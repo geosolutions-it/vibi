@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlowConfiguration>
+
+    <id>roadrunner</id>
+
+    <name>Arc ingestion</name>
+    <description>Arc ingestion and post processing</description>
+
+    <autorun>true</autorun>
+
+    <EventGeneratorConfiguration>
+        <serviceID>fsEventGeneratorService</serviceID>
+        <wildCard>*.zip</wildCard>
+        <watchDirectory>roadrunner/in</watchDirectory>
+        <osType>OS_UNDEFINED</osType>
+        <eventType>FILE_ADDED</eventType>
+    </EventGeneratorConfiguration>
+
+    <EventConsumerConfiguration>
+
+        <listenerId>ConsumerLogger0</listenerId>
+        <listenerId>Cumulator</listenerId>
+
+        <Ds2dsConfiguration>
+            <id>import_shape</id>
+            <name>SHP ingestion</name>
+            <description>Ingesting shapefile into the DB</description>
+
+            <listenerConfigurations/>
+            <failIgnored>false</failIgnored>
+            <purgeData>true</purgeData>
+
+            <outputFeature>
+                <dataStore>
+                   <entry>
+                     <string>dbtype</string>
+                     <string>postgis</string>
+                   </entry>
+                   <entry>
+                     <string>host</string>
+                     <string>localhost</string>
+                   </entry>
+                   <entry>
+                     <string>port</string>
+                     <string>5432</string>
+                   </entry>
+                   <entry>
+                     <string>database</string>
+                     <string>destination_staging</string>
+                   </entry>
+                   <entry>
+                     <string>database</string>
+                     <string>destination_staging</string>
+                   </entry>
+                   <entry>
+                     <string>schema</string>
+                     <string>siig_p</string>
+                   </entry>
+                   <entry>
+                     <string>user</string>
+                     <string>siig_p</string>
+                   </entry>
+                   <entry>
+                     <string>passwd</string>
+                     <string>siig_p</string>
+                   </entry>
+                </dataStore>
+            </outputFeature>
+            <projectOnMappings>false</projectOnMappings>
+            <attributeMappings/>
+
+        </Ds2dsConfiguration>
+
+        <ArcIngestionConfiguration>
+            <id>arcingest_l1</id>
+            <name>ArcIngestion level 1</name>
+            <description>Arc ingestion with aggregation level 1</description>
+            <failIgnored>false</failIgnored>
+            <aggregationLevel>1</aggregationLevel>
+            <onGrid>false</onGrid>
+            <dropInput>false</dropInput>
+        </ArcIngestionConfiguration>
+
+        <ArcIngestionConfiguration>
+            <id>arcingest_l2</id>
+            <name>ArcIngestion level 2</name>
+            <description>Arc ingestion with aggregation level 2</description>
+            <failIgnored>false</failIgnored>
+            <aggregationLevel>2</aggregationLevel>
+            <onGrid>false</onGrid>
+            <dropInput>false</dropInput>
+        </ArcIngestionConfiguration>
+
+        <ArcIngestionConfiguration>
+            <id>arcingest_l3</id>
+            <name>ArcIngestion level 3</name>
+            <description>Arc ingestion with aggregation level 3</description>
+            <failIgnored>false</failIgnored>
+            <aggregationLevel>3</aggregationLevel>
+            <onGrid>false</onGrid>
+            <dropInput>false</dropInput>
+        </ArcIngestionConfiguration>
+
+        <ArcIngestionConfiguration>
+            <id>arcingest_l3_close</id>
+            <name>ArcIngestion level 3, close phase</name>
+            <description>Arc ingestion with aggregation level 3, with close phase</description>
+            <failIgnored>false</failIgnored>
+            <aggregationLevel>3</aggregationLevel>
+            <onGrid>true</onGrid>
+            <dropInput>false</dropInput>
+            <closePhase>A</closePhase>
+        </ArcIngestionConfiguration>
+
+        <ZeroRemovalConfiguration>
+            <id>zeroremoval_1</id>
+            <name>Zero removal level 1</name>
+            <description>Zeroes removal aggregation level 1</description>
+            <aggregationLevel>1</aggregationLevel>
+            <!--<closePhase>B</closePhase>-->
+        </ZeroRemovalConfiguration>
+
+        <ZeroRemovalConfiguration>
+            <id>zeroremoval_2</id>
+            <name>Zero removal level 2</name>
+            <description>Zeroes removal aggregation level 2</description>
+            <aggregationLevel>2</aggregationLevel>
+            <!--<closePhase>B</closePhase>-->
+        </ZeroRemovalConfiguration>
+
+        <ZeroRemovalConfiguration>
+            <id>zeroremoval_3</id>
+            <name>Zero removal level 3</name>
+            <description>Zeroes removal aggregation level 3</description>
+            <aggregationLevel>3</aggregationLevel>
+            <!--<closePhase>B</closePhase>-->
+        </ZeroRemovalConfiguration>
+
+        <VulnerabilityConfiguration>
+            <id>vulnerability_1</id>
+            <name>Vulnerability level 1</name>
+            <description>Vulnerability computation, aggregation level 1</description>
+            <aggregationLevel>1</aggregationLevel>
+            <writeMode>PURGE_INSERT</writeMode>
+        </VulnerabilityConfiguration>
+
+        <VulnerabilityConfiguration>
+            <id>vulnerability_2</id>
+            <name>Vulnerability level 2</name>
+            <description>Vulnerability computation, aggregation level 2</description>
+            <aggregationLevel>2</aggregationLevel>
+            <writeMode>PURGE_INSERT</writeMode>
+        </VulnerabilityConfiguration>
+
+        <VulnerabilityConfiguration>
+            <id>vulnerability_3</id>
+            <name>Vulnerability level 3</name>
+            <description>Vulnerability computation, aggregation level 3</description>
+<!--            <failIgnored>false</failIgnored>-->
+            <aggregationLevel>3</aggregationLevel>
+            <writeMode>PURGE_INSERT</writeMode>
+            <!--<closePhase>B</closePhase>-->
+        </VulnerabilityConfiguration>
+
+        <RiskConfiguration>
+            <id>risk_1</id>
+            <name>Risk level 1</name>
+            <description>Risk computation aggregation level 1</description>
+
+            <precision>3</precision>
+            <aggregationLevel>1</aggregationLevel>
+            <processing>1</processing>
+            <formula>26</formula>
+            <target>100</target>
+            <materials>1,2,3,4,5,6,7,8,9,10</materials>
+            <scenarios>1,2,3,4,5,6,7,8,9,10,11</scenarios>
+            <entities>0,1</entities>
+            <severeness>1,2,3,4,5</severeness>
+            <fpfield>fp_scen_centrale</fpfield>
+            <writeMode>PURGE_INSERT</writeMode>
+        </RiskConfiguration>
+
+        <RiskConfiguration>
+            <id>risk_2</id>
+            <name>Risk level 2</name>
+            <description>Risk computation aggregation level 2</description>
+
+            <precision>3</precision>
+            <aggregationLevel>2</aggregationLevel>
+            <processing>1</processing>
+            <formula>26</formula>
+            <target>100</target>
+            <materials>1,2,3,4,5,6,7,8,9,10</materials>
+            <scenarios>1,2,3,4,5,6,7,8,9,10,11</scenarios>
+            <entities>0,1</entities>
+            <severeness>1,2,3,4,5</severeness>
+            <fpfield>fp_scen_centrale</fpfield>
+            <writeMode>PURGE_INSERT</writeMode>
+        </RiskConfiguration>
+
+        <RiskConfiguration>
+            <id>risk_3</id>
+            <name>Risk level 3</name>
+            <description>Risk computation aggregation level 3</description>
+
+            <precision>3</precision>
+            <aggregationLevel>3</aggregationLevel>
+            <processing>1</processing>
+            <formula>29</formula>
+            <target>100</target>
+            <materials>1,2,3,4,5,6,7,8,9,10</materials>
+            <scenarios>1,2,3,4,5,6,7,8,9,10,11</scenarios>
+            <entities>0,1</entities>
+            <severeness>1,2,3,4,5</severeness>
+            <fpfield>fp_scen_centrale</fpfield>
+            <writeMode>PURGE_INSERT</writeMode>
+            <closePhase>B</closePhase>
+        </RiskConfiguration>
+        
+        <StreetUserConfiguration>
+            <id>streetuser_1</id>
+            <name>Street users computation level 1</name>
+            <description>Street users computation level 1</description>
+            <aggregationLevel>1</aggregationLevel>
+        </StreetUserConfiguration>
+        
+        <StreetUserConfiguration>
+            <id>streetuser_2</id>
+            <name>Street users computation level 2</name>
+            <description>Street users computation level 2</description>
+            <aggregationLevel>2</aggregationLevel>
+        </StreetUserConfiguration>
+
+        <StreetUserConfiguration>
+            <id>streetuser_3</id>
+            <name>Street users computation level 3</name>
+            <description>Street users computation level 3</description>
+            <aggregationLevel>3</aggregationLevel>
+        </StreetUserConfiguration>
+
+    </EventConsumerConfiguration>
+
+
+    <ListenerConfigurations>
+<!--		<StatusProgressListener>
+            <serviceID>statusListenerService</serviceID>
+            <id>StatusActionLogger0</id>
+        </StatusProgressListener>
+
+        <LoggingProgressListener>
+            <serviceID>loggingListenerService</serviceID>
+            <id>ActionLogger0</id>
+
+            <loggerName>it.geosolutions.ActionLogger</loggerName>
+        </LoggingProgressListener>-->
+
+        <LoggingProgressListener>
+            <serviceID>loggingListenerService</serviceID>
+            <id>ConsumerLogger0</id>
+
+            <loggerName>it.geosolutions.ConsLogger</loggerName>
+        </LoggingProgressListener>
+
+        <CumulatingProgressListener>
+            <serviceID>cumulatingListenerService</serviceID>
+            <id>Cumulator</id>
+        </CumulatingProgressListener>
+
+    </ListenerConfigurations>
+
+</FlowConfiguration>

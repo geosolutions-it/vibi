@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<features>
+
+<!-- BERSAGLI -->
+
+	<feature>
+		<target>true</target>
+		<featureName>siig_geo_bers_non_umano_ln</featureName>
+		<featureParentRelation>siig_t_bersaglio_non_umano</featureParentRelation>
+	</feature>
+
+	<feature>
+		<target>true</target>
+		<featureName>siig_geo_bers_non_umano_pl</featureName>
+		<featureParentRelation>siig_t_bersaglio_non_umano</featureParentRelation>
+	</feature>
+
+	<feature>
+		<target>true</target>
+		<featureName>siig_geo_bers_non_umano_pt</featureName>
+		<featureParentRelation>siig_t_bersaglio_non_umano</featureParentRelation>
+	</feature>
+
+	<feature>
+		<target>true</target>
+		<featureName>siig_geo_bersaglio_umano_pl</featureName>
+		<featureParentRelation>siig_t_bersaglio_umano</featureParentRelation>
+	</feature>
+	<feature>
+		<target>true</target>
+		<featureName>siig_geo_bersaglio_umano_pt</featureName>
+		<featureParentRelation>siig_t_bersaglio_umano</featureParentRelation>
+	</feature>
+
+	<feature>
+		<target>true</target>
+		<featureName>siig_t_bersaglio_non_umano</featureName>
+	</feature>
+
+	<feature>
+		<target>true</target>
+		<featureName>siig_t_bersaglio_umano</featureName>
+	</feature>
+
+<!-- ARCHI DI STRADA --> 
+
+	<feature>
+		<featureName>siig_r_arco_1_dissesto</featureName>
+		<featureParentRelation>siig_geo_ln_arco_1</featureParentRelation>
+	</feature>
+	<feature>
+		<featureName>siig_r_arco_1_scen_tipobers</featureName>
+		<featureParentRelation>siig_geo_ln_arco_1</featureParentRelation>
+	</feature>
+	<feature>
+		<featureName>siig_r_arco_1_sostanza</featureName>
+		<featureParentRelation>siig_geo_ln_arco_1</featureParentRelation>
+	</feature>
+	<feature>
+		<featureName>siig_r_tipovei_geoarco1</featureName>
+		<featureParentRelation>siig_geo_ln_arco_1</featureParentRelation>
+	</feature>	
+	<feature>
+		<featureName>siig_r_arco_2_dissesto</featureName>
+		<featureParentRelation>siig_geo_ln_arco_2</featureParentRelation>
+	</feature>
+	<feature>
+		<featureName>siig_r_arco_2_scen_tipobers</featureName>
+		<featureParentRelation>siig_geo_ln_arco_2</featureParentRelation>
+	</feature>
+	<feature>
+		<featureName>siig_r_arco_2_sostanza</featureName>
+		<featureParentRelation>siig_geo_ln_arco_2</featureParentRelation>
+	</feature>
+	<feature>
+		<featureName>siig_r_tipovei_geoarco2</featureName>
+		<featureParentRelation>siig_geo_ln_arco_2</featureParentRelation>
+	</feature>	
+	<feature>
+		<featureName>siig_r_arco_3_dissesto</featureName>
+		<featureParentRelation>siig_geo_pl_arco_3</featureParentRelation>
+	</feature>
+	<feature>
+		<featureName>siig_r_arco_3_scen_tipobers</featureName>
+		<featureParentRelation>siig_geo_pl_arco_3</featureParentRelation>
+	</feature>
+	<feature>
+		<featureName>siig_r_arco_3_sostanza</featureName>
+		<featureParentRelation>siig_geo_pl_arco_3</featureParentRelation>
+	</feature>
+	<feature>
+		<featureName>siig_r_tipovei_geoarco3</featureName>
+		<featureParentRelation>siig_geo_pl_arco_3</featureParentRelation>
+	</feature>	
+
+<!-- VULNERABILITA -->
+
+	<feature>
+		<featureName>siig_t_vulnerabilita_1</featureName>
+		<featureParentRelation>siig_geo_ln_arco_1</featureParentRelation>
+	</feature>	
+	<feature>
+		<featureName>siig_t_vulnerabilita_2</featureName>
+		<featureParentRelation>siig_geo_ln_arco_2</featureParentRelation>
+	</feature>	
+	<feature>
+		<featureName>siig_t_vulnerabilita_3</featureName>
+		<featureParentRelation>siig_geo_pl_arco_3</featureParentRelation>
+	</feature>
+
+<!-- PRECALCOLO -->
+
+	<feature>
+		<featureName>siig_t_elab_standard_1</featureName>
+		<featureParentRelation>siig_geo_ln_arco_1</featureParentRelation>
+	</feature>	
+	<feature>
+		<featureName>siig_t_elab_standard_2</featureName>
+		<featureParentRelation>siig_geo_ln_arco_2</featureParentRelation>
+	</feature>	
+	<feature>
+	<featureName>siig_t_elab_standard_3</featureName>
+		<featureParentRelation>siig_geo_pl_arco_3</featureParentRelation>
+	</feature>
+
+<!-- ARCHI -->
+
+	<feature>
+		<featureName>siig_geo_ln_arco_1</featureName>
+	</feature>
+	<feature>
+		<featureName>siig_geo_ln_arco_2</featureName>
+	</feature>
+	<feature>
+		<featureName>siig_geo_ln_arco_3</featureName>
+	</feature>
+	<feature>
+		<featureName>siig_geo_pl_arco_3</featureName>
+	</feature>
+
+</features>

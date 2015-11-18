@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlowConfiguration>
+
+    <id>targetrunner</id>
+
+    <name>Target ingestion</name>
+    <description>Target ingestion and post processing</description>
+
+    <autorun>true</autorun>
+
+    <EventGeneratorConfiguration>
+        <serviceID>fsEventGeneratorService</serviceID>
+        <wildCard>*.zip</wildCard>
+        <watchDirectory>targetrunner/in</watchDirectory>
+        <osType>OS_UNDEFINED</osType>
+        <eventType>FILE_ADDED</eventType>
+    </EventGeneratorConfiguration>
+
+    <EventConsumerConfiguration>
+
+        <listenerId>ConsumerLogger0</listenerId>
+        <listenerId>Cumulator</listenerId>
+
+        <Ds2dsConfiguration>
+            <id>import_shape</id>
+            <name>SHP ingestion</name>
+            <description>Ingesting shapefile into the DB</description>
+
+            <listenerConfigurations/>
+            <failIgnored>false</failIgnored>
+            <purgeData>true</purgeData>
+
+            <outputFeature>
+                <dataStore>
+                   <entry>
+                     <string>dbtype</string>
+                     <string>postgis</string>
+                   </entry>
+                   <entry>
+                     <string>host</string>
+                     <string>localhost</string>
+                   </entry>
+                   <entry>
+                     <string>port</string>
+                     <string>5432</string>
+                   </entry>
+                   <entry>
+                     <string>database</string>
+                     <string>destination_staging</string>
+                   </entry>
+                   <entry>
+                     <string>database</string>
+                     <string>destination_staging</string>
+                   </entry>
+                   <entry>
+                     <string>schema</string>
+                     <string>siig_p</string>
+                   </entry>
+                   <entry>
+                     <string>user</string>
+                     <string>siig_p</string>
+                   </entry>
+                   <entry>
+                     <string>passwd</string>
+                     <string>siig_p</string>
+                   </entry>
+                </dataStore>
+            </outputFeature>
+            <projectOnMappings>false</projectOnMappings>
+            <attributeMappings/>
+
+        </Ds2dsConfiguration>
+
+
+        <TargetIngestionConfiguration>
+            <id>target_processing</id>
+            <name>Target processing</name>
+            <description>Target postprocessing</description>
+            <dropInput>false</dropInput>
+        </TargetIngestionConfiguration>
+		
+		<ScriptingConfiguration>
+			<id>scripting</id>
+			<description>Groovy to generate XML input for task executor action in rasterize process</description>
+			<name>GroovyRasterizeAction</name>
+			
+			<listenerId>ScriptActionLogger0</listenerId>
+			<listenerId>ScriptActionStatus0</listenerId>
+
+            <language>groovy</language>
+
+            <scriptFile>gdalTaskInputXmlCreator.groovy</scriptFile>
+
+			<!--
+		    <properties>
+				 <entry>
+				    <string>baseOutputPath</string>
+				    <string>C:/temp/</string>
+				  </entry>
+			</properties>
+			-->
+			
+		</ScriptingConfiguration>
+
+		<RasterizeConfiguration>
+            <id>raster_processing</id>
+            <name>Raster processing</name>
+            <description>Raster postprocessing</description>
+			<!--<baseOutputPath>C:/temp/</baseOutputPath>-->
+        </RasterizeConfiguration>
+
+    </EventConsumerConfiguration>
+
+
+    <ListenerConfigurations>
+<!--		<StatusProgressListener>
+            <serviceID>statusListenerService</serviceID>
+            <id>StatusActionLogger0</id>
+        </StatusProgressListener>
+
+        <LoggingProgressListener>
+            <serviceID>loggingListenerService</serviceID>
+            <id>ActionLogger0</id>
+
+            <loggerName>it.geosolutions.ActionLogger</loggerName>
+        </LoggingProgressListener>-->
+
+        <LoggingProgressListener>
+            <serviceID>loggingListenerService</serviceID>
+            <id>ConsumerLogger0</id>
+
+            <loggerName>it.geosolutions.ConsLogger</loggerName>
+        </LoggingProgressListener>
+
+        <CumulatingProgressListener>
+            <serviceID>cumulatingListenerService</serviceID>
+            <id>Cumulator</id>
+        </CumulatingProgressListener>
+
+    </ListenerConfigurations>
+
+</FlowConfiguration>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+  
+    <parent>
+<!--        <groupId>it.geosolutions.geobatch</groupId>
+        <artifactId>gb-actions</artifactId>-->
+      <groupId>it.geosolutions.destination.geobatch</groupId>
+      <artifactId>gb-destination</artifactId>
+      <version>1.1-SNAPSHOT</version>
+    </parent>
+    <!-- =========================================================== -->
+    <!--     Module Description                                      -->
+    <!-- =========================================================== -->
+
+    <groupId>it.geosolutions.destination.geobatch</groupId>
+    <artifactId>gb-destination-ingestion-actions</artifactId>
+    <packaging>jar</packaging>
+    <version>1.1-SNAPSHOT</version>
+
+    <name>GeoBatch Destination - Ingestion Actions</name>
+    <description></description>
+
+    <properties>
+    </properties>
+    <!-- =========================================================== -->
+    <!--     Dependency Management                                   -->
+    <!-- =========================================================== -->
+    <dependencies>
+        <!--    <dependency>
+          <groupId>it.geosolutions.geobatch</groupId>
+          <artifactId>tools-geobatch</artifactId>
+        </dependency>-->
+        <dependency>
+            <groupId>it.geosolutions.destination.geobatch</groupId>
+            <artifactId>gb-destination-ingestion</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>it.geosolutions.destination.geobatch</groupId>
+            <artifactId>gb-destination-migration</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>it.geosolutions.geobatch</groupId>
+            <artifactId>gb-action-ds2ds</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>it.geosolutions.geobatch</groupId>
+            <artifactId>gb-action-scripting</artifactId>                
+        </dependency>
+
+        <dependency>
+            <groupId>it.geosolutions.geobatch</groupId>
+            <artifactId>gb-dao-xstream</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>it.geosolutions.geobatch</groupId>
+            <artifactId>gb-fsm-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>it.geosolutions.geobatch</groupId>
+            <artifactId>gb-core-model</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>it.geosolutions.geobatch</groupId>
+            <artifactId>gb-alias-registry</artifactId>
+        </dependency>
+
+        <!-- import pack plugin definition -->
+        <dependency>
+            <groupId>it.geosolutions.geobatch</groupId>
+            <artifactId>gb-actions</artifactId>
+            <type>pom</type>
+            <version>1.4-GT12.2-13032015</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>it.geosolutions.geobatch</groupId>
+            <artifactId>gb-action-ftp</artifactId>
+        </dependency>
+
+        <!-- Apache Commons VFS -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-vfs2</artifactId>
+            <version>2.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency> 
+
+        <!-- JSch -->
+        <dependency>
+            <groupId>com.jcraft</groupId>
+            <artifactId>jsch</artifactId>
+            <version>0.1.50</version>
+        </dependency>
+		
+		<dependency>
+		  <groupId>it.geosolutions.jaiext.scheduler</groupId>
+		  <artifactId>jt-scheduler</artifactId>
+		</dependency>
+
+        <!--dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>1.6.6</version>
+            <scope>test</scope>
+        </dependency-->
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+        <groupId>org.mockftpserver</groupId>
+        <artifactId>MockFtpServer</artifactId>
+        <version>2.4</version>
+        <scope>test</scope>
+      </dependency>
+
+    </dependencies>
+</project>
