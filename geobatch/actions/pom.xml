@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>it.geosolutions.vibi</groupId>
+        <artifactId>vibi-geobatch</artifactId>
+        <version>0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <name>vibi-geobatch-actions</name>
+    <artifactId>vibi-geobatch-actions</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>it.geosolutions.geobatch</groupId>
+            <artifactId>gb-core-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>it.geosolutions.geobatch</groupId>
+            <artifactId>gb-fs-catalog</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>it.geosolutions.vibi</groupId>
+            <artifactId>vibi-mapper</artifactId>
+        </dependency>
+    </dependencies>
+</project>
