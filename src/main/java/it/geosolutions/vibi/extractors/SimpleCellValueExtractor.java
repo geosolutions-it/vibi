@@ -1,17 +1,12 @@
-package it.geosolutions.vibi.converters;
+package it.geosolutions.vibi.extractors;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DateUtil;
 
-public final class BasicConverter implements Converter {
-
-    public static BasicConverter BASIC_CONVERTER = new BasicConverter();
-
-    private BasicConverter() {
-    }
+public class SimpleCellValueExtractor implements CellValueExtractor {
 
     @Override
-    public Object convert(Cell cell) {
+    public Object extract(Cell cell) {
         switch (cell.getCellType()) {
             case Cell.CELL_TYPE_STRING:
                 return cell.getRichStringCellValue().getString();

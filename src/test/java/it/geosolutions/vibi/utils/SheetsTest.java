@@ -19,5 +19,9 @@ public final class SheetsTest {
         assertThat(Sheets.getIndex("ba"), is(equalTo(52)));
         assertThat(Sheets.getIndex("bb"), is(equalTo(53)));
         assertThat(Sheets.getIndex("zz"), is(equalTo(701)));
+        assertThat(Sheets.getIndex("M"), is(equalTo(12)));
+        assertThat(Sheets.getIndex("Ba"), is(equalTo(52)));
+        assertThat(Sheets.getIndex("bA"), is(equalTo(52)));
+        assertThat(Sheets.getIndex("BA"), is(equalTo(52)));
     }
 }

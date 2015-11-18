@@ -2,12 +2,11 @@ package it.geosolutions.vibi.detectors;
 
 import it.geosolutions.vibi.utils.Sheets;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
 
 import java.util.List;
 import java.util.regex.Pattern;
 
-public class DetectorByMatches implements DataStartDetector, DataEndDetector {
+public class SimpleBoundsDetector implements BoundsDetector {
 
     public static class ExpectedMatch {
 
@@ -21,29 +20,29 @@ public class DetectorByMatches implements DataStartDetector, DataEndDetector {
             this.pattern = pattern;
         }
 
-        public boolean checkMatch(Sheet sheet, Row currentRow) {
+        public boolean checkMatch(Row currentRow) {
             int rowToMatchIndex = currentRow.getRowNum() + relativeRowIndex;
             if (rowToMatchIndex < 0) {
                 return false;
             }
-            Row rowToMatch = sheet.getRow(rowToMatchIndex);
+            Row rowToMatch = currentRow.getSheet().getRow(rowToMatchIndex);
             String cellValue = Sheets.cellToString(rowToMatch.getCell(columnIndex, Row.CREATE_NULL_AS_BLANK));
             return pattern.matcher(cellValue).matches();
         }
     }
 
-    private final List<ExpectedMatch> startExpectedMatches;
-    private final List<ExpectedMatch> endExpectedMatches;
+    protected final List<ExpectedMatch> startExpectedMatches;
+    protected final List<ExpectedMatch> endExpectedMatches;
 
-    public DetectorByMatches(List<ExpectedMatch> startExpectedMatches, List<ExpectedMatch> endExpectedMatches) {
+    public SimpleBoundsDetector(List<ExpectedMatch> startExpectedMatches, List<ExpectedMatch> endExpectedMatches) {
         this.startExpectedMatches = startExpectedMatches;
         this.endExpectedMatches = endExpectedMatches;
     }
 
     @Override
-    public boolean isStart(Sheet sheet, Row row) {
+    public boolean isDataStart(Row row) {
         for (ExpectedMatch expectedMatch : startExpectedMatches) {
-            if (!expectedMatch.checkMatch(sheet, row)) {
+            if (!expectedMatch.checkMatch(row)) {
                 return false;
             }
         }
@@ -51,9 +50,9 @@ public class DetectorByMatches implements DataStartDetector, DataEndDetector {
     }
 
     @Override
-    public boolean isEnd(Sheet sheet, Row row) {
+    public boolean isDataEnd(Row row) {
         for (ExpectedMatch expectedMatch : endExpectedMatches) {
-            if (!expectedMatch.checkMatch(sheet, row)) {
+            if (!expectedMatch.checkMatch(row)) {
                 return false;
             }
         }

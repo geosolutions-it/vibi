@@ -16,7 +16,7 @@
         <version.log4j>1.2.17</version.log4j>
         <version.poi>3.13</version.poi>
         <version.postgresql>9.4-1201-jdbc41</version.postgresql>
-        <version.spring.jdbc>4.2.3.RELEASE</version.spring.jdbc>
+        <version.spring.framework>4.2.3.RELEASE</version.spring.framework>
     </properties>
     <repositories>
         <repository>
@@ -67,24 +67,12 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
-            <version>${version.spring.jdbc}</version>
+            <version>${version.spring.framework}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${version.spring.framework}</version>
         </dependency>
     </dependencies>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.antlr</groupId>
-                <artifactId>antlr4-maven-plugin</artifactId>
-                <version>4.5.1</version>
-                <executions>
-                    <execution>
-                        <id>antlr</id>
-                        <goals>
-                            <goal>antlr4</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
 </project>

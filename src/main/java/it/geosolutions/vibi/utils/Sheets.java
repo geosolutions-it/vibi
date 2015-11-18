@@ -75,20 +75,17 @@ public final class Sheets {
         return cells;
     }
 
-    public static abstract class WorkOnSheet {
+    public static abstract class WorkBook {
 
-        public WorkOnSheet(String workBookPath, String sheetName) {
+        public WorkBook(String workBookPath) {
             try (InputStream input = new FileInputStream(workBookPath);
                  HSSFWorkbook workBook = new HSSFWorkbook(new POIFSFileSystem(input))) {
-                Sheet sheet = workBook.getSheet(sheetName);
-                Validations.checkNotNull(sheet, "Sheet '%d' not found.", sheetName);
-                doWork(sheet);
+                doWork(workBook);
             } catch (Exception exception) {
-                throw new RuntimeException(String.format("Error processing sheet '%s' of work book '%s'.",
-                        sheetName, workBookPath), exception);
+                throw new RuntimeException(String.format("Error processing work book '%s'.", workBookPath), exception);
             }
         }
 
-        public abstract void doWork(Sheet sheet);
+        public abstract void doWork(HSSFWorkbook workBook);
     }
 }
