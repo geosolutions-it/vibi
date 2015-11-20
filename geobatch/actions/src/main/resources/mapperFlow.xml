@@ -1,0 +1,27 @@
+<FlowConfiguration>
+    <id>mapperFlow</id>
+    <description>spread sheet to data base</description>
+    <name>mapperFlow</name>
+    <autorun>true</autorun>
+    <EventConsumerConfiguration>
+        <MoveConfiguration>
+            <id>mapper</id>
+            <name>mapperAction</name>
+            <description>spread sheet to data base</description>
+            <dbtype>postgis</dbtype>
+            <host>localhost</host>
+            <port>5432</port>
+            <schema>public</schema>
+            <databse>postgres</databse>
+            <user>postgres</user>
+            <passwd>postgres</passwd>
+        </MoveConfiguration>
+    </EventConsumerConfiguration>
+    <EventGeneratorConfiguration>
+        <serviceID>fsEventGeneratorService</serviceID>
+        <wildCard>*</wildCard>
+        <watchDirectory>vibi/input</watchDirectory>
+        <osType>OS_UNDEFINED</osType>
+        <eventType>FILE_ADDED</eventType>
+    </EventGeneratorConfiguration>
+</FlowConfiguration>

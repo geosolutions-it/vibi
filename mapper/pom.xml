@@ -13,7 +13,15 @@
     <dependencies>
         <dependency>
             <groupId>org.geotools</groupId>
+            <artifactId>gt-epsg-hsql</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
             <artifactId>gt-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools.jdbc</groupId>
+            <artifactId>gt-jdbc-postgis</artifactId>
         </dependency>
         <dependency>
             <groupId>org.hamcrest</groupId>

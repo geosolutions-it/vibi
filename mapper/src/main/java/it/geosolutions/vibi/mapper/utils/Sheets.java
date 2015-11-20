@@ -2,10 +2,7 @@ package it.geosolutions.vibi.mapper.utils;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.DataFormatter;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.*;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -54,12 +51,30 @@ public final class Sheets {
         char[] indexParts = columnIndex.toLowerCase().toCharArray();
         int index = charsIndex.get(indexParts[indexParts.length - 1]);
         for (int i = indexParts.length - 2; i >= 0; i--) {
-            index += (charsIndex.get(indexParts[i]) + 1) * 26;
+            Integer charWeight = charsIndex.get(indexParts[i]);
+            Validations.checkNotNull(charWeight, "Invalid char '%c' in column index '%s'.", indexParts[i], columnIndex);
+            index += (charWeight + 1) * 26;
         }
         return index;
     }
 
+    public static Cell evaluateCell(Cell cell) {
+        if(cell == null) {
+            return null;
+        }
+        FormulaEvaluator evaluator = cell.getRow().getSheet().getWorkbook().getCreationHelper().createFormulaEvaluator();
+        try {
+            cell = evaluator.evaluateInCell(cell);
+        } catch (Exception exception) {
+            return null;
+        }
+        return cell;
+    }
+
     public static String cellToString(Cell cell) {
+        if (cell == null) {
+            return null;
+        }
         DataFormatter formatter = new DataFormatter();
         return formatter.formatCellValue(cell);
     }

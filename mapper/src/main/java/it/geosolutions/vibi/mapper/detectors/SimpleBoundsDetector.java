@@ -3,7 +3,6 @@ package it.geosolutions.vibi.mapper.detectors;
 import it.geosolutions.vibi.mapper.utils.Sheets;
 import org.apache.poi.ss.usermodel.Row;
 
-import java.util.List;
 import java.util.regex.Pattern;
 
 public class SimpleBoundsDetector implements BoundsDetector {
@@ -31,31 +30,28 @@ public class SimpleBoundsDetector implements BoundsDetector {
         }
     }
 
-    protected final List<ExpectedMatch> startExpectedMatches;
-    protected final List<ExpectedMatch> endExpectedMatches;
+    private final ExpectedMatch headerExpectedMatch;
+    private final ExpectedMatch startExpectedMatch;
+    private final ExpectedMatch endExpectedMatch;
 
-    public SimpleBoundsDetector(List<ExpectedMatch> startExpectedMatches, List<ExpectedMatch> endExpectedMatches) {
-        this.startExpectedMatches = startExpectedMatches;
-        this.endExpectedMatches = endExpectedMatches;
+    public SimpleBoundsDetector(ExpectedMatch headerExpectedMatch, ExpectedMatch startExpectedMatch, ExpectedMatch endExpectedMatch) {
+        this.headerExpectedMatch = headerExpectedMatch;
+        this.startExpectedMatch = startExpectedMatch;
+        this.endExpectedMatch = endExpectedMatch;
+    }
+
+    @Override
+    public boolean isHeader(Row row) {
+        return headerExpectedMatch != null && headerExpectedMatch.checkMatch(row);
     }
 
     @Override
     public boolean isDataStart(Row row) {
-        for (ExpectedMatch expectedMatch : startExpectedMatches) {
-            if (!expectedMatch.checkMatch(row)) {
-                return false;
-            }
-        }
-        return true;
+        return startExpectedMatch.checkMatch(row);
     }
 
     @Override
     public boolean isDataEnd(Row row) {
-        for (ExpectedMatch expectedMatch : endExpectedMatches) {
-            if (!expectedMatch.checkMatch(row)) {
-                return false;
-            }
-        }
-        return true;
+        return endExpectedMatch.checkMatch(row);
     }
 }

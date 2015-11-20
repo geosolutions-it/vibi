@@ -6,6 +6,8 @@ import it.geosolutions.geobatch.annotations.CheckConfiguration;
 import it.geosolutions.geobatch.configuration.event.action.ActionConfiguration;
 import it.geosolutions.geobatch.flow.event.action.ActionException;
 import it.geosolutions.geobatch.flow.event.action.BaseAction;
+import it.geosolutions.vibi.mapper.VibiService;
+import org.geotools.data.DataStore;
 
 import java.util.EventObject;
 import java.util.Queue;
@@ -13,8 +15,11 @@ import java.util.Queue;
 @Action(configurationClass = MapperConfiguration.class)
 public final class MapperAction extends BaseAction<EventObject> {
 
-    public MapperAction(ActionConfiguration actionConfiguration) {
+    private final DataStore store;
+
+    public MapperAction(MapperConfiguration actionConfiguration) {
         super(actionConfiguration);
+        store = actionConfiguration.getStore();
     }
 
     @Override
@@ -36,5 +41,6 @@ public final class MapperAction extends BaseAction<EventObject> {
     }
 
     private void handleFileSystemEvent(FileSystemEvent event) {
+        VibiService.submit(event.getSource(), store);
     }
 }

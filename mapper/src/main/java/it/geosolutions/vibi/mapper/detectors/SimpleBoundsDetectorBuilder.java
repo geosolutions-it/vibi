@@ -3,34 +3,30 @@ package it.geosolutions.vibi.mapper.detectors;
 import it.geosolutions.vibi.mapper.detectors.SimpleBoundsDetector.ExpectedMatch;
 import it.geosolutions.vibi.mapper.utils.Sheets;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Pattern;
 
 public class SimpleBoundsDetectorBuilder {
 
-    private final List<ExpectedMatch> startExpectedMatches = new ArrayList<>();
-    private final List<ExpectedMatch> endExpectedMatches = new ArrayList<>();
+    private ExpectedMatch headerExpectedMatch;
+    private ExpectedMatch startExpectedMatch;
+    private ExpectedMatch endExpectedMatch;
 
-    public SimpleBoundsDetectorBuilder withStartExpectedMatch(int relativeRowIndex, String column, String pattern) {
-        return withStartExpectedMatch(relativeRowIndex, Sheets.getIndex(column), pattern);
+    public SimpleBoundsDetectorBuilder withHeaderExpectedMatch(int relativeRowIndex, String column, String pattern) {
+        this.headerExpectedMatch = new ExpectedMatch(relativeRowIndex, Sheets.getIndex(column), Pattern.compile(pattern));
+        return this;
     }
 
-    public SimpleBoundsDetectorBuilder withStartExpectedMatch(int relativeRowIndex, int columnIndex, String pattern) {
-        startExpectedMatches.add(new ExpectedMatch(relativeRowIndex, columnIndex, Pattern.compile(pattern)));
+    public SimpleBoundsDetectorBuilder withStartExpectedMatch(int relativeRowIndex, String column, String pattern) {
+        this.startExpectedMatch = new ExpectedMatch(relativeRowIndex, Sheets.getIndex(column), Pattern.compile(pattern));
         return this;
     }
 
     public SimpleBoundsDetectorBuilder withEndExpectedMatch(int relativeRowIndex, String column, String pattern) {
-        return withEndExpectedMatch(relativeRowIndex, Sheets.getIndex(column), pattern);
-    }
-
-    public SimpleBoundsDetectorBuilder withEndExpectedMatch(int relativeRowIndex, int columnIndex, String pattern) {
-        endExpectedMatches.add(new ExpectedMatch(relativeRowIndex, columnIndex, Pattern.compile(pattern)));
+        this.endExpectedMatch = new ExpectedMatch(relativeRowIndex, Sheets.getIndex(column), Pattern.compile(pattern));
         return this;
     }
 
     public SimpleBoundsDetector build() {
-        return new SimpleBoundsDetector(startExpectedMatches, endExpectedMatches);
+        return new SimpleBoundsDetector(headerExpectedMatch, startExpectedMatch, endExpectedMatch);
     }
 }
