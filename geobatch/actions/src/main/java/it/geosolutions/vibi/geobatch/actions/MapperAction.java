@@ -10,16 +10,17 @@ import it.geosolutions.vibi.mapper.VibiService;
 import org.geotools.data.DataStore;
 
 import java.util.EventObject;
+import java.util.LinkedList;
 import java.util.Queue;
 
 @Action(configurationClass = MapperConfiguration.class)
 public final class MapperAction extends BaseAction<EventObject> {
 
-    private final DataStore store;
+    private final MapperConfiguration actionConfiguration;
 
     public MapperAction(MapperConfiguration actionConfiguration) {
         super(actionConfiguration);
-        store = actionConfiguration.getStore();
+        this.actionConfiguration = actionConfiguration;
     }
 
     @Override
@@ -37,10 +38,10 @@ public final class MapperAction extends BaseAction<EventObject> {
             }
         }
         super.listenerForwarder.completed();
-        return null;
+        return new LinkedList<>();
     }
 
     private void handleFileSystemEvent(FileSystemEvent event) {
-        VibiService.submit(event.getSource(), store);
+        VibiService.submit(event.getSource(), actionConfiguration.getStore());
     }
 }

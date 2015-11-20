@@ -1,22 +1,9 @@
 <FlowConfiguration>
-    <id>mapperFlow</id>
+    <id>mapper</id>
     <description>spread sheet to data base</description>
-    <name>mapperFlow</name>
+    <name>mapper</name>
     <autorun>true</autorun>
-    <EventConsumerConfiguration>
-        <MoveConfiguration>
-            <id>mapper</id>
-            <name>mapperAction</name>
-            <description>spread sheet to data base</description>
-            <dbtype>postgis</dbtype>
-            <host>localhost</host>
-            <port>5432</port>
-            <schema>public</schema>
-            <databse>postgres</databse>
-            <user>postgres</user>
-            <passwd>postgres</passwd>
-        </MoveConfiguration>
-    </EventConsumerConfiguration>
+
     <EventGeneratorConfiguration>
         <serviceID>fsEventGeneratorService</serviceID>
         <wildCard>*</wildCard>
@@ -24,4 +11,21 @@
         <osType>OS_UNDEFINED</osType>
         <eventType>FILE_ADDED</eventType>
     </EventGeneratorConfiguration>
+
+    <EventConsumerConfiguration>
+
+        <MapperConfiguration>
+            <id>mapper</id>
+            <name>mapper</name>
+            <description>spread sheet to data base</description>
+            <dbtype>postgis</dbtype>
+            <host>localhost</host>
+            <port>5432</port>
+            <schema>public</schema>
+            <database>postgres</database>
+            <user>postgres</user>
+            <passwd>postgres</passwd>
+        </MapperConfiguration>
+
+    </EventConsumerConfiguration>
 </FlowConfiguration>

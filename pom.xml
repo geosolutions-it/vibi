@@ -12,7 +12,7 @@
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
         <geobatch.version>1.4-GT12.2-13032015</geobatch.version>
-        <geotools.version>14.0</geotools.version>
+        <geotools.version>12.2</geotools.version>
         <hamcrest.version>1.3</hamcrest.version>
         <junit.version>4.12</junit.version>
         <log4j.version>1.2.17</log4j.version>

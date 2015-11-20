@@ -87,7 +87,6 @@ public final class MapperConfiguration extends ActionConfiguration {
         params.put("database", database);
         params.put("user", user);
         params.put("passwd", passwd);
-        DataStore store = null;
         try {
             return DataStoreFinder.getDataStore(params);
         } catch (IOException exception) {

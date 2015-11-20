@@ -2,69 +2,64 @@
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/"
-	threshold="null" debug="false">
+                     threshold="null" debug="false">
 
-	<appender name="rolling" class="org.apache.log4j.RollingFileAppender">
-		<param name="File" value="${geobatch.webapp.root}/logs/geobatch.log" />
-		<param name="MaxFileSize" value="10MB" />
-		<param name="MaxBackupIndex" value="10" />
-		
-		<layout class="org.apache.log4j.PatternLayout">
-			<param name="ConversionPattern" value="%d{ISO8601} %5p %24C{1}:%L - %m%n" />
-		</layout>
-	</appender>
+    <appender name="rolling" class="org.apache.log4j.RollingFileAppender">
+        <param name="File" value="${geobatch.webapp.root}/logs/geobatch.log"/>
+        <param name="MaxFileSize" value="10MB"/>
+        <param name="MaxBackupIndex" value="10"/>
 
-	<appender name="console" class="org.apache.log4j.ConsoleAppender">
-		<param name="Target" value="System.out" />
-		<layout class="org.apache.log4j.PatternLayout">
-			<param name="ConversionPattern" value="%d{ABSOLUTE} %-5p %C{1} - %m%n" /> <!-- c:category C:class-->
-		</layout>
-	</appender>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{ISO8601} %5p %24C{1}:%L - %m%n"/>
+        </layout>
+    </appender>
 
-	<logger name="it.geosolutions" additivity="true">
-		<!-- <level value="warning" /> -->
-		<level value="info" /><!--  DEBUG  -->
-		<appender-ref ref="rolling" />
-	</logger>
+    <appender name="console" class="org.apache.log4j.ConsoleAppender">
+        <param name="Target" value="System.out"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{ABSOLUTE} %-5p %C{1} - %m%n"/>
+            <!-- c:category C:class-->
+        </layout>
+    </appender>
 
-    <!-- trace is too much here -->
-	<logger name="it.geosolutions.filesystemmonitor.neutral.monitorpolling" additivity="false">
-		<level value="debug" />
-		<appender-ref ref="rolling" />
-	</logger>
-    <!-- trace is too much here -->
-	<logger name="it.geosolutions.geobatch.flow.event.ProgressListenerForwarder" additivity="false">
-		<level value="debug" />
-		<appender-ref ref="rolling" />
-	</logger>
+    <logger name="it.geosolutions" additivity="true">
+        <level value="debug"/>
+        <appender-ref ref="rolling"/>
+    </logger>
 
-	<logger name="org.quartz" additivity="true">
-		<level value="info" />
-		<appender-ref ref="rolling" />
-	</logger>
+    <logger name="it.geosolutions.filesystemmonitor.neutral.monitorpolling" additivity="false">
+        <level value="debug"/>
+        <appender-ref ref="rolling"/>
+    </logger>
 
-	<logger name="org.hibernate" additivity="true">
-		<level value="info" />
-		<appender-ref ref="rolling" />
-	</logger>
+    <logger name="it.geosolutions.geobatch.flow.event.ProgressListenerForwarder" additivity="false">
+        <level value="debug"/>
+        <appender-ref ref="rolling"/>
+    </logger>
 
-	<!-- SPRING  -->
-	<logger name="org.springframework" additivity="true">
-		<level value="info" />
-		<appender-ref ref="rolling" />
-	</logger>
-	
-	<!-- JETTY  -->
-	<logger name="org.mortbay.jetty"  additivity="true">
-		<level value="info" />
-		<appender-ref ref="rolling" />
-	</logger>
+    <logger name="org.quartz" additivity="true">
+        <level value="error"/>
+        <appender-ref ref="rolling"/>
+    </logger>
 
-	<root>
-		<!-- <priority value="debug" />-->
-		<level value="info" />
-		<appender-ref ref="rolling" />
-		<!--appender-ref ref="console" /-->
-	</root>
+    <logger name="org.hibernate" additivity="true">
+        <level value="error"/>
+        <appender-ref ref="rolling"/>
+    </logger>
+
+    <logger name="org.springframework" additivity="true">
+        <level value="error"/>
+        <appender-ref ref="rolling"/>
+    </logger>
+
+    <logger name="org.mortbay.jetty" additivity="true">
+        <level value="error"/>
+        <appender-ref ref="rolling"/>
+    </logger>
+
+    <root>
+        <level value="info"/>
+        <appender-ref ref="rolling"/>
+    </root>
 
 </log4j:configuration>
