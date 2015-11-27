@@ -30,7 +30,14 @@ public class Attribute {
         if (cell == null) {
             return null;
         }
-        return extract(cell);
+        // FIXME
+        Object value = extract(cell);
+        if (type.equalsIgnoreCase("Integer") || type.equalsIgnoreCase("Double")) {
+            if (!((value instanceof Integer) || (value instanceof Double) || (value instanceof Float))) {
+                return 0;
+            }
+        }
+        return value;
     }
 
     public Object extract(Cell cell) {

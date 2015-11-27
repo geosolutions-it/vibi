@@ -3,12 +3,12 @@ package it.geosolutions.vibi.geobatch.actions;
 import it.geosolutions.filesystemmonitor.monitor.FileSystemEvent;
 import it.geosolutions.geobatch.annotations.Action;
 import it.geosolutions.geobatch.annotations.CheckConfiguration;
-import it.geosolutions.geobatch.configuration.event.action.ActionConfiguration;
 import it.geosolutions.geobatch.flow.event.action.ActionException;
 import it.geosolutions.geobatch.flow.event.action.BaseAction;
 import it.geosolutions.vibi.mapper.VibiService;
-import org.geotools.data.DataStore;
+import org.apache.commons.io.FileUtils;
 
+import java.io.File;
 import java.util.EventObject;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -43,5 +43,12 @@ public final class MapperAction extends BaseAction<EventObject> {
 
     private void handleFileSystemEvent(FileSystemEvent event) {
         VibiService.submit(event.getSource(), actionConfiguration.getStore());
+        try {
+
+            FileUtils.moveFile(event.getSource(), new File(actionConfiguration.getOutputPath() + "/" + event.getSource().getName()));
+        } catch (Exception excetion) {
+            throw new RuntimeException(
+                    String.format("Error moving file from '%s' to '%s'.", event.getSource(), actionConfiguration.getOutputPath()));
+        }
     }
 }

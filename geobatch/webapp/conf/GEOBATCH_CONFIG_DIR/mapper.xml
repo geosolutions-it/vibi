@@ -1,4 +1,5 @@
 <FlowConfiguration>
+
     <id>mapper</id>
     <description>spread sheet to data base</description>
     <name>mapper</name>
@@ -14,6 +15,10 @@
 
     <EventConsumerConfiguration>
 
+	<listenerId>Logger</listenerId>
+        <listenerId>Cumulator</listenerId>
+        <listenerId>Status</listenerId>
+
         <MapperConfiguration>
             <id>mapper</id>
             <name>mapper</name>
@@ -25,7 +30,25 @@
             <database>postgres</database>
             <user>postgres</user>
             <passwd>postgres</passwd>
+            <outputPath>/tmp</outputPath>
         </MapperConfiguration>
 
     </EventConsumerConfiguration>
+
+    <ListenerConfigurations>
+        <LoggingProgressListener>
+            <serviceID>loggingListenerService</serviceID>
+            <id>Logger</id>
+            <loggerName>it.geosolutions.geobatch</loggerName>
+        </LoggingProgressListener>
+        <CumulatingProgressListener>
+            <serviceID>cumulatingListenerService</serviceID>
+            <id>Cumulator</id>
+        </CumulatingProgressListener>
+        <StatusProgressListener>
+            <serviceID>statusListenerService</serviceID>
+            <id>Status</id>
+        </StatusProgressListener>
+    </ListenerConfigurations>
+
 </FlowConfiguration>

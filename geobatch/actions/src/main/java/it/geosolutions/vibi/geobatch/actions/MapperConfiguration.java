@@ -17,6 +17,7 @@ public final class MapperConfiguration extends ActionConfiguration {
     private String database = "postgres";
     private String user = "postgres";
     private String passwd = "postgres";
+    private String outputPath = "/tmp";
 
     public MapperConfiguration(String id, String name, String description) {
         super(id, name, description);
@@ -76,6 +77,14 @@ public final class MapperConfiguration extends ActionConfiguration {
 
     public void setPasswd(String passwd) {
         this.passwd = passwd;
+    }
+
+    public String getOutputPath() {
+        return outputPath;
+    }
+
+    public void setOutputPath(String outputPath) {
+        this.outputPath = outputPath;
     }
 
     public DataStore getStore() {
