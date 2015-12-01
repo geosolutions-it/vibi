@@ -1,6 +1,12 @@
 package it.geosolutions.vibi.mapper.service;
 
+import it.geosolutions.vibi.mapper.attributes.Attribute;
+import it.geosolutions.vibi.mapper.builders.ReferenceAttributeBuilder;
+import it.geosolutions.vibi.mapper.builders.SheetProcessorBuilder;
+import it.geosolutions.vibi.mapper.detectors.BoundsDetector;
 import it.geosolutions.vibi.mapper.exceptions.VibiException;
+import it.geosolutions.vibi.mapper.sheets.SheetContext;
+import it.geosolutions.vibi.mapper.sheets.SheetProcessor;
 import it.geosolutions.vibi.mapper.utils.Sheets;
 import it.geosolutions.vibi.mapper.utils.Store;
 import it.geosolutions.vibi.mapper.utils.Type;
@@ -49,6 +55,69 @@ class Fds1Service {
         }
     }
 
+    static void processReducedFds1Sheet(Sheet sheet, DataStore store) {
+
+        BoundsDetector boundsDetector = new BoundsDetector() {
+            @Override
+            public boolean ignore(SheetContext context) {
+                String speciesValue = ((String) Type.STRING.extract(context.getRow().getCell(Sheets.getIndex("D")))).toLowerCase();
+                return speciesValue == null
+                        || speciesValue.contains("species")
+                        || speciesValue.contains("%open water")
+                        || speciesValue.contains("%unvegetated open water")
+                        || speciesValue.contains("%bare ground")
+                        || speciesValue.contains("%litter cover")
+                        || speciesValue.contains("0.0");
+            }
+
+            @Override
+            public boolean dataStart(SheetContext context) {
+                Row row = context.getSheet().getRow(context.getRow().getRowNum() - 1);
+                if (row == null) {
+                    return false;
+                }
+                String speciesValue = Sheets.cellToString(row.getCell(Sheets.getIndex("D"))).toLowerCase();
+                return speciesValue.contains("species");
+            }
+
+            @Override
+            public boolean dataEnd(SheetContext context) {
+                return false;
+            }
+        };
+
+        SheetProcessor sheetProcessor = new SheetProcessorBuilder()
+                .withTable("herbaceous_relative_cover").withBoundsDetector(boundsDetector)
+                .withAttribute(new Attribute("fid", Type.STRING, true) {
+                    @Override
+                    public Object getValue(SheetContext context) {
+                        Object plotNo = Type.INTEGER.extract(context.getRow().getCell(Sheets.getIndex("A"), Row.RETURN_BLANK_AS_NULL));
+                        Object species = Type.STRING.extract(context.getRow().getCell(Sheets.getIndex("D"), Row.RETURN_BLANK_AS_NULL));
+                        if (plotNo == null || species == null) {
+                            throw new VibiException("Error extract data from row '%d' fo sheet '%s', site and species cannot be NULL.",
+                                    context.getRow().getRowNum(), context.getSheet().getSheetName());
+                        }
+                        return plotNo + "-" + species;
+                    }
+                })
+                .withAttribute(new ReferenceAttributeBuilder().withTableName("plot")
+                        .withAttributeName("plot_no")
+                        .withAttributeType("Integer")
+                        .withAttributeId("plot_no", "A")
+                        .withUpdateReference(false)
+                        .build())
+                .withAttribute(new ReferenceAttributeBuilder().withTableName("species")
+                        .withAttributeName("species")
+                        .withAttributeType("Text")
+                        .withAttributeId("scientific_name", "D")
+                        .withUpdateReference(false)
+                        .build())
+                .withAttribute("AR", "relative_cover", "Double")
+                .build();
+
+        sheetProcessor.process(sheet, store);
+    }
+
     private static int findNextTableIndex(Sheet sheet, int startIndex) {
         int index = startIndex;
         while (true) {
@@ -57,7 +126,7 @@ class Fds1Service {
                 return -1;
             }
             Cell cell = row.getCell(Sheets.getIndex("O"));
-            if(cell == null) {
+            if (cell == null) {
                 return -1;
             }
             if (Sheets.cellToString(cell).toLowerCase().contains("mod")) {
@@ -104,10 +173,10 @@ class Fds1Service {
         createForeignKeyIfNeed(store, MODULE_TYPE, module);
         createForeignKeyIfNeed(store, CORNER_TYPE, corner);
         createForeignKeyIfNeed(store, SPECIES_TYPE, species);
-        if(depth != null) {
+        if (depth != null) {
             createForeignKeyIfNeed(store, DEPTH_TYPE, depth);
         }
-        if(coverClassCode != null) {
+        if (coverClassCode != null) {
             createForeignKeyIfNeed(store, COVER_MIDPOINT_LOOKUP, coverClassCode);
         }
         SimpleFeatureBuilder featureBuilder = new SimpleFeatureBuilder(PLOT_MODULE_HERBACEOUS_TYPE);

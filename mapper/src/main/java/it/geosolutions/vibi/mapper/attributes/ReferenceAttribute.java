@@ -14,9 +14,13 @@ public class ReferenceAttribute extends Attribute {
 
     private final SimpleFeatureType featureType;
 
-    public ReferenceAttribute(String attributeName, Type attributeType, String tableName, List<Attribute> attributes) {
+    private final boolean updateReference;
+
+    public ReferenceAttribute(String attributeName, Type attributeType, String tableName,
+                              List<Attribute> attributes, boolean updateReference) {
         super(attributeName, attributeType);
         this.attributes = attributes;
+        this.updateReference = updateReference;
         this.featureType = Store.constructFeatureType(tableName, attributes);
     }
 

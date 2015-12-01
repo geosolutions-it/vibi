@@ -15,6 +15,7 @@ public final class ReferenceAttributeBuilder {
     private Type attributeType;
     private String tableName;
     private List<Attribute> attributes = new ArrayList<>();
+    private boolean updateReference = true;
 
     public ReferenceAttributeBuilder withTableName(String tableName) {
         this.tableName = tableName;
@@ -32,7 +33,7 @@ public final class ReferenceAttributeBuilder {
     }
 
     public ReferenceAttributeBuilder withAttributeId(String attributeName, String column) {
-        attributes.add(new SimpleAttribute(attributeName, Type.STRING, Sheets.getIndex(column)));
+        attributes.add(new SimpleAttribute(attributeName, Type.STRING, Sheets.getIndex(column), true));
         return this;
     }
 
@@ -41,7 +42,12 @@ public final class ReferenceAttributeBuilder {
         return this;
     }
 
+    public ReferenceAttributeBuilder withUpdateReference(boolean updateReference) {
+        this.updateReference = updateReference;
+        return this;
+    }
+
     public ReferenceAttribute build() {
-        return new ReferenceAttribute(attributeName, attributeType, tableName, attributes);
+        return new ReferenceAttribute(attributeName, attributeType, tableName, attributes, updateReference);
     }
 }

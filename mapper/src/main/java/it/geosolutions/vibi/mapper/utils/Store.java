@@ -32,7 +32,10 @@ public final class Store {
             if (!attribute.isIdentifier()) {
                 featureBuilder.set(attribute.getName(), attribute.getValue(context));
             } else {
-                id = attribute.getValue(context).toString();
+                Object value = attribute.getValue(context);
+                if(value != null) {
+                    id = value.toString();
+                }
             }
         }
         return featureBuilder.buildFeature(id);

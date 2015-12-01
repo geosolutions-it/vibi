@@ -266,6 +266,7 @@ CREATE TABLE plot_module_herbaceous
 --includes calculated field
 CREATE TABLE herbaceous_relative_cover
 (
+  fid text PRIMARY KEY,
   plot_no int4 references plot(plot_no),
   species text references species(scientific_name),
   relative_cover numeric -- this is calculated, see columns AP-AR on "Reduced FDS1" tab in spreadsheet
@@ -287,6 +288,7 @@ CREATE TABLE plot_module_woody
 --calculations are done under "Reduced FDS2" tab in spreadsheet
 CREATE TABLE woody_importance_value
 (
+  fid text PRIMARY KEY,
   plot_no int4 references plot(plot_no),
   species text references species(scientific_name),
   subcanopy_IV_partial numeric, --  calculated for those species with "partial" designation in "shade" column in species lookup table
