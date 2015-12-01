@@ -252,6 +252,7 @@ CREATE TABLE plot
 
 CREATE TABLE plot_module_herbaceous
 (
+  fid text PRIMARY KEY,
   plot_no int4 references plot(plot_no),
   module_id int4 references module(module_id),
   corner int4 references corner(corner),

@@ -1,65 +1,32 @@
 package it.geosolutions.vibi.mapper.utils;
 
+import it.geosolutions.vibi.mapper.exceptions.VibiException;
+import it.geosolutions.vibi.mapper.sheets.SheetContext;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellReference;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public final class Sheets {
-
-    private final static Map<Character, Integer> charsIndex = new HashMap<>();
-
-    static {
-        charsIndex.put('a', 0);
-        charsIndex.put('b', 1);
-        charsIndex.put('c', 2);
-        charsIndex.put('d', 3);
-        charsIndex.put('e', 4);
-        charsIndex.put('f', 5);
-        charsIndex.put('g', 6);
-        charsIndex.put('h', 7);
-        charsIndex.put('i', 8);
-        charsIndex.put('j', 9);
-        charsIndex.put('k', 10);
-        charsIndex.put('l', 11);
-        charsIndex.put('m', 12);
-        charsIndex.put('n', 13);
-        charsIndex.put('o', 14);
-        charsIndex.put('p', 15);
-        charsIndex.put('q', 16);
-        charsIndex.put('r', 17);
-        charsIndex.put('s', 18);
-        charsIndex.put('t', 19);
-        charsIndex.put('u', 20);
-        charsIndex.put('v', 21);
-        charsIndex.put('w', 22);
-        charsIndex.put('x', 23);
-        charsIndex.put('y', 24);
-        charsIndex.put('z', 25);
-    }
 
     private Sheets() {
     }
 
-    public static int getIndex(String columnIndex) {
-        char[] indexParts = columnIndex.toLowerCase().toCharArray();
-        int index = charsIndex.get(indexParts[indexParts.length - 1]);
-        for (int i = indexParts.length - 2; i >= 0; i--) {
-            Integer charWeight = charsIndex.get(indexParts[i]);
-            Validations.checkNotNull(charWeight, "Invalid char '%c' in column index '%s'.", indexParts[i], columnIndex);
-            index += (charWeight + 1) * 26;
-        }
-        return index;
+    public static int getIndex(String column) {
+        return CellReference.convertColStringToIndex(column);
+    }
+
+    public static String getColumn(int index) {
+        return CellReference.convertNumToColString(index);
     }
 
     public static Cell evaluateCell(Cell cell) {
-        if(cell == null) {
+        if (cell == null) {
             return null;
         }
         FormulaEvaluator evaluator = cell.getRow().getSheet().getWorkbook().getCreationHelper().createFormulaEvaluator();
@@ -77,6 +44,75 @@ public final class Sheets {
         }
         DataFormatter formatter = new DataFormatter();
         return formatter.formatCellValue(cell);
+    }
+
+    public static Object extract(Cell cell) {
+        if(cell == null) {
+            return null;
+        }
+        FormulaEvaluator evaluator = cell.getRow().getSheet().getWorkbook().getCreationHelper().createFormulaEvaluator();
+        Object result;
+        try {
+            evaluator.evaluateInCell(cell);
+        } catch (Exception exception) {
+            throw new VibiException(exception, "Error evaluating cell from sheet '%s', row '%d' and column '%s'.",
+                    cell.getSheet().getSheetName(), cell.getRow().getRowNum() + 1, Sheets.getColumn(cell.getColumnIndex()));
+        }
+        switch (cell.getCellType()) {
+            case Cell.CELL_TYPE_BOOLEAN:
+                try {
+                    result = cell.getBooleanCellValue();
+                } catch (Exception exception) {
+                    throw extractException(cell, "BOOLEAN", exception);
+                }
+                break;
+            case Cell.CELL_TYPE_NUMERIC:
+                if (DateUtil.isCellDateFormatted(cell)) {
+                    try {
+                        result = cell.getDateCellValue();
+                    } catch (Exception exception) {
+                        throw extractException(cell, "DATE", exception);
+                    }
+                } else {
+                    try {
+                        result = cell.getNumericCellValue();
+                    } catch (Exception exception) {
+                        throw extractException(cell, "NUMERIC", exception);
+                    }
+                }
+                break;
+            case Cell.CELL_TYPE_STRING:
+                try {
+                    result = cell.getRichStringCellValue().getString();
+                } catch (Exception exception) {
+                    throw extractException(cell, "STRING", exception);
+                }
+                break;
+            case Cell.CELL_TYPE_BLANK:
+                result = null;
+                break;
+            case Cell.CELL_TYPE_ERROR:
+                result = null;
+                break;
+            default:
+                throw new VibiException("Unknown cell type '%d' from sheet '%s', row '%d' and column '%s'.", cell.getCellType(),
+                        cell.getSheet().getSheetName(), cell.getRow().getRowNum() + 1, Sheets.getColumn(cell.getColumnIndex()));
+        }
+        return result;
+    }
+
+    private static VibiException extractException(Cell cell, String type, Exception exception) {
+        return new VibiException(exception,
+                "Error extracting %s value from sheet '%s', row '%d' and column '%s'.", type,
+                cell.getSheet().getSheetName(), cell.getRow().getRowNum() + 1, Sheets.getColumn(cell.getColumnIndex()));
+    }
+
+    public static Object getValue(SheetContext context, int columnIndex, Type type) {
+        Cell cell = context.getRow().getCell(columnIndex, Row.RETURN_BLANK_AS_NULL);
+        if (cell == null) {
+            return null;
+        }
+        return type.extract(cell);
     }
 
     public static List<Cell> getCells(Sheet sheet, int rowIndex, String startColumn, String endColumn) {

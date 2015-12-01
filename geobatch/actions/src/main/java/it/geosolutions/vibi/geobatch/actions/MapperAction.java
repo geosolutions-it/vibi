@@ -5,7 +5,7 @@ import it.geosolutions.geobatch.annotations.Action;
 import it.geosolutions.geobatch.annotations.CheckConfiguration;
 import it.geosolutions.geobatch.flow.event.action.ActionException;
 import it.geosolutions.geobatch.flow.event.action.BaseAction;
-import it.geosolutions.vibi.mapper.VibiService;
+import it.geosolutions.vibi.mapper.service.VibiService;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;

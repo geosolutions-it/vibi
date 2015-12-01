@@ -1,9 +1,15 @@
 package it.geosolutions.vibi.mapper.utils;
 
+import it.geosolutions.vibi.mapper.attributes.Attribute;
+import it.geosolutions.vibi.mapper.exceptions.Validations;
+import it.geosolutions.vibi.mapper.exceptions.VibiException;
+import it.geosolutions.vibi.mapper.sheets.SheetContext;
 import org.geotools.data.*;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
+import org.geotools.factory.Hints;
 import org.geotools.feature.FeatureCollection;
+import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.opengis.feature.Property;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
@@ -18,6 +24,34 @@ public final class Store {
 
     private final static FilterFactory2 filterFactory = CommonFactoryFinder.getFilterFactory2(GeoTools.getDefaultHints());
 
+    public static SimpleFeature constructFeature(SimpleFeatureType featureType, SheetContext context, List<Attribute> attributes) {
+        SimpleFeatureBuilder featureBuilder = new SimpleFeatureBuilder(featureType);
+        featureBuilder.featureUserData(Hints.USE_PROVIDED_FID, Boolean.TRUE);
+        String id = null;
+        for (Attribute attribute : attributes) {
+            if (!attribute.isIdentifier()) {
+                featureBuilder.set(attribute.getName(), attribute.getValue(context));
+            } else {
+                id = attribute.getValue(context).toString();
+            }
+        }
+        return featureBuilder.buildFeature(id);
+    }
+
+    public static SimpleFeatureType constructFeatureType(String tableName, List<Attribute> attributes) {
+        StringBuilder featureDescription = new StringBuilder();
+        for (Attribute attribute : attributes) {
+            if (!attribute.isIdentifier()) {
+                featureDescription.append(attribute.getName()).append(":").append(attribute.getType().getName()).append(",");
+            }
+        }
+        try {
+            return DataUtilities.createType(tableName, featureDescription.toString());
+        } catch (Exception exception) {
+            throw new VibiException(exception, "Error creating feature type for table '%s'.", tableName);
+        }
+    }
+
     public static FeatureStore<SimpleFeatureType, SimpleFeature> getFeatureStore(DataStore store, String featureTypeName) {
         try {
             return (FeatureStore<SimpleFeatureType, SimpleFeature>) store.getFeatureSource(featureTypeName);
@@ -27,10 +61,14 @@ public final class Store {
     }
 
     public static void persistFeature(DataStore store, SimpleFeature simpleFeature) {
+        persistFeature(store, simpleFeature, true);
+    }
+
+    public static void persistFeature(DataStore store, SimpleFeature simpleFeature, boolean update) {
         SimpleFeature foundFeature = find(store, simpleFeature);
         if (foundFeature == null) {
             create(store, simpleFeature);
-        } else {
+        } else if (update) {
             update(store, simpleFeature);
         }
     }
@@ -66,7 +104,7 @@ public final class Store {
 
         final List<Property> properties = filterInvalidProperties(simpleFeature.getProperties());
 
-        if(properties.isEmpty()) {
+        if (properties.isEmpty()) {
             return;
         }
 

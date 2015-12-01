@@ -1,5 +1,6 @@
 package it.geosolutions.vibi.mapper.detectors;
 
+import it.geosolutions.vibi.mapper.sheets.SheetContext;
 import it.geosolutions.vibi.mapper.utils.Sheets;
 import org.apache.poi.ss.usermodel.Row;
 
@@ -41,17 +42,17 @@ public class SimpleBoundsDetector implements BoundsDetector {
     }
 
     @Override
-    public boolean isHeader(Row row) {
-        return headerExpectedMatch != null && headerExpectedMatch.checkMatch(row);
+    public boolean ignore(SheetContext context) {
+        return headerExpectedMatch != null && headerExpectedMatch.checkMatch(context.getRow());
     }
 
     @Override
-    public boolean isDataStart(Row row) {
-        return startExpectedMatch.checkMatch(row);
+    public boolean dataStart(SheetContext context) {
+        return startExpectedMatch != null && startExpectedMatch.checkMatch(context.getRow());
     }
 
     @Override
-    public boolean isDataEnd(Row row) {
-        return endExpectedMatch.checkMatch(row);
+    public boolean dataEnd(SheetContext context) {
+        return endExpectedMatch != null && endExpectedMatch.checkMatch(context.getRow());
     }
 }

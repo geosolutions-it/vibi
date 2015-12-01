@@ -1,67 +1,35 @@
 package it.geosolutions.vibi.mapper.attributes;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.DateUtil;
-import org.apache.poi.ss.usermodel.FormulaEvaluator;
-import org.apache.poi.ss.usermodel.Row;
+import it.geosolutions.vibi.mapper.sheets.SheetContext;
+import it.geosolutions.vibi.mapper.utils.Type;
 
-public class Attribute {
+public abstract class Attribute {
 
     private final String name;
-    private final String type;
-    private final int columnIndex;
+    private final Type type;
+    private final boolean isIdentifier;
 
-    public Attribute(String name, String type, int columnIndex) {
+    public Attribute(String name, Type type) {
+        this(name, type, false);
+    }
+
+    public Attribute(String name, Type type, boolean isIdentifier) {
         this.name = name;
         this.type = type;
-        this.columnIndex = columnIndex;
+        this.isIdentifier = isIdentifier;
     }
+
+    public abstract Object getValue(SheetContext context);
 
     public String getName() {
         return name;
     }
 
-    public String getType() {
+    public Type getType() {
         return type;
     }
 
-    public Object getValue(Row row) {
-        Cell cell = row.getCell(columnIndex, Row.RETURN_BLANK_AS_NULL);
-        if (cell == null) {
-            return null;
-        }
-        // FIXME
-        Object value = extract(cell);
-        if (type.equalsIgnoreCase("Integer") || type.equalsIgnoreCase("Double")) {
-            if (!((value instanceof Integer) || (value instanceof Double) || (value instanceof Float))) {
-                return 0;
-            }
-        }
-        return value;
-    }
-
-    public Object extract(Cell cell) {
-        FormulaEvaluator evaluator = cell.getRow().getSheet().getWorkbook().getCreationHelper().createFormulaEvaluator();
-        Object result;
-        switch (evaluator.evaluateInCell(cell).getCellType()) {
-            case Cell.CELL_TYPE_BOOLEAN:
-                result = cell.getBooleanCellValue();
-                break;
-            case Cell.CELL_TYPE_NUMERIC:
-                result = DateUtil.isCellDateFormatted(cell) ? cell.getDateCellValue() : cell.getNumericCellValue();
-                break;
-            case Cell.CELL_TYPE_STRING:
-                result = cell.getRichStringCellValue().getString();
-                break;
-            case Cell.CELL_TYPE_BLANK:
-                result = null;
-                break;
-            case Cell.CELL_TYPE_ERROR:
-                result = null;
-                break;
-            default:
-                throw new RuntimeException(String.format("Unknown cell type '%d'.", cell.getCellType()));
-        }
-        return result;
+    public boolean isIdentifier() {
+        return isIdentifier;
     }
 }

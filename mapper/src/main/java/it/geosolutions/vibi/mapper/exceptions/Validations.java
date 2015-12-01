@@ -1,4 +1,4 @@
-package it.geosolutions.vibi.mapper.utils;
+package it.geosolutions.vibi.mapper.exceptions;
 
 public final class Validations {
 

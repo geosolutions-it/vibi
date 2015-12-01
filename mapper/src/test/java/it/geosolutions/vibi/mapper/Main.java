@@ -1,6 +1,6 @@
 package it.geosolutions.vibi.mapper;
 
-import it.geosolutions.vibi.mapper.VibiService;
+import it.geosolutions.vibi.mapper.service.VibiService;
 import org.geotools.data.DataStore;
 import org.geotools.data.DataStoreFinder;
 
@@ -19,6 +19,6 @@ public class Main {
         params.put("user", "nuno");
         params.put("passwd", "nuno");
         DataStore store = DataStoreFinder.getDataStore(params);
-        VibiService.submit(System.getProperty("user.dir") + "/mapper/src/test/resources/2010_PCAP_DATA_NC.xls", store);
+        VibiService.submit("/home/nuno/Work/doc/vibi/vibi_data/2011_PCAP_DATA_1101-1130_mod.xls", store);
     }
 }

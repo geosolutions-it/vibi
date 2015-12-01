@@ -1,12 +1,13 @@
 package it.geosolutions.vibi.mapper.detectors;
 
+import it.geosolutions.vibi.mapper.sheets.SheetContext;
 import org.apache.poi.ss.usermodel.Row;
 
 public interface BoundsDetector {
 
-    boolean isHeader(Row row);
+    boolean ignore(SheetContext context);
 
-    boolean isDataStart(Row row);
+    boolean dataStart(SheetContext context);
 
-    boolean isDataEnd(Row row);
+    boolean dataEnd(SheetContext context);
 }
