@@ -20,9 +20,12 @@ public final class VibiService {
 
             @Override
             public void doWork(HSSFWorkbook workBook) {
-                //PlotService.processPlotInfoSheet(workBook.getSheet("ENTER PLOT INFO"), store);
-                //Fds1Service.processFds1Sheet(workBook.getSheet("ENTER FDS1"), store);
-                //Fds1Service.processReducedFds1Sheet(workBook.getSheet("REDUCED FDS1"), store);
+                LookupService.processLookupSpeciesSheet(workBook.getSheet("LOOKUP species"), store);
+                LookupService.processLookupCommunitySheet(workBook.getSheet("LOOKUP community"), store);
+                LookupService.processLookupMidPointSheet(workBook.getSheet("LOOKUP midpoint"), store);
+                PlotService.processPlotInfoSheet(workBook.getSheet("ENTER PLOT INFO"), store);
+                Fds1Service.processFds1Sheet(workBook.getSheet("ENTER FDS1"), store);
+                Fds1Service.processReducedFds1Sheet(workBook.getSheet("REDUCED FDS1"), store);
                 Fds2Service.processReducedFds2Sheet(workBook.getSheet("REDUCED FDS2"), store);
             }
         };
