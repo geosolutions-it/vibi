@@ -47,7 +47,7 @@ public final class Sheets {
     }
 
     public static Object extract(Cell cell) {
-        if(cell == null) {
+        if (cell == null) {
             return null;
         }
         FormulaEvaluator evaluator = cell.getRow().getSheet().getWorkbook().getCreationHelper().createFormulaEvaluator();
@@ -132,6 +132,8 @@ public final class Sheets {
             try (InputStream input = new FileInputStream(workBookPath);
                  HSSFWorkbook workBook = new HSSFWorkbook(new POIFSFileSystem(input))) {
                 doWork(workBook);
+            } catch (VibiException exception) {
+                throw exception;
             } catch (Exception exception) {
                 throw new RuntimeException(String.format("Error processing work book '%s'.", workBookPath), exception);
             }
