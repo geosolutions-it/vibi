@@ -1,12 +1,6 @@
 package it.geosolutions.vibi.mapper.service;
 
-import it.geosolutions.vibi.mapper.attributes.Attribute;
-import it.geosolutions.vibi.mapper.builders.ReferenceAttributeBuilder;
-import it.geosolutions.vibi.mapper.builders.SheetProcessorBuilder;
-import it.geosolutions.vibi.mapper.detectors.BoundsDetector;
 import it.geosolutions.vibi.mapper.exceptions.VibiException;
-import it.geosolutions.vibi.mapper.sheets.SheetContext;
-import it.geosolutions.vibi.mapper.sheets.SheetProcessor;
 import it.geosolutions.vibi.mapper.utils.Sheets;
 import it.geosolutions.vibi.mapper.utils.Store;
 import it.geosolutions.vibi.mapper.utils.Type;
@@ -24,91 +18,131 @@ import java.util.List;
 
 class Fds2Service {
 
+    private static final SimpleFeatureType PLOT_MODULE_WOODY_RAW = createFeatureType("plot_module_woody_raw",
+            "plot_no:Integer,sub:Double,module_id:Integer,species:String,dbh_class:String,dbh_class_index:Integer,count:String");
 
-    static void processReducedFds2Sheet(Sheet sheet, DataStore store) {
+    private static final SimpleFeatureType PLOT_TYPE = createFeatureType("plot", "");
 
-        BoundsDetector boundsDetector = new BoundsDetector() {
-            @Override
-            public boolean ignore(SheetContext context) {
-                String speciesValue = ((String) Type.STRING.extract(context.getRow().getCell(Sheets.getIndex("J")))).toLowerCase();
-                return speciesValue == null
-                        || speciesValue.contains("0.0");
+    private static final SimpleFeatureType MODULE_TYPE = createFeatureType("module", "");
+
+    private static final SimpleFeatureType SPECIES_TYPE = createFeatureType("species", "");
+
+    private static final SimpleFeatureType DBH_CLASS = createFeatureType("dbh_class", "");
+
+    private static SimpleFeatureType createFeatureType(String tableName, String description) {
+        try {
+            return DataUtilities.createType(tableName, description);
+        } catch (Exception exception) {
+            throw new VibiException(exception, "Error creating feature type for table '%s' with description'%s'.",
+                    tableName, description);
+        }
+    }
+
+    static void processFds2Sheet(Sheet sheet, DataStore store) {
+        Row row = findHeaderRow(sheet);
+        if (row == null) {
+            throw new VibiException("No header could be found on spreadsheet '%s'.", sheet.getSheetName());
+        }
+        List<DbhClass> dbhClassList = getDbhClassList(row);
+        Integer plotNo = null;
+        row = sheet.getRow(row.getRowNum() + 1);
+        while (row != null) {
+            plotNo = processRow(store, dbhClassList, plotNo, row);
+            row = sheet.getRow(row.getRowNum() + 1);
+        }
+    }
+
+    private static Row findHeaderRow(Sheet sheet) {
+        for (Row row : sheet) {
+            Cell cell = row.getCell(Sheets.getIndex("A"), Row.RETURN_BLANK_AS_NULL);
+            if (cell != null && Sheets.cellToString(cell).equalsIgnoreCase("site name")) {
+                return sheet.getRow(row.getRowNum());
             }
+        }
+        return null;
+    }
 
-            @Override
-            public boolean dataStart(SheetContext context) {
-                Row row = context.getSheet().getRow(context.getRow().getRowNum() - 1);
-                if (row == null) {
-                    return false;
-                }
-                String speciesValue = Sheets.cellToString(row.getCell(Sheets.getIndex("J"))).toLowerCase();
-                return speciesValue.contains("species");
+    private static List<DbhClass> getDbhClassList(Row row) {
+        Row dbhClassIndexRow = row.getSheet().getRow(row.getRowNum() - 1);
+        List<DbhClass> dbhClassList = new ArrayList<>();
+        int index = Sheets.getIndex("L");
+        String dbhClass = (String) Type.STRING.extract(row.getCell(index));
+        int dbhClassIndex = (int) Type.INTEGER.extract(dbhClassIndexRow.getCell(index));
+        do {
+            dbhClassList.add(new DbhClass(dbhClass, dbhClassIndex, index));
+            index++;
+            dbhClass = (String) Type.STRING.extract(row.getCell(index));
+            dbhClassIndex = (int) Type.INTEGER.extract(dbhClassIndexRow.getCell(index));
+        } while (!dbhClass.equalsIgnoreCase("clump"));
+        return dbhClassList;
+    }
+
+    private static Integer processRow(DataStore store, List<DbhClass> dbhClassList, Integer existingPlotNo, Row row) {
+        Integer plotNo = extractPlotNo(row, existingPlotNo);
+        if (plotNo == null) {
+            throw new VibiException("Could not map row '%d' of sheet '%s' to site code.",
+                    row.getRowNum(), row.getSheet().getSheetName());
+        }
+        Cell speciesCell = row.getCell(Sheets.getIndex("G"), Row.RETURN_BLANK_AS_NULL);
+        if (speciesCell == null) {
+            return plotNo;
+        }
+        Object sub = Type.DOUBLE.extract(row.getCell(Sheets.getIndex("F"), Row.RETURN_BLANK_AS_NULL));
+        Object module = Type.INTEGER.extract(row.getCell(Sheets.getIndex("G"), Row.RETURN_BLANK_AS_NULL));
+        Object species = Type.STRING.extract(speciesCell);
+        for (DbhClass dbhClass : dbhClassList) {
+            Cell countCell = row.getCell(dbhClass.columnIndex, Row.RETURN_BLANK_AS_NULL);
+            if (countCell != null) {
+                Object count = Type.STRING.extract(countCell);
+                processDbhClass(store, dbhClass.dbhClass, dbhClass.dbhClassIndex, plotNo, sub, module, species, count);
             }
+        }
+        return plotNo;
+    }
 
-            @Override
-            public boolean dataEnd(SheetContext context) {
-                return false;
-            }
-        };
+    private static void processDbhClass(DataStore store, Object dbhClass, Object dbhClassIndex, Object plotNo,
+                                        Object sub, Object module, Object species, Object count) {
+        createForeignKeyIfNeed(store, PLOT_TYPE, plotNo);
+        createForeignKeyIfNeed(store, MODULE_TYPE, module);
+        createForeignKeyIfNeed(store, SPECIES_TYPE, species);
+        createForeignKeyIfNeed(store, DBH_CLASS, dbhClass);
+        SimpleFeatureBuilder featureBuilder = new SimpleFeatureBuilder(PLOT_MODULE_WOODY_RAW);
+        featureBuilder.featureUserData(Hints.USE_PROVIDED_FID, Boolean.TRUE);
+        String id = String.format("%s-%s-%s-%s", plotNo, module, species, dbhClass);
+        featureBuilder.set("plot_no", plotNo);
+        featureBuilder.set("sub", sub);
+        featureBuilder.set("module_id", module);
+        featureBuilder.set("species", species);
+        featureBuilder.set("dbh_class", dbhClass);
+        featureBuilder.set("dbh_class_index", dbhClassIndex);
+        featureBuilder.set("count", count);
+        Store.persistFeature(store, featureBuilder.buildFeature(id));
+    }
 
-        SheetProcessor sheetProcessor = new SheetProcessorBuilder()
-                .withTable("woody_importance_value").withBoundsDetector(boundsDetector)
-                .withAttribute(new Attribute("fid", Type.STRING, true) {
-                    @Override
-                    public Object getValue(SheetContext context) {
-                        Object plotNo = Type.INTEGER.extract(context.getRow().getCell(Sheets.getIndex("A"), Row.RETURN_BLANK_AS_NULL));
-                        Object species = Type.STRING.extract(context.getRow().getCell(Sheets.getIndex("J"), Row.RETURN_BLANK_AS_NULL));
-                        if (plotNo == null || species == null) {
-                            throw new VibiException("Error extract data from row '%d' fo sheet '%s', site and species cannot be NULL.",
-                                    context.getRow().getRowNum(), context.getSheet().getSheetName());
-                        }
-                        return plotNo + "-" + species;
-                    }
-                })
-                .withAttribute(new ReferenceAttributeBuilder().withTableName("plot")
-                        .withAttributeName("plot_no")
-                        .withAttributeType("Integer")
-                        .withAttributeId("plot_no", "A")
-                        .withUpdateReference(false)
-                        .build())
-                .withAttribute(new ReferenceAttributeBuilder().withTableName("species")
-                        .withAttributeName("species")
-                        .withAttributeType("Text")
-                        .withAttributeId("scientific_name", "J")
-                        .withUpdateReference(false)
-                        .build())
-                .withAttribute(new Attribute("subcanopy_iv_partial", Type.DOUBLE) {
-                    @Override
-                    public Object getValue(SheetContext context) {
-                        Cell cell = context.getRow().getCell(Sheets.getIndex("EU"), Row.RETURN_BLANK_AS_NULL);
-                        if (((String) Type.STRING.extract(cell)).toLowerCase().contains("none")) {
-                            return null;
-                        }
-                        return Type.DOUBLE.extract(cell);
-                    }
-                })
-                .withAttribute(new Attribute("subcanopy_iv_shade", Type.DOUBLE) {
-                    @Override
-                    public Object getValue(SheetContext context) {
-                        Cell cell = context.getRow().getCell(Sheets.getIndex("EV"), Row.RETURN_BLANK_AS_NULL);
-                        if (((String) Type.STRING.extract(cell)).toLowerCase().contains("none")) {
-                            return null;
-                        }
-                        return Type.DOUBLE.extract(cell);
-                    }
-                })
-                .withAttribute(new Attribute("canopy_iv", Type.DOUBLE) {
-                    @Override
-                    public Object getValue(SheetContext context) {
-                        Cell cell = context.getRow().getCell(Sheets.getIndex("EW"), Row.RETURN_BLANK_AS_NULL);
-                        if(((String)Type.STRING.extract(cell)).toLowerCase().contains("none")) {
-                            return null;
-                        }
-                        return Type.DOUBLE.extract(cell);
-                    }
-                })
-                .build();
+    private static void createForeignKeyIfNeed(DataStore store, SimpleFeatureType type, Object id) {
+        SimpleFeatureBuilder featureBuilder = new SimpleFeatureBuilder(type);
+        featureBuilder.featureUserData(Hints.USE_PROVIDED_FID, Boolean.TRUE);
+        Store.persistFeature(store, featureBuilder.buildFeature(id.toString()), false);
+    }
 
-        sheetProcessor.process(sheet, store);
+    private static Integer extractPlotNo(Row row, Integer plotNo) {
+        Cell cell = row.getCell(Sheets.getIndex("A"), Row.RETURN_BLANK_AS_NULL);
+        if (cell != null) {
+            return (Integer) Type.INTEGER.extract(cell);
+        }
+        return plotNo;
+    }
+
+    private static class DbhClass {
+
+        String dbhClass;
+        int dbhClassIndex;
+        int columnIndex;
+
+        public DbhClass(String dbhClass, int dbhClassIndex, int columnIndex) {
+            this.dbhClass = dbhClass;
+            this.dbhClassIndex = dbhClassIndex;
+            this.columnIndex = columnIndex;
+        }
     }
 }

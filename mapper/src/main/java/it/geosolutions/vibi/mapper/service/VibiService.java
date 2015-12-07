@@ -25,8 +25,7 @@ public final class VibiService {
                 LookupService.processLookupMidPointSheet(workBook.getSheet("LOOKUP midpoint"), store);
                 PlotService.processPlotInfoSheet(workBook.getSheet("ENTER PLOT INFO"), store);
                 Fds1Service.processFds1Sheet(workBook.getSheet("ENTER FDS1"), store);
-                Fds1Service.processReducedFds1Sheet(workBook.getSheet("REDUCED FDS1"), store);
-                Fds2Service.processReducedFds2Sheet(workBook.getSheet("REDUCED FDS2"), store);
+                Fds2Service.processFds2Sheet(workBook.getSheet("ENTER FDS2"), store);
             }
         };
     }

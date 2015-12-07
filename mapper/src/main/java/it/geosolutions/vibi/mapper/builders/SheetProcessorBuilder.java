@@ -1,7 +1,6 @@
 package it.geosolutions.vibi.mapper.builders;
 
 import it.geosolutions.vibi.mapper.attributes.Attribute;
-import it.geosolutions.vibi.mapper.attributes.ContextAttribute;
 import it.geosolutions.vibi.mapper.attributes.SimpleAttribute;
 import it.geosolutions.vibi.mapper.detectors.BoundsDetector;
 import it.geosolutions.vibi.mapper.sheets.SheetContextUpdater;
@@ -36,11 +35,6 @@ public class SheetProcessorBuilder {
 
     public SheetProcessorBuilder withAttribute(Attribute attribute) {
         attributes.add(attribute);
-        return this;
-    }
-
-    public SheetProcessorBuilder withContextAttribute(String column, String name, String type) {
-        attributes.add(new ContextAttribute(name, Type.of(type), Sheets.getIndex(column)));
         return this;
     }
 
