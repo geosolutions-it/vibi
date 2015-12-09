@@ -17,6 +17,7 @@ import org.geotools.data.DataStore;
 import org.geotools.data.DataUtilities;
 import org.geotools.factory.Hints;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
 import java.util.ArrayList;
@@ -98,22 +99,22 @@ class Fds1Service {
             Integer depth = depthCell == null ? null : extractInteger(depthCell);
             Cell coverClassCodeCell = row.getCell(moduleAndCorner.coverClassCodeIndex, Row.RETURN_BLANK_AS_NULL);
             Integer coverClassCode = depthCell == null ? null : extractInteger(coverClassCodeCell);
-            createAndStoreFeature(store, plotNo, moduleAndCorner.module,
+            createAndStoreFeature(store, row, plotNo, moduleAndCorner.module,
                     moduleAndCorner.corner, species, depth, coverClassCode);
         }
     }
 
-    private static void createAndStoreFeature(DataStore store, int plotNo, int module, int corner,
+    private static void createAndStoreFeature(DataStore store, Row row, int plotNo, int module, int corner,
                                               String species, Integer depth, Integer coverClassCode) {
-        createForeignKeyIfNeed(store, PLOT_TYPE, plotNo);
-        createForeignKeyIfNeed(store, MODULE_TYPE, module);
-        createForeignKeyIfNeed(store, CORNER_TYPE, corner);
-        createForeignKeyIfNeed(store, SPECIES_TYPE, species);
+        VibiService.testForeignKeyExists(store, row, PLOT_TYPE, plotNo);
+        species = VibiService.testSpeciesForeignKey(store, row, SPECIES_TYPE, species);
+        VibiService.createForeignKeyIfNeed(store, MODULE_TYPE, module);
+        VibiService.createForeignKeyIfNeed(store, CORNER_TYPE, corner);
         if (depth != null) {
-            createForeignKeyIfNeed(store, DEPTH_TYPE, depth);
+            VibiService.createForeignKeyIfNeed(store, DEPTH_TYPE, depth);
         }
         if (coverClassCode != null) {
-            createForeignKeyIfNeed(store, COVER_MIDPOINT_LOOKUP, coverClassCode);
+            VibiService.createForeignKeyIfNeed(store, COVER_MIDPOINT_LOOKUP, coverClassCode);
         }
         SimpleFeatureBuilder featureBuilder = new SimpleFeatureBuilder(PLOT_MODULE_HERBACEOUS_TYPE);
         featureBuilder.featureUserData(Hints.USE_PROVIDED_FID, Boolean.TRUE);
@@ -125,12 +126,6 @@ class Fds1Service {
         featureBuilder.set("species", species);
         featureBuilder.set("cover_class_code", coverClassCode);
         Store.persistFeature(store, featureBuilder.buildFeature(id));
-    }
-
-    private static void createForeignKeyIfNeed(DataStore store, SimpleFeatureType type, Object id) {
-        SimpleFeatureBuilder featureBuilder = new SimpleFeatureBuilder(type);
-        featureBuilder.featureUserData(Hints.USE_PROVIDED_FID, Boolean.TRUE);
-        Store.persistFeature(store, featureBuilder.buildFeature(id.toString()), false);
     }
 
     private static List<ModuleAndCorner> getModulesAndCorners(Row row) {

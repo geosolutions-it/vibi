@@ -11,6 +11,7 @@ import org.geotools.data.DataStore;
 import org.geotools.data.DataUtilities;
 import org.geotools.factory.Hints;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
 import java.util.ArrayList;
@@ -83,7 +84,7 @@ class Fds2Service {
             throw new VibiException("Could not map row '%d' of sheet '%s' to site code.",
                     row.getRowNum(), row.getSheet().getSheetName());
         }
-        Cell speciesCell = row.getCell(Sheets.getIndex("G"), Row.RETURN_BLANK_AS_NULL);
+        Cell speciesCell = row.getCell(Sheets.getIndex("H"), Row.RETURN_BLANK_AS_NULL);
         if (speciesCell == null) {
             return plotNo;
         }
@@ -94,18 +95,18 @@ class Fds2Service {
             Cell countCell = row.getCell(dbhClass.columnIndex, Row.RETURN_BLANK_AS_NULL);
             if (countCell != null) {
                 Object count = Type.STRING.extract(countCell);
-                processDbhClass(store, dbhClass.dbhClass, dbhClass.dbhClassIndex, plotNo, sub, module, species, count);
+                processDbhClass(store, row, dbhClass.dbhClass, dbhClass.dbhClassIndex, plotNo, sub, module, species, count);
             }
         }
         return plotNo;
     }
 
-    private static void processDbhClass(DataStore store, Object dbhClass, Object dbhClassIndex, Object plotNo,
+    private static void processDbhClass(DataStore store, Row row, Object dbhClass, Object dbhClassIndex, Object plotNo,
                                         Object sub, Object module, Object species, Object count) {
-        createForeignKeyIfNeed(store, PLOT_TYPE, plotNo);
-        createForeignKeyIfNeed(store, MODULE_TYPE, module);
-        createForeignKeyIfNeed(store, SPECIES_TYPE, species);
-        createForeignKeyIfNeed(store, DBH_CLASS, dbhClass);
+        VibiService.testForeignKeyExists(store, row, PLOT_TYPE, plotNo);
+        species = VibiService.testSpeciesForeignKey(store, row, SPECIES_TYPE, (String) species);
+        VibiService.createForeignKeyIfNeed(store, MODULE_TYPE, module);
+        VibiService.createForeignKeyIfNeed(store, DBH_CLASS, dbhClass);
         SimpleFeatureBuilder featureBuilder = new SimpleFeatureBuilder(PLOT_MODULE_WOODY_RAW);
         featureBuilder.featureUserData(Hints.USE_PROVIDED_FID, Boolean.TRUE);
         String id = String.format("%s-%s-%s-%s", plotNo, module, species, dbhClass);
@@ -117,12 +118,6 @@ class Fds2Service {
         featureBuilder.set("dbh_class_index", dbhClassIndex);
         featureBuilder.set("count", count);
         Store.persistFeature(store, featureBuilder.buildFeature(id));
-    }
-
-    private static void createForeignKeyIfNeed(DataStore store, SimpleFeatureType type, Object id) {
-        SimpleFeatureBuilder featureBuilder = new SimpleFeatureBuilder(type);
-        featureBuilder.featureUserData(Hints.USE_PROVIDED_FID, Boolean.TRUE);
-        Store.persistFeature(store, featureBuilder.buildFeature(id.toString()), false);
     }
 
     private static Integer extractPlotNo(Row row, Integer plotNo) {

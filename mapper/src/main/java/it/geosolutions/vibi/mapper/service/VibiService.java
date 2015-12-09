@@ -1,8 +1,15 @@
 package it.geosolutions.vibi.mapper.service;
 
+import it.geosolutions.vibi.mapper.exceptions.VibiException;
 import it.geosolutions.vibi.mapper.utils.Sheets;
+import it.geosolutions.vibi.mapper.utils.Store;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
 import org.geotools.data.DataStore;
+import org.geotools.factory.Hints;
+import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.opengis.feature.simple.SimpleFeature;
+import org.opengis.feature.simple.SimpleFeatureType;
 
 import java.io.File;
 
@@ -28,5 +35,41 @@ public final class VibiService {
                 Fds2Service.processFds2Sheet(workBook.getSheet("ENTER FDS2"), store);
             }
         };
+    }
+
+    static String testSpeciesForeignKey(DataStore store, Row row, SimpleFeatureType type, String species) {
+        if (!testForeignKeyExists(store, type, species)) {
+            species = species.toUpperCase();
+            if (!testForeignKeyExists(store, type, species)) {
+                species = lowerSpecies(species);
+                testForeignKeyExists(store, row, type, species);
+            }
+        }
+        return species;
+    }
+
+    static String lowerSpecies(String species) {
+        return Character.toUpperCase(species.charAt(0)) + species.substring(1, species.length()).toLowerCase();
+    }
+
+    static void testForeignKeyExists(DataStore store, Row row, SimpleFeatureType type, Object id) {
+        if (!testForeignKeyExists(store, type, id)) {
+            throw new VibiException("Foreign key '%s' of type '%s' in the context of row " +
+                    "'%d' of spreadsheet '%s' could not be found.",
+                    id, type.getTypeName(), row.getRowNum() + 1, row.getSheet().getSheetName());
+        }
+    }
+
+    static boolean testForeignKeyExists(DataStore store, SimpleFeatureType type, Object id) {
+        SimpleFeatureBuilder featureBuilder = new SimpleFeatureBuilder(type);
+        featureBuilder.featureUserData(Hints.USE_PROVIDED_FID, Boolean.TRUE);
+        SimpleFeature foundFeature = Store.find(store, featureBuilder.buildFeature(id.toString()));
+        return foundFeature != null;
+    }
+
+    static void createForeignKeyIfNeed(DataStore store, SimpleFeatureType type, Object id) {
+        SimpleFeatureBuilder featureBuilder = new SimpleFeatureBuilder(type);
+        featureBuilder.featureUserData(Hints.USE_PROVIDED_FID, Boolean.TRUE);
+        Store.persistFeature(store, featureBuilder.buildFeature(id.toString()), false);
     }
 }

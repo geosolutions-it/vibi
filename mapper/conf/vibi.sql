@@ -251,20 +251,17 @@ CREATE TABLE plot_module_woody_raw (
 
 --includes calculated fields
 --calculations are done under "Reduced FDS2" tab in spreadsheet
-CREATE TABLE woody_importance_value
-(
+CREATE TABLE woody_importance_value (
   fid text PRIMARY KEY,
   plot_no int4 references plot(plot_no),
   species text references species(scientific_name),
   subcanopy_IV_partial numeric, --  calculated for those species with "partial" designation in "shade" column in species lookup table
   subcanopy_IV_shade numeric,  --  calculated for those species with "shade" designation in "shade" column in species lookup table
   canopy_IV numeric --  calculated for those species with "tree" designation in "shade" column in species lookup table
-)
-;
+);
 
 --includes calculated fields
-CREATE TABLE biomass
-(
+CREATE TABLE biomass (
   plot_no int4 references plot(plot_no),
   DateTime timestamptz,
   module_id int4 references module(module_id),
@@ -276,15 +273,13 @@ CREATE TABLE biomass
   actual_or_derived text references biomass_accuracy(biomass_accuracy), -- this lookup needs to be created
   biomass_weight_grams numeric, --calculated; see column N in "Enter Biomass" tab of spreadsheet
   grams_per_sq_meter numeric  --calculated; see column O in "Enter Biomass" tab of spreadsheet
-)
-;
+);
 
 -- one big table (or materialize view) that includes all metric calculations for each plot
 -- if table, needs tied to trigger
 -- if view, needs to be performant
 
-CREATE TABLE metric_calculations
-(
+CREATE TABLE metric_calculations (
   plot_no int4 references plot(plot_no),
   carex_metric_value int, -- see row 6 column B of "Calculations" tab in  cyperaceae_metric_value int -- see row 7 column B of "Calculations" tab in spreadsheet
   dicot_metric_value int, -- see row 8 column B of "Calculations" tab in spreadsheet
@@ -312,5 +307,4 @@ CREATE TABLE metric_calculations
   per_unvegetated_open_water numeric, --31
   per_bare_ground numeric,  --32
   vibi_score numeric -- Sum of scores as e.g. C33 in Calculations tab
-)
-;
+);

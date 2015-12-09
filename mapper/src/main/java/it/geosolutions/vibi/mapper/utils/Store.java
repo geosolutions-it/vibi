@@ -76,7 +76,7 @@ public final class Store {
         }
     }
 
-    private static SimpleFeature find(DataStore store, final SimpleFeature simpleFeature) {
+    public static SimpleFeature find(DataStore store, final SimpleFeature simpleFeature) {
         return new InTransaction(store, simpleFeature.getFeatureType().getTypeName(), "find") {
 
             SimpleFeature feature;
@@ -93,7 +93,7 @@ public final class Store {
         }.feature;
     }
 
-    private static void create(DataStore store, final SimpleFeature simpleFeature) {
+    public static void create(DataStore store, final SimpleFeature simpleFeature) {
         new InTransaction(store, simpleFeature.getFeatureType().getTypeName(), "create") {
 
             @Override
@@ -103,7 +103,7 @@ public final class Store {
         };
     }
 
-    private static void update(DataStore store, final SimpleFeature simpleFeature) {
+    public static void update(DataStore store, final SimpleFeature simpleFeature) {
 
         final List<Property> properties = filterInvalidProperties(simpleFeature.getProperties());
 
