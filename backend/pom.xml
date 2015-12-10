@@ -44,7 +44,7 @@
         <repository>
             <id>ibiblio</id>
             <name>Ibiblio Maven Repository</name>
-            <url>http://mirrors.ibiblio.org/maven/mule/dependencies/maven2/</url>
+            <url>http://maven.ibiblio.org/maven</url>
         </repository>
 
         <repository>
