@@ -1,0 +1,26 @@
+#left-banner {
+	position : absolute;
+	left : 0;
+	top : 0;
+	width : 420px;
+	height : 86px;
+}
+#fdh-header {
+	position : absolute;
+	top : 0px;
+	left : 0px;
+	margin-right: 0px;
+	width : 100%;
+    background: white;
+}
+#right-banner {
+	float : right;
+	display : inline;
+	top : 0;
+	width : 378px;
+	height : 86px;
+}
+
+.vibi_plot_ic{
+    background-image: url(../img/table.png);
+}
