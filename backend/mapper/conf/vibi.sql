@@ -19,7 +19,6 @@ DROP TABLE IF EXISTS module CASCADE;
 DROP TABLE IF EXISTS plant_comm_code CASCADE;
 DROP TABLE IF EXISTS plot CASCADE;
 DROP TABLE IF EXISTS plot_module_herbaceous CASCADE;
-DROP TABLE IF EXISTS plot_module_woody CASCADE;
 DROP TABLE IF EXISTS salinity CASCADE;
 DROP TABLE IF EXISTS species CASCADE;
 DROP TABLE IF EXISTS stand_size CASCADE;
@@ -27,9 +26,25 @@ DROP TABLE IF EXISTS veg_class CASCADE;
 DROP TABLE IF EXISTS woody_importance_value CASCADE;
 DROP TABLE IF EXISTS metric_calculations CASCADE;
 DROP TABLE IF EXISTS plot_module_woody_raw CASCADE;
+DROP TABLE IF EXISTS authority CASCADE;
+DROP TABLE IF EXISTS family CASCADE;
+DROP TABLE IF EXISTS ind CASCADE;
+DROP TABLE IF EXISTS form CASCADE;
+DROP TABLE IF EXISTS habit CASCADE;
+DROP TABLE IF EXISTS groupp CASCADE;
+DROP TABLE IF EXISTS shade CASCADE;
+DROP TABLE IF EXISTS nativity CASCADE;
+DROP TABLE IF EXISTS CODE1 CASCADE;
+DROP TABLE IF EXISTS CODE2 CASCADE;
+DROP TABLE IF EXISTS CODE3 CASCADE;
+DROP TABLE IF EXISTS CODE4 CASCADE;
+DROP TABLE IF EXISTS CODE5 CASCADE;
 
 DROP VIEW IF EXISTS herbaceous_tot_cov CASCADE;
 DROP VIEW IF EXISTS herbaceous_site_cov CASCADE;
+DROP VIEW IF EXISTS herbaceous_relative_cover CASCADE;
+DROP VIEW IF EXISTS plot_module_woody_dbh CASCADE;
+DROP VIEW IF EXISTS plot_module_woody_dbh_cm CASCADE;
 
 CREATE TABLE plant_comm_code (
     code text PRIMARY KEY,
@@ -116,29 +131,113 @@ CREATE TABLE biomass_accuracy (
     biomass_accuracy text PRIMARY KEY
 );
 
+CREATE TABLE authority
+(
+  authority text PRIMARY KEY
+)
+;
+
+  CREATE TABLE family
+(
+  family text PRIMARY KEY
+)
+;
+
+  CREATE TABLE ind
+(
+  ind text PRIMARY KEY
+)
+;
+
+  CREATE TABLE form
+(
+  form text PRIMARY KEY
+)
+;
+
+  CREATE TABLE habit
+(
+  habit text PRIMARY KEY
+)
+;
+
+  CREATE TABLE groupp
+(
+  groupp text PRIMARY KEY
+)
+;
+
+  CREATE TABLE shade
+(
+  shade text PRIMARY KEY
+)
+;
+
+  CREATE TABLE nativity
+(
+  nativity text PRIMARY KEY
+)
+;
+
+  CREATE TABLE CODE1
+(
+  CODE1 text PRIMARY KEY
+)
+;
+
+  CREATE TABLE CODE2
+(
+  CODE2 text PRIMARY KEY
+)
+;
+
+  CREATE TABLE CODE3
+(
+  CODE3 text PRIMARY KEY
+)
+;
+
+  CREATE TABLE CODE4
+(
+  CODE4 text PRIMARY KEY
+)
+;
+
+  CREATE TABLE CODE5
+(
+  CODE5 text PRIMARY KEY
+)
+;
+
 -- species table below will be populated from most recent version of the Ohio EPA-maintained list
 CREATE TABLE species (
-    veg_id int4,
-    scientific_name text PRIMARY KEY,
-    acronym text,
-    authority text,
-    cofc int4,
-    syn text,
-    common_name text,
-    family text,
-    fn int4,
-    wet text,
-    form text,
-    habit text,
-    shade text,
-    usda_id text,
-    oh_tore text,
-    type text,
-    oh_status text,
-    emp text,
-    mw text,
-    ncne text,
-    notes text
+--  veg_id int4 PRIMARY KEY,
+  scientific_name text PRIMARY KEY,
+  acronym text,
+  authority text REFERENCES authority(authority),
+  cofc int4, -- wildcard ("*") in spreadsheet is null in table
+--  syn text,
+  common_name text,
+  family text REFERENCES family(family),
+--  fn int4,
+  ind text REFERENCES ind(ind),
+  form text REFERENCES form(form),
+  habit text REFERENCES habit(habit),
+  groupp text REFERENCES groupp(groupp),
+  shade text REFERENCES shade(shade),
+--  usda_id text,
+--  oh_tore text,
+--  type text, -- equivalent to group
+  nativity text REFERENCES nativity(nativity), -- oh_status
+--  emp text, -- separate regions in Ohio. To be used later.
+--  mw text, -- ditto
+--  ncne text, -- ditto
+--  notes text
+  CODE1 text REFERENCES code1(code1),
+  CODE2 text REFERENCES code2(code2),
+  CODE3 text REFERENCES code3(code3),
+  CODE4 text REFERENCES code4(code4),
+  CODE5 text REFERENCES code5(code5)
 );
 
 -- From "ENTER PLOT INFO" Tab. Ignore columns after column "BM"
@@ -239,15 +338,25 @@ CREATE VIEW herbaceous_relative_cover AS
     INNER JOIN herbaceous_site_cov b ON a.plot_no = b.plot_no;
 
 CREATE TABLE plot_module_woody_raw (
-  fid text PRIMARY KEY,
-  plot_no int4 references plot(plot_no),
-  sub numeric,
-  module_id int4 references module(module_id),
-  species text references species(scientific_name),
-  dbh_class text references dbh_class(dbh_class),
-  dbh_class_index int4,
-  count text
+    fid text PRIMARY KEY,
+    plot_no int4 references plot(plot_no),
+    sub numeric,
+    module_id int4 references module(module_id),
+    species text references species(scientific_name),
+    dbh_class text references dbh_class(dbh_class),
+    dbh_class_index int4,
+    count text
 );
+
+CREATE OR REPLACE VIEW plot_module_woody_dbh AS
+SELECT plot_no, module_id, species, dbh_class, count::numeric / sub AS count
+FROM plot_module_woody_raw
+WHERE dbh_class_index <= 10;
+
+CREATE OR REPLACE VIEW plot_module_woody_dbh_cm AS
+SELECT plot_no, module_id, species, dbh_class, count::numeric ^ 2 * pi() AS dbh_cm
+FROM plot_module_woody_raw
+WHERE dbh_class_index > 10
 
 --includes calculated fields
 --calculations are done under "Reduced FDS2" tab in spreadsheet

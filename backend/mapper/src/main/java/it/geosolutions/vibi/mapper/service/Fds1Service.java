@@ -1,12 +1,6 @@
 package it.geosolutions.vibi.mapper.service;
 
-import it.geosolutions.vibi.mapper.attributes.Attribute;
-import it.geosolutions.vibi.mapper.builders.ReferenceAttributeBuilder;
-import it.geosolutions.vibi.mapper.builders.SheetProcessorBuilder;
-import it.geosolutions.vibi.mapper.detectors.BoundsDetector;
 import it.geosolutions.vibi.mapper.exceptions.VibiException;
-import it.geosolutions.vibi.mapper.sheets.SheetContext;
-import it.geosolutions.vibi.mapper.sheets.SheetProcessor;
 import it.geosolutions.vibi.mapper.utils.Sheets;
 import it.geosolutions.vibi.mapper.utils.Store;
 import it.geosolutions.vibi.mapper.utils.Type;
@@ -17,7 +11,6 @@ import org.geotools.data.DataStore;
 import org.geotools.data.DataUtilities;
 import org.geotools.factory.Hints;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
-import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
 import java.util.ArrayList;
@@ -55,6 +48,7 @@ class Fds1Service {
             nextTableIndex = findNextTableIndex(sheet, processTable(sheet, store, nextTableIndex));
         }
     }
+
     private static int findNextTableIndex(Sheet sheet, int startIndex) {
         int index = startIndex;
         while (true) {
@@ -86,7 +80,14 @@ class Fds1Service {
                 continue;
             }
             String species = extractString(speciesCell);
-            processRow(store, row, plotNo, species, modulesAndCorners);
+            try {
+                processRow(store, row, plotNo, species, modulesAndCorners);
+            } catch (VibiException exception) {
+                throw exception;
+            } catch (Exception exception) {
+                throw new VibiException(exception, "Error processing row '%d' of spreadsheet '%s'.",
+                        row.getRowNum() + 1, sheet.getSheetName());
+            }
             index++;
         }
         return index;

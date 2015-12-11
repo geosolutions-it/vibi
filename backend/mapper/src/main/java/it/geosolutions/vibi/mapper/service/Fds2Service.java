@@ -11,7 +11,6 @@ import org.geotools.data.DataStore;
 import org.geotools.data.DataUtilities;
 import org.geotools.factory.Hints;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
-import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
 import java.util.ArrayList;
@@ -48,8 +47,15 @@ class Fds2Service {
         Integer plotNo = null;
         row = sheet.getRow(row.getRowNum() + 1);
         while (row != null) {
-            plotNo = processRow(store, dbhClassList, plotNo, row);
-            row = sheet.getRow(row.getRowNum() + 1);
+            try {
+                plotNo = processRow(store, dbhClassList, plotNo, row);
+                row = sheet.getRow(row.getRowNum() + 1);
+            } catch (VibiException exception) {
+                throw exception;
+            } catch (Exception exception) {
+                throw new VibiException(exception, "Error processing row '%d' of spreadsheet '%s'.",
+                        row.getRowNum() + 1, sheet.getSheetName());
+            }
         }
     }
 
