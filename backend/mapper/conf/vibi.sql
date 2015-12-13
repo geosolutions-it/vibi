@@ -39,12 +39,24 @@ DROP TABLE IF EXISTS CODE2 CASCADE;
 DROP TABLE IF EXISTS CODE3 CASCADE;
 DROP TABLE IF EXISTS CODE4 CASCADE;
 DROP TABLE IF EXISTS CODE5 CASCADE;
+DROP TABLE IF EXISTS reduced_fsd2_dbh_index_basal_area CASCADE;
 
 DROP VIEW IF EXISTS herbaceous_tot_cov CASCADE;
 DROP VIEW IF EXISTS herbaceous_site_cov CASCADE;
 DROP VIEW IF EXISTS herbaceous_relative_cover CASCADE;
 DROP VIEW IF EXISTS plot_module_woody_dbh CASCADE;
 DROP VIEW IF EXISTS plot_module_woody_dbh_cm CASCADE;
+DROP VIEW IF EXISTS reduced_fsd2_counts CASCADE;
+DROP VIEW IF EXISTS reduced_fsd2_counts_cm2 CASCADE;
+DROP VIEW IF EXISTS reduced_fsd2_class_freq CASCADE;
+DROP VIEW IF EXISTS reduced_fsd2_tot_steams CASCADE;
+DROP VIEW IF EXISTS reduced_fsd2_tot_steams_all_spp CASCADE;
+DROP VIEW IF EXISTS reduced_fsd2_basal_cm2 CASCADE;
+DROP VIEW IF EXISTS reduced_fsd2_basal_cm2_ha CASCADE;
+DROP VIEW IF EXISTS reduced_fsd2_basal_cm2_ha_tot CASCADE;
+DROP VIEW IF EXISTS reduced_fsd2_basal_cm2_ha_all_spp CASCADE;
+DROP VIEW IF EXISTS reduced_fsd2_iv CASCADE;
+DROP VIEW IF EXISTS woody_importance_value CASCADE;
 
 CREATE TABLE plant_comm_code (
     code text PRIMARY KEY,
@@ -265,7 +277,6 @@ CREATE TABLE plot (
     Enter_GPS_location_in_plot text,
     latitude numeric,
     longitude numeric,
-    location geometry,
     Total_Modules int4,
     Intensive_Modules int4,
     Plot_Configuration text,
@@ -349,25 +360,106 @@ CREATE TABLE plot_module_woody_raw (
 );
 
 CREATE OR REPLACE VIEW plot_module_woody_dbh AS
-SELECT plot_no, module_id, species, dbh_class, count::numeric / sub AS count
-FROM plot_module_woody_raw
-WHERE dbh_class_index <= 10;
+	SELECT plot_no, module_id, species, dbh_class_index, dbh_class, count::numeric / sub AS count
+	FROM plot_module_woody_raw
+	WHERE dbh_class_index <= 10;
 
 CREATE OR REPLACE VIEW plot_module_woody_dbh_cm AS
-SELECT plot_no, module_id, species, dbh_class, count::numeric ^ 2 * pi() AS dbh_cm
-FROM plot_module_woody_raw
-WHERE dbh_class_index > 10
+	SELECT plot_no, module_id, species, dbh_class_index, dbh_class, (count::numeric / 2) ^ 2 * pi() AS dbh_cm
+	FROM plot_module_woody_raw
+	WHERE dbh_class_index > 10;
 
---includes calculated fields
---calculations are done under "Reduced FDS2" tab in spreadsheet
-CREATE TABLE woody_importance_value (
-  fid text PRIMARY KEY,
-  plot_no int4 references plot(plot_no),
-  species text references species(scientific_name),
-  subcanopy_IV_partial numeric, --  calculated for those species with "partial" designation in "shade" column in species lookup table
-  subcanopy_IV_shade numeric,  --  calculated for those species with "shade" designation in "shade" column in species lookup table
-  canopy_IV numeric --  calculated for those species with "tree" designation in "shade" column in species lookup table
+CREATE TABLE reduced_fsd2_dbh_index_basal_area (
+    dbh_class_index int4,
+    basal_area numeric
 );
+
+INSERT INTO reduced_fsd2_dbh_index_basal_area (dbh_class_index, basal_area) VALUES
+(0, 0.1963), (1, 0.1963), (2, 2.405), (3, 11.04), (4, 44.18), (5, 122.7), (6, 240.5),
+(7, 397.6), (8, 594), (9, 830), (10, 1104);
+
+CREATE OR REPLACE VIEW reduced_fsd2_counts AS
+	SELECT plot_no, species, dbh_class_index, sum(count::numeric) as counts
+	FROM plot_module_woody_dbh
+	GROUP BY plot_no, species, dbh_class_index
+	UNION
+	SELECT plot_no, species, -1 as dbh_class_index, count(*) as counts
+	FROM plot_module_woody_dbh_cm
+	GROUP BY plot_no, species;
+
+CREATE OR REPLACE VIEW reduced_fsd2_counts_cm2 AS
+	SELECT plot_no, species, dbh_class_index, sum(dbh_cm::numeric) as counts
+	FROM plot_module_woody_dbh_cm
+	GROUP BY plot_no, species, dbh_class_index;
+
+CREATE OR REPLACE VIEW reduced_fsd2_class_freq AS
+	SELECT plot_no, species, count(*) as class_freq, count(*) / 12.0 as rel_class_freq
+	FROM reduced_fsd2_counts
+	GROUP BY plot_no, species;
+
+CREATE OR REPLACE VIEW reduced_fsd2_tot_steams AS
+	SELECT b.plot_no, a.species, sum(a.counts) as tot_steams, (sum(a.counts) / b.plot_size_for_cover_data_area_ha) as tot_steams_ha
+	FROM reduced_fsd2_counts a
+	INNER JOIN plot AS b ON a.plot_no = b.plot_no
+	GROUP BY b.plot_no, a.species;
+
+CREATE OR REPLACE VIEW reduced_fsd2_tot_steams_all_spp AS
+	SELECT plot_no, sum(tot_steams_ha) as tot_steams_all_spp
+	FROM reduced_fsd2_tot_steams
+	GROUP BY plot_no;
+
+CREATE OR REPLACE VIEW reduced_fsd2_basal_cm2 AS
+	SELECT a.plot_no, a.species, a.dbh_class_index, (a.counts * b.basal_area) as basal_cm2
+	FROM reduced_fsd2_counts a
+	INNER JOIN reduced_fsd2_dbh_index_basal_area b
+	ON a.dbh_class_index = b.dbh_class_index
+	WHERE a.dbh_class_index >= 0
+	UNION
+	SELECT * FROM reduced_fsd2_counts_cm2 as basal_cm2;
+
+CREATE OR REPLACE VIEW reduced_fsd2_basal_cm2_ha AS
+	SELECT a.plot_no, a.species, a.dbh_class_index, (a.counts * b.basal_area) / c.plot_size_for_cover_data_area_ha AS basal_cm2_ha
+	FROM reduced_fsd2_counts a
+	INNER JOIN reduced_fsd2_dbh_index_basal_area b
+	ON a.dbh_class_index = b.dbh_class_index
+	INNER JOIN plot AS c
+	ON a.plot_no = c.plot_no
+	WHERE a.dbh_class_index >= 0
+	UNION
+	SELECT a.plot_no, a.species, a.dbh_class_index, a.counts / b.plot_size_for_cover_data_area_ha AS basal_cm2_ha
+	FROM reduced_fsd2_counts_cm2 a
+	INNER JOIN plot b
+	ON a.plot_no = b.plot_no;
+
+CREATE OR REPLACE VIEW reduced_fsd2_basal_cm2_ha_tot AS
+	SELECT plot_no, species, sum(basal_cm2_ha) AS tot_cm2_ha
+	FROM reduced_fsd2_basal_cm2_ha
+	GROUP BY plot_no, species;
+
+CREATE OR REPLACE VIEW reduced_fsd2_basal_cm2_ha_all_spp AS
+	SELECT plot_no, sum(basal_cm2_ha) AS  tot_cm2_all_spp
+	FROM reduced_fsd2_basal_cm2_ha
+	GROUP BY plot_no;
+
+CREATE OR REPLACE VIEW reduced_fsd2_iv AS
+	SELECT a.plot_no, a.species, (d.tot_cm2_ha / e.tot_cm2_all_spp + b.tot_steams_ha / c.tot_steams_all_spp + a.rel_class_freq) / 3 AS iv
+	FROM reduced_fsd2_class_freq a
+	INNER JOIN reduced_fsd2_tot_steams b
+	ON a.plot_no = b.plot_no AND a.species = b.species
+	INNER JOIN reduced_fsd2_tot_steams_all_spp c
+	ON a.plot_no = c.plot_no
+	INNER JOIN reduced_fsd2_basal_cm2_ha_tot d
+	ON a.plot_no = d.plot_no AND a.species = d.species
+	INNER JOIN reduced_fsd2_basal_cm2_ha_all_spp e
+	ON a.plot_no = e.plot_no;
+
+CREATE OR REPLACE VIEW  woody_importance_value AS
+	SELECT a.plot_no, a.species,
+	       CASE WHEN b.code5 = 'partial' THEN a.iv ELSE null END AS subcanopy_iv_partial,
+	       CASE WHEN b.code5 = 'shade' THEN a.iv ELSE null END AS subcanopy_iv_shade,
+	       CASE WHEN b.form = 'tree' THEN a.iv ELSE null END AS canopy_IV
+	FROM reduced_fsd2_iv a
+	INNER JOIN species b ON a.species = b.scientific_name;
 
 --includes calculated fields
 CREATE TABLE biomass (
