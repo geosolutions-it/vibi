@@ -27,12 +27,13 @@ class LookupService {
                 .withTable("species").withBoundsDetector(boundsDetector)
                 .withAttributeId("A", "scientific_name")
                 .withAttribute("B", "acronym", "Text")
-                .withAttribute(new ReferenceAttributeBuilder()
+                .withAttribute("C", "authority", "Text")
+                /*.withAttribute(new ReferenceAttributeBuilder()
                         .withTableName("authority")
                         .withAttributeName("authority")
                         .withAttributeType("Text")
                         .withAttributeId("authority", "C")
-                        .build())
+                        .build())*/
                 .withAttribute(new Attribute("cofc", Type.INTEGER) {
                     @Override
                     public Object getValue(SheetContext context) {
@@ -46,8 +47,11 @@ class LookupService {
                         return Type.INTEGER.extract(cell);
                     }
                 })
+                .withAttribute("E", "tolerance", "Text")
                 .withAttribute("H", "common_name", "Text")
-                .withAttribute(new ReferenceAttributeBuilder()
+                .withAttribute("G", "family", "Text")
+                .withAttribute("I", "ind", "Text")
+                /*.withAttribute(new ReferenceAttributeBuilder()
                         .withTableName("family")
                         .withAttributeName("family")
                         .withAttributeType("Text")
@@ -57,8 +61,9 @@ class LookupService {
                         .withTableName("ind")
                         .withAttributeName("ind")
                         .withAttributeType("Text")
-                        .withAttributeId("ind", "J")
-                        .build())
+                        .withAttributeId("ind", "I")
+                        .build())*/
+                .withAttribute("J", "hydro", "Text")
                 .withAttribute(new ReferenceAttributeBuilder()
                         .withTableName("form")
                         .withAttributeName("form")
@@ -99,13 +104,13 @@ class LookupService {
                         .withTableName("code2")
                         .withAttributeName("code2")
                         .withAttributeType("Text")
-                        .withAttributeId("code2", "Q")
+                        .withAttributeId("code2", "P")
                         .build())
                 .withAttribute(new ReferenceAttributeBuilder()
                         .withTableName("code3")
                         .withAttributeName("code3")
                         .withAttributeType("Text")
-                        .withAttributeId("code3", "P")
+                        .withAttributeId("code3", "Q")
                         .build())
                 .withAttribute(new ReferenceAttributeBuilder()
                         .withTableName("code4")

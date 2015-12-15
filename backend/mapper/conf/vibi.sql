@@ -226,13 +226,15 @@ CREATE TABLE species (
 --  veg_id int4 PRIMARY KEY,
   scientific_name text PRIMARY KEY,
   acronym text,
-  authority text REFERENCES authority(authority),
+  authority text, --REFERENCES authority(authority),
   cofc int4, -- wildcard ("*") in spreadsheet is null in table
+  tolerance text,
 --  syn text,
   common_name text,
-  family text REFERENCES family(family),
+  family text, --REFERENCES family(family),
 --  fn int4,
-  ind text REFERENCES ind(ind),
+  ind text, -- REFERENCES ind(ind),
+  hydro text,
   form text REFERENCES form(form),
   habit text REFERENCES habit(habit),
   groupp text REFERENCES groupp(groupp),
@@ -476,36 +478,173 @@ CREATE TABLE biomass (
   grams_per_sq_meter numeric  --calculated; see column O in "Enter Biomass" tab of spreadsheet
 );
 
+DROP VIEW IF EXISTS reduced_fsd2_den CASCADE;
+DROP VIEW IF EXISTS reduced_fsd2_rel_den CASCADE;
+DROP VIEW IF EXISTS reduced_fsd2_rel_den_calculations CASCADE;
+DROP VIEW IF EXISTS reduced_fsd2_sums_counts_iv CASCADE;
+DROP VIEW IF EXISTS reduced_fsd2_avg_iv CASCADE;
+DROP VIEW IF EXISTS reduced_fsd2_calculations_iv CASCADE;
+DROP VIEW IF EXISTS calculations_reduced_fsd1 CASCADE;
+DROP VIEW IF EXISTS calculations_reduced_fsd2_canopy CASCADE;
+DROP VIEW IF EXISTS calculations_reduced_fsd2_steams CASCADE;
+
+CREATE OR REPLACE VIEW reduced_fsd2_den AS
+	SELECT a.plot_no, a.species, a.dbh_class_index, a.counts / b.plot_size_for_cover_data_area_ha AS counts_den
+	FROM reduced_fsd2_counts a
+	INNER JOIN plot b
+	ON a.plot_no = b.plot_no;
+
+CREATE OR REPLACE VIEW reduced_fsd2_rel_den AS
+	SELECT a.plot_no, a.species, a.dbh_class_index,
+	CASE WHEN a.counts_den > 0 THEN a.counts_den / b.tot_steams_all_spp ELSE 0 END AS counts_rel_den
+	FROM reduced_fsd2_den a
+	INNER JOIN reduced_fsd2_tot_steams_all_spp b
+	ON a.plot_no = b.plot_no;
+
+CREATE OR REPLACE VIEW reduced_fsd2_rel_den_calculations AS
+	SELECT plot_no, sum(CASE WHEN dbh_class_index = 5 or dbh_class_index = 6 or dbh_class_index = 7 THEN counts_rel_den ELSE 0 END) AS small_tree
+	FROM reduced_fsd2_rel_den
+	GROUP BY plot_no;
+
+CREATE OR REPLACE VIEW reduced_fsd2_sums_counts_iv AS
+	SELECT plot_no,
+	sum(subcanopy_iv_partial) AS sum_subcanopy_iv_partial,
+	sum(subcanopy_iv_shade) AS sum_subcanopy_iv_shade,
+	sum(canopy_IV) AS sum_canopy_IV,
+	count(subcanopy_iv_partial) AS count_subcanopy_iv_partial,
+	count(subcanopy_iv_shade) AS count_subcanopy_iv_shade,
+	count(canopy_IV) AS count_canopy_IV
+	FROM woody_importance_value
+	GROUP BY plot_no;
+
+CREATE OR REPLACE VIEW reduced_fsd2_avg_iv AS
+	SELECT plot_no,
+	CASE WHEN count_subcanopy_iv_partial > 0 THEN sum_subcanopy_iv_partial / count_subcanopy_iv_partial ELSE 0 END AS avg_subcanopy_iv_partial,
+	CASE WHEN count_subcanopy_iv_shade > 0 THEN sum_subcanopy_iv_shade / count_subcanopy_iv_shade ELSE 0 END AS avg_subcanopy_iv_shade,
+	CASE WHEN count_canopy_IV > 0 THEN sum_canopy_IV / count_canopy_IV ELSE 0 END AS avg_canopy_IV
+	FROM reduced_fsd2_sums_counts_iv;
+
+CREATE OR REPLACE VIEW reduced_fsd2_calculations_iv AS
+	SELECT a.plot_no,
+	sum_subcanopy_iv_partial,
+	sum_subcanopy_iv_shade,
+	sum_canopy_IV,
+	count_subcanopy_iv_partial,
+	count_subcanopy_iv_shade,
+	count_canopy_IV,
+	avg_subcanopy_iv_partial,
+	avg_subcanopy_iv_shade,
+	avg_canopy_IV
+	FROM reduced_fsd2_sums_counts_iv a
+	INNER JOIN reduced_fsd2_avg_iv b
+	ON a.plot_no = b.plot_no;
+
+CREATE OR REPLACE VIEW calculations_reduced_fsd1 AS
+	SELECT a.plot_no,
+	sum(CASE WHEN c.code1 = 'carex' THEN 1 ELSE 0 END) AS carex,
+	sum(CASE WHEN c.code2 = 'cyper' THEN 1 ELSE 0 END) AS cyperaceae,
+	sum(CASE WHEN c.code1 = 'natDI' THEN 1 ELSE 0 END) AS dicot,
+	sum(CASE WHEN c.shade = 'shade' OR c.shade = 'partial' THEN 1 ELSE 0 END) AS shade,
+	sum(CASE WHEN c.code2 = 'natwtldSH' THEN 1 ELSE 0 END) AS shrub,
+	sum(CASE WHEN c.hydro = 'hydrophyte' THEN 1 ELSE 0 END) AS hydrophyte,
+	sum(CASE WHEN c.groupp = 'SVP' THEN 1 ELSE 0 END) AS svp,
+	CASE WHEN (sum(CASE WHEN c.habit = 'PE' THEN b.relative_cover ELSE 0 END)) > 0
+	THEN (sum(CASE WHEN c.habit = 'AN' THEN 1.0 ELSE 0 END)) / (sum(CASE WHEN c.habit = 'PE' THEN 1.0 ELSE 0 END))
+	ELSE 1 END AS ap_ratio,
+	sum(CASE WHEN c.cofc >= 0 THEN c.cofc ELSE 0 END) / sqrt(sum(CASE WHEN c.cofc >= 0 THEN 1 ELSE 0 END)) AS fqai,
+	sum(CASE WHEN c.groupp = 'bryo' THEN b.relative_cover ELSE 0 END) AS bryophyte,
+	sum(CASE WHEN c.code3 = 'natshHYDRO' THEN b.relative_cover ELSE 0 END) AS per_hydrophyte,
+	sum(CASE WHEN c.tolerance = 'sensitive' THEN b.relative_cover ELSE 0 END) AS sensitive,
+	sum(CASE WHEN c.tolerance = 'tolerant' THEN b.relative_cover ELSE 0 END) AS tolerant,
+	sum(CASE WHEN c.code1 = 'invgram' THEN b.relative_cover ELSE 0 END) AS invasive_graminoids
+	FROM plot a
+	INNER JOIN herbaceous_relative_cover b
+	ON a.plot_no = b.plot_no
+	INNER JOIN species c
+	ON b.species = c.scientific_name
+	GROUP BY a.plot_no, a.plot_name;
+
+CREATE OR REPLACE VIEW calculations_reduced_fsd2_canopy AS
+	SELECT a.plot_no,
+	b.small_tree,
+	c.avg_subcanopy_iv_partial + c.avg_subcanopy_iv_shade AS subcanopy_iv,
+	c.avg_canopy_IV AS canopy_iv
+	FROM plot a
+	INNER JOIN reduced_fsd2_rel_den_calculations b
+	ON a.plot_no = b.plot_no
+	INNER JOIN reduced_fsd2_calculations_iv c
+	ON a.plot_no = c.plot_no;
+
+CREATE OR REPLACE VIEW calculations_reduced_fsd2_steams AS
+	SELECT a.plot_no,
+	sum(CASE WHEN c.code2 = 'natwtldTR' THEN b.tot_steams_ha ELSE 0 END) AS steams_wetland_trees,
+	sum(CASE WHEN c.code2 = 'natwtldSH' THEN b.tot_steams_ha ELSE 0 END) AS steams_wetland_shrubs
+	FROM plot a
+	INNER JOIN reduced_fsd2_tot_steams b
+	ON a.plot_no = b.plot_no
+	INNER JOIN species c
+	ON b.species = c.scientific_name
+	GROUP BY a.plot_no;
+
+DROP VIEW IF EXISTS metric_calculations CASCADE;
+
+CREATE OR REPLACE VIEW metric_calculations AS
+	SELECT a.plot_no,
+	carex AS carex_metric_value,
+	cyperaceae AS cyperaceae_metric_value,
+	dicot AS dicot_metric_value,
+	shade AS shade_metric_value,
+	shrub AS shrub_metric_value,
+	hydrophyte AS hydrophyte_metric_value,
+	svp AS svp_metric_value,
+	ap_ratio AS ap_ratio_metric_value,
+	fqai AS fqai_metric_value,
+	bryophyte AS bryophyte_metric_value,
+	per_hydrophyte AS per_hydrophyte_metric_value,
+	sensitive AS sensitive_metric_value,
+	tolerant AS tolerant_metric_value,
+	invasive_graminoids AS invasive_graminoids_metric_value,
+	small_tree AS small_tree_metric_value,
+	subcanopy_iv,
+	canopy_iv,
+	steams_wetland_trees AS stems_ha_wetland_trees,
+	steams_wetland_shrubs AS stems_ha_wetland_shrubs
+	FROM calculations_reduced_fsd1 a
+	INNER JOIN calculations_reduced_fsd2_canopy b
+	ON a.plot_no = b.plot_no
+	INNER JOIN calculations_reduced_fsd2_steams c
+	ON a.plot_no = c.plot_no;
+
 -- one big table (or materialize view) that includes all metric calculations for each plot
 -- if table, needs tied to trigger
 -- if view, needs to be performant
 
-CREATE TABLE metric_calculations (
-  plot_no int4 references plot(plot_no),
-  carex_metric_value int, -- see row 6 column B of "Calculations" tab in  cyperaceae_metric_value int -- see row 7 column B of "Calculations" tab in spreadsheet
-  dicot_metric_value int, -- see row 8 column B of "Calculations" tab in spreadsheet
-  shade_metric_value int, -- see row 9 column B of "Calculations" tab in spreadsheet
-  shrub_metric_value int, -- see row 10 column B of "Calculations" tab in spreadsheet
-  hydrophyte_metric_value int, -- see row 11 column B of "Calculations" tab in spreadsheet
-  SVP_metric_value int, -- see row 12 column B of "Calculations" tab in spreadsheet
-  AP_ratio_metric_value numeric, -- see row 13 column B of "Calculations" tab in spreadsheet
-  FQAI_metric_value numeric, -- see row 14 column B of "Calculations" tab in spreadsheet
-  bryophyte_metric_value numeric, -- see row 15 column B of "Calculations" tab in spreadsheet
-  sensitive_metric_value numeric, -- see row 17 column B of "Calculations" tab in spreadsheet
-  tolerant_metric_value numeric, -- see row 18 column B of "Calculations" tab in spreadsheet
-  invasive_graminoid_metric_value numeric, -- see row 19 column B of "Calculations" tab in spreadsheet
-  small_tree_metric_value numeric, -- see row 20 column B of "Calculations" tab in spreadsheet
-  subcanopy_IV numeric, --21
-  canopy_IV numeric, --22
-  biomass numeric,  --23
-  stems_ha_wetland_trees int4, --24
-  stems_ha_wetland_shrubs int4, --25
-  per_unvegetated numeric, --26
-  per_buttonbush numeric, --27
-  per_perrenial_native_hydrophytes numeric, --28
-  per_adventives numeric, --29
-  per_open_water numeric, --30
-  per_unvegetated_open_water numeric, --31
-  per_bare_ground numeric,  --32
-  vibi_score numeric -- Sum of scores as e.g. C33 in Calculations tab
-);
+CREATE TABLE metric_calculations_orig (
+    plot_no int4 references plot(plot_no),
+    carex_metric_value int, -- see row 6 column B of "Calculations" tab in  cyperaceae_metric_value int -- see row 7 column B of "Calculations" tab in spreadsheet
+    dicot_metric_value int, -- see row 8 column B of "Calculations" tab in spreadsheet
+    shade_metric_value int, -- see row 9 column B of "Calculations" tab in spreadsheet
+    shrub_metric_value int, -- see row 10 column B of "Calculations" tab in spreadsheet
+    hydrophyte_metric_value int, -- see row 11 column B of "Calculations" tab in spreadsheet
+    SVP_metric_value int, -- see row 12 column B of "Calculations" tab in spreadsheet
+    AP_ratio_metric_value numeric, -- see row 13 column B of "Calculations" tab in spreadsheet
+    FQAI_metric_value numeric, -- see row 14 column B of "Calculations" tab in spreadsheet
+    bryophyte_metric_value numeric, -- see row 15 column B of "Calculations" tab in spreadsheet
+    sensitive_metric_value numeric, -- see row 17 column B of "Calculations" tab in spreadsheet
+    tolerant_metric_value numeric, -- see row 18 column B of "Calculations" tab in spreadsheet
+    invasive_graminoid_metric_value numeric, -- see row 19 column B of "Calculations" tab in spreadsheet
+    small_tree_metric_value numeric, -- see row 20 column B of "Calculations" tab in spreadsheet
+    subcanopy_IV numeric, --21
+    canopy_IV numeric, --22
+    biomass numeric,  --23
+    stems_ha_wetland_trees int4, --24
+    stems_ha_wetland_shrubs int4, --25
+    per_unvegetated numeric, --26
+    per_buttonbush numeric, --27
+    per_perrenial_native_hydrophytes numeric, --28
+    per_adventives numeric, --29
+    per_open_water numeric, --30
+    per_unvegetated_open_water numeric, --31
+    per_bare_ground numeric,  --32
+    vibi_score numeric -- Sum of scores as e.g. C33 in Calculations tab
+  );
