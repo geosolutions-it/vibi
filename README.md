@@ -1,4 +1,4 @@
-# vibiingestion
+# FrontEnd
 MapStore application for VIBI web manager
 
 To run this application, clone this repository inside the "application" folder of a MapStore instance.
@@ -11,9 +11,12 @@ Get the code
 
 Run in debug mode
 
-> \MapStore> ant debug -Dapplication=vibiingestion
+> \MapStore> ant debug -Dapplication=vibi/frontend
 
 Build the WAR package
 
-> \MapStore> ant war -Dapplication=vibiingestion
+> \MapStore> ant war -Dapplication=vibi/frontend
+
+
+# BackEnd
 
