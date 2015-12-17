@@ -24,3 +24,31 @@
 .vibi_plot_ic{
     background-image: url(../img/table.png);
 }
+
+.vibi_species_ic {
+		background-image: url(../img/table.png);
+}
+
+.vibi_plot_module_herbaceous_ic {
+		background-image: url(../img/table.png);
+}
+
+.vibi_herbaceous_relative_cover_ic {
+		background-image: url(../img/table.png);
+}
+
+.vibi_plot_module_woody_ic {
+		background-image: url(../img/table.png);
+}
+
+.vibi_woody_importance_value_ic {
+		background-image: url(../img/table.png);
+}
+
+.vibi_biomass_ic {
+		background-image: url(../img/table.png);
+}
+
+.vibi_metric_calculations_ic {
+		background-image: url(../img/table.png);
+}
