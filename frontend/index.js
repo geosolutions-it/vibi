@@ -1,6 +1,6 @@
 var Response = require("ringo/webapp/response").Response;
 var Request = require("ringo/webapp/request").Request;
-var auth = require("/auth");
+var auth = require("../../../auth");
 
 exports.app = function(req) {
     var request = new Request(req);
