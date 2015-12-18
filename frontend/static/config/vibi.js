@@ -152,10 +152,15 @@
                     "iconCls": "vibi_plot_ic",
                     "id": "Plots",
                     "idProperty": "id",
+                    "totalProperty" : "totalCount",
                     "name": "Plot",
                     "pluralName": "Plots",
                     "restful": true,
-                    "root": "data"
+                    "root": "data",
+                    "paramNames" : {
+                        "start" : "firstResult",
+                        "limit" : "maxResults"
+                    }
                 },
                 {
                     "api": {},
@@ -365,10 +370,15 @@
                     "iconCls": "vibi_species_ic",
                     "id": "Species",
                     "idProperty": "id",
+                    "totalProperty" : "totalCount",
                     "name": "Specie",
                     "pluralName": "Species",
                     "restful": true,
-                    "root": "data"
+                    "root": "data",
+                    "paramNames" : {
+                        "start" : "firstResult",
+                        "limit" : "maxResults"
+                    }
                 },
                 {
                     "api": {},
@@ -447,7 +457,11 @@
                     "name": "Plot Module Herbaceous",
                     "pluralName": "Plots Modules Herbaceous",
                     "restful": true,
-                    "root": "data"
+                    "root": "data",
+                    "paramNames" : {
+                        "start" : "firstResult",
+                        "limit" : "maxResults"
+                    }
                 },
                 {
                     "api": {},
@@ -470,7 +484,11 @@
                     "name": "Herbaceous Relative Cover",
                     "pluralName": "Herbaceous Relative Cover",
                     "restful": true,
-                    "root": "data"
+                    "root": "data",
+                    "paramNames" : {
+                        "start" : "firstResult",
+                        "limit" : "maxResults"
+                    }
                 },
                 {
                     "api": {},
@@ -493,7 +511,11 @@
                     "name": "Plot Module Woody",
                     "pluralName": "Plots Modules Woody",
                     "restful": true,
-                    "root": "data"
+                    "root": "data",
+                    "paramNames" : {
+                        "start" : "firstResult",
+                        "limit" : "maxResults"
+                    }
                 },
                 {
                     "api": {},
@@ -516,7 +538,11 @@
                     "name": "Woody Importance Value",
                     "pluralName": "Woody Importance Values",
                     "restful": true,
-                    "root": "data"
+                    "root": "data",
+                    "paramNames" : {
+                        "start" : "firstResult",
+                        "limit" : "maxResults"
+                    }
                 },
                 {
                     "api": {},
@@ -539,7 +565,11 @@
                     "name": "Biomass",
                     "pluralName": "Biomass",
                     "restful": true,
-                    "root": "data"
+                    "root": "data",
+                    "paramNames" : {
+                        "start" : "firstResult",
+                        "limit" : "maxResults"
+                    }
                 },
                 {
 
@@ -725,7 +755,11 @@
                     "name": "Metrics",
                     "pluralName": "Metrics",
                     "restful": true,
-                    "root": "data"
+                    "root": "data",
+                    "paramNames" : {
+                        "start" : "firstResult",
+                        "limit" : "maxResults"
+                    }
                 }
             ]
         },
