@@ -96,6 +96,7 @@
                     "canCreate": false,
                     "canDelete": false,
                     "canEdit": false,
+                    "canSearch": true,
                     "columns": [
                         {
                             "header": "Plot #",
@@ -159,7 +160,8 @@
                     "root": "data",
                     "paramNames" : {
                         "start" : "firstResult",
-                        "limit" : "maxResults"
+                        "limit" : "maxResults",
+                        "query" : "keyword"
                     }
                 },
                 {
@@ -170,6 +172,7 @@
                     "canCreate": false,
                     "canDelete": false,
                     "canEdit": false,
+                    "canSearch":true,
                     "columns": [
                       {
                           "header": "Veg Id",
@@ -377,7 +380,8 @@
                     "root": "data",
                     "paramNames" : {
                         "start" : "firstResult",
-                        "limit" : "maxResults"
+                        "limit" : "maxResults",
+                        "query" : "keyword"
                     }
                 },
                 {
@@ -388,6 +392,7 @@
                     "canCreate": false,
                     "canDelete": false,
                     "canEdit": false,
+                    "canSearch": true,
                     "columns": [
                       {
                           "header": "Plot No",
@@ -460,7 +465,8 @@
                     "root": "data",
                     "paramNames" : {
                         "start" : "firstResult",
-                        "limit" : "maxResults"
+                        "limit" : "maxResults",
+                        "query" : "keyword"
                     }
                 },
                 {
@@ -471,6 +477,7 @@
                     "canCreate": false,
                     "canDelete": false,
                     "canEdit": false,
+                    "canSearch": true,
                     "columns": [],
                     "createTitle": "Create a new Herbaceous Relative Cover",
                     "displayField": "label",
@@ -487,7 +494,8 @@
                     "root": "data",
                     "paramNames" : {
                         "start" : "firstResult",
-                        "limit" : "maxResults"
+                        "limit" : "maxResults",
+                        "query" : "keyword"
                     }
                 },
                 {
@@ -498,6 +506,7 @@
                     "canCreate": false,
                     "canDelete": false,
                     "canEdit": false,
+                    "canSearch": true,
                     "columns": [],
                     "createTitle": "Create a new Plot Module Woody",
                     "displayField": "label",
@@ -514,7 +523,8 @@
                     "root": "data",
                     "paramNames" : {
                         "start" : "firstResult",
-                        "limit" : "maxResults"
+                        "limit" : "maxResults",
+                        "query" : "keyword"
                     }
                 },
                 {
@@ -525,6 +535,7 @@
                     "canCreate": false,
                     "canDelete": false,
                     "canEdit": false,
+                    "canSearch": true,
                     "columns": [],
                     "createTitle": "Create a new Woody Importance Value",
                     "displayField": "label",
@@ -541,7 +552,8 @@
                     "root": "data",
                     "paramNames" : {
                         "start" : "firstResult",
-                        "limit" : "maxResults"
+                        "limit" : "maxResults",
+                        "query" : "keyword"
                     }
                 },
                 {
@@ -552,6 +564,7 @@
                     "canCreate": false,
                     "canDelete": false,
                     "canEdit": false,
+                    "canSearch": true,
                     "columns": [],
                     "createTitle": "Create a new Biomass",
                     "displayField": "label",
@@ -568,7 +581,8 @@
                     "root": "data",
                     "paramNames" : {
                         "start" : "firstResult",
-                        "limit" : "maxResults"
+                        "limit" : "maxResults",
+                        "query" : "keyword"
                     }
                 },
                 {
@@ -580,6 +594,7 @@
                     "canCreate": false,
                     "canDelete": false,
                     "canEdit": false,
+                    "canSearch": true,
                     "columns": [
                         {
                             "header" : "Plot No",
@@ -758,7 +773,8 @@
                     "root": "data",
                     "paramNames" : {
                         "start" : "firstResult",
-                        "limit" : "maxResults"
+                        "limit" : "maxResults",
+                        "query" : "keyword"
                     }
                 }
             ]
