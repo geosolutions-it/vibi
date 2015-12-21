@@ -37,7 +37,19 @@
 		background-image: url(../img/table.png);
 }
 
-.vibi_plot_module_woody_ic {
+.vibi_metric_calculations_ic {
+		background-image: url(../img/table.png);
+}
+
+.vibi_plot_module_woody_raw_ic {
+		background-image: url(../img/table.png);
+}
+
+.vibi_plot_module_woody_ic_dbh {
+		background-image: url(../img/table.png);
+}
+
+.vibi_plot_module_woody_ic_dbh_cm {
 		background-image: url(../img/table.png);
 }
 
@@ -46,9 +58,5 @@
 }
 
 .vibi_biomass_ic {
-		background-image: url(../img/table.png);
-}
-
-.vibi_metric_calculations_ic {
 		background-image: url(../img/table.png);
 }
