@@ -1046,7 +1046,8 @@
                 },
                 {
                     "api": {},
-                    "autoExpandColumn": "label",
+                    "autoExpandColumn": false,
+                    "minColumnWidth": 80,
                     "autoload": false,
                     "basePath": "mvc/vibi/herbaceousRelativeCover/",
                     "canCreate": false,
@@ -1742,7 +1743,7 @@
             "autoOpen": true,
             "closable": false,
             "showActionButton": false,
-            "filters": [{ title : "Excel files", extensions : "xls,xlsx" }]
+            "filters": [{ "title" : "Excel files", "extensions" : "xls,xlsx" }]
         },
         {
             "ptype": "mxp_usermanager",
@@ -3435,7 +3436,7 @@
             "showActionButton": false,
             "autoRefreshState": true,
             "restrictToGroups": [ "uploaders" ],
-            "filters": [{ title : "Excel files", extensions : "xls,xlsx" }]
+            "filters": [{ "title" : "Excel files", "extensions" : "xls,xlsx" }]
         },
         {
             "ptype": "mxp_login",
