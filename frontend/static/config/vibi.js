@@ -91,6 +91,7 @@
                 {
                     "api": {},
                     "autoExpandColumn": false,
+                    "minColumnWidth": 80,
                     "autoload": true,
                     "basePath": "mvc/vibi/plot/",
                     "canCreate": false,
@@ -689,6 +690,7 @@
                 {
                     "api": {},
                     "autoExpandColumn": false,
+                    "minColumnWidth": 80,
                     "autoload": false,
                     "basePath": "mvc/vibi/species/",
                     "canCreate": false,
@@ -873,6 +875,7 @@
                 {
                     "api": {},
                     "autoExpandColumn": false,
+                    "minColumnWidth": 80,
                     "autoload": false,
                     "basePath": "mvc/vibi/plotModuleHerbaceous/",
                     "canCreate": false,
@@ -958,6 +961,7 @@
                 {
                     "api": {},
                     "autoExpandColumn": false,
+                    "minColumnWidth": 80,
                     "autoload": false,
                     "basePath": "mvc/vibi/plotModuleHerbaceousInfo/",
                     "canCreate": false,
@@ -1101,6 +1105,7 @@
                 {
                     "api": {},
                     "autoExpandColumn": false,
+                    "minColumnWidth": 80,
                     "autoload": false,
                     "basePath": "mvc/vibi/plotModuleWoodyRaw/",
                     "canCreate": false,
@@ -1195,6 +1200,7 @@
                 {
                     "api": {},
                     "autoExpandColumn": false,
+                    "minColumnWidth": 80,
                     "autoload": false,
                     "basePath": "mvc/vibi/plotModuleWoodyDbh/",
                     "canCreate": false,
@@ -1280,6 +1286,7 @@
                 {
                     "api": {},
                     "autoExpandColumn": false,
+                    "minColumnWidth": 80,
                     "autoload": false,
                     "basePath": "mvc/vibi/plotModuleWoodyDbhCm/",
                     "canCreate": false,
@@ -1365,6 +1372,7 @@
                 {
                     "api": {},
                     "autoExpandColumn": false,
+                    "minColumnWidth": 80,
                     "autoload": false,
                     "basePath": "mvc/vibi/woodyImportanceValue/",
                     "canCreate": false,
@@ -1441,6 +1449,7 @@
                 {
                     "api": {},
                     "autoExpandColumn": false,
+                    "minColumnWidth": 80,
                     "autoload": false,
                     "basePath": "mvc/vibi/biomass/",
                     "canCreate": false,
@@ -1471,6 +1480,7 @@
 
                     "api": {},
                     "autoExpandColumn": false,
+                    "minColumnWidth": 80,
                     "autoload": false,
                     "basePath": "mvc/vibi/metrics/",
                     "canCreate": false,
@@ -1709,7 +1719,7 @@
                           "name": "per_bare_ground"
                         }
                     ],
-                    "iconCls": "vibi_plot_module_herbaceous_ic",
+                    "iconCls": "vibi_metric_calculations_ic",
                     "id": "Metrics",
                     "idProperty": "id",
                     "name": "Metrics",
@@ -1771,6 +1781,7 @@
                 {
                     "api": {},
                     "autoExpandColumn": false,
+                    "minColumnWidth": 80,
                     "autoload": true,
                     "basePath": "mvc/vibi/plot/",
                     "canCreate": false,
@@ -2369,6 +2380,7 @@
                 {
                     "api": {},
                     "autoExpandColumn": false,
+                    "minColumnWidth": 80,
                     "autoload": false,
                     "basePath": "mvc/vibi/species/",
                     "canCreate": false,
@@ -2553,6 +2565,7 @@
                 {
                     "api": {},
                     "autoExpandColumn": false,
+                    "minColumnWidth": 80,
                     "autoload": false,
                     "basePath": "mvc/vibi/plotModuleHerbaceous/",
                     "canCreate": false,
@@ -2638,6 +2651,7 @@
                 {
                     "api": {},
                     "autoExpandColumn": false,
+                    "minColumnWidth": 80,
                     "autoload": false,
                     "basePath": "mvc/vibi/plotModuleHerbaceousInfo/",
                     "canCreate": false,
@@ -2723,6 +2737,7 @@
                 {
                     "api": {},
                     "autoExpandColumn": false,
+                    "minColumnWidth": 80,
                     "autoload": false,
                     "basePath": "mvc/vibi/herbaceousRelativeCover/",
                     "canCreate": false,
@@ -2781,6 +2796,7 @@
                 {
                     "api": {},
                     "autoExpandColumn": false,
+                    "minColumnWidth": 80,
                     "autoload": false,
                     "basePath": "mvc/vibi/plotModuleWoodyRaw/",
                     "canCreate": false,
@@ -2875,6 +2891,7 @@
                 {
                     "api": {},
                     "autoExpandColumn": false,
+                    "minColumnWidth": 80,
                     "autoload": false,
                     "basePath": "mvc/vibi/plotModuleWoodyDbh/",
                     "canCreate": false,
@@ -2960,6 +2977,7 @@
                 {
                     "api": {},
                     "autoExpandColumn": false,
+                    "minColumnWidth": 80,
                     "autoload": false,
                     "basePath": "mvc/vibi/plotModuleWoodyDbhCm/",
                     "canCreate": false,
@@ -3029,7 +3047,7 @@
                         }
                     ],
                     "iconCls": "vibi_plot_module_woody_ic_dbh_cm",
-                    "id": "Plot Module Woody Dbh",
+                    "id": "Plot Module Woody Dbh Cm",
                     "idProperty": "id",
                     "totalProperty" : "totalCount",
                     "name": "Plot Module Woody Dbh Cm",
@@ -3045,6 +3063,7 @@
                 {
                     "api": {},
                     "autoExpandColumn": false,
+                    "minColumnWidth": 80,
                     "autoload": false,
                     "basePath": "mvc/vibi/woodyImportanceValue/",
                     "canCreate": false,
@@ -3121,6 +3140,7 @@
                 {
                     "api": {},
                     "autoExpandColumn": false,
+                    "minColumnWidth": 80,
                     "autoload": false,
                     "basePath": "mvc/vibi/biomass/",
                     "canCreate": false,
@@ -3150,6 +3170,7 @@
                 {
                     "api": {},
                     "autoExpandColumn": false,
+                    "minColumnWidth": 80,
                     "autoload": false,
                     "basePath": "mvc/vibi/metrics/",
                     "canCreate": false,
