@@ -15,7 +15,6 @@ import org.geotools.factory.Hints;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.opengis.feature.simple.SimpleFeatureType;
 
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,12 +77,21 @@ class Fds1Service {
 
     private static int processTable(Sheet sheet, DataStore store, int startRowIndex) {
         List<ModuleAndCorner> modulesAndCorners = getModulesAndCorners(sheet.getRow(startRowIndex + 1));
-        int plotNo = extractInteger(sheet.getRow(startRowIndex + 3).getCell(Sheets.getIndex("A"), Row.RETURN_BLANK_AS_NULL));
+        int plotNo = getPlotNo(sheet, store, startRowIndex);
         processInfoRow(store, sheet.getRow(startRowIndex + 3), "%open water", plotNo, modulesAndCorners);
         processInfoRow(store, sheet.getRow(startRowIndex + 4), "%unvegetated open water", plotNo, modulesAndCorners);
         processInfoRow(store, sheet.getRow(startRowIndex + 5), "%bare ground", plotNo, modulesAndCorners);
         processInfoRow(store, sheet.getRow(startRowIndex + 6), "%litter cover", plotNo, modulesAndCorners);
         return processSpeciesRows(store, sheet, startRowIndex, plotNo, modulesAndCorners);
+    }
+
+    private static int getPlotNo(Sheet sheet, DataStore store, int startRowIndex) {
+        int plotNoRowIndex = startRowIndex + 3;
+        Cell siteCell = sheet.getRow(startRowIndex + 2).getCell(Sheets.getIndex("A"), Row.RETURN_BLANK_AS_NULL);
+        if (siteCell == null || !Type.STRING.extract(siteCell).toString().trim().equalsIgnoreCase("site")) {
+            plotNoRowIndex = startRowIndex + 4;
+        }
+        return extractInteger(sheet.getRow(plotNoRowIndex).getCell(Sheets.getIndex("A"), Row.RETURN_BLANK_AS_NULL));
     }
 
     private static void processInfoRow(DataStore store, Row row, String expectedInfo,

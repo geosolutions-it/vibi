@@ -959,6 +959,91 @@
                     "api": {},
                     "autoExpandColumn": false,
                     "autoload": false,
+                    "basePath": "mvc/vibi/plotModuleHerbaceousInfo/",
+                    "canCreate": false,
+                    "canDelete": false,
+                    "canEdit": false,
+                    "canSearch": true,
+                    "columns": [
+                        {
+                            "header": "Plot No",
+                            "mapping": "plot_no",
+                            "name": "plot_no"
+                        },
+                        {
+                            "header": "Module Id",
+                            "mapping": "module_id",
+                            "name": "module_id"
+                        },
+                        {
+                            "header": "Corner Id",
+                            "mapping": "corner",
+                            "name": "corner"
+                        },
+                        {
+                            "header": "Depth",
+                            "mapping": "depth",
+                            "name": "depth"
+                        },
+                        {
+                            "header": "Info",
+                            "mapping": "info",
+                            "name": "info"
+                        },
+                        {
+                            "header": "Cover Class Code",
+                            "mapping": "cover_class_code",
+                            "name": "cover_class_code"
+                        }
+                    ],
+                    "createTitle": "Create a new Plot Module Herbaceous Info",
+                    "displayField": "label",
+                    "editHeight": 270,
+                    "editTitle": "Edit Plot Module Herbaceous Info",
+                    "fields": [
+                        {
+                          "mapping": "plotNo",
+                          "name": "plot_no"
+                        },
+                        {
+                          "mapping": "moduleId",
+                          "name": "module_id"
+                        },
+                        {
+                          "mapping": "cornerId",
+                          "name": "corner"
+                        },
+                        {
+                          "mapping": "depth",
+                          "name": "depth"
+                        },
+                        {
+                          "mapping": "info",
+                          "name": "info"
+                        },
+                        {
+                          "mapping": "coverClassCode",
+                          "name": "cover_class_code"
+                        }
+                    ],
+                    "iconCls": "vibi_plot_module_herbaceous_info_ic",
+                    "id": "Plots Modules Herbaceous Info",
+                    "idProperty": "id",
+                    "totalProperty" : "totalCount",
+                    "name": "Plot Module Herbaceous Info",
+                    "pluralName": "Plots Modules Herbaceous Info",
+                    "restful": true,
+                    "root": "data",
+                    "paramNames" : {
+                        "start" : "firstResult",
+                        "limit" : "maxResults",
+                        "query" : "keyword"
+                    }
+                },
+                {
+                    "api": {},
+                    "autoExpandColumn": "label",
+                    "autoload": false,
                     "basePath": "mvc/vibi/herbaceousRelativeCover/",
                     "canCreate": false,
                     "canDelete": false,
@@ -1264,7 +1349,7 @@
                         }
                     ],
                     "iconCls": "vibi_plot_module_woody_ic_dbh_cm",
-                    "id": "Plot Module Woody Dbh",
+                    "id": "Plot Module Woody Dbh Cm",
                     "idProperty": "id",
                     "totalProperty" : "totalCount",
                     "name": "Plot Module Woody Dbh Cm",
@@ -1473,6 +1558,41 @@
                             "header" : "Stems HA Wetland Shrubs",
                             "mapping" : "stems_ha_wetland_shrubs",
                             "name" : "stems_ha_wetland_shrubs"
+                        }, 
+                        {
+                            "header": "Per Unvegetated",
+                            "mapping": "per_unvegetated",
+                            "name": "per_unvegetated"
+                        },
+                        {
+                            "header": "Per Button Bush",
+                            "mapping": "per_button_bush",
+                            "name": "per_button_bush"
+                        },
+                        {
+                            "header": "Per Perennial Native Hydrophytes",
+                            "mapping": "per_perennial_native_hydrophytes",
+                            "name": "per_perennial_native_hydrophytes"
+                        },
+                        {
+                            "header": "Per Adventives",
+                            "mapping": "per_adventives",
+                            "name": "per_adventives"
+                        },
+                        {
+                            "header": "Per PpenWater",
+                            "mapping": "per_open_water",
+                            "name": "per_open_water"
+                        },
+                        {
+                            "header": "Per Unvegetated OpenWater",
+                            "mapping": "per_unvegetated_open_water",
+                            "name": "per_unvegetated_open_water"
+                        },
+                        {
+                            "header": "Per Bare Ground",
+                            "mapping": "per_bare_ground",
+                            "name": "per_bare_ground"
                         }
                     ],
                     "createTitle": "Create new Metrics",
@@ -1559,6 +1679,34 @@
                         {
                             "mapping" : "steamsHaWetlandShrubs",
                             "name" : "stems_ha_wetland_shrubs"
+                        },
+                        {
+                          "mapping": "perUnvegetated",
+                          "name": "per_unvegetated"
+                        },
+                        {
+                          "mapping": "perButtonBush",
+                          "name": "per_button_bush"
+                        },
+                        {
+                          "mapping": "perPerennialNativeHydrophytes",
+                          "name": "per_perennial_native_hydrophytes"
+                        },
+                        {
+                          "mapping": "perAdventives",
+                          "name": "per_adventives"
+                        },
+                        {
+                          "mapping": "perPpenWater",
+                          "name": "per_open_water"
+                        },
+                        {
+                          "mapping": "perUnvegetatedOpenWater",
+                          "name": "per_unvegetated_open_water"
+                        },
+                        {
+                          "mapping": "perBareGround",
+                          "name": "per_bare_ground"
                         }
                     ],
                     "iconCls": "vibi_plot_module_herbaceous_ic",
@@ -2491,6 +2639,91 @@
                     "api": {},
                     "autoExpandColumn": false,
                     "autoload": false,
+                    "basePath": "mvc/vibi/plotModuleHerbaceousInfo/",
+                    "canCreate": false,
+                    "canDelete": false,
+                    "canEdit": false,
+                    "canSearch": true,
+                    "columns": [
+                        {
+                            "header": "Plot No",
+                            "mapping": "plot_no",
+                            "name": "plot_no"
+                        },
+                        {
+                            "header": "Module Id",
+                            "mapping": "module_id",
+                            "name": "module_id"
+                        },
+                        {
+                            "header": "Corner Id",
+                            "mapping": "corner",
+                            "name": "corner"
+                        },
+                        {
+                            "header": "Depth",
+                            "mapping": "depth",
+                            "name": "depth"
+                        },
+                        {
+                            "header": "Info",
+                            "mapping": "info",
+                            "name": "info"
+                        },
+                        {
+                            "header": "Cover Class Code",
+                            "mapping": "cover_class_code",
+                            "name": "cover_class_code"
+                        }
+                    ],
+                    "createTitle": "Create a new Plot Module Herbaceous Info",
+                    "displayField": "label",
+                    "editHeight": 270,
+                    "editTitle": "Edit Plot Module Herbaceous Info",
+                    "fields": [
+                        {
+                          "mapping": "plotNo",
+                          "name": "plot_no"
+                        },
+                        {
+                          "mapping": "moduleId",
+                          "name": "module_id"
+                        },
+                        {
+                          "mapping": "cornerId",
+                          "name": "corner"
+                        },
+                        {
+                          "mapping": "depth",
+                          "name": "depth"
+                        },
+                        {
+                          "mapping": "info",
+                          "name": "info"
+                        },
+                        {
+                          "mapping": "coverClassCode",
+                          "name": "cover_class_code"
+                        }
+                    ],
+                    "iconCls": "vibi_plot_module_herbaceous_info_ic",
+                    "id": "Plots Modules Herbaceous Info",
+                    "idProperty": "id",
+                    "totalProperty" : "totalCount",
+                    "name": "Plot Module Herbaceous Info",
+                    "pluralName": "Plots Modules Herbaceous Info",
+                    "restful": true,
+                    "root": "data",
+                    "paramNames" : {
+                        "start" : "firstResult",
+                        "limit" : "maxResults",
+                        "query" : "keyword"
+                    }
+                },
+                {
+                    "api": {},
+                    "autoExpandColumn": false,
+                    "autoload": false,
                     "basePath": "mvc/vibi/herbaceousRelativeCover/",
                     "canCreate": false,
                     "canDelete": false,
@@ -3004,6 +3237,41 @@
                             "header" : "Stems HA Wetland Shrubs",
                             "mapping" : "stems_ha_wetland_shrubs",
                             "name" : "stems_ha_wetland_shrubs"
+                        }, 
+                        {
+                            "header": "Per Unvegetated",
+                            "mapping": "per_unvegetated",
+                            "name": "per_unvegetated"
+                        },
+                        {
+                            "header": "Per Button Bush",
+                            "mapping": "per_button_bush",
+                            "name": "per_button_bush"
+                        },
+                        {
+                            "header": "Per Perennial Native Hydrophytes",
+                            "mapping": "per_perennial_native_hydrophytes",
+                            "name": "per_perennial_native_hydrophytes"
+                        },
+                        {
+                            "header": "Per Adventives",
+                            "mapping": "per_adventives",
+                            "name": "per_adventives"
+                        },
+                        {
+                            "header": "Per PpenWater",
+                            "mapping": "per_open_water",
+                            "name": "per_open_water"
+                        },
+                        {
+                            "header": "Per Unvegetated OpenWater",
+                            "mapping": "per_unvegetated_open_water",
+                            "name": "per_unvegetated_open_water"
+                        },
+                        {
+                            "header": "Per Bare Ground",
+                            "mapping": "per_bare_ground",
+                            "name": "per_bare_ground"
                         }
                     ],
                     "createTitle": "Create new Metrics",
@@ -3090,6 +3358,34 @@
                         {
                             "mapping" : "steamsHaWetlandShrubs",
                             "name" : "stems_ha_wetland_shrubs"
+                        },
+                        {
+                          "mapping": "perUnvegetated",
+                          "name": "per_unvegetated"
+                        },
+                        {
+                          "mapping": "perButtonBush",
+                          "name": "per_button_bush"
+                        },
+                        {
+                          "mapping": "perPerennialNativeHydrophytes",
+                          "name": "per_perennial_native_hydrophytes"
+                        },
+                        {
+                          "mapping": "perAdventives",
+                          "name": "per_adventives"
+                        },
+                        {
+                          "mapping": "perPpenWater",
+                          "name": "per_open_water"
+                        },
+                        {
+                          "mapping": "perUnvegetatedOpenWater",
+                          "name": "per_unvegetated_open_water"
+                        },
+                        {
+                          "mapping": "perBareGround",
+                          "name": "per_bare_ground"
                         }
                     ],
                     "iconCls": "vibi_plot_module_herbaceous_ic",

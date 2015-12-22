@@ -12,15 +12,27 @@ public abstract class Type {
     };
 
     public static Type INTEGER = new Type("Integer", Integer.class) {
+        @Override
+        public Object extract(Cell cell) {
+            return extractWithNulls(cell);
+        }
     };
 
     public static Type BOOLEAN = new Type("Boolean", Boolean.class) {
     };
 
     public static Type DATE = new Type("Date", Date.class) {
+        @Override
+        public Object extract(Cell cell) {
+            return extractWithNulls(cell);
+        }
     };
 
     public static Type DOUBLE = new Type("Double", Double.class) {
+        @Override
+        public Object extract(Cell cell) {
+            return extractWithNulls(cell);
+        }
     };
 
     private final String name;
@@ -40,6 +52,22 @@ public abstract class Type {
         if (rawValue == null) {
             return null;
         }
+        return convertValue(cell, rawValue);
+    }
+
+    protected Object extractWithNulls(Cell cell) {
+        Object rawValue = Sheets.extract(cell);
+        if (rawValue == null) {
+            return null;
+        }
+        String stringRawValue = rawValue.toString();
+        if (stringRawValue.equalsIgnoreCase("na") || stringRawValue.equals("*")) {
+            return null;
+        }
+        return convertValue(cell, rawValue);
+    }
+
+    protected Object convertValue(Cell cell, Object rawValue) {
         if (clazz.isInstance(rawValue)) {
             return rawValue;
         }

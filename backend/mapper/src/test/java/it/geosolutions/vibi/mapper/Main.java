@@ -19,6 +19,7 @@ public class Main {
         params.put("user", "nuno");
         params.put("passwd", "nuno");
         DataStore store = DataStoreFinder.getDataStore(params);
-        VibiService.submit(System.getProperty("user.dir") + "/mapper/src/test/resources/2011_PCAP_DATA_1101-1130_mod.xls", store);
+        VibiService.submit("/home/nuno/Work/doc/vibi/vibi_data_original/2011_PCAP_DATA_1161-1190_mod.xls", store);
+        //VibiService.submit(System.getProperty("user.dir") + "/mapper/src/test/resources/2011_PCAP_DATA_1101-1130_mod.xls", store);
     }
 }
