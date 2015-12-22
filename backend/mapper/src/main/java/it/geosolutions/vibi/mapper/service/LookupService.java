@@ -1,7 +1,6 @@
 package it.geosolutions.vibi.mapper.service;
 
 import it.geosolutions.vibi.mapper.attributes.Attribute;
-import it.geosolutions.vibi.mapper.attributes.ReferenceAttribute;
 import it.geosolutions.vibi.mapper.builders.ReferenceAttributeBuilder;
 import it.geosolutions.vibi.mapper.builders.SheetProcessorBuilder;
 import it.geosolutions.vibi.mapper.builders.SimpleBoundsDetectorBuilder;
@@ -40,7 +39,8 @@ class LookupService {
                         if (cell == null) {
                             return null;
                         }
-                        if (Type.STRING.extract(cell).equals("*")) {
+                        String rawStringValue = (String) Type.STRING.extract(cell);
+                        if (rawStringValue.equals("*") || rawStringValue.equals("F")) {
                             return null;
                         }
                         return Type.INTEGER.extract(cell);
