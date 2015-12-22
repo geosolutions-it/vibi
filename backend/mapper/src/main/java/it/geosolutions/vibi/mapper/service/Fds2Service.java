@@ -4,6 +4,7 @@ import it.geosolutions.vibi.mapper.exceptions.VibiException;
 import it.geosolutions.vibi.mapper.utils.Sheets;
 import it.geosolutions.vibi.mapper.utils.Store;
 import it.geosolutions.vibi.mapper.utils.Type;
+import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -17,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Fds2Service {
+
+    private final static Logger LOGGER = Logger.getLogger(Fds2Service.class);
 
     private static final SimpleFeatureType PLOT_MODULE_WOODY_RAW = createFeatureType("plot_module_woody_raw",
             "plot_no:Integer,sub:Double,module_id:Integer,species:String,dbh_class:String,dbh_class_index:Integer,count:String");
@@ -39,6 +42,7 @@ class Fds2Service {
     }
 
     static void processFds2Sheet(Sheet sheet, DataStore store) {
+        LOGGER.info(String.format("Start parsing spreadsheet '%s'.", sheet.getSheetName()));
         Row row = findHeaderRow(sheet);
         if (row == null) {
             throw new VibiException("No header could be found on spreadsheet '%s'.", sheet.getSheetName());
