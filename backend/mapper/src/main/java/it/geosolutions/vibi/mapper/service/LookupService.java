@@ -27,13 +27,12 @@ class LookupService {
                 .withTable("species").withBoundsDetector(boundsDetector)
                 .withAttributeId("A", "scientific_name")
                 .withAttribute("B", "acronym", "Text")
-                .withAttribute("C", "authority", "Text")
-                /*.withAttribute(new ReferenceAttributeBuilder()
+                .withAttribute(new ReferenceAttributeBuilder()
                         .withTableName("authority")
                         .withAttributeName("authority")
                         .withAttributeType("Text")
                         .withAttributeId("authority", "C")
-                        .build())*/
+                        .build())
                 .withAttribute(new Attribute("cofc", Type.INTEGER) {
                     @Override
                     public Object getValue(SheetContext context) {
@@ -49,9 +48,7 @@ class LookupService {
                 })
                 .withAttribute("E", "tolerance", "Text")
                 .withAttribute("H", "common_name", "Text")
-                .withAttribute("G", "family", "Text")
-                .withAttribute("I", "ind", "Text")
-                /*.withAttribute(new ReferenceAttributeBuilder()
+                .withAttribute(new ReferenceAttributeBuilder()
                         .withTableName("family")
                         .withAttributeName("family")
                         .withAttributeType("Text")
@@ -62,7 +59,7 @@ class LookupService {
                         .withAttributeName("ind")
                         .withAttributeType("Text")
                         .withAttributeId("ind", "I")
-                        .build())*/
+                        .build())
                 .withAttribute("J", "hydro", "Text")
                 .withAttribute(new ReferenceAttributeBuilder()
                         .withTableName("form")

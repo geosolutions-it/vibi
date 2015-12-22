@@ -19,12 +19,13 @@ DROP TABLE IF EXISTS module CASCADE;
 DROP TABLE IF EXISTS plant_comm_code CASCADE;
 DROP TABLE IF EXISTS plot CASCADE;
 DROP TABLE IF EXISTS plot_module_herbaceous CASCADE;
+DROP TABLE IF EXISTS plot_module_herbaceous_info CASCADE;
 DROP TABLE IF EXISTS salinity CASCADE;
 DROP TABLE IF EXISTS species CASCADE;
 DROP TABLE IF EXISTS stand_size CASCADE;
 DROP TABLE IF EXISTS veg_class CASCADE;
 DROP TABLE IF EXISTS woody_importance_value CASCADE;
-DROP TABLE IF EXISTS metric_calculations CASCADE;
+DROP TABLE IF EXISTS metric_calculations_orig CASCADE;
 DROP TABLE IF EXISTS plot_module_woody_raw CASCADE;
 DROP TABLE IF EXISTS authority CASCADE;
 DROP TABLE IF EXISTS family CASCADE;
@@ -57,6 +58,21 @@ DROP VIEW IF EXISTS reduced_fsd2_basal_cm2_ha_tot CASCADE;
 DROP VIEW IF EXISTS reduced_fsd2_basal_cm2_ha_all_spp CASCADE;
 DROP VIEW IF EXISTS reduced_fsd2_iv CASCADE;
 DROP VIEW IF EXISTS woody_importance_value CASCADE;
+DROP VIEW IF EXISTS reduced_fsd2_den CASCADE;
+DROP VIEW IF EXISTS reduced_fsd2_rel_den CASCADE;
+DROP VIEW IF EXISTS reduced_fsd2_rel_den_calculations CASCADE;
+DROP VIEW IF EXISTS reduced_fsd2_sums_counts_iv CASCADE;
+DROP VIEW IF EXISTS reduced_fsd2_avg_iv CASCADE;
+DROP VIEW IF EXISTS reduced_fsd2_calculations_iv CASCADE;
+DROP VIEW IF EXISTS calculations_reduced_fsd1 CASCADE;
+DROP VIEW IF EXISTS calculations_reduced_fsd2_canopy CASCADE;
+DROP VIEW IF EXISTS calculations_reduced_fsd2_steams CASCADE;
+DROP VIEW IF EXISTS metric_calculations CASCADE;
+DROP VIEW IF EXISTS herbaceous_info_tot_cov CASCADE;
+DROP VIEW IF EXISTS herbaceous_info_tot_count CASCADE;
+DROP VIEW IF EXISTS herbaceous_info_relative_cover CASCADE;
+DROP VIEW IF EXISTS calculations_plot_module_herbaceous_info CASCADE;
+DROP VIEW IF EXISTS metric_calculations CASCADE;
 
 CREATE TABLE plant_comm_code (
     code text PRIMARY KEY,
@@ -333,6 +349,16 @@ CREATE TABLE plot_module_herbaceous (
 --  cover_class_midpoint numeric references cover_midpoint_lookup(midpoint)  -- this should be auto populated based on code above
 );
 
+CREATE TABLE plot_module_herbaceous_info (
+    fid text PRIMARY KEY,
+    plot_no int4 references plot(plot_no),
+    module_id int4 references module(module_id),
+    corner int4 references corner(corner),
+    depth integer references depth(depth),
+    info text,
+    cover_class_code integer references cover_midpoint_lookup(cover_code)
+);
+
 CREATE VIEW herbaceous_tot_cov AS
     SELECT a.plot_no, a.species, sum(b.midpoint) as tot_cov
     FROM plot_module_herbaceous a
@@ -478,16 +504,6 @@ CREATE TABLE biomass (
   grams_per_sq_meter numeric  --calculated; see column O in "Enter Biomass" tab of spreadsheet
 );
 
-DROP VIEW IF EXISTS reduced_fsd2_den CASCADE;
-DROP VIEW IF EXISTS reduced_fsd2_rel_den CASCADE;
-DROP VIEW IF EXISTS reduced_fsd2_rel_den_calculations CASCADE;
-DROP VIEW IF EXISTS reduced_fsd2_sums_counts_iv CASCADE;
-DROP VIEW IF EXISTS reduced_fsd2_avg_iv CASCADE;
-DROP VIEW IF EXISTS reduced_fsd2_calculations_iv CASCADE;
-DROP VIEW IF EXISTS calculations_reduced_fsd1 CASCADE;
-DROP VIEW IF EXISTS calculations_reduced_fsd2_canopy CASCADE;
-DROP VIEW IF EXISTS calculations_reduced_fsd2_steams CASCADE;
-
 CREATE OR REPLACE VIEW reduced_fsd2_den AS
 	SELECT a.plot_no, a.species, a.dbh_class_index, a.counts / b.plot_size_for_cover_data_area_ha AS counts_den
 	FROM reduced_fsd2_counts a
@@ -556,7 +572,11 @@ CREATE OR REPLACE VIEW calculations_reduced_fsd1 AS
 	sum(CASE WHEN c.code3 = 'natshHYDRO' THEN b.relative_cover ELSE 0 END) AS per_hydrophyte,
 	sum(CASE WHEN c.tolerance = 'sensitive' THEN b.relative_cover ELSE 0 END) AS sensitive,
 	sum(CASE WHEN c.tolerance = 'tolerant' THEN b.relative_cover ELSE 0 END) AS tolerant,
-	sum(CASE WHEN c.code1 = 'invgram' THEN b.relative_cover ELSE 0 END) AS invasive_graminoids
+	sum(CASE WHEN c.code1 = 'invgram' THEN b.relative_cover ELSE 0 END) AS invasive_graminoids,
+	sum(CASE WHEN c.habit = 'AN' THEN b.relative_cover ELSE 0 END) AS habit_an_sum,
+	sum(CASE WHEN c.code3 = 'BBS' THEN b.relative_cover ELSE 0 END) AS button_bush,
+	sum(CASE WHEN c.code4 = 'PEnatHYD' THEN b.relative_cover ELSE 0 END) AS perennial_native_hydrophytes,
+	sum(CASE WHEN c.nativity = 'adventive' THEN b.relative_cover ELSE 0 END) AS adventives
 	FROM plot a
 	INNER JOIN herbaceous_relative_cover b
 	ON a.plot_no = b.plot_no
@@ -586,7 +606,33 @@ CREATE OR REPLACE VIEW calculations_reduced_fsd2_steams AS
 	ON b.species = c.scientific_name
 	GROUP BY a.plot_no;
 
-DROP VIEW IF EXISTS metric_calculations CASCADE;
+CREATE VIEW herbaceous_info_tot_cov AS
+    SELECT a.plot_no, a.info, sum(b.midpoint) as tot_cov
+    FROM plot_module_herbaceous_info a
+    INNER JOIN cover_midpoint_lookup b ON a.cover_class_code = b.cover_code
+    WHERE a.cover_class_code NOTNULL
+    GROUP BY a.plot_no, a.info;
+
+CREATE VIEW herbaceous_info_tot_count AS
+    SELECT a.plot_no, a.info, sum(CASE WHEN b.midpoint > 0 THEN 1 ELSE 0 END) as tot_count
+    FROM plot_module_herbaceous_info a
+    INNER JOIN cover_midpoint_lookup b ON a.cover_class_code = b.cover_code
+    WHERE a.cover_class_code NOTNULL
+    GROUP BY a.plot_no, a.info;
+
+CREATE VIEW herbaceous_info_relative_cover AS
+    SELECT a.plot_no, a.info, CASE WHEN a.tot_cov > 0 THEN a.tot_cov / b.tot_count ELSE 0 END AS relative_cover
+    FROM herbaceous_info_tot_cov a
+    INNER JOIN herbaceous_info_tot_count b ON a.plot_no = b.plot_no AND a.info = b.info;
+
+CREATE OR REPLACE VIEW calculations_plot_module_herbaceous_info AS
+	SELECT plot_no,
+	sum(CASE WHEN info = '%bare ground' OR info = '%litter cover' THEN relative_cover ELSE 0 END) AS unvegetated_partial,
+	sum(CASE WHEN info = '%open water' THEN relative_cover ELSE 0 END) AS open_water,
+	sum(CASE WHEN info = '%unvegetated open water' THEN relative_cover ELSE 0 END) AS unvegetated_open_water,
+	sum(CASE WHEN info = '%bare ground' THEN relative_cover ELSE 0 END) AS bare_ground
+	FROM herbaceous_info_relative_cover
+	GROUP BY plot_no;
 
 CREATE OR REPLACE VIEW metric_calculations AS
 	SELECT a.plot_no,
@@ -608,12 +654,21 @@ CREATE OR REPLACE VIEW metric_calculations AS
 	subcanopy_iv,
 	canopy_iv,
 	steams_wetland_trees AS stems_ha_wetland_trees,
-	steams_wetland_shrubs AS stems_ha_wetland_shrubs
+	steams_wetland_shrubs AS stems_ha_wetland_shrubs,
+	unvegetated_partial + habit_an_sum AS per_unvegetated,
+	button_bush AS per_button_bush,
+	perennial_native_hydrophytes AS per_perennial_native_hydrophytes,
+	adventives AS per_adventives,
+	open_water AS per_open_water,
+	unvegetated_open_water AS per_unvegetated_open_water,
+	bare_ground AS per_bare_ground
 	FROM calculations_reduced_fsd1 a
 	INNER JOIN calculations_reduced_fsd2_canopy b
 	ON a.plot_no = b.plot_no
 	INNER JOIN calculations_reduced_fsd2_steams c
-	ON a.plot_no = c.plot_no;
+	ON a.plot_no = c.plot_no
+	INNER JOIN calculations_plot_module_herbaceous_info d
+	ON a.plot_no = d.plot_no;
 
 -- one big table (or materialize view) that includes all metric calculations for each plot
 -- if table, needs tied to trigger

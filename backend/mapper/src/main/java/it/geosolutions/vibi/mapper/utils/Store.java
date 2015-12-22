@@ -16,6 +16,7 @@ import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.Name;
 import org.opengis.filter.FilterFactory2;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -84,7 +85,7 @@ public final class Store {
             @Override
             public void doWork(FeatureStore<SimpleFeatureType, SimpleFeature> featureStore) throws Exception {
                 FeatureCollection<SimpleFeatureType, SimpleFeature> features =
-                        featureStore.getFeatures(filterFactory.id(simpleFeature.getIdentifier()));
+                        featureStore.getFeatures(filterFactory.id(encodeId(simpleFeature, true).getIdentifier()));
                 Validations.checkCondition(features.size() <= 1, "To much features found.");
                 if (!features.isEmpty()) {
                     feature = features.features().next();
@@ -98,7 +99,7 @@ public final class Store {
 
             @Override
             public void doWork(FeatureStore<SimpleFeatureType, SimpleFeature> featureStore) throws Exception {
-                featureStore.addFeatures(DataUtilities.collection(simpleFeature));
+                featureStore.addFeatures(DataUtilities.collection(encodeId(simpleFeature, false)));
             }
         };
     }
@@ -123,9 +124,20 @@ public final class Store {
                     values[i] = property.getValue();
                     i++;
                 }
-                featureStore.modifyFeatures(names, values, filterFactory.id(simpleFeature.getIdentifier()));
+                featureStore.modifyFeatures(names, values, filterFactory.id(encodeId(simpleFeature, false).getIdentifier()));
             }
         };
+    }
+
+    private static SimpleFeature encodeId(SimpleFeature simpleFeature, boolean escapeQuotes) {
+        SimpleFeatureBuilder copy = new SimpleFeatureBuilder(simpleFeature.getType());
+        copy.init(simpleFeature);
+        String encodedId = simpleFeature.getID();
+        if(escapeQuotes) {
+            encodedId = encodedId.replace("'", "''");
+        }
+        encodedId = URLEncoder.encode(encodedId);
+        return copy.buildFeature(encodedId);
     }
 
     private static List<Property> filterInvalidProperties(Collection<Property> properties) {
