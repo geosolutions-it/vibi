@@ -16,12 +16,12 @@ public class Main {
         dbParams.put("host", "localhost");
         dbParams.put("port", 5432);
         dbParams.put("schema", "public");
-        dbParams.put("database", "postgres");
-        dbParams.put("user", "postgres");
-        dbParams.put("passwd", "postgres");
+        dbParams.put("database", "nuno");
+        dbParams.put("user", "nuno");
+        dbParams.put("passwd", "nuno");
         DataStore store = DataStoreFinder.getDataStore(dbParams);
         VibiService.submit(System.getProperty("user.dir") + "/mapper/src/test/resources/2011_PCAP_DATA_1101-1130_mod.xls", store);
         Calculations.initJdbcDriver("org.postgresql.Driver");
-        Calculations.refresh("jdbc:postgresql://localhost:5432/postgres", "postgres", "postgres");
+        Calculations.refresh("jdbc:postgresql://localhost:5432/nuno", "nuno", "nuno");
     }
 }

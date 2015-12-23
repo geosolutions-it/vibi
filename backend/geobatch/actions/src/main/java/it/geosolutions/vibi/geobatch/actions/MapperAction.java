@@ -52,19 +52,19 @@ public final class MapperAction extends BaseAction<EventObject> {
                 @Override
                 public void doWork(HSSFWorkbook workBook) {
                     LookupService.processLookupSpeciesSheet(workBook.getSheet("LOOKUP species"), store);
-                    MapperAction.super.listenerForwarder.progressing(0.20f, "LOOKUP SPECIES");
+                    MapperAction.super.listenerForwarder.progressing(20f, "LOOKUP SPECIES");
                     LookupService.processLookupCommunitySheet(workBook.getSheet("LOOKUP community"), store);
-                    MapperAction.super.listenerForwarder.progressing(0.25f, "LOOKUP COMMUNITY");
+                    MapperAction.super.listenerForwarder.progressing(25f, "LOOKUP COMMUNITY");
                     LookupService.processLookupMidPointSheet(workBook.getSheet("LOOKUP midpoint"), store);
-                    MapperAction.super.listenerForwarder.progressing(0.30f, "LOOKUP MIDPOINT");
+                    MapperAction.super.listenerForwarder.progressing(30f, "LOOKUP MIDPOINT");
                     PlotService.processPlotInfoSheet(workBook.getSheet("ENTER PLOT INFO"), store);
-                    MapperAction.super.listenerForwarder.progressing(0.45f, "ENTER PLOT INFO");
+                    MapperAction.super.listenerForwarder.progressing(45f, "ENTER PLOT INFO");
                     Fds1Service.processFds1Sheet(workBook.getSheet("ENTER FDS1"), store);
-                    MapperAction.super.listenerForwarder.progressing(0.65f, "ENTER FDS1");
+                    MapperAction.super.listenerForwarder.progressing(65f, "ENTER FDS1");
                     Fds2Service.processFds2Sheet(workBook.getSheet("ENTER FDS2"), store);
-                    MapperAction.super.listenerForwarder.progressing(0.85f, "ENTER FDS2");
+                    MapperAction.super.listenerForwarder.progressing(85f, "ENTER FDS2");
                     Calculations.refresh(actionConfiguration.getDbUrl(), actionConfiguration.getUser(), actionConfiguration.getPasswd());
-                    MapperAction.super.listenerForwarder.progressing(1.00f, "CALCULATIONS");
+                    MapperAction.super.listenerForwarder.progressing(100f, "CALCULATIONS");
                 }
             };
         } finally {

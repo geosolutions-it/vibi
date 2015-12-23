@@ -1411,7 +1411,7 @@
                     "displayField": "label",
                     "editHeight": 270,
                     "editTitle": "Edit Woody Importance Value",
-                    "fields": [                      
+                    "fields": [
                         {
                             "mapping": "plotNo",
                             "name": "plot_no"
@@ -1569,7 +1569,7 @@
                             "header" : "Stems HA Wetland Shrubs",
                             "mapping" : "stems_ha_wetland_shrubs",
                             "name" : "stems_ha_wetland_shrubs"
-                        }, 
+                        },
                         {
                             "header": "Per Unvegetated",
                             "mapping": "per_unvegetated",
@@ -1724,6 +1724,7 @@
                     "id": "Metrics",
                     "idProperty": "id",
                     "name": "Metrics",
+                    "totalProperty" : "totalCount",
                     "pluralName": "Metrics",
                     "restful": true,
                     "root": "data",
@@ -3102,7 +3103,7 @@
                     "displayField": "label",
                     "editHeight": 270,
                     "editTitle": "Edit Woody Importance Value",
-                    "fields": [                      
+                    "fields": [
                         {
                             "mapping": "plotNo",
                             "name": "plot_no"
@@ -3259,7 +3260,7 @@
                             "header" : "Stems HA Wetland Shrubs",
                             "mapping" : "stems_ha_wetland_shrubs",
                             "name" : "stems_ha_wetland_shrubs"
-                        }, 
+                        },
                         {
                             "header": "Per Unvegetated",
                             "mapping": "per_unvegetated",
@@ -3413,6 +3414,7 @@
                     "iconCls": "vibi_metric_calculations_ic",
                     "id": "Metrics",
                     "idProperty": "id",
+                    "totalProperty" : "totalCount",
                     "name": "Metrics",
                     "pluralName": "Metrics",
                     "restful": true,
