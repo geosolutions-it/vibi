@@ -1,4 +1,4 @@
-﻿{
+{
     "composerUrl": "",
     "socialUrl": "",
     "start": 0,
@@ -22,6 +22,19 @@
 			"maxHeight": 86,
 			"height": 86
 	   }
+    },
+    "footer": {
+        "html": "<div id=\"footer\"> © 2015 Cleveland MetroParks </div>",
+        "css": "<style type='text/css'>#footer{background-color:white;height:100%;text-align:right;color:#4C755B;line-height:30px;padding-right:5px}</style>",
+        "container": {
+            "border": false,
+            "header": false,
+            "split": false,
+            "resizable":false,
+            "minHeight": 30,
+            "maxHeight": 30,
+            "height": 30
+        }
     },
     "ASSET": {
         "delete_icon": "./externals/mapmanager/theme/img/user_delete.png",
@@ -3410,7 +3423,7 @@
                           "name": "per_bare_ground"
                         }
                     ],
-                    "iconCls": "vibi_metric_calculations_ic",
+                    "iconCls": "vibi_plot_module_herbaceous_ic",
                     "id": "Metrics",
                     "idProperty": "id",
                     "name": "Metrics",

@@ -22,45 +22,45 @@
 }
 
 .vibi_plot_ic{
-    background-image: url(../img/table.png);
+    background-image: url(../img/marker.png);
 }
 
 .vibi_species_ic {
-		background-image: url(../img/table.png);
+		background-image: url(../img/chart_organisation.png);
 }
 
 .vibi_plot_module_herbaceous_ic {
-		background-image: url(../img/table.png);
+		background-image: url(../img/leaf.png);
 }
 
 .vibi_plot_module_herbaceous_info_ic {
-		background-image: url(../img/table.png);
+		background-image: url(../img/information.png);
 }
 
 .vibi_herbaceous_relative_cover_ic {
-		background-image: url(../img/table.png);
+		background-image: url(../img/edit-percent.png);
 }
 
 .vibi_metric_calculations_ic {
-		background-image: url(../img/table.png);
+		background-image: url(../img/chart_pie.png);
 }
 
 .vibi_plot_module_woody_raw_ic {
-		background-image: url(../img/table.png);
+		background-image: url(../img/tree.png);
 }
 
 .vibi_plot_module_woody_ic_dbh {
-		background-image: url(../img/table.png);
+		background-image: url(../img/tree-red.png);
 }
 
 .vibi_plot_module_woody_ic_dbh_cm {
-		background-image: url(../img/table.png);
+		background-image: url(../img/ruler_2.png);
 }
 
 .vibi_woody_importance_value_ic {
-		background-image: url(../img/table.png);
+		background-image: url(../img/medal_gold_3.png);
 }
 
 .vibi_biomass_ic {
-		background-image: url(../img/table.png);
+		background-image: url(../img/leaf-plant.png);
 }
