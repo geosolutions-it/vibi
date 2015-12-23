@@ -8,9 +8,9 @@ import it.geosolutions.vibi.mapper.sheets.SheetProcessor;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.geotools.data.DataStore;
 
-class PlotService {
+public class PlotService {
 
-    static void processPlotInfoSheet(Sheet sheet, DataStore store) {
+    public static void processPlotInfoSheet(Sheet sheet, DataStore store) {
 
         BoundsDetector boundsDetector = new SimpleBoundsDetectorBuilder()
                 .withDataStartExpectedMatch(-1, "A", "Plot No.")

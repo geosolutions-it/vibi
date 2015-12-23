@@ -18,7 +18,7 @@ import org.opengis.feature.simple.SimpleFeatureType;
 import java.util.ArrayList;
 import java.util.List;
 
-class Fds1Service {
+public class Fds1Service {
 
     private final static Logger LOGGER = Logger.getLogger(Fds1Service.class);
 
@@ -49,7 +49,7 @@ class Fds1Service {
         }
     }
 
-    static void processFds1Sheet(Sheet sheet, DataStore store) {
+    public static void processFds1Sheet(Sheet sheet, DataStore store) {
         LOGGER.info(String.format("Start parsing spreadsheet '%s'.", sheet.getSheetName()));
         int nextTableIndex = findNextTableIndex(sheet, 0);
         while (nextTableIndex != -1) {
@@ -77,7 +77,7 @@ class Fds1Service {
 
     private static int processTable(Sheet sheet, DataStore store, int startRowIndex) {
         List<ModuleAndCorner> modulesAndCorners = getModulesAndCorners(sheet.getRow(startRowIndex + 1));
-        int plotNo = getPlotNo(sheet, store, startRowIndex);
+        int plotNo = getPlotNo(sheet, startRowIndex);
         processInfoRow(store, sheet.getRow(startRowIndex + 3), "%open water", plotNo, modulesAndCorners);
         processInfoRow(store, sheet.getRow(startRowIndex + 4), "%unvegetated open water", plotNo, modulesAndCorners);
         processInfoRow(store, sheet.getRow(startRowIndex + 5), "%bare ground", plotNo, modulesAndCorners);
@@ -85,13 +85,24 @@ class Fds1Service {
         return processSpeciesRows(store, sheet, startRowIndex, plotNo, modulesAndCorners);
     }
 
-    private static int getPlotNo(Sheet sheet, DataStore store, int startRowIndex) {
-        int plotNoRowIndex = startRowIndex + 3;
-        Cell siteCell = sheet.getRow(startRowIndex + 2).getCell(Sheets.getIndex("A"), Row.RETURN_BLANK_AS_NULL);
-        if (siteCell == null || !Type.STRING.extract(siteCell).toString().trim().equalsIgnoreCase("site")) {
-            plotNoRowIndex = startRowIndex + 4;
+    private static int getPlotNo(Sheet sheet, int startRowIndex) {
+        int siteHeaderRowIndex = startRowIndex;
+        try {
+            for (int i = 1; i <= 7; i++) {
+                Cell siteCell = sheet.getRow(siteHeaderRowIndex).getCell(Sheets.getIndex("A"), Row.RETURN_BLANK_AS_NULL);
+                if (siteCell != null && Type.STRING.extract(siteCell).toString().trim().equalsIgnoreCase("site")) {
+                    return extractInteger(sheet.getRow(siteHeaderRowIndex + 1).getCell(Sheets.getIndex("A"), Row.RETURN_BLANK_AS_NULL));
+                }
+                siteHeaderRowIndex++;
+            }
+        } catch (VibiException exception) {
+            throw exception;
+        } catch (Exception exception) {
+            throw new VibiException(exception, "Error obtaining site for row '%d' of spreadsheet '%s'.",
+                    siteHeaderRowIndex + 1, sheet.getSheetName());
         }
-        return extractInteger(sheet.getRow(plotNoRowIndex).getCell(Sheets.getIndex("A"), Row.RETURN_BLANK_AS_NULL));
+        throw new VibiException("Could not found plot number for table that starts at row '%d' of spreadsheet '%s'.",
+                startRowIndex + 1, sheet.getSheetName());
     }
 
     private static void processInfoRow(DataStore store, Row row, String expectedInfo,

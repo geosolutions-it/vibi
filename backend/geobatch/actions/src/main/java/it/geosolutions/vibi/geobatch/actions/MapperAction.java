@@ -5,8 +5,11 @@ import it.geosolutions.geobatch.annotations.Action;
 import it.geosolutions.geobatch.annotations.CheckConfiguration;
 import it.geosolutions.geobatch.flow.event.action.ActionException;
 import it.geosolutions.geobatch.flow.event.action.BaseAction;
-import it.geosolutions.vibi.mapper.service.VibiService;
+import it.geosolutions.vibi.mapper.service.*;
+import it.geosolutions.vibi.mapper.utils.Sheets;
 import org.apache.commons.io.FileUtils;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.geotools.data.DataStore;
 
 import java.io.File;
 import java.util.EventObject;
@@ -42,9 +45,35 @@ public final class MapperAction extends BaseAction<EventObject> {
     }
 
     private void handleFileSystemEvent(FileSystemEvent event) {
-        VibiService.submit(event.getSource(), actionConfiguration.getStore());
         try {
+            final DataStore store = actionConfiguration.getStore();
+            new Sheets.WorkBook(event.getSource().getPath()) {
 
+                @Override
+                public void doWork(HSSFWorkbook workBook) {
+                    LookupService.processLookupSpeciesSheet(workBook.getSheet("LOOKUP species"), store);
+                    MapperAction.super.listenerForwarder.progressing(0.20f, "LOOKUP SPECIES");
+                    LookupService.processLookupCommunitySheet(workBook.getSheet("LOOKUP community"), store);
+                    MapperAction.super.listenerForwarder.progressing(0.25f, "LOOKUP COMMUNITY");
+                    LookupService.processLookupMidPointSheet(workBook.getSheet("LOOKUP midpoint"), store);
+                    MapperAction.super.listenerForwarder.progressing(0.30f, "LOOKUP MIDPOINT");
+                    PlotService.processPlotInfoSheet(workBook.getSheet("ENTER PLOT INFO"), store);
+                    MapperAction.super.listenerForwarder.progressing(0.45f, "ENTER PLOT INFO");
+                    Fds1Service.processFds1Sheet(workBook.getSheet("ENTER FDS1"), store);
+                    MapperAction.super.listenerForwarder.progressing(0.65f, "ENTER FDS1");
+                    Fds2Service.processFds2Sheet(workBook.getSheet("ENTER FDS2"), store);
+                    MapperAction.super.listenerForwarder.progressing(0.85f, "ENTER FDS2");
+                    Calculations.refresh(actionConfiguration.getDbUrl(), actionConfiguration.getUser(), actionConfiguration.getPasswd());
+                    MapperAction.super.listenerForwarder.progressing(1.00f, "CALCULATIONS");
+                }
+            };
+        } finally {
+            saveFile(event);
+        }
+    }
+
+    private void saveFile(FileSystemEvent event) {
+        try {
             FileUtils.moveFile(event.getSource(), new File(actionConfiguration.getOutputPath() + "/" + event.getSource().getName()));
         } catch (Exception excetion) {
             throw new RuntimeException(

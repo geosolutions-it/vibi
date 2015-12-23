@@ -1,6 +1,7 @@
 package it.geosolutions.vibi.geobatch.actions;
 
 import it.geosolutions.geobatch.configuration.event.action.ActionConfiguration;
+import it.geosolutions.vibi.mapper.service.Calculations;
 import org.geotools.data.DataStore;
 import org.geotools.data.DataStoreFinder;
 
@@ -18,6 +19,8 @@ public final class MapperConfiguration extends ActionConfiguration {
     private String user = "postgres";
     private String passwd = "postgres";
     private String outputPath = "/tmp";
+    private String driver = "org.postgresql.Driver";
+    private String dbUrl = "jdbc:postgresql://localhost:5432/postgres";
 
     public MapperConfiguration(String id, String name, String description) {
         super(id, name, description);
@@ -85,6 +88,23 @@ public final class MapperConfiguration extends ActionConfiguration {
 
     public void setOutputPath(String outputPath) {
         this.outputPath = outputPath;
+    }
+
+    public String getDriver() {
+        return driver;
+    }
+
+    public void setDriver(String driver) {
+        this.driver = driver;
+        Calculations.initJdbcDriver(this.driver);
+    }
+
+    public String getDbUrl() {
+        return dbUrl;
+    }
+
+    public void setDbUrl(String dbUrl) {
+        this.dbUrl = dbUrl;
     }
 
     public DataStore getStore() {

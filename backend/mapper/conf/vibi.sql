@@ -42,37 +42,36 @@ DROP TABLE IF EXISTS CODE4 CASCADE;
 DROP TABLE IF EXISTS CODE5 CASCADE;
 DROP TABLE IF EXISTS reduced_fsd2_dbh_index_basal_area CASCADE;
 
-DROP VIEW IF EXISTS herbaceous_tot_cov CASCADE;
-DROP VIEW IF EXISTS herbaceous_site_cov CASCADE;
-DROP VIEW IF EXISTS herbaceous_relative_cover CASCADE;
-DROP VIEW IF EXISTS plot_module_woody_dbh CASCADE;
-DROP VIEW IF EXISTS plot_module_woody_dbh_cm CASCADE;
-DROP VIEW IF EXISTS reduced_fsd2_counts CASCADE;
-DROP VIEW IF EXISTS reduced_fsd2_counts_cm2 CASCADE;
-DROP VIEW IF EXISTS reduced_fsd2_class_freq CASCADE;
-DROP VIEW IF EXISTS reduced_fsd2_tot_steams CASCADE;
-DROP VIEW IF EXISTS reduced_fsd2_tot_steams_all_spp CASCADE;
-DROP VIEW IF EXISTS reduced_fsd2_basal_cm2 CASCADE;
-DROP VIEW IF EXISTS reduced_fsd2_basal_cm2_ha CASCADE;
-DROP VIEW IF EXISTS reduced_fsd2_basal_cm2_ha_tot CASCADE;
-DROP VIEW IF EXISTS reduced_fsd2_basal_cm2_ha_all_spp CASCADE;
-DROP VIEW IF EXISTS reduced_fsd2_iv CASCADE;
-DROP VIEW IF EXISTS woody_importance_value CASCADE;
-DROP VIEW IF EXISTS reduced_fsd2_den CASCADE;
-DROP VIEW IF EXISTS reduced_fsd2_rel_den CASCADE;
-DROP VIEW IF EXISTS reduced_fsd2_rel_den_calculations CASCADE;
-DROP VIEW IF EXISTS reduced_fsd2_sums_counts_iv CASCADE;
-DROP VIEW IF EXISTS reduced_fsd2_avg_iv CASCADE;
-DROP VIEW IF EXISTS reduced_fsd2_calculations_iv CASCADE;
-DROP VIEW IF EXISTS calculations_reduced_fsd1 CASCADE;
-DROP VIEW IF EXISTS calculations_reduced_fsd2_canopy CASCADE;
-DROP VIEW IF EXISTS calculations_reduced_fsd2_steams CASCADE;
-DROP VIEW IF EXISTS metric_calculations CASCADE;
-DROP VIEW IF EXISTS herbaceous_info_tot_cov CASCADE;
-DROP VIEW IF EXISTS herbaceous_info_tot_count CASCADE;
-DROP VIEW IF EXISTS herbaceous_info_relative_cover CASCADE;
-DROP VIEW IF EXISTS calculations_plot_module_herbaceous_info CASCADE;
-DROP VIEW IF EXISTS metric_calculations CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS herbaceous_tot_cov CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS herbaceous_site_cov CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS herbaceous_relative_cover CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS plot_module_woody_dbh CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS plot_module_woody_dbh_cm CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS reduced_fsd2_counts CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS reduced_fsd2_counts_cm2 CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS reduced_fsd2_class_freq CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS reduced_fsd2_tot_steams CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS reduced_fsd2_tot_steams_all_spp CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS reduced_fsd2_basal_cm2 CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS reduced_fsd2_basal_cm2_ha CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS reduced_fsd2_basal_cm2_ha_tot CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS reduced_fsd2_basal_cm2_ha_all_spp CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS reduced_fsd2_iv CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS woody_importance_value CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS reduced_fsd2_den CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS reduced_fsd2_rel_den CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS reduced_fsd2_rel_den_calculations CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS reduced_fsd2_sums_counts_iv CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS reduced_fsd2_avg_iv CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS reduced_fsd2_calculations_iv CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS calculations_reduced_fsd1 CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS calculations_reduced_fsd2_canopy CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS calculations_reduced_fsd2_steams CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS herbaceous_info_tot_cov CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS herbaceous_info_tot_count CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS herbaceous_info_relative_cover CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS calculations_plot_module_herbaceous_info CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS metric_calculations CASCADE;
 
 CREATE TABLE plant_comm_code (
     code text PRIMARY KEY,
@@ -359,19 +358,19 @@ CREATE TABLE plot_module_herbaceous_info (
     cover_class_code integer references cover_midpoint_lookup(cover_code)
 );
 
-CREATE VIEW herbaceous_tot_cov AS
+CREATE MATERIALIZED VIEW herbaceous_tot_cov AS
     SELECT a.plot_no, a.species, sum(b.midpoint) as tot_cov
     FROM plot_module_herbaceous a
     INNER JOIN cover_midpoint_lookup b ON a.cover_class_code = b.cover_code
     WHERE a.cover_class_code NOTNULL
     GROUP BY a.plot_no, a.species;
 
-CREATE VIEW herbaceous_site_cov AS
+CREATE MATERIALIZED VIEW herbaceous_site_cov AS
     SELECT plot_no, sum(tot_cov) as site_cov
     FROM herbaceous_tot_cov
     GROUP BY plot_no;
 
-CREATE VIEW herbaceous_relative_cover AS
+CREATE MATERIALIZED VIEW herbaceous_relative_cover AS
     SELECT a.plot_no, a.species, (a.tot_cov / b.site_cov) as relative_cover
     FROM herbaceous_tot_cov a
     INNER JOIN herbaceous_site_cov b ON a.plot_no = b.plot_no;
@@ -387,12 +386,12 @@ CREATE TABLE plot_module_woody_raw (
     count text
 );
 
-CREATE OR REPLACE VIEW plot_module_woody_dbh AS
+CREATE MATERIALIZED VIEW plot_module_woody_dbh AS
 	SELECT plot_no, module_id, species, dbh_class_index, dbh_class, count::numeric / sub AS count
 	FROM plot_module_woody_raw
 	WHERE dbh_class_index <= 10;
 
-CREATE OR REPLACE VIEW plot_module_woody_dbh_cm AS
+CREATE MATERIALIZED VIEW plot_module_woody_dbh_cm AS
 	SELECT plot_no, module_id, species, dbh_class_index, dbh_class, (count::numeric / 2) ^ 2 * pi() AS dbh_cm
 	FROM plot_module_woody_raw
 	WHERE dbh_class_index > 10;
@@ -406,7 +405,7 @@ INSERT INTO reduced_fsd2_dbh_index_basal_area (dbh_class_index, basal_area) VALU
 (0, 0.1963), (1, 0.1963), (2, 2.405), (3, 11.04), (4, 44.18), (5, 122.7), (6, 240.5),
 (7, 397.6), (8, 594), (9, 830), (10, 1104);
 
-CREATE OR REPLACE VIEW reduced_fsd2_counts AS
+CREATE MATERIALIZED VIEW reduced_fsd2_counts AS
 	SELECT plot_no, species, dbh_class_index, sum(count::numeric) as counts
 	FROM plot_module_woody_dbh
 	GROUP BY plot_no, species, dbh_class_index
@@ -415,28 +414,28 @@ CREATE OR REPLACE VIEW reduced_fsd2_counts AS
 	FROM plot_module_woody_dbh_cm
 	GROUP BY plot_no, species;
 
-CREATE OR REPLACE VIEW reduced_fsd2_counts_cm2 AS
+CREATE MATERIALIZED VIEW reduced_fsd2_counts_cm2 AS
 	SELECT plot_no, species, dbh_class_index, sum(dbh_cm::numeric) as counts
 	FROM plot_module_woody_dbh_cm
 	GROUP BY plot_no, species, dbh_class_index;
 
-CREATE OR REPLACE VIEW reduced_fsd2_class_freq AS
+CREATE MATERIALIZED VIEW reduced_fsd2_class_freq AS
 	SELECT plot_no, species, count(*) as class_freq, count(*) / 12.0 as rel_class_freq
 	FROM reduced_fsd2_counts
 	GROUP BY plot_no, species;
 
-CREATE OR REPLACE VIEW reduced_fsd2_tot_steams AS
+CREATE MATERIALIZED VIEW reduced_fsd2_tot_steams AS
 	SELECT b.plot_no, a.species, sum(a.counts) as tot_steams, (sum(a.counts) / b.plot_size_for_cover_data_area_ha) as tot_steams_ha
 	FROM reduced_fsd2_counts a
 	INNER JOIN plot AS b ON a.plot_no = b.plot_no
 	GROUP BY b.plot_no, a.species;
 
-CREATE OR REPLACE VIEW reduced_fsd2_tot_steams_all_spp AS
+CREATE MATERIALIZED VIEW reduced_fsd2_tot_steams_all_spp AS
 	SELECT plot_no, sum(tot_steams_ha) as tot_steams_all_spp
 	FROM reduced_fsd2_tot_steams
 	GROUP BY plot_no;
 
-CREATE OR REPLACE VIEW reduced_fsd2_basal_cm2 AS
+CREATE MATERIALIZED VIEW reduced_fsd2_basal_cm2 AS
 	SELECT a.plot_no, a.species, a.dbh_class_index, (a.counts * b.basal_area) as basal_cm2
 	FROM reduced_fsd2_counts a
 	INNER JOIN reduced_fsd2_dbh_index_basal_area b
@@ -445,7 +444,7 @@ CREATE OR REPLACE VIEW reduced_fsd2_basal_cm2 AS
 	UNION
 	SELECT * FROM reduced_fsd2_counts_cm2 as basal_cm2;
 
-CREATE OR REPLACE VIEW reduced_fsd2_basal_cm2_ha AS
+CREATE MATERIALIZED VIEW reduced_fsd2_basal_cm2_ha AS
 	SELECT a.plot_no, a.species, a.dbh_class_index, (a.counts * b.basal_area) / c.plot_size_for_cover_data_area_ha AS basal_cm2_ha
 	FROM reduced_fsd2_counts a
 	INNER JOIN reduced_fsd2_dbh_index_basal_area b
@@ -459,17 +458,17 @@ CREATE OR REPLACE VIEW reduced_fsd2_basal_cm2_ha AS
 	INNER JOIN plot b
 	ON a.plot_no = b.plot_no;
 
-CREATE OR REPLACE VIEW reduced_fsd2_basal_cm2_ha_tot AS
+CREATE MATERIALIZED VIEW reduced_fsd2_basal_cm2_ha_tot AS
 	SELECT plot_no, species, sum(basal_cm2_ha) AS tot_cm2_ha
 	FROM reduced_fsd2_basal_cm2_ha
 	GROUP BY plot_no, species;
 
-CREATE OR REPLACE VIEW reduced_fsd2_basal_cm2_ha_all_spp AS
+CREATE MATERIALIZED VIEW reduced_fsd2_basal_cm2_ha_all_spp AS
 	SELECT plot_no, sum(basal_cm2_ha) AS  tot_cm2_all_spp
 	FROM reduced_fsd2_basal_cm2_ha
 	GROUP BY plot_no;
 
-CREATE OR REPLACE VIEW reduced_fsd2_iv AS
+CREATE MATERIALIZED VIEW reduced_fsd2_iv AS
 	SELECT a.plot_no, a.species, (d.tot_cm2_ha / e.tot_cm2_all_spp + b.tot_steams_ha / c.tot_steams_all_spp + a.rel_class_freq) / 3 AS iv
 	FROM reduced_fsd2_class_freq a
 	INNER JOIN reduced_fsd2_tot_steams b
@@ -481,7 +480,7 @@ CREATE OR REPLACE VIEW reduced_fsd2_iv AS
 	INNER JOIN reduced_fsd2_basal_cm2_ha_all_spp e
 	ON a.plot_no = e.plot_no;
 
-CREATE OR REPLACE VIEW  woody_importance_value AS
+CREATE MATERIALIZED VIEW  woody_importance_value AS
 	SELECT a.plot_no, a.species,
 	       CASE WHEN b.code5 = 'partial' THEN a.iv ELSE null END AS subcanopy_iv_partial,
 	       CASE WHEN b.code5 = 'shade' THEN a.iv ELSE null END AS subcanopy_iv_shade,
@@ -504,25 +503,25 @@ CREATE TABLE biomass (
   grams_per_sq_meter numeric  --calculated; see column O in "Enter Biomass" tab of spreadsheet
 );
 
-CREATE OR REPLACE VIEW reduced_fsd2_den AS
+CREATE MATERIALIZED VIEW reduced_fsd2_den AS
 	SELECT a.plot_no, a.species, a.dbh_class_index, a.counts / b.plot_size_for_cover_data_area_ha AS counts_den
 	FROM reduced_fsd2_counts a
 	INNER JOIN plot b
 	ON a.plot_no = b.plot_no;
 
-CREATE OR REPLACE VIEW reduced_fsd2_rel_den AS
+CREATE MATERIALIZED VIEW reduced_fsd2_rel_den AS
 	SELECT a.plot_no, a.species, a.dbh_class_index,
 	CASE WHEN a.counts_den > 0 THEN a.counts_den / b.tot_steams_all_spp ELSE 0 END AS counts_rel_den
 	FROM reduced_fsd2_den a
 	INNER JOIN reduced_fsd2_tot_steams_all_spp b
 	ON a.plot_no = b.plot_no;
 
-CREATE OR REPLACE VIEW reduced_fsd2_rel_den_calculations AS
+CREATE MATERIALIZED VIEW reduced_fsd2_rel_den_calculations AS
 	SELECT plot_no, sum(CASE WHEN dbh_class_index = 5 or dbh_class_index = 6 or dbh_class_index = 7 THEN counts_rel_den ELSE 0 END) AS small_tree
 	FROM reduced_fsd2_rel_den
 	GROUP BY plot_no;
 
-CREATE OR REPLACE VIEW reduced_fsd2_sums_counts_iv AS
+CREATE MATERIALIZED VIEW reduced_fsd2_sums_counts_iv AS
 	SELECT plot_no,
 	sum(subcanopy_iv_partial) AS sum_subcanopy_iv_partial,
 	sum(subcanopy_iv_shade) AS sum_subcanopy_iv_shade,
@@ -533,14 +532,14 @@ CREATE OR REPLACE VIEW reduced_fsd2_sums_counts_iv AS
 	FROM woody_importance_value
 	GROUP BY plot_no;
 
-CREATE OR REPLACE VIEW reduced_fsd2_avg_iv AS
+CREATE MATERIALIZED VIEW reduced_fsd2_avg_iv AS
 	SELECT plot_no,
 	CASE WHEN count_subcanopy_iv_partial > 0 THEN sum_subcanopy_iv_partial / count_subcanopy_iv_partial ELSE 0 END AS avg_subcanopy_iv_partial,
 	CASE WHEN count_subcanopy_iv_shade > 0 THEN sum_subcanopy_iv_shade / count_subcanopy_iv_shade ELSE 0 END AS avg_subcanopy_iv_shade,
 	CASE WHEN count_canopy_IV > 0 THEN sum_canopy_IV / count_canopy_IV ELSE 0 END AS avg_canopy_IV
 	FROM reduced_fsd2_sums_counts_iv;
 
-CREATE OR REPLACE VIEW reduced_fsd2_calculations_iv AS
+CREATE MATERIALIZED VIEW reduced_fsd2_calculations_iv AS
 	SELECT a.plot_no,
 	sum_subcanopy_iv_partial,
 	sum_subcanopy_iv_shade,
@@ -555,7 +554,7 @@ CREATE OR REPLACE VIEW reduced_fsd2_calculations_iv AS
 	INNER JOIN reduced_fsd2_avg_iv b
 	ON a.plot_no = b.plot_no;
 
-CREATE OR REPLACE VIEW calculations_reduced_fsd1 AS
+CREATE MATERIALIZED VIEW calculations_reduced_fsd1 AS
 	SELECT a.plot_no,
 	sum(CASE WHEN c.code1 = 'carex' THEN 1 ELSE 0 END) AS carex,
 	sum(CASE WHEN c.code2 = 'cyper' THEN 1 ELSE 0 END) AS cyperaceae,
@@ -584,7 +583,7 @@ CREATE OR REPLACE VIEW calculations_reduced_fsd1 AS
 	ON b.species = c.scientific_name
 	GROUP BY a.plot_no, a.plot_name;
 
-CREATE OR REPLACE VIEW calculations_reduced_fsd2_canopy AS
+CREATE MATERIALIZED VIEW calculations_reduced_fsd2_canopy AS
 	SELECT a.plot_no,
 	b.small_tree,
 	c.avg_subcanopy_iv_partial + c.avg_subcanopy_iv_shade AS subcanopy_iv,
@@ -595,7 +594,7 @@ CREATE OR REPLACE VIEW calculations_reduced_fsd2_canopy AS
 	INNER JOIN reduced_fsd2_calculations_iv c
 	ON a.plot_no = c.plot_no;
 
-CREATE OR REPLACE VIEW calculations_reduced_fsd2_steams AS
+CREATE MATERIALIZED VIEW calculations_reduced_fsd2_steams AS
 	SELECT a.plot_no,
 	sum(CASE WHEN c.code2 = 'natwtldTR' THEN b.tot_steams_ha ELSE 0 END) AS steams_wetland_trees,
 	sum(CASE WHEN c.code2 = 'natwtldSH' THEN b.tot_steams_ha ELSE 0 END) AS steams_wetland_shrubs
@@ -606,26 +605,26 @@ CREATE OR REPLACE VIEW calculations_reduced_fsd2_steams AS
 	ON b.species = c.scientific_name
 	GROUP BY a.plot_no;
 
-CREATE VIEW herbaceous_info_tot_cov AS
+CREATE MATERIALIZED VIEW herbaceous_info_tot_cov AS
     SELECT a.plot_no, a.info, sum(b.midpoint) as tot_cov
     FROM plot_module_herbaceous_info a
     INNER JOIN cover_midpoint_lookup b ON a.cover_class_code = b.cover_code
     WHERE a.cover_class_code NOTNULL
     GROUP BY a.plot_no, a.info;
 
-CREATE VIEW herbaceous_info_tot_count AS
+CREATE MATERIALIZED VIEW herbaceous_info_tot_count AS
     SELECT a.plot_no, a.info, sum(CASE WHEN b.midpoint > 0 THEN 1 ELSE 0 END) as tot_count
     FROM plot_module_herbaceous_info a
     INNER JOIN cover_midpoint_lookup b ON a.cover_class_code = b.cover_code
     WHERE a.cover_class_code NOTNULL
     GROUP BY a.plot_no, a.info;
 
-CREATE VIEW herbaceous_info_relative_cover AS
+CREATE MATERIALIZED VIEW herbaceous_info_relative_cover AS
     SELECT a.plot_no, a.info, CASE WHEN a.tot_cov > 0 THEN a.tot_cov / b.tot_count ELSE 0 END AS relative_cover
     FROM herbaceous_info_tot_cov a
     INNER JOIN herbaceous_info_tot_count b ON a.plot_no = b.plot_no AND a.info = b.info;
 
-CREATE OR REPLACE VIEW calculations_plot_module_herbaceous_info AS
+CREATE MATERIALIZED VIEW calculations_plot_module_herbaceous_info AS
 	SELECT plot_no,
 	sum(CASE WHEN info = '%bare ground' OR info = '%litter cover' THEN relative_cover ELSE 0 END) AS unvegetated_partial,
 	sum(CASE WHEN info = '%open water' THEN relative_cover ELSE 0 END) AS open_water,
@@ -634,7 +633,7 @@ CREATE OR REPLACE VIEW calculations_plot_module_herbaceous_info AS
 	FROM herbaceous_info_relative_cover
 	GROUP BY plot_no;
 
-CREATE OR REPLACE VIEW metric_calculations AS
+CREATE MATERIALIZED VIEW metric_calculations AS
 	SELECT a.plot_no,
 	carex AS carex_metric_value,
 	cyperaceae AS cyperaceae_metric_value,

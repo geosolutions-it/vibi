@@ -17,7 +17,7 @@ import org.opengis.feature.simple.SimpleFeatureType;
 import java.util.ArrayList;
 import java.util.List;
 
-class Fds2Service {
+public class Fds2Service {
 
     private final static Logger LOGGER = Logger.getLogger(Fds2Service.class);
 
@@ -41,7 +41,7 @@ class Fds2Service {
         }
     }
 
-    static void processFds2Sheet(Sheet sheet, DataStore store) {
+    public static void processFds2Sheet(Sheet sheet, DataStore store) {
         LOGGER.info(String.format("Start parsing spreadsheet '%s'.", sheet.getSheetName()));
         Row row = findHeaderRow(sheet);
         if (row == null) {

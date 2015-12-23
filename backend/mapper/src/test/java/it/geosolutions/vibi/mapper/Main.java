@@ -1,5 +1,6 @@
 package it.geosolutions.vibi.mapper;
 
+import it.geosolutions.vibi.mapper.service.Calculations;
 import it.geosolutions.vibi.mapper.service.VibiService;
 import org.geotools.data.DataStore;
 import org.geotools.data.DataStoreFinder;
@@ -10,16 +11,17 @@ import java.util.Map;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        Map<String, Object> params = new HashMap<>();
-        params.put("dbtype", "postgis");
-        params.put("host", "localhost");
-        params.put("port", 5432);
-        params.put("schema", "public");
-        params.put("database", "nuno");
-        params.put("user", "nuno");
-        params.put("passwd", "nuno");
-        DataStore store = DataStoreFinder.getDataStore(params);
-        VibiService.submit("/home/nuno/Work/doc/vibi/vibi_data_original/2011_PCAP_DATA_1161-1190_mod.xls", store);
-        //VibiService.submit(System.getProperty("user.dir") + "/mapper/src/test/resources/2011_PCAP_DATA_1101-1130_mod.xls", store);
+        Map<String, Object> dbParams = new HashMap<>();
+        dbParams.put("dbtype", "postgis");
+        dbParams.put("host", "localhost");
+        dbParams.put("port", 5432);
+        dbParams.put("schema", "public");
+        dbParams.put("database", "postgres");
+        dbParams.put("user", "postgres");
+        dbParams.put("passwd", "postgres");
+        DataStore store = DataStoreFinder.getDataStore(dbParams);
+        VibiService.submit(System.getProperty("user.dir") + "/mapper/src/test/resources/2011_PCAP_DATA_1101-1130_mod.xls", store);
+        Calculations.initJdbcDriver("org.postgresql.Driver");
+        Calculations.refresh("jdbc:postgresql://localhost:5432/postgres", "postgres", "postgres");
     }
 }

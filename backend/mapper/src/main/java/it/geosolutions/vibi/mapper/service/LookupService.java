@@ -14,9 +14,9 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.geotools.data.DataStore;
 
-class LookupService {
+public class LookupService {
 
-    static void processLookupSpeciesSheet(Sheet sheet, DataStore store) {
+    public static void processLookupSpeciesSheet(Sheet sheet, DataStore store) {
 
         BoundsDetector boundsDetector = new SimpleBoundsDetectorBuilder()
                 .withDataStartExpectedMatch(-1, "A", "SCIENTIFIC NAME")
@@ -125,7 +125,7 @@ class LookupService {
         sheetProcessor.process(sheet, store);
     }
 
-    static void processLookupCommunitySheet(Sheet sheet, DataStore store) {
+    public static void processLookupCommunitySheet(Sheet sheet, DataStore store) {
 
         BoundsDetector boundsDetector = new SimpleBoundsDetectorBuilder()
                 .withDataStartExpectedMatch(-1, "A", "code")
@@ -140,7 +140,7 @@ class LookupService {
         sheetProcessor.process(sheet, store);
     }
 
-    static void processLookupMidPointSheet(Sheet sheet, DataStore store) {
+    public static void processLookupMidPointSheet(Sheet sheet, DataStore store) {
 
         BoundsDetector boundsDetector = new SimpleBoundsDetectorBuilder()
                 .withDataStartExpectedMatch(-1, "A", "cover code")
