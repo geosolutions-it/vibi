@@ -91,6 +91,8 @@ public abstract class Type {
                 return DATE;
             case "double":
                 return DOUBLE;
+            case "numeric":
+                return DOUBLE;
             default:
                 throw new VibiException("Unknown type '%s'.", name);
         }

@@ -6,6 +6,7 @@ import it.geosolutions.vibi.mapper.utils.Store;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.geotools.data.DataStore;
+import org.geotools.data.DataUtilities;
 import org.geotools.factory.Hints;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.opengis.feature.simple.SimpleFeature;
@@ -33,9 +34,20 @@ public final class VibiService {
                 PlotService.processPlotInfoSheet(workBook.getSheet("ENTER PLOT INFO"), store);
                 Fds1Service.processFds1Sheet(workBook.getSheet("ENTER FDS1"), store);
                 Fds2Service.processFds2Sheet(workBook.getSheet("ENTER FDS2"), store);
+                BiomassService.processBiomassSheet(workBook.getSheet("ENTER BIOMASS"), store);
             }
         };
     }
+
+    static SimpleFeatureType createFeatureType(String tableName, String description) {
+        try {
+            return DataUtilities.createType(tableName, description);
+        } catch (Exception exception) {
+            throw new VibiException(exception, "Error creating feature type for table '%s' with description'%s'.",
+                    tableName, description);
+        }
+    }
+
 
     static String testSpeciesForeignKey(DataStore store, Row row, SimpleFeatureType type, String species) {
         if (!testForeignKeyExists(store, type, species)) {

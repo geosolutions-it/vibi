@@ -2,6 +2,7 @@ package it.geosolutions.vibi.mapper.detectors;
 
 import it.geosolutions.vibi.mapper.sheets.SheetContext;
 import it.geosolutions.vibi.mapper.utils.Sheets;
+import it.geosolutions.vibi.mapper.utils.Type;
 import org.apache.poi.ss.usermodel.Row;
 
 import java.util.regex.Pattern;
@@ -26,7 +27,10 @@ public class SimpleBoundsDetector implements BoundsDetector {
                 return false;
             }
             Row rowToMatch = currentRow.getSheet().getRow(rowToMatchIndex);
-            String cellValue = Sheets.cellToString(rowToMatch.getCell(columnIndex, Row.CREATE_NULL_AS_BLANK));
+            String cellValue = Sheets.extract(rowToMatch, columnIndex, Type.STRING);
+            if(cellValue == null) {
+                return false;
+            }
             return pattern.matcher(cellValue).matches();
         }
     }

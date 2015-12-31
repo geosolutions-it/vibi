@@ -25,7 +25,7 @@ public final class Store {
 
     private final static FilterFactory2 filterFactory = CommonFactoryFinder.getFilterFactory2(GeoTools.getDefaultHints());
 
-    public static SimpleFeature constructFeature(SimpleFeatureType featureType, SheetContext context, List<Attribute> attributes) {
+    public static Tuple<String, SimpleFeature> constructFeature(SimpleFeatureType featureType, SheetContext context, List<Attribute> attributes) {
         SimpleFeatureBuilder featureBuilder = new SimpleFeatureBuilder(featureType);
         featureBuilder.featureUserData(Hints.USE_PROVIDED_FID, Boolean.TRUE);
         String id = null;
@@ -39,7 +39,7 @@ public final class Store {
                 }
             }
         }
-        return featureBuilder.buildFeature(id);
+        return Tuple.tuple(id, featureBuilder.buildFeature(id));
     }
 
     public static SimpleFeatureType constructFeatureType(String tableName, List<Attribute> attributes) {

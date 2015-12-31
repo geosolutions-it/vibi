@@ -63,6 +63,8 @@ public final class MapperAction extends BaseAction<EventObject> {
                     MapperAction.super.listenerForwarder.progressing(65f, "ENTER FDS1");
                     Fds2Service.processFds2Sheet(workBook.getSheet("ENTER FDS2"), store);
                     MapperAction.super.listenerForwarder.progressing(85f, "ENTER FDS2");
+                    BiomassService.processBiomassSheet(workBook.getSheet("ENTER BIOMASS"), store);
+                    MapperAction.super.listenerForwarder.progressing(92.5f, "ENTER BIOMASS");
                     Calculations.refresh(actionConfiguration.getDbUrl(), actionConfiguration.getUser(), actionConfiguration.getPasswd());
                     MapperAction.super.listenerForwarder.progressing(100f, "CALCULATIONS");
                 }

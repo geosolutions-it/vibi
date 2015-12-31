@@ -17,6 +17,8 @@ import org.opengis.feature.simple.SimpleFeatureType;
 import java.util.ArrayList;
 import java.util.List;
 
+import static it.geosolutions.vibi.mapper.service.VibiService.createFeatureType;
+
 public class Fds2Service {
 
     private final static Logger LOGGER = Logger.getLogger(Fds2Service.class);
@@ -31,15 +33,6 @@ public class Fds2Service {
     private static final SimpleFeatureType SPECIES_TYPE = createFeatureType("species", "");
 
     private static final SimpleFeatureType DBH_CLASS = createFeatureType("dbh_class", "");
-
-    private static SimpleFeatureType createFeatureType(String tableName, String description) {
-        try {
-            return DataUtilities.createType(tableName, description);
-        } catch (Exception exception) {
-            throw new VibiException(exception, "Error creating feature type for table '%s' with description'%s'.",
-                    tableName, description);
-        }
-    }
 
     public static void processFds2Sheet(Sheet sheet, DataStore store) {
         LOGGER.info(String.format("Start parsing spreadsheet '%s'.", sheet.getSheetName()));
@@ -66,7 +59,7 @@ public class Fds2Service {
     private static Row findHeaderRow(Sheet sheet) {
         for (Row row : sheet) {
             Cell cell = row.getCell(Sheets.getIndex("A"), Row.RETURN_BLANK_AS_NULL);
-            if (cell != null && Sheets.cellToString(cell).equalsIgnoreCase("site name")) {
+            if (cell != null && ((String) Type.STRING.extract(cell)).equalsIgnoreCase("site name")) {
                 return sheet.getRow(row.getRowNum());
             }
         }

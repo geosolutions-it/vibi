@@ -10,13 +10,14 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.geotools.data.DataStore;
-import org.geotools.data.DataUtilities;
 import org.geotools.factory.Hints;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.opengis.feature.simple.SimpleFeatureType;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static it.geosolutions.vibi.mapper.service.VibiService.createFeatureType;
 
 public class Fds1Service {
 
@@ -40,15 +41,6 @@ public class Fds1Service {
 
     private static final SimpleFeatureType COVER_MIDPOINT_LOOKUP = createFeatureType("cover_midpoint_lookup", "");
 
-    private static SimpleFeatureType createFeatureType(String tableName, String description) {
-        try {
-            return DataUtilities.createType(tableName, description);
-        } catch (Exception exception) {
-            throw new VibiException(exception, "Error creating feature type for table '%s' with description'%s'.",
-                    tableName, description);
-        }
-    }
-
     public static void processFds1Sheet(Sheet sheet, DataStore store) {
         LOGGER.info(String.format("Start parsing spreadsheet '%s'.", sheet.getSheetName()));
         int nextTableIndex = findNextTableIndex(sheet, 0);
@@ -59,19 +51,23 @@ public class Fds1Service {
 
     private static int findNextTableIndex(Sheet sheet, int startIndex) {
         int index = startIndex;
-        while (true) {
-            Row row = sheet.getRow(index);
-            if (row == null) {
-                return -1;
+        try {
+            while (true) {
+                Row row = sheet.getRow(index);
+                if (row == null) {
+                    return -1;
+                }
+                String value = Sheets.extract(row, "O", Type.STRING);
+                if (value != null && value.toLowerCase().contains("mod")) {
+                    return index;
+                }
+                index++;
             }
-            Cell cell = row.getCell(Sheets.getIndex("O"));
-            if (cell == null) {
-                return -1;
-            }
-            if (Sheets.cellToString(cell).toLowerCase().contains("mod")) {
-                return index;
-            }
-            index++;
+        } catch (VibiException exception) {
+            throw exception;
+        } catch (Exception exception) {
+            throw new VibiException(exception, "Error find nex table index at row '%d' of spreadsheet '%s'.",
+                    index + 1, sheet.getSheetName());
         }
     }
 

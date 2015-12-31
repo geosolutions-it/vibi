@@ -4,6 +4,7 @@ import it.geosolutions.vibi.mapper.attributes.Attribute;
 import it.geosolutions.vibi.mapper.detectors.BoundsDetector;
 import it.geosolutions.vibi.mapper.exceptions.VibiException;
 import it.geosolutions.vibi.mapper.utils.Store;
+import it.geosolutions.vibi.mapper.utils.Tuple;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -64,7 +65,11 @@ public final class SheetProcessor {
     }
 
     private void processRow(SheetContext context) {
-        SimpleFeature feature = Store.constructFeature(featureType, context, attributes);
-        Store.persistFeature(context.getStore(), feature);
+        Tuple<String, SimpleFeature> feature = Store.constructFeature(featureType, context, attributes);
+        if(feature.first == null || feature.first.isEmpty()) {
+            throw new VibiException("Error processing row '%d' o sheet '%s', primary key is null or empty.",
+                    context.getRow().getRowNum() + 1, context.getSheet().getSheetName());
+        }
+        Store.persistFeature(context.getStore(), feature.second);
     }
 }

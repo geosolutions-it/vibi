@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS class_code_Mod_NatureServe CASCADE;
 DROP TABLE IF EXISTS hgm_subclass CASCADE;
-DROP TABLE IF EXISTS biomass CASCADE;
+DROP TABLE IF EXISTS biomass_raw CASCADE;
 DROP TABLE IF EXISTS biomass_accuracy CASCADE;
 DROP TABLE IF EXISTS corner CASCADE;
 DROP TABLE IF EXISTS cover_midpoint_lookup CASCADE;
@@ -71,7 +71,16 @@ DROP MATERIALIZED VIEW IF EXISTS herbaceous_info_tot_cov CASCADE;
 DROP MATERIALIZED VIEW IF EXISTS herbaceous_info_tot_count CASCADE;
 DROP MATERIALIZED VIEW IF EXISTS herbaceous_info_relative_cover CASCADE;
 DROP MATERIALIZED VIEW IF EXISTS calculations_plot_module_herbaceous_info CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS biomass CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS biomass_info CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS biomass_count CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS biomass_tot CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS biomass_calculations CASCADE;
 DROP MATERIALIZED VIEW IF EXISTS metric_calculations CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS vibi_e_index CASCADE;
+
+DROP FUNCTION IF EXISTS refresh_calculations();
+DROP FUNCTION IF EXISTS metric_value(numeric, numeric[], numeric[]);
 
 CREATE TABLE plant_comm_code (
     code text PRIMARY KEY,
@@ -489,19 +498,60 @@ CREATE MATERIALIZED VIEW  woody_importance_value AS
 	INNER JOIN species b ON a.species = b.scientific_name;
 
 --includes calculated fields
-CREATE TABLE biomass (
-  plot_no int4 references plot(plot_no),
-  DateTime timestamptz,
-  module_id int4 references module(module_id),
-  corner int4 references corner(corner),
-  sample_id text,
-  area_sampled numeric,
-  weight_with_bag numeric,
-  bag_weight numeric,
-  actual_or_derived text references biomass_accuracy(biomass_accuracy), -- this lookup needs to be created
-  biomass_weight_grams numeric, --calculated; see column N in "Enter Biomass" tab of spreadsheet
-  grams_per_sq_meter numeric  --calculated; see column O in "Enter Biomass" tab of spreadsheet
+CREATE TABLE biomass_raw (
+    fid text PRIMARY KEY,
+    plot_no int4 references plot(plot_no),
+    date_time timestamptz,
+    module_id int4 references module(module_id),
+    corner int4 references corner(corner),
+    sample_id int4,
+    area_sampled numeric,
+    weight_with_bag numeric,
+    bag_weight numeric,
+    biomass_collected text,
+    actual_or_derived text references biomass_accuracy(biomass_accuracy) -- this lookup needs to be created
+    --biomass_weight_grams numeric, --calculated; see column N in "Enter Biomass" tab of spreadsheet
+    --grams_per_sq_meter numeric  --calculated; see column O in "Enter Biomass" tab of spreadsheet
 );
+
+CREATE MATERIALIZED VIEW biomass AS
+    SELECT plot_no, date_time, module_id, corner, sample_id, area_sampled,
+    weight_with_bag, bag_weight, biomass_collected, actual_or_derived,
+    CASE WHEN COALESCE(weight_with_bag, 0.0) > 2
+    THEN weight_with_bag - bag_weight ELSE COALESCE(weight_with_bag, 0.0)
+    END AS biomass_weight_grams,
+    CASE WHEN COALESCE(sample_id, 0.0) > 0.0 AND COALESCE(area_sampled, 0.0) > 0.0
+    THEN (CASE WHEN COALESCE(weight_with_bag, 0.0) > 2
+         THEN weight_with_bag - bag_weight ELSE COALESCE(weight_with_bag, 0.0) END) / area_sampled
+    END AS grams_per_sq_meter
+    FROM biomass_raw;
+
+CREATE MATERIALIZED VIEW biomass_info AS
+    SELECT plot_no, date_time, biomass_collected
+    FROM biomass
+    GROUP BY plot_no, date_time, biomass_collected;
+
+CREATE MATERIALIZED VIEW biomass_count AS
+    SELECT plot_no,
+    sum(CASE WHEN COALESCE(sample_id, 0) > 0 THEN 1 ELSE 0 END) AS count
+    FROM biomass
+    GROUP BY plot_no;
+
+CREATE MATERIALIZED VIEW biomass_tot AS
+    SELECT plot_no,
+    sum(COALESCE(grams_per_sq_meter, 0)) AS tot
+    FROM biomass
+    GROUP BY plot_no;
+
+CREATE MATERIALIZED VIEW biomass_calculations AS
+    SELECT a.plot_no,
+    CASE WHEN COALESCE(b.count, 0) > 0
+    THEN c.tot / b.count ELSE 0 END AS biomass
+    FROM plot a
+    LEFT JOIN biomass_count b
+    ON a.plot_no = b.plot_no
+    LEFT JOIN biomass_tot c
+    ON a.plot_no = c.plot_no;
 
 CREATE MATERIALIZED VIEW reduced_fsd2_den AS
 	SELECT a.plot_no, a.species, a.dbh_class_index, a.counts / b.plot_size_for_cover_data_area_ha AS counts_den
@@ -634,71 +684,132 @@ CREATE MATERIALIZED VIEW calculations_plot_module_herbaceous_info AS
 	GROUP BY plot_no;
 
 CREATE MATERIALIZED VIEW metric_calculations AS
-	SELECT a.plot_no,
-	carex AS carex_metric_value,
-	cyperaceae AS cyperaceae_metric_value,
-	dicot AS dicot_metric_value,
-	shade AS shade_metric_value,
-	shrub AS shrub_metric_value,
-	hydrophyte AS hydrophyte_metric_value,
-	svp AS svp_metric_value,
-	ap_ratio AS ap_ratio_metric_value,
-	fqai AS fqai_metric_value,
-	bryophyte AS bryophyte_metric_value,
-	per_hydrophyte AS per_hydrophyte_metric_value,
-	sensitive AS sensitive_metric_value,
-	tolerant AS tolerant_metric_value,
-	invasive_graminoids AS invasive_graminoids_metric_value,
-	small_tree AS small_tree_metric_value,
-	subcanopy_iv,
-	canopy_iv,
-	steams_wetland_trees AS stems_ha_wetland_trees,
-	steams_wetland_shrubs AS stems_ha_wetland_shrubs,
-	unvegetated_partial + habit_an_sum AS per_unvegetated,
-	button_bush AS per_button_bush,
-	perennial_native_hydrophytes AS per_perennial_native_hydrophytes,
-	adventives AS per_adventives,
-	open_water AS per_open_water,
-	unvegetated_open_water AS per_unvegetated_open_water,
-	bare_ground AS per_bare_ground
-	FROM calculations_reduced_fsd1 a
-	INNER JOIN calculations_reduced_fsd2_canopy b
-	ON a.plot_no = b.plot_no
-	INNER JOIN calculations_reduced_fsd2_steams c
-	ON a.plot_no = c.plot_no
-	INNER JOIN calculations_plot_module_herbaceous_info d
-	ON a.plot_no = d.plot_no;
+    SELECT a.plot_no,
+    carex AS carex_metric_value,
+    cyperaceae AS cyperaceae_metric_value,
+    dicot AS dicot_metric_value,
+    shade AS shade_metric_value,
+    shrub AS shrub_metric_value,
+    hydrophyte AS hydrophyte_metric_value,
+    svp AS svp_metric_value,
+    ap_ratio AS ap_ratio_metric_value,
+    fqai AS fqai_metric_value,
+    bryophyte AS bryophyte_metric_value,
+    per_hydrophyte AS per_hydrophyte_metric_value,
+    sensitive AS sensitive_metric_value,
+    tolerant AS tolerant_metric_value,
+    invasive_graminoids AS invasive_graminoids_metric_value,
+    small_tree AS small_tree_metric_value,
+    subcanopy_iv,
+    canopy_iv,
+    biomass AS biomass_metric_value,
+    steams_wetland_trees AS stems_ha_wetland_trees,
+    steams_wetland_shrubs AS stems_ha_wetland_shrubs,
+    unvegetated_partial + habit_an_sum AS per_unvegetated,
+    button_bush AS per_button_bush,
+    perennial_native_hydrophytes AS per_perennial_native_hydrophytes,
+    adventives AS per_adventives,
+    open_water AS per_open_water,
+    unvegetated_open_water AS per_unvegetated_open_water,
+    bare_ground AS per_bare_ground
+    FROM plot a
+    LEFT JOIN calculations_reduced_fsd2_canopy b
+    ON a.plot_no = b.plot_no
+    LEFT JOIN calculations_reduced_fsd2_steams c
+    ON a.plot_no = c.plot_no
+    LEFT JOIN calculations_plot_module_herbaceous_info d
+    ON a.plot_no = d.plot_no
+    LEFT JOIN calculations_reduced_fsd1 e
+    ON a.plot_no = e.plot_no
+    LEFT JOIN biomass_calculations f
+    ON a.plot_no = f.plot_no;
 
--- one big table (or materialize view) that includes all metric calculations for each plot
--- if table, needs tied to trigger
--- if view, needs to be performant
+CREATE OR REPLACE FUNCTION metric_value(value numeric, metrics_index numeric[], metrics_values numeric[])
+RETURNS numeric LANGUAGE plpgsql AS $$
+DECLARE
+	index int := 0;
+	length int := array_length(metrics_index, 1);
+BEGIN
+	IF value IS NULL THEN
+		RETURN NULL;
+	END IF;
+	WHILE index < length LOOP
+		IF metrics_index[index] >= value THEN
+			RETURN metrics_values[index];
+		END IF;
+		index := index + 1;
+	END LOOP;
+	RETURN metrics_values[length + 1];
+END
+$$;
 
-CREATE TABLE metric_calculations_orig (
-    plot_no int4 references plot(plot_no),
-    carex_metric_value int, -- see row 6 column B of "Calculations" tab in  cyperaceae_metric_value int -- see row 7 column B of "Calculations" tab in spreadsheet
-    dicot_metric_value int, -- see row 8 column B of "Calculations" tab in spreadsheet
-    shade_metric_value int, -- see row 9 column B of "Calculations" tab in spreadsheet
-    shrub_metric_value int, -- see row 10 column B of "Calculations" tab in spreadsheet
-    hydrophyte_metric_value int, -- see row 11 column B of "Calculations" tab in spreadsheet
-    SVP_metric_value int, -- see row 12 column B of "Calculations" tab in spreadsheet
-    AP_ratio_metric_value numeric, -- see row 13 column B of "Calculations" tab in spreadsheet
-    FQAI_metric_value numeric, -- see row 14 column B of "Calculations" tab in spreadsheet
-    bryophyte_metric_value numeric, -- see row 15 column B of "Calculations" tab in spreadsheet
-    sensitive_metric_value numeric, -- see row 17 column B of "Calculations" tab in spreadsheet
-    tolerant_metric_value numeric, -- see row 18 column B of "Calculations" tab in spreadsheet
-    invasive_graminoid_metric_value numeric, -- see row 19 column B of "Calculations" tab in spreadsheet
-    small_tree_metric_value numeric, -- see row 20 column B of "Calculations" tab in spreadsheet
-    subcanopy_IV numeric, --21
-    canopy_IV numeric, --22
-    biomass numeric,  --23
-    stems_ha_wetland_trees int4, --24
-    stems_ha_wetland_shrubs int4, --25
-    per_unvegetated numeric, --26
-    per_buttonbush numeric, --27
-    per_perrenial_native_hydrophytes numeric, --28
-    per_adventives numeric, --29
-    per_open_water numeric, --30
-    per_unvegetated_open_water numeric, --31
-    per_bare_ground numeric,  --32
-    vibi_score numeric -- Sum of scores as e.g. C33 in Calculations tab
-  );
+CREATE MATERIALIZED VIEW vibi_e_index AS
+    SELECT a.plot_no,
+    metric_value(b.carex_metric_value::numeric, ARRAY[2.0, 4.0, 5.0], ARRAY[0.0, 3.0, 7.0, 10.0]) AS carex_metric_value,
+    metric_value(b.dicot_metric_value::numeric, ARRAY[11.0, 18.0, 26.0], ARRAY[0.0, 3.0, 7.0, 10.0]) AS dicot_metric_value,
+    metric_value(b.shrub_metric_value::numeric, ARRAY[2.0, 3.0, 5.0], ARRAY[0.0, 3.0, 7.0, 10.0]) AS shrub_metric_value,
+    metric_value(b.hydrophyte_metric_value::numeric, ARRAY[11.0, 21.0, 31.0], ARRAY[0.0, 3.0, 7.0, 10.0]) AS hydrophyte_metric_value,
+    CASE WHEN COALESCE(c.site_cov, 0.0) > 0.1049 THEN
+	 metric_value(b.ap_ratio_metric_value::numeric, ARRAY[0.205, 0.325, 0.485], ARRAY[10.0, 7.0, 3.0, 0.0])
+	 ELSE 0.0 END AS ap_ratio_metric_value,
+    metric_value(b.fqai_metric_value::numeric, ARRAY[9.95, 14.35, 21.45], ARRAY[0.0, 3.0, 7.0, 10.0]) AS fqai_metric_value,
+    CASE WHEN COALESCE(c.site_cov, 0.0) > 0.1049 THEN
+	 metric_value(b.sensitive_metric_value::numeric, ARRAY[0.0255, 0.1005, 0.1505], ARRAY[0.0, 3.0, 7.0, 10.0])
+	 ELSE 0.0 END AS sensitive_metric_value,
+    CASE WHEN COALESCE(c.site_cov, 0.0) > 0.1049 THEN
+	 metric_value(b.tolerant_metric_value::numeric, ARRAY[0.2005, 0.4005, 0.6005], ARRAY[10.0, 7.0, 3.0, 0.0])
+	 ELSE 0.0 END AS tolerant_metric_value,
+    CASE WHEN COALESCE(c.site_cov, 0.0) > 0.1049 THEN
+	 metric_value(b.invasive_graminoids_metric_value::numeric, ARRAY[0.0305, 0.1505, 0.3046], ARRAY[10.0, 7.0, 3.0, 0.0])
+	 ELSE 0.0 END AS invasive_graminoids_metric_value,
+    CASE WHEN d.biomass_collected = 'NO-NAT' OR d.biomass_collected = 'NO-MIT' THEN 3
+	 WHEN d.biomass_collected = 'YES'
+	 THEN metric_value(b.biomass_metric_value, ARRAY[100.0, 201.0, 451.0, 801.0], ARRAY[0.0, 10.0, 7.0, 3.0, 0.0])
+	 ELSE 0.0 END AS biomass
+    FROM plot a
+    INNER JOIN metric_calculations b
+    ON a.plot_no = b.plot_no
+    LEFT JOIN herbaceous_site_cov c
+    ON a.plot_no = c.plot_no
+    LEFT JOIN biomass_info d
+    ON a.plot_no = d.plot_no;
+
+CREATE OR REPLACE FUNCTION refresh_calculations() RETURNS void AS $$
+    BEGIN
+        REFRESH MATERIALIZED VIEW plot_module_woody_dbh;
+        REFRESH MATERIALIZED VIEW plot_module_woody_dbh_cm;
+        REFRESH MATERIALIZED VIEW reduced_fsd2_counts;
+        REFRESH MATERIALIZED VIEW reduced_fsd2_tot_steams;
+        REFRESH MATERIALIZED VIEW calculations_reduced_fsd2_steams;
+        REFRESH MATERIALIZED VIEW reduced_fsd2_counts_cm2;
+        REFRESH MATERIALIZED VIEW reduced_fsd2_basal_cm2_ha;
+        REFRESH MATERIALIZED VIEW reduced_fsd2_basal_cm2_ha_tot;
+        REFRESH MATERIALIZED VIEW reduced_fsd2_basal_cm2_ha_all_spp;
+        REFRESH MATERIALIZED VIEW reduced_fsd2_class_freq;
+        REFRESH MATERIALIZED VIEW reduced_fsd2_tot_steams_all_spp;
+        REFRESH MATERIALIZED VIEW reduced_fsd2_den;
+        REFRESH MATERIALIZED VIEW reduced_fsd2_rel_den;
+        REFRESH MATERIALIZED VIEW reduced_fsd2_rel_den_calculations;
+        REFRESH MATERIALIZED VIEW reduced_fsd2_iv;
+        REFRESH MATERIALIZED VIEW woody_importance_value;
+        REFRESH MATERIALIZED VIEW reduced_fsd2_sums_counts_iv;
+        REFRESH MATERIALIZED VIEW reduced_fsd2_avg_iv;
+        REFRESH MATERIALIZED VIEW reduced_fsd2_calculations_iv;
+        REFRESH MATERIALIZED VIEW calculations_reduced_fsd2_canopy;
+        REFRESH MATERIALIZED VIEW herbaceous_tot_cov;
+        REFRESH MATERIALIZED VIEW herbaceous_site_cov;
+        REFRESH MATERIALIZED VIEW herbaceous_relative_cover;
+        REFRESH MATERIALIZED VIEW calculations_reduced_fsd1;
+        REFRESH MATERIALIZED VIEW herbaceous_info_tot_cov;
+        REFRESH MATERIALIZED VIEW herbaceous_info_tot_count;
+        REFRESH MATERIALIZED VIEW herbaceous_info_relative_cover;
+        REFRESH MATERIALIZED VIEW calculations_plot_module_herbaceous_info;
+        REFRESH MATERIALIZED VIEW biomass;
+        REFRESH MATERIALIZED VIEW biomass_info;
+        REFRESH MATERIALIZED VIEW biomass_count;
+        REFRESH MATERIALIZED VIEW biomass_tot;
+        REFRESH MATERIALIZED VIEW biomass_calculations;
+        REFRESH MATERIALIZED VIEW metric_calculations;
+        REFRESH MATERIALIZED VIEW vibi_e_index;
+    END;
+$$ LANGUAGE plpgsql;

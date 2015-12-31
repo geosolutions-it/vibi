@@ -15,7 +15,8 @@ public final class ReferenceAttributeBuilder {
     private Type attributeType;
     private String tableName;
     private List<Attribute> attributes = new ArrayList<>();
-    private boolean updateReference = true;
+    private boolean createReference = false;
+    private boolean updateReference = false;
 
     public ReferenceAttributeBuilder withTableName(String tableName) {
         this.tableName = tableName;
@@ -47,7 +48,12 @@ public final class ReferenceAttributeBuilder {
         return this;
     }
 
+    public ReferenceAttributeBuilder withCreateReference(boolean createReference) {
+        this.createReference = createReference;
+        return this;
+    }
+
     public ReferenceAttribute build() {
-        return new ReferenceAttribute(attributeName, attributeType, tableName, attributes, updateReference);
+        return new ReferenceAttribute(attributeName, attributeType, tableName, attributes, createReference, updateReference);
     }
 }

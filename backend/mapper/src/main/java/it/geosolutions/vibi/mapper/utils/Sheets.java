@@ -25,25 +25,17 @@ public final class Sheets {
         return CellReference.convertNumToColString(index);
     }
 
-    public static Cell evaluateCell(Cell cell) {
-        if (cell == null) {
-            return null;
-        }
-        FormulaEvaluator evaluator = cell.getRow().getSheet().getWorkbook().getCreationHelper().createFormulaEvaluator();
-        try {
-            cell = evaluator.evaluateInCell(cell);
-        } catch (Exception exception) {
-            return null;
-        }
-        return cell;
+    public static <T> T extract(Row row, String column, Type type) {
+        return extract(row, Sheets.getIndex(column), type);
     }
 
-    public static String cellToString(Cell cell) {
-        if (cell == null) {
+    @SuppressWarnings("unchecked")
+    public static <T> T extract(Row row, int columnIndex, Type type) {
+        if (row == null) {
             return null;
         }
-        DataFormatter formatter = new DataFormatter();
-        return formatter.formatCellValue(cell);
+        Cell cell = row.getCell(columnIndex, Row.RETURN_BLANK_AS_NULL);
+        return (T) type.extract(cell);
     }
 
     public static Object extract(Cell cell) {
