@@ -78,6 +78,8 @@ DROP MATERIALIZED VIEW IF EXISTS biomass_tot CASCADE;
 DROP MATERIALIZED VIEW IF EXISTS biomass_calculations CASCADE;
 DROP MATERIALIZED VIEW IF EXISTS metric_calculations CASCADE;
 DROP MATERIALIZED VIEW IF EXISTS vibi_e_index CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS vibi_ecst_index CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS vibi_sh_index CASCADE;
 
 DROP FUNCTION IF EXISTS refresh_calculations();
 DROP FUNCTION IF EXISTS metric_value(numeric, numeric[], numeric[]);
@@ -733,8 +735,8 @@ BEGIN
 	IF value IS NULL THEN
 		RETURN NULL;
 	END IF;
-	WHILE index < length LOOP
-		IF metrics_index[index] >= value THEN
+	WHILE index <= length LOOP
+		IF metrics_index[index] > value THEN
 			RETURN metrics_values[index];
 		END IF;
 		index := index + 1;
@@ -766,6 +768,63 @@ CREATE MATERIALIZED VIEW vibi_e_index AS
 	 WHEN d.biomass_collected = 'YES'
 	 THEN metric_value(b.biomass_metric_value, ARRAY[100.0, 201.0, 451.0, 801.0], ARRAY[0.0, 10.0, 7.0, 3.0, 0.0])
 	 ELSE 0.0 END AS biomass
+    FROM plot a
+    INNER JOIN metric_calculations b
+    ON a.plot_no = b.plot_no
+    LEFT JOIN herbaceous_site_cov c
+    ON a.plot_no = c.plot_no
+    LEFT JOIN biomass_info d
+    ON a.plot_no = d.plot_no;
+
+CREATE MATERIALIZED VIEW vibi_ecst_index AS
+    SELECT a.plot_no,
+    metric_value(b.cyperaceae_metric_value::numeric, ARRAY[2.0, 4.0, 7.0], ARRAY[0.0, 3.0, 7.0, 10.0]) AS cyperaceae_metric_value,
+    metric_value(b.dicot_metric_value::numeric, ARRAY[11.0, 18.0, 26.0], ARRAY[0.0, 3.0, 7.0, 10.0]) AS dicot_metric_value,
+    metric_value(b.shrub_metric_value::numeric, ARRAY[2.0, 3.0, 5.0], ARRAY[0.0, 3.0, 7.0, 10.0]) AS shrub_metric_value,
+    metric_value(b.hydrophyte_metric_value::numeric, ARRAY[11.0, 21.0, 31.0], ARRAY[0.0, 3.0, 7.0, 10.0]) AS hydrophyte_metric_value,
+    CASE WHEN COALESCE(c.site_cov, 0.0) > 0.1049 THEN
+	 metric_value(b.ap_ratio_metric_value::numeric, ARRAY[0.205, 0.325, 0.485], ARRAY[10.0, 7.0, 3.0, 0.0])
+	 ELSE 0.0 END AS ap_ratio_metric_value,
+    metric_value(b.fqai_metric_value::numeric, ARRAY[9.95, 14.35, 21.45], ARRAY[0.0, 3.0, 7.0, 10.0]) AS fqai_metric_value,
+    CASE WHEN COALESCE(c.site_cov, 0.0) > 0.1049 THEN
+	 metric_value(b.sensitive_metric_value::numeric, ARRAY[0.0255, 0.1005, 0.1505], ARRAY[0.0, 3.0, 7.0, 10.0])
+	 ELSE 0.0 END AS sensitive_metric_value,
+    CASE WHEN COALESCE(c.site_cov, 0.0) > 0.1049 THEN
+	 metric_value(b.tolerant_metric_value::numeric, ARRAY[0.2005, 0.4005, 0.6005], ARRAY[10.0, 7.0, 3.0, 0.0])
+	 ELSE 0.0 END AS tolerant_metric_value,
+    CASE WHEN COALESCE(c.site_cov, 0.0) > 0.1049 THEN
+	 metric_value(b.invasive_graminoids_metric_value::numeric, ARRAY[0.0305, 0.1505, 0.3046], ARRAY[10.0, 7.0, 3.0, 0.0])
+	 ELSE 0.0 END AS invasive_graminoids_metric_value,
+    CASE WHEN d.biomass_collected = 'NO-NAT' OR d.biomass_collected = 'NO-MIT' THEN 3
+	 WHEN d.biomass_collected = 'YES'
+	 THEN metric_value(b.biomass_metric_value, ARRAY[100.0, 201.0, 451.0, 801.0], ARRAY[0.0, 10.0, 7.0, 3.0, 0.0])
+	 ELSE 0.0 END AS biomass
+    FROM plot a
+    INNER JOIN metric_calculations b
+    ON a.plot_no = b.plot_no
+    LEFT JOIN herbaceous_site_cov c
+    ON a.plot_no = c.plot_no
+    LEFT JOIN biomass_info d
+    ON a.plot_no = d.plot_no;
+
+CREATE MATERIALIZED VIEW vibi_sh_index AS
+    SELECT a.plot_no,
+    metric_value(b.carex_metric_value::numeric, ARRAY[2.0, 4.0, 5.0], ARRAY[0.0, 3.0, 7.0, 10.0]) AS carex_metric_value,
+    metric_value(b.dicot_metric_value::numeric, ARRAY[10.0, 15.0, 24.0], ARRAY[0.0, 3.0, 7.0, 10.0]) AS dicot_metric_value,
+    metric_value(b.shrub_metric_value::numeric, ARRAY[2.0, 3.0, 5.0], ARRAY[0.0, 3.0, 7.0, 10.0]) AS shrub_metric_value,
+    metric_value(b.hydrophyte_metric_value::numeric, ARRAY[10.0, 15.0, 21.0], ARRAY[0.0, 3.0, 7.0, 10.0]) AS hydrophyte_metric_value,
+    metric_value(b.svp_metric_value::numeric, ARRAY[1.0, 2.0, 3.0], ARRAY[0.0, 3.0, 7.0, 10.0]) AS svp_metric_value,
+    metric_value(b.fqai_metric_value::numeric, ARRAY[9.95, 14.35, 21.45], ARRAY[0.0, 3.0, 7.0, 10.0]) AS fqai_metric_value,
+    CASE WHEN COALESCE(c.site_cov, 0.0) > 0.1049 THEN
+	 metric_value(b.per_hydrophyte_metric_value::numeric, ARRAY[0.0105, 0.0305, 0.0605], ARRAY[0.0, 3.0, 7.0, 10.0])
+	 ELSE 0.0 END AS per_hydrophyte_metric_value,
+    CASE WHEN COALESCE(c.site_cov, 0.0) > 0.1049 THEN
+	 metric_value(b.sensitive_metric_value::numeric, ARRAY[0.0205, 0.0605, 0.1305], ARRAY[0.0, 3.0, 7.0, 10.0])
+	 ELSE 0.0 END AS sensitive_metric_value,
+    CASE WHEN COALESCE(c.site_cov, 0.0) > 0.1049 THEN
+	 metric_value(b.tolerant_metric_value::numeric, ARRAY[0.0505, 0.1005, 0.1505], ARRAY[10.0, 7.0, 3.0, 0.0])
+	 ELSE 0.0 END AS tolerant_metric_value,
+    metric_value(b.subcanopy_iv::numeric, ARRAY[0.0205, 0.0505, 0.1046], ARRAY[0.0, 3.0, 7.0, 10.0]) AS subcanopy_iv
     FROM plot a
     INNER JOIN metric_calculations b
     ON a.plot_no = b.plot_no
