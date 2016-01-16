@@ -872,3 +872,17 @@ CREATE OR REPLACE FUNCTION refresh_calculations() RETURNS void AS $$
         REFRESH MATERIALIZED VIEW vibi_e_index;
     END;
 $$ LANGUAGE plpgsql;
+
+DROP TABLE IF EXISTS rule CASCADE;
+
+CREATE TABLE rule (
+    id int8 PRIMARY KEY,
+    _user TEXT NOT NULL,
+    _group TEXT NOT NULL,
+    service TEXT NOT NULL,
+    operation TEXT NOT NULL,
+    entity TEXT NOT NULL,
+    format TEXT NOT NULL,
+    size INT8,
+    UNIQUE (_user, _group, service, operation, entity, format)
+);
