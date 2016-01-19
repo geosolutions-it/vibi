@@ -29,7 +29,7 @@ public final class VibiService {
             @Override
             public void doWork(HSSFWorkbook workBook) {
                 LookupService.processLookupSpeciesSheet(workBook.getSheet("LOOKUP species"), store);
-                LookupService.processLookupCommunitySheet(workBook.getSheet("LOOKUP community"), store);
+                LookupService.processLookupNatureSOPEACommunitySheet(workBook.getSheet("LOOKUP NatureS+OEPA community"), store);
                 LookupService.processLookupMidPointSheet(workBook.getSheet("LOOKUP midpoint"), store);
                 PlotService.processPlotInfoSheet(workBook.getSheet("ENTER PLOT INFO"), store);
                 Fds1Service.processFds1Sheet(workBook.getSheet("ENTER FDS1"), store);
@@ -47,7 +47,6 @@ public final class VibiService {
                     tableName, description);
         }
     }
-
 
     static String testSpeciesForeignKey(DataStore store, Row row, SimpleFeatureType type, String species) {
         if (!testForeignKeyExists(store, type, species)) {

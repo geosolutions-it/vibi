@@ -72,7 +72,7 @@ public class BiomassService {
                 .withAttribute(new Attribute("fid", Type.STRING, true) {
                     @Override
                     public Object getValue(SheetContext context) {
-                        return String.format("%d-%d-%d-%d", getPlotNo(context), getDateTime(context).getTime(),
+                        return String.format("%d-%d-%d", getPlotNo(context),
                                 Sheets.extract(context.getRow(), "F", Type.INTEGER),
                                 Sheets.extract(context.getRow(), "H", Type.INTEGER));
                     }

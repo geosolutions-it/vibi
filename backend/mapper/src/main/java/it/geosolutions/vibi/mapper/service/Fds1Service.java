@@ -154,10 +154,8 @@ public class Fds1Service {
                                           String species, List<ModuleAndCorner> modulesAndCorners) {
         for (ModuleAndCorner moduleAndCorner : modulesAndCorners) {
             Tuple<Integer, Integer> depthAndCoverClassCode = extractDepthAndCoverClassCode(row, moduleAndCorner);
-            if (depthAndCoverClassCode.first != null || depthAndCoverClassCode.second != null) {
-                createAndStoreSpeciesFeature(store, row, plotNo, moduleAndCorner.module, moduleAndCorner.corner,
-                        species, depthAndCoverClassCode.first, depthAndCoverClassCode.second);
-            }
+            createAndStoreSpeciesFeature(store, row, plotNo, moduleAndCorner.module, moduleAndCorner.corner,
+                    species, depthAndCoverClassCode.first, depthAndCoverClassCode.second);
         }
     }
 
@@ -166,7 +164,14 @@ public class Fds1Service {
         Integer depth = depthCell == null ? null : extractInteger(depthCell);
         Cell coverClassCodeCell = row.getCell(moduleAndCorner.coverClassCodeIndex, Row.RETURN_BLANK_AS_NULL);
         Integer coverClassCode = depthCell == null ? null : extractInteger(coverClassCodeCell);
-        return Tuple.tuple(depth, coverClassCode);
+        return Tuple.tuple(safeDefault(depth, 0), safeDefault(coverClassCode, 0));
+    }
+
+    private static <T> T safeDefault(T original, T fallBack) {
+        if(original == null) {
+            return fallBack;
+        }
+        return original;
     }
 
     private static SimpleFeatureBuilder createCommonFeatureBuilder(DataStore store, Row row, int plotNo, int module, int corner,

@@ -53,8 +53,8 @@ public final class MapperAction extends BaseAction<EventObject> {
                 public void doWork(HSSFWorkbook workBook) {
                     LookupService.processLookupSpeciesSheet(workBook.getSheet("LOOKUP species"), store);
                     MapperAction.super.listenerForwarder.progressing(20f, "LOOKUP SPECIES");
-                    LookupService.processLookupCommunitySheet(workBook.getSheet("LOOKUP community"), store);
-                    MapperAction.super.listenerForwarder.progressing(25f, "LOOKUP COMMUNITY");
+                    LookupService.processLookupNatureSOPEACommunitySheet(workBook.getSheet("LOOKUP NatureS+OEPA community"), store);
+                    MapperAction.super.listenerForwarder.progressing(27.5f, "LOOKUP NATURES+OEPA COMMUNITY");
                     LookupService.processLookupMidPointSheet(workBook.getSheet("LOOKUP midpoint"), store);
                     MapperAction.super.listenerForwarder.progressing(30f, "LOOKUP MIDPOINT");
                     PlotService.processPlotInfoSheet(workBook.getSheet("ENTER PLOT INFO"), store);

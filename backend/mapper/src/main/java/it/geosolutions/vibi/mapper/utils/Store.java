@@ -9,6 +9,7 @@ import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
 import org.geotools.factory.Hints;
 import org.geotools.feature.FeatureCollection;
+import org.geotools.feature.FeatureIterator;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.opengis.feature.Property;
 import org.opengis.feature.simple.SimpleFeature;
@@ -34,7 +35,7 @@ public final class Store {
                 featureBuilder.set(attribute.getName(), attribute.getValue(context));
             } else {
                 Object value = attribute.getValue(context);
-                if(value != null) {
+                if (value != null) {
                     id = value.toString();
                 }
             }
@@ -84,11 +85,16 @@ public final class Store {
 
             @Override
             public void doWork(FeatureStore<SimpleFeatureType, SimpleFeature> featureStore) throws Exception {
-                FeatureCollection<SimpleFeatureType, SimpleFeature> features =
+                FeatureCollection<SimpleFeatureType, SimpleFeature> featuresCollection =
                         featureStore.getFeatures(filterFactory.id(encodeId(simpleFeature, true).getIdentifier()));
-                Validations.checkCondition(features.size() <= 1, "To much features found.");
-                if (!features.isEmpty()) {
-                    feature = features.features().next();
+                Validations.checkCondition(featuresCollection.size() <= 1, "To much features found.");
+                if (!featuresCollection.isEmpty()) {
+                    FeatureIterator<SimpleFeature> features = featuresCollection.features();
+                    try {
+                        feature = features.next();
+                    } finally {
+                        features.close();
+                    }
                 }
             }
         }.feature;
@@ -133,7 +139,7 @@ public final class Store {
         SimpleFeatureBuilder copy = new SimpleFeatureBuilder(simpleFeature.getType());
         copy.init(simpleFeature);
         String encodedId = simpleFeature.getID();
-        if(escapeQuotes) {
+        if (escapeQuotes) {
             encodedId = encodedId.replace("'", "''");
         }
         encodedId = URLEncoder.encode(encodedId);
