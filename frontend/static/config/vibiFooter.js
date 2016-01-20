@@ -1069,17 +1069,17 @@
                     "canSearch": true,
                     "columns": [
                         {
-                            "header": "plotNo",
+                            "header": "Plot No",
                             "mapping": "plot_no",
                             "name": "plot_no"
                         },
                         {
-                            "header": "species",
+                            "header": "Species",
                             "mapping": "species",
                             "name": "species"
                         },
                         {
-                            "header": "relativeCover",
+                            "header": "Relative Cover",
                             "mapping": "relative_cover",
                             "name": "relative_cover"
                         }
@@ -1128,37 +1128,37 @@
                     "canSearch": true,
                     "columns": [
                         {
-                            "header": "plotNo",
+                            "header": "Plot No",
                             "mapping": "plot_no",
                             "name": "plot_no"
                         },
                         {
-                            "header": "sub",
+                            "header": "Sub",
                             "mapping": "sub",
                             "name": "sub"
                         },
                         {
-                            "header": "module_id",
+                            "header": "Module Id",
                             "mapping": "module_id",
                             "name": "module_id"
                         },
                         {
-                            "header": "species",
+                            "header": "Species",
                             "mapping": "species",
                             "name": "species"
                         },
                         {
-                            "header": "dbhClass",
+                            "header": "Dbh Class",
                             "mapping": "dbh_class",
                             "name": "dbh_class"
                         },
                         {
-                            "header": "dbhClassIndex",
+                            "header": "Dbh Class Index",
                             "mapping": "dbh_class_index",
                             "name": "dbh_class_index"
                         },
                         {
-                            "header": "count",
+                            "header": "Count",
                             "mapping": "count",
                             "name": "count"
                         }
@@ -1223,32 +1223,32 @@
                     "canSearch": true,
                     "columns": [
                         {
-                            "header": "plotNo",
+                            "header": "Plot No",
                             "mapping": "plot_no",
                             "name": "plot_no"
                         },
                         {
-                            "header": "module_id",
+                            "header": "Module Id",
                             "mapping": "module_id",
                             "name": "module_id"
                         },
                         {
-                            "header": "species",
+                            "header": "Species",
                             "mapping": "species",
                             "name": "species"
                         },
                         {
-                            "header": "dbhClass",
+                            "header": "Dbh Class",
                             "mapping": "dbh_class",
                             "name": "dbh_class"
                         },
                         {
-                            "header": "dbhClassIndex",
+                            "header": "Dbh Class Index",
                             "mapping": "dbh_class_index",
                             "name": "dbh_class_index"
                         },
                         {
-                            "header": "count",
+                            "header": "Count",
                             "mapping": "count",
                             "name": "count"
                         }
@@ -1309,32 +1309,32 @@
                     "canSearch": true,
                     "columns": [
                         {
-                            "header": "plotNo",
+                            "header": "Plot No",
                             "mapping": "plot_no",
                             "name": "plot_no"
                         },
                         {
-                            "header": "module_id",
+                            "header": "Module Id",
                             "mapping": "module_id",
                             "name": "module_id"
                         },
                         {
-                            "header": "species",
+                            "header": "Species",
                             "mapping": "species",
                             "name": "species"
                         },
                         {
-                            "header": "dbhClass",
+                            "header": "Dbh Class",
                             "mapping": "dbh_class",
                             "name": "dbh_class"
                         },
                         {
-                            "header": "dbhClassIndex",
+                            "header": "Dbh Class Index",
                             "mapping": "dbh_class_index",
                             "name": "dbh_class_index"
                         },
                         {
-                            "header": "dbhCm",
+                            "header": "Dbh Cm",
                             "mapping": "dbh_cm",
                             "name": "dbh_cm"
                         }
@@ -1395,27 +1395,27 @@
                     "canSearch": true,
                     "columns": [
                         {
-                            "header": "plotNo",
+                            "header": "Plot No",
                             "mapping": "plot_no",
                             "name": "plot_no"
                         },
                         {
-                            "header": "species",
+                            "header": "Species",
                             "mapping": "species",
                             "name": "species"
                         },
                         {
-                            "header": "subcanopyIvPartial",
+                            "header": "Subcanopy IV Partial",
                             "mapping": "subcanopy_iv_partial",
                             "name": "subcanopy_iv_partial"
                         },
                         {
-                            "header": "subcanopyIvShade",
+                            "header": "Subcanopy IV Shade",
                             "mapping": "subcanopy_iv_shade",
                             "name": "subcanopy_iv_shade"
                         },
                         {
-                            "header": "canopyIv",
+                            "header": "Canopy IV",
                             "mapping": "canopy_iv",
                             "name": "canopy_iv"
                         }
@@ -1424,25 +1424,25 @@
                     "displayField": "label",
                     "editHeight": 270,
                     "editTitle": "Edit Woody Importance Value",
-                    "fields": [                      
+                    "fields": [
                         {
-                            "mapping": "plotNo",
+                            "mapping": "Plot No",
                             "name": "plot_no"
                         },
                         {
-                            "mapping": "species",
+                            "mapping": "Species",
                             "name": "species"
                         },
                         {
-                            "mapping": "subcanopyIvPartial",
+                            "mapping": "SubcanopyIV Partial",
                             "name": "subcanopy_iv_partial"
                         },
                         {
-                            "mapping": "subcanopyIvShade",
+                            "mapping": "Subcanopy IV Shade",
                             "name": "subcanopy_iv_shade"
                         },
                         {
-                            "mapping": "canopyIv",
+                            "mapping": "Canopy IV",
                             "name": "canopy_iv"
                         }
                     ],
@@ -1470,18 +1470,340 @@
                     "canDelete": false,
                     "canEdit": false,
                     "canSearch": true,
-                    "columns": [],
+                    "columns": [
+                        {
+                            "header": "Plot No",
+                            "mapping": "plot_no",
+                            "name": "plot_no"
+                        },
+                        {
+                            "header": "Date Time",
+                            "mapping": "date_time",
+                            "name": "date_time"
+                        },
+                        {
+                            "header": "Module Id",
+                            "mapping": "Module Id",
+                            "name": "module_id"
+                        },
+                        {
+                            "header": "Corner",
+                            "mapping": "corner",
+                            "name": "corner"
+                        },
+                        {
+                            "header": "Sample Id",
+                            "mapping": "sample_id",
+                            "name": "sample_id"
+                        },
+                        {
+                            "header": "Area Sampled",
+                            "mapping": "area_sampled",
+                            "name": "area_sampled"
+                        },
+                        {
+                            "header": "Weight With Bag",
+                            "mapping": "weight_with_bag",
+                            "name": "weight_with_bag"
+                        },
+                        {
+                            "header": "Bag Weight",
+                            "mapping": "bag_weight",
+                            "name": "bag_weight"
+                        },
+                        {
+                            "header": "Biomass Collected",
+                            "mapping": "biomass_collected",
+                            "name": "biomass_collected"
+                        },
+                        {
+                            "header": "Biomass Weight Grams",
+                            "mapping": "biomass_weight_grams",
+                            "name": "biomass_weight_grams"
+                        },
+                        {
+                            "header": "Grams Per Square Meter",
+                            "mapping": "grams_per_sq_meter",
+                            "name": "grams_per_sq_meter"
+                        }
+                    ],
                     "createTitle": "Create a new Biomass",
                     "displayField": "label",
                     "editHeight": 270,
                     "editTitle": "Edit Biomass",
-                    "fields": [],
+                    "fields": [
+                        {
+                            "mapping": "fid",
+                            "name": "fid"
+                        },
+                        {
+                            "mapping": "plotNo",
+                            "name": "plot_no"
+                        },
+                        {
+                            "mapping": "dateTime",
+                            "name": "date_time"
+                        },
+                        {
+                            "mapping": "moduleId",
+                            "name": "module_id"
+                        },
+                        {
+                            "mapping": "corner",
+                            "name": "corner"
+                        },
+                        {
+                            "mapping": "sampleId",
+                            "name": "sample_id"
+                        },
+                        {
+                            "mapping": "areaSampled",
+                            "name": "area_sampled"
+                        },
+                        {
+                            "mapping": "weightWithBag",
+                            "name": "weight_with_bag"
+                        },
+                        {
+                            "mapping": "bagWeight",
+                            "name": "bag_weight"
+                        },
+                        {
+                            "mapping": "biomassCollected",
+                            "name": "biomass_collected"
+                        },
+                        {
+                            "mapping": "biomassWeightGrams",
+                            "name": "biomass_weight_grams"
+                        },
+                        {
+                            "mapping": "gramsPerSqMeter",
+                            "name": "grams_per_sq_meter"
+                        }
+                    ],
                     "iconCls": "vibi_biomass_ic",
                     "id": "Biomass",
                     "idProperty": "id",
                     "totalProperty" : "totalCount",
                     "name": "Biomass",
                     "pluralName": "Biomass",
+                    "restful": true,
+                    "root": "data",
+                    "paramNames" : {
+                        "start" : "firstResult",
+                        "limit" : "maxResults",
+                        "query" : "keyword"
+                    }
+                },
+                {
+                    "api": {},
+                    "autoExpandColumn": false,
+                    "minColumnWidth": 80,
+                    "autoload": false,
+                    "basePath": "mvc/vibi/biomassRaw/",
+                    "canCreate": false,
+                    "canDelete": false,
+                    "canEdit": false,
+                    "canSearch": true,
+                    "columns": [
+                        {
+                            "header": "Plot No",
+                            "mapping": "plot_no",
+                            "name": "plot_no"
+                        },
+                        {
+                            "header": "Date Time",
+                            "mapping": "date_time",
+                            "name": "date_time"
+                        },
+                        {
+                            "header": "Module Id",
+                            "mapping": "Module Id",
+                            "name": "module_id"
+                        },
+                        {
+                            "header": "Corner",
+                            "mapping": "corner",
+                            "name": "corner"
+                        },
+                        {
+                            "header": "Sample Id",
+                            "mapping": "sample_id",
+                            "name": "sample_id"
+                        },
+                        {
+                            "header": "Area Sampled",
+                            "mapping": "area_sampled",
+                            "name": "area_sampled"
+                        },
+                        {
+                            "header": "Weight With Bag",
+                            "mapping": "weight_with_bag",
+                            "name": "weight_with_bag"
+                        },
+                        {
+                            "header": "Bag Weight",
+                            "mapping": "bag_weight",
+                            "name": "bag_weight"
+                        },
+                        {
+                            "header": "Biomass Collected",
+                            "mapping": "biomass_collected",
+                            "name": "biomass_collected"
+                        }
+                    ],
+                    "createTitle": "Create a new Biomass Raw",
+                    "displayField": "label",
+                    "editHeight": 270,
+                    "editTitle": "Edit Biomass Raw",
+                    "fields": [
+                        {
+                            "mapping": "fid",
+                            "name": "fid"
+                        },
+                        {
+                            "mapping": "plotNo",
+                            "name": "plot_no"
+                        },
+                        {
+                            "mapping": "dateTime",
+                            "name": "date_time"
+                        },
+                        {
+                            "mapping": "moduleId",
+                            "name": "module_id"
+                        },
+                        {
+                            "mapping": "corner",
+                            "name": "corner"
+                        },
+                        {
+                            "mapping": "sampleId",
+                            "name": "sample_id"
+                        },
+                        {
+                            "mapping": "areaSampled",
+                            "name": "area_sampled"
+                        },
+                        {
+                            "mapping": "weightWithBag",
+                            "name": "weight_with_bag"
+                        },
+                        {
+                            "mapping": "bagWeight",
+                            "name": "bag_weight"
+                        },
+                        {
+                            "mapping": "biomassCollected",
+                            "name": "biomass_collected"
+                        }
+                    ],
+                    "iconCls": "vibi_biomass_raw_ic",
+                    "id": "Biomass Raw",
+                    "idProperty": "id",
+                    "totalProperty" : "totalCount",
+                    "name": "Biomass Raw",
+                    "pluralName": "Biomass Raw",
+                    "restful": true,
+                    "root": "data",
+                    "paramNames" : {
+                        "start" : "firstResult",
+                        "limit" : "maxResults",
+                        "query" : "keyword"
+                    }
+                },
+                {
+                    "api": {},
+                    "autoExpandColumn": false,
+                    "minColumnWidth": 80,
+                    "autoload": false,
+                    "basePath": "mvc/vibi/classCodeModNatureServe/",
+                    "canCreate": false,
+                    "canDelete": false,
+                    "canEdit": false,
+                    "canSearch": true,
+                    "columns": [
+                        {
+                            "header": "Code",
+                            "mapping": "code",
+                            "name": "code"
+                        },
+                        {
+                            "header": "Community Class",
+                            "mapping": "community_class",
+                            "name": "community_class"
+                        }
+                    ],
+                    "createTitle": "Create a new Class Code Mod Nature Serve",
+                    "displayField": "label",
+                    "editHeight": 270,
+                    "editTitle": "Class Code Mod Nature Serve",
+                    "fields": [
+                        {
+                            "mapping": "code",
+                            "name": "code"
+                        },
+                        {
+                            "mapping": "CommunityClass",
+                            "name": "community_class"
+                        }
+                    ],
+                    "iconCls": "vibi_class_code_mod_nature_serve_ic",
+                    "id": "Class Code Mod Nature Serve",
+                    "idProperty": "id",
+                    "totalProperty" : "totalCount",
+                    "name": "Class Code Mod Nature Serve",
+                    "pluralName": "Class Code Mod Nature Serve",
+                    "restful": true,
+                    "root": "data",
+                    "paramNames" : {
+                        "start" : "firstResult",
+                        "limit" : "maxResults",
+                        "query" : "keyword"
+                    }
+                },
+                {
+                    "api": {},
+                    "autoExpandColumn": false,
+                    "minColumnWidth": 80,
+                    "autoload": false,
+                    "basePath": "mvc/vibi/coverMidpointLookup/",
+                    "canCreate": false,
+                    "canDelete": false,
+                    "canEdit": false,
+                    "canSearch": true,
+                    "columns": [
+                        {
+                            "header": "Cover Code",
+                            "mapping": "cover_code",
+                            "name": "cover_code"
+                        },
+                        {
+                            "header": "Midpoint",
+                            "mapping": "midpoint",
+                            "name": "midpoint"
+                        }
+                    ],
+                    "createTitle": "Create a new Cover Midpoint",
+                    "displayField": "label",
+                    "editHeight": 270,
+                    "editTitle": "Edit Cover Midpoint",
+                    "fields": [
+                        {
+                            "mapping": "Cover Code",
+                            "name": "cover_code"
+                        },
+                        {
+                            "mapping": "midpoint",
+                            "name": "midpoint"
+                        }
+                    ],
+                    "iconCls": "vibi_cover_midpoint_ic",
+                    "id": "Cover Midpoint",
+                    "idProperty": "id",
+                    "totalProperty" : "totalCount",
+                    "name": "Cover Midpoint",
+                    "pluralName": "Cover Midpoint",
                     "restful": true,
                     "root": "data",
                     "paramNames" : {
@@ -1507,63 +1829,71 @@
                             "mapping" : "plot_no",
                             "name" : "plot_no"
                         }, {
-                            "header" : "Carex Metric Value",
+                            "header" : "Vibi Type",
+                            "mapping" : "vibi_type",
+                            "name" : "vibi_type"
+                        }, {
+                            "header" : "Vibi Score",
+                            "mapping" : "vibi_score",
+                            "name" : "vibi_score"
+                        }, {
+                            "header" : "Carex",
                             "mapping" : "carex_metric_value",
                             "name" : "carex_metric_value"
                         }, {
-                            "header" : "Cyperaceae Metric Value",
+                            "header" : "Cyperaceae",
                             "mapping" : "cyperaceae_metric_value",
                             "name" : "cyperaceae_metric_value"
                         }, {
-                            "header" : "Dicot Metric Value",
+                            "header" : "Dicot",
                             "mapping" : "dicot_metric_value",
                             "name" : "dicot_metric_value"
                         }, {
-                            "header" : "Shade Metric Value",
+                            "header" : "Shade",
                             "mapping" : "shade_metric_value",
                             "name" : "shade_metric_value"
                         }, {
-                            "header" : "Shrub Metric Value",
+                            "header" : "Shrub",
                             "mapping" : "shrub_metric_value",
                             "name" : "shrub_metric_value"
                         }, {
-                            "header" : "Hydrophyte Metric Value",
+                            "header" : "Hydrophyte",
                             "mapping" : "hydrophyte_metric_value",
                             "name" : "hydrophyte_metric_value"
                         }, {
-                            "header" : "SVP Metric Value",
+                            "header" : "SVP",
                             "mapping" : "svp_metric_value",
                             "name" : "svp_metric_value"
                         }, {
-                            "header" : "Ap Ratio Metric Value",
+                            "header" : "Ap Ratio",
                             "mapping" : "ap_ratio_metric_value",
                             "name" : "ap_ratio_metric_value"
                         }, {
-                            "header" : "FQAI Metric Value",
+                            "header" : "FQAI",
                             "mapping" : "fqai_metric_value",
                             "name" : "fqai_metric_value"
                         }, {
-                            "header" : "Bryophyte Metric Value",
+                            "header" : "Bryophyte",
                             "mapping" : "bryophyte_metric_value",
                             "name" : "bryophyte_metric_value"
                         }, {
-                            "header" : "Per Hydrophyte Metric Value",
+                            "header" : "Per Hydrophyte",
                             "mapping" : "per_hydrophyte_metric_value",
                             "name" : "per_hydrophyte_metric_value"
                         }, {
-                            "header" : "Sensitive Metric Value",
+                            "header" : "Sensitive",
                             "mapping" : "sensitive_metric_value",
                             "name" : "sensitive_metric_value"
                         }, {
-                            "header" : "Tolerant Metric Value",
+                            "header" : "Tolerant",
                             "mapping" : "tolerant_metric_value",
                             "name" : "tolerant_metric_value"
                         }, {
-                            "header" : "Invasive Graminoids Metric Value",
+                            "header" : "Invasive Graminoids",
                             "mapping" : "invasive_graminoids_metric_value",
                             "name" : "invasive_graminoids_metric_value"
                         }, {
-                            "header" : "Small Tree Metric Value",
+                            "header" : "Small Tree",
                             "mapping" : "small_tree_metric_value",
                             "name" : "small_tree_metric_value"
                         }, {
@@ -1575,6 +1905,10 @@
                             "mapping" : "canopy_iv",
                             "name" : "canopy_iv"
                         }, {
+                            "header" : "Biomass",
+                            "mapping" : "biomass_metric_value",
+                            "name" : "biomass_metric_value"
+                        }, {
                             "header" : "Stems HA Wetland Trees",
                             "mapping" : "stems_ha_wetland_trees",
                             "name" : "stems_ha_wetland_trees"
@@ -1582,7 +1916,7 @@
                             "header" : "Stems HA Wetland Shrubs",
                             "mapping" : "stems_ha_wetland_shrubs",
                             "name" : "stems_ha_wetland_shrubs"
-                        }, 
+                        },
                         {
                             "header": "Per Unvegetated",
                             "mapping": "per_unvegetated",
@@ -1627,6 +1961,14 @@
                         {
                             "mapping" : "plotNo",
                             "name" : "plot_no"
+                        },
+                        {
+                            "mapping" : "vibiType",
+                            "name" : "vibi_type"
+                        }, 
+                        {
+                            "mapping" : "vibiScore",
+                            "name" : "vibi_score"
                         },
                         {
                             "mapping" : "carexMetricValue",
@@ -1697,6 +2039,10 @@
                             "name" : "canopy_iv"
                         },
                         {
+                            "mapping" : "biomassMetricValue",
+                            "name" : "biomass_metric_value"
+                        },
+                        {
                             "mapping" : "steamsHaWetlandTrees",
                             "name" : "stems_ha_wetland_trees"
                         },
@@ -1737,6 +2083,7 @@
                     "id": "Metrics",
                     "idProperty": "id",
                     "name": "Metrics",
+                    "totalProperty" : "totalCount",
                     "pluralName": "Metrics",
                     "restful": true,
                     "root": "data",
@@ -2760,17 +3107,17 @@
                     "canSearch": true,
                     "columns": [
                         {
-                            "header": "plotNo",
+                            "header": "Plot No",
                             "mapping": "plot_no",
                             "name": "plot_no"
                         },
                         {
-                            "header": "species",
+                            "header": "Species",
                             "mapping": "species",
                             "name": "species"
                         },
                         {
-                            "header": "relativeCover",
+                            "header": "Relative Cover",
                             "mapping": "relative_cover",
                             "name": "relative_cover"
                         }
@@ -2819,37 +3166,37 @@
                     "canSearch": true,
                     "columns": [
                         {
-                            "header": "plotNo",
+                            "header": "Plot No",
                             "mapping": "plot_no",
                             "name": "plot_no"
                         },
                         {
-                            "header": "sub",
+                            "header": "Sub",
                             "mapping": "sub",
                             "name": "sub"
                         },
                         {
-                            "header": "module_id",
+                            "header": "Module Id",
                             "mapping": "module_id",
                             "name": "module_id"
                         },
                         {
-                            "header": "species",
+                            "header": "Species",
                             "mapping": "species",
                             "name": "species"
                         },
                         {
-                            "header": "dbhClass",
+                            "header": "Dbh Class",
                             "mapping": "dbh_class",
                             "name": "dbh_class"
                         },
                         {
-                            "header": "dbhClassIndex",
+                            "header": "Dbh Class Index",
                             "mapping": "dbh_class_index",
                             "name": "dbh_class_index"
                         },
                         {
-                            "header": "count",
+                            "header": "Count",
                             "mapping": "count",
                             "name": "count"
                         }
@@ -2868,7 +3215,7 @@
                             "name": "sub"
                         },
                         {
-                            "mapping": "module_id",
+                            "mapping": "moduleId",
                             "name": "module_id"
                         },
                         {
@@ -2914,32 +3261,32 @@
                     "canSearch": true,
                     "columns": [
                         {
-                            "header": "plotNo",
+                            "header": "Plot No",
                             "mapping": "plot_no",
                             "name": "plot_no"
                         },
                         {
-                            "header": "module_id",
+                            "header": "Module Id",
                             "mapping": "module_id",
                             "name": "module_id"
                         },
                         {
-                            "header": "species",
+                            "header": "Species",
                             "mapping": "species",
                             "name": "species"
                         },
                         {
-                            "header": "dbhClass",
+                            "header": "Dbh Class",
                             "mapping": "dbh_class",
                             "name": "dbh_class"
                         },
                         {
-                            "header": "dbhClassIndex",
+                            "header": "Dbh Class Index",
                             "mapping": "dbh_class_index",
                             "name": "dbh_class_index"
                         },
                         {
-                            "header": "count",
+                            "header": "Count",
                             "mapping": "count",
                             "name": "count"
                         }
@@ -2954,7 +3301,7 @@
                           "name": "plot_no"
                         },
                         {
-                          "mapping": "module_id",
+                          "mapping": "moduleId",
                           "name": "module_id"
                         },
                         {
@@ -3000,32 +3347,32 @@
                     "canSearch": true,
                     "columns": [
                         {
-                            "header": "plotNo",
+                            "header": "Plot No",
                             "mapping": "plot_no",
                             "name": "plot_no"
                         },
                         {
-                            "header": "module_id",
+                            "header": "Module Id",
                             "mapping": "module_id",
                             "name": "module_id"
                         },
                         {
-                            "header": "species",
+                            "header": "Species",
                             "mapping": "species",
                             "name": "species"
                         },
                         {
-                            "header": "dbhClass",
+                            "header": "Dbh Class",
                             "mapping": "dbh_class",
                             "name": "dbh_class"
                         },
                         {
-                            "header": "dbhClassIndex",
+                            "header": "Dbh Class Index",
                             "mapping": "dbh_class_index",
                             "name": "dbh_class_index"
                         },
                         {
-                            "header": "dbhCm",
+                            "header": "Dbh Cm",
                             "mapping": "dbh_cm",
                             "name": "dbh_cm"
                         }
@@ -3040,7 +3387,7 @@
                             "name": "plot_no"
                         },
                         {
-                            "mapping": "module_id",
+                            "mapping": "moduleId",
                             "name": "module_id"
                         },
                         {
@@ -3086,27 +3433,27 @@
                     "canSearch": true,
                     "columns": [
                         {
-                            "header": "plotNo",
+                            "header": "Plot No",
                             "mapping": "plot_no",
                             "name": "plot_no"
                         },
                         {
-                            "header": "species",
+                            "header": "Species",
                             "mapping": "species",
                             "name": "species"
                         },
                         {
-                            "header": "subcanopyIvPartial",
+                            "header": "Subcanopy IV Partial",
                             "mapping": "subcanopy_iv_partial",
                             "name": "subcanopy_iv_partial"
                         },
                         {
-                            "header": "subcanopyIvShade",
+                            "header": "Subcanopy IV Shade",
                             "mapping": "subcanopy_iv_shade",
                             "name": "subcanopy_iv_shade"
                         },
                         {
-                            "header": "canopyIv",
+                            "header": "Canopy IV",
                             "mapping": "canopy_iv",
                             "name": "canopy_iv"
                         }
@@ -3115,7 +3462,7 @@
                     "displayField": "label",
                     "editHeight": 270,
                     "editTitle": "Edit Woody Importance Value",
-                    "fields": [                      
+                    "fields": [
                         {
                             "mapping": "plotNo",
                             "name": "plot_no"
@@ -3161,12 +3508,117 @@
                     "canDelete": false,
                     "canEdit": false,
                     "canSearch": true,
-                    "columns": [],
+                    "columns": [
+                        {
+                            "header": "Plot No",
+                            "mapping": "plot_no",
+                            "name": "plot_no"
+                        },
+                        {
+                            "header": "Date Time",
+                            "mapping": "date_time",
+                            "name": "date_time"
+                        },
+                        {
+                            "header": "Module Id",
+                            "mapping": "Module Id",
+                            "name": "module_id"
+                        },
+                        {
+                            "header": "Corner",
+                            "mapping": "corner",
+                            "name": "corner"
+                        },
+                        {
+                            "header": "Sample Id",
+                            "mapping": "sample_id",
+                            "name": "sample_id"
+                        },
+                        {
+                            "header": "Area Sampled",
+                            "mapping": "area_sampled",
+                            "name": "area_sampled"
+                        },
+                        {
+                            "header": "Weight With Bag",
+                            "mapping": "weight_with_bag",
+                            "name": "weight_with_bag"
+                        },
+                        {
+                            "header": "Bag Weight",
+                            "mapping": "bag_weight",
+                            "name": "bag_weight"
+                        },
+                        {
+                            "header": "Biomass Collected",
+                            "mapping": "biomass_collected",
+                            "name": "biomass_collected"
+                        },
+                        {
+                            "header": "Biomass Weight Grams",
+                            "mapping": "biomass_weight_grams",
+                            "name": "biomass_weight_grams"
+                        },
+                        {
+                            "header": "Grams Per Square Meter",
+                            "mapping": "grams_per_sq_meter",
+                            "name": "grams_per_sq_meter"
+                        }
+                    ],
                     "createTitle": "Create a new Biomass",
                     "displayField": "label",
                     "editHeight": 270,
                     "editTitle": "Edit Biomass",
-                    "fields": [],
+                    "fields": [
+                        {
+                            "mapping": "fid",
+                            "name": "fid"
+                        },
+                        {
+                            "mapping": "plotNo",
+                            "name": "plot_no"
+                        },
+                        {
+                            "mapping": "dateTime",
+                            "name": "date_time"
+                        },
+                        {
+                            "mapping": "moduleId",
+                            "name": "module_id"
+                        },
+                        {
+                            "mapping": "corner",
+                            "name": "corner"
+                        },
+                        {
+                            "mapping": "sampleId",
+                            "name": "sample_id"
+                        },
+                        {
+                            "mapping": "areaSampled",
+                            "name": "area_sampled"
+                        },
+                        {
+                            "mapping": "weightWithBag",
+                            "name": "weight_with_bag"
+                        },
+                        {
+                            "mapping": "bagWeight",
+                            "name": "bag_weight"
+                        },
+                        {
+                            "mapping": "biomassCollected",
+                            "name": "biomass_collected"
+                        },
+                        {
+                            "mapping": "biomassWeightGrams",
+                            "name": "biomass_weight_grams"
+                        },
+                        {
+                            "mapping": "gramsPerSqMeter",
+                            "name": "grams_per_sq_meter"
+                        }
+                    ],
                     "iconCls": "vibi_biomass_ic",
                     "id": "Biomass",
                     "idProperty": "id",
@@ -3186,6 +3638,224 @@
                     "autoExpandColumn": false,
                     "minColumnWidth": 80,
                     "autoload": false,
+                    "basePath": "mvc/vibi/biomassRaw/",
+                    "canCreate": false,
+                    "canDelete": false,
+                    "canEdit": false,
+                    "canSearch": true,
+                    "columns": [
+                        {
+                            "header": "Plot No",
+                            "mapping": "plot_no",
+                            "name": "plot_no"
+                        },
+                        {
+                            "header": "Date Time",
+                            "mapping": "date_time",
+                            "name": "date_time"
+                        },
+                        {
+                            "header": "Module Id",
+                            "mapping": "Module Id",
+                            "name": "module_id"
+                        },
+                        {
+                            "header": "Corner",
+                            "mapping": "corner",
+                            "name": "corner"
+                        },
+                        {
+                            "header": "Sample Id",
+                            "mapping": "sample_id",
+                            "name": "sample_id"
+                        },
+                        {
+                            "header": "Area Sampled",
+                            "mapping": "area_sampled",
+                            "name": "area_sampled"
+                        },
+                        {
+                            "header": "Weight With Bag",
+                            "mapping": "weight_with_bag",
+                            "name": "weight_with_bag"
+                        },
+                        {
+                            "header": "Bag Weight",
+                            "mapping": "bag_weight",
+                            "name": "bag_weight"
+                        },
+                        {
+                            "header": "Biomass Collected",
+                            "mapping": "biomass_collected",
+                            "name": "biomass_collected"
+                        }
+                    ],
+                    "createTitle": "Create a new Biomass Raw",
+                    "displayField": "label",
+                    "editHeight": 270,
+                    "editTitle": "Edit Biomass Raw",
+                    "fields": [
+                        {
+                            "mapping": "fid",
+                            "name": "fid"
+                        },
+                        {
+                            "mapping": "plotNo",
+                            "name": "plot_no"
+                        },
+                        {
+                            "mapping": "dateTime",
+                            "name": "date_time"
+                        },
+                        {
+                            "mapping": "moduleId",
+                            "name": "module_id"
+                        },
+                        {
+                            "mapping": "corner",
+                            "name": "corner"
+                        },
+                        {
+                            "mapping": "sampleId",
+                            "name": "sample_id"
+                        },
+                        {
+                            "mapping": "areaSampled",
+                            "name": "area_sampled"
+                        },
+                        {
+                            "mapping": "weightWithBag",
+                            "name": "weight_with_bag"
+                        },
+                        {
+                            "mapping": "bagWeight",
+                            "name": "bag_weight"
+                        },
+                        {
+                            "mapping": "biomassCollected",
+                            "name": "biomass_collected"
+                        }
+                    ],
+                    "iconCls": "vibi_biomass_raw_ic",
+                    "id": "Biomass Raw",
+                    "idProperty": "id",
+                    "totalProperty" : "totalCount",
+                    "name": "Biomass Raw",
+                    "pluralName": "Biomass Raw",
+                    "restful": true,
+                    "root": "data",
+                    "paramNames" : {
+                        "start" : "firstResult",
+                        "limit" : "maxResults",
+                        "query" : "keyword"
+                    }
+                },
+                {
+                    "api": {},
+                    "autoExpandColumn": false,
+                    "minColumnWidth": 80,
+                    "autoload": false,
+                    "basePath": "mvc/vibi/classCodeModNatureServe/",
+                    "canCreate": false,
+                    "canDelete": false,
+                    "canEdit": false,
+                    "canSearch": true,
+                    "columns": [
+                        {
+                            "header": "Code",
+                            "mapping": "code",
+                            "name": "code"
+                        },
+                        {
+                            "header": "Community Class",
+                            "mapping": "community_class",
+                            "name": "community_class"
+                        }
+                    ],
+                    "createTitle": "Create a new Class Code Mod Nature Serve",
+                    "displayField": "label",
+                    "editHeight": 270,
+                    "editTitle": "Class Code Mod Nature Serve",
+                    "fields": [
+                        {
+                            "mapping": "code",
+                            "name": "code"
+                        },
+                        {
+                            "mapping": "communityClass",
+                            "name": "community_class"
+                        }
+                    ],
+                    "iconCls": "vibi_class_code_mod_nature_serve_ic",
+                    "id": "Class Code Mod Nature Serve",
+                    "idProperty": "id",
+                    "totalProperty" : "totalCount",
+                    "name": "Class Code Mod Nature Serve",
+                    "pluralName": "Class Code Mod Nature Serve",
+                    "restful": true,
+                    "root": "data",
+                    "paramNames" : {
+                        "start" : "firstResult",
+                        "limit" : "maxResults",
+                        "query" : "keyword"
+                    }
+                },
+                {
+                    "api": {},
+                    "autoExpandColumn": false,
+                    "minColumnWidth": 80,
+                    "autoload": false,
+                    "basePath": "mvc/vibi/coverMidpointLookup/",
+                    "canCreate": false,
+                    "canDelete": false,
+                    "canEdit": false,
+                    "canSearch": true,
+                    "columns": [
+                        {
+                            "header": "Cover Code",
+                            "mapping": "cover_code",
+                            "name": "cover_code"
+                        },
+                        {
+                            "header": "Midpoint",
+                            "mapping": "midpoint",
+                            "name": "midpoint"
+                        }
+                    ],
+                    "createTitle": "Create a new Cover Midpoint",
+                    "displayField": "label",
+                    "editHeight": 270,
+                    "editTitle": "Edit Cover Midpoint",
+                    "fields": [
+                        {
+                            "mapping": "coverCode",
+                            "name": "cover_code"
+                        },
+                        {
+                            "mapping": "midPoint",
+                            "name": "midpoint"
+                        }
+                    ],
+                    "iconCls": "vibi_cover_midpoint_ic",
+                    "id": "Cover Midpoint",
+                    "idProperty": "id",
+                    "totalProperty" : "totalCount",
+                    "name": "Cover Midpoint",
+                    "pluralName": "Cover Midpoint",
+                    "restful": true,
+                    "root": "data",
+                    "paramNames" : {
+                        "start" : "firstResult",
+                        "limit" : "maxResults",
+                        "query" : "keyword"
+                    }
+                },
+                {
+
+                    "api": {},
+                    "autoExpandColumn": false,
+                    "minColumnWidth": 80,
+                    "autoload": false,
                     "basePath": "mvc/vibi/metrics/",
                     "canCreate": false,
                     "canDelete": false,
@@ -3197,63 +3867,71 @@
                             "mapping" : "plot_no",
                             "name" : "plot_no"
                         }, {
-                            "header" : "Carex Metric Value",
+                            "header" : "Vibi Type",
+                            "mapping" : "vibi_type",
+                            "name" : "vibi_type"
+                        }, {
+                            "header" : "Vibi Score",
+                            "mapping" : "score",
+                            "name" : "score"
+                        }, {
+                            "header" : "Carex",
                             "mapping" : "carex_metric_value",
                             "name" : "carex_metric_value"
                         }, {
-                            "header" : "Cyperaceae Metric Value",
+                            "header" : "Cyperaceae",
                             "mapping" : "cyperaceae_metric_value",
                             "name" : "cyperaceae_metric_value"
                         }, {
-                            "header" : "Dicot Metric Value",
+                            "header" : "Dicot",
                             "mapping" : "dicot_metric_value",
                             "name" : "dicot_metric_value"
                         }, {
-                            "header" : "Shade Metric Value",
+                            "header" : "Shade",
                             "mapping" : "shade_metric_value",
                             "name" : "shade_metric_value"
                         }, {
-                            "header" : "Shrub Metric Value",
+                            "header" : "Shrub",
                             "mapping" : "shrub_metric_value",
                             "name" : "shrub_metric_value"
                         }, {
-                            "header" : "Hydrophyte Metric Value",
+                            "header" : "Hydrophyte",
                             "mapping" : "hydrophyte_metric_value",
                             "name" : "hydrophyte_metric_value"
                         }, {
-                            "header" : "SVP Metric Value",
+                            "header" : "SVP",
                             "mapping" : "svp_metric_value",
                             "name" : "svp_metric_value"
                         }, {
-                            "header" : "Ap Ratio Metric Value",
+                            "header" : "Ap Ratio",
                             "mapping" : "ap_ratio_metric_value",
                             "name" : "ap_ratio_metric_value"
                         }, {
-                            "header" : "FQAI Metric Value",
+                            "header" : "FQAI",
                             "mapping" : "fqai_metric_value",
                             "name" : "fqai_metric_value"
                         }, {
-                            "header" : "Bryophyte Metric Value",
+                            "header" : "Bryophyte",
                             "mapping" : "bryophyte_metric_value",
                             "name" : "bryophyte_metric_value"
                         }, {
-                            "header" : "Per Hydrophyte Metric Value",
+                            "header" : "Per Hydrophyte",
                             "mapping" : "per_hydrophyte_metric_value",
                             "name" : "per_hydrophyte_metric_value"
                         }, {
-                            "header" : "Sensitive Metric Value",
+                            "header" : "Sensitive",
                             "mapping" : "sensitive_metric_value",
                             "name" : "sensitive_metric_value"
                         }, {
-                            "header" : "Tolerant Metric Value",
+                            "header" : "Tolerant",
                             "mapping" : "tolerant_metric_value",
                             "name" : "tolerant_metric_value"
                         }, {
-                            "header" : "Invasive Graminoids Metric Value",
+                            "header" : "Invasive Graminoids",
                             "mapping" : "invasive_graminoids_metric_value",
                             "name" : "invasive_graminoids_metric_value"
                         }, {
-                            "header" : "Small Tree Metric Value",
+                            "header" : "Small Tree",
                             "mapping" : "small_tree_metric_value",
                             "name" : "small_tree_metric_value"
                         }, {
@@ -3265,6 +3943,10 @@
                             "mapping" : "canopy_iv",
                             "name" : "canopy_iv"
                         }, {
+                            "header" : "Biomass",
+                            "mapping" : "biomass_metric_value",
+                            "name" : "biomass_metric_value"
+                        }, {
                             "header" : "Stems HA Wetland Trees",
                             "mapping" : "stems_ha_wetland_trees",
                             "name" : "stems_ha_wetland_trees"
@@ -3272,7 +3954,7 @@
                             "header" : "Stems HA Wetland Shrubs",
                             "mapping" : "stems_ha_wetland_shrubs",
                             "name" : "stems_ha_wetland_shrubs"
-                        }, 
+                        },
                         {
                             "header": "Per Unvegetated",
                             "mapping": "per_unvegetated",
@@ -3317,6 +3999,14 @@
                         {
                             "mapping" : "plotNo",
                             "name" : "plot_no"
+                        },
+                        {
+                            "mapping" : "vibiType",
+                            "name" : "vibi_type"
+                        }, 
+                        {
+                            "mapping" : "score",
+                            "name" : "score"
                         },
                         {
                             "mapping" : "carexMetricValue",
@@ -3387,6 +4077,10 @@
                             "name" : "canopy_iv"
                         },
                         {
+                            "mapping" : "biomassMetricValue",
+                            "name" : "biomass_metric_value"
+                        },
+                        {
                             "mapping" : "steamsHaWetlandTrees",
                             "name" : "stems_ha_wetland_trees"
                         },
@@ -3423,10 +4117,11 @@
                           "name": "per_bare_ground"
                         }
                     ],
-                    "iconCls": "vibi_plot_module_herbaceous_ic",
+                    "iconCls": "vibi_metric_calculations_ic",
                     "id": "Metrics",
                     "idProperty": "id",
                     "name": "Metrics",
+                    "totalProperty" : "totalCount",
                     "pluralName": "Metrics",
                     "restful": true,
                     "root": "data",

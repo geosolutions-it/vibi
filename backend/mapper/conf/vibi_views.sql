@@ -52,19 +52,20 @@ CREATE MATERIALIZED VIEW herbaceous_site_cov AS
   GROUP BY plot_no;
 
 CREATE MATERIALIZED VIEW herbaceous_relative_cover AS
-  SELECT a.plot_no, a.species, (a.tot_cov / b.site_cov) as relative_cover
+  SELECT row_number() OVER () AS view_id, a.plot_no, a.species, (a.tot_cov / b.site_cov) as relative_cover
   FROM herbaceous_tot_cov a
     LEFT JOIN herbaceous_site_cov b ON a.plot_no = b.plot_no;
 
 CREATE MATERIALIZED VIEW plot_module_woody_dbh AS
-  SELECT plot_no, module_id, species, dbh_class_index, dbh_class, count::numeric / sub AS count
+  SELECT row_number() OVER () AS view_id, plot_no, module_id, species, dbh_class_index, dbh_class, count::numeric / sub AS count
   FROM plot_module_woody_raw
   WHERE dbh_class_index <= 10;
 
 CREATE MATERIALIZED VIEW plot_module_woody_dbh_cm AS
-  SELECT plot_no, module_id, species, dbh_class_index, dbh_class, (count::numeric / 2) ^ 2 * pi() AS dbh_cm
+  SELECT row_number() OVER () AS view_id, plot_no, module_id, species, dbh_class_index, dbh_class, (count::numeric / 2) ^ 2 * pi() AS dbh_cm
   FROM plot_module_woody_raw
   WHERE dbh_class_index > 10;
+
 
 CREATE MATERIALIZED VIEW reduced_fsd2_counts AS
   SELECT plot_no, species, dbh_class_index, sum(count::numeric) as counts
@@ -142,7 +143,7 @@ CREATE MATERIALIZED VIEW reduced_fsd2_iv AS
       ON a.plot_no = e.plot_no;
 
 CREATE MATERIALIZED VIEW  woody_importance_value AS
-  SELECT a.plot_no, a.species,
+  SELECT row_number() OVER () AS view_id, a.plot_no, a.species,
     CASE WHEN b.code5 = 'partial' THEN a.iv ELSE null END AS subcanopy_iv_partial,
     CASE WHEN b.code5 = 'shade' THEN a.iv ELSE null END AS subcanopy_iv_shade,
     CASE WHEN b.form = 'tree' THEN a.iv ELSE null END AS canopy_IV
@@ -151,7 +152,7 @@ CREATE MATERIALIZED VIEW  woody_importance_value AS
 
 
 CREATE MATERIALIZED VIEW biomass AS
-  SELECT plot_no, date_time, module_id, corner, sample_id, area_sampled,
+  SELECT row_number() OVER () AS view_id, plot_no, date_time, module_id, corner, sample_id, area_sampled,
     weight_with_bag, bag_weight, biomass_collected, actual_or_derived,
     CASE WHEN COALESCE(weight_with_bag, 0.0) > 2
       THEN weight_with_bag - bag_weight ELSE COALESCE(weight_with_bag, 0.0)
@@ -555,44 +556,46 @@ CREATE MATERIALIZED VIEW vibi_f_index AS
       ON a.plot_no = c.plot_no;
 
 CREATE MATERIALIZED VIEW metric_calculations AS
-  SELECT *, null AS score FROM vibi_values
-  UNION
-  SELECT *, COALESCE(carex_metric_value, 0.0) + COALESCE(cyperaceae_metric_value, 0.0) + COALESCE(dicot_metric_value, 0.0) +
-            COALESCE(shade_metric_value, 0.0) + COALESCE(shrub_metric_value, 0.0) + COALESCE(hydrophyte_metric_value, 0.0) +
-            COALESCE(svp_metric_value, 0.0) + COALESCE(ap_ratio_metric_value, 0.0) + COALESCE(fqai_metric_value, 0.0) +
-            COALESCE(bryophyte_metric_value, 0.0) + COALESCE(per_hydrophyte_metric_value, 0.0) + COALESCE(sensitive_metric_value, 0.0) +
-            COALESCE(tolerant_metric_value, 0.0) + COALESCE(invasive_graminoids_metric_value, 0.0) + COALESCE(small_tree_metric_value, 0.0) +
-            COALESCE(subcanopy_iv, 0.0) + COALESCE(canopy_iv, 0.0) + COALESCE(biomass_metric_value, 0.0) + COALESCE(stems_ha_wetland_trees, 0.0) +
-            COALESCE(stems_ha_wetland_shrubs, 0.0) + COALESCE(per_unvegetated, 0.0) + COALESCE(per_button_bush, 0.0) +
-            COALESCE(per_perennial_native_hydrophytes, 0.0) + COALESCE(per_adventives, 0.0) + COALESCE(per_open_water, 0.0) +
-            COALESCE(per_unvegetated_open_water, 0.0) AS score FROM vibi_e_index
-  UNION
-  SELECT *, COALESCE(carex_metric_value, 0.0) + COALESCE(cyperaceae_metric_value, 0.0) + COALESCE(dicot_metric_value, 0.0) +
-            COALESCE(shade_metric_value, 0.0) + COALESCE(shrub_metric_value, 0.0) + COALESCE(hydrophyte_metric_value, 0.0) +
-            COALESCE(svp_metric_value, 0.0) + COALESCE(ap_ratio_metric_value, 0.0) + COALESCE(fqai_metric_value, 0.0) +
-            COALESCE(bryophyte_metric_value, 0.0) + COALESCE(per_hydrophyte_metric_value, 0.0) + COALESCE(sensitive_metric_value, 0.0) +
-            COALESCE(tolerant_metric_value, 0.0) + COALESCE(invasive_graminoids_metric_value, 0.0) + COALESCE(small_tree_metric_value, 0.0) +
-            COALESCE(subcanopy_iv, 0.0) + COALESCE(canopy_iv, 0.0) + COALESCE(biomass_metric_value, 0.0) + COALESCE(stems_ha_wetland_trees, 0.0) +
-            COALESCE(stems_ha_wetland_shrubs, 0.0) + COALESCE(per_unvegetated, 0.0) + COALESCE(per_button_bush, 0.0) +
-            COALESCE(per_perennial_native_hydrophytes, 0.0) + COALESCE(per_adventives, 0.0) + COALESCE(per_open_water, 0.0) +
-            COALESCE(per_unvegetated_open_water, 0.0) AS score FROM vibi_ecst_index
-  UNION
-  SELECT *, COALESCE(carex_metric_value, 0.0) + COALESCE(cyperaceae_metric_value, 0.0) + COALESCE(dicot_metric_value, 0.0) +
-            COALESCE(shade_metric_value, 0.0) + COALESCE(shrub_metric_value, 0.0) + COALESCE(hydrophyte_metric_value, 0.0) +
-            COALESCE(svp_metric_value, 0.0) + COALESCE(ap_ratio_metric_value, 0.0) + COALESCE(fqai_metric_value, 0.0) +
-            COALESCE(bryophyte_metric_value, 0.0) + COALESCE(per_hydrophyte_metric_value, 0.0) + COALESCE(sensitive_metric_value, 0.0) +
-            COALESCE(tolerant_metric_value, 0.0) + COALESCE(invasive_graminoids_metric_value, 0.0) + COALESCE(small_tree_metric_value, 0.0) +
-            COALESCE(subcanopy_iv, 0.0) + COALESCE(canopy_iv, 0.0) + COALESCE(biomass_metric_value, 0.0) + COALESCE(stems_ha_wetland_trees, 0.0) +
-            COALESCE(stems_ha_wetland_shrubs, 0.0) + COALESCE(per_unvegetated, 0.0) + COALESCE(per_button_bush, 0.0) +
-            COALESCE(per_perennial_native_hydrophytes, 0.0) + COALESCE(per_adventives, 0.0) + COALESCE(per_open_water, 0.0) +
-            COALESCE(per_unvegetated_open_water, 0.0) AS score FROM vibi_sh_index
-  UNION
-  SELECT *, COALESCE(carex_metric_value, 0.0) + COALESCE(cyperaceae_metric_value, 0.0) + COALESCE(dicot_metric_value, 0.0) +
-            COALESCE(shade_metric_value, 0.0) + COALESCE(shrub_metric_value, 0.0) + COALESCE(hydrophyte_metric_value, 0.0) +
-            COALESCE(svp_metric_value, 0.0) + COALESCE(ap_ratio_metric_value, 0.0) + COALESCE(fqai_metric_value, 0.0) +
-            COALESCE(bryophyte_metric_value, 0.0) + COALESCE(per_hydrophyte_metric_value, 0.0) + COALESCE(sensitive_metric_value, 0.0) +
-            COALESCE(tolerant_metric_value, 0.0) + COALESCE(invasive_graminoids_metric_value, 0.0) + COALESCE(small_tree_metric_value, 0.0) +
-            COALESCE(subcanopy_iv, 0.0) + COALESCE(canopy_iv, 0.0) + COALESCE(biomass_metric_value, 0.0) + COALESCE(stems_ha_wetland_trees, 0.0) +
-            COALESCE(stems_ha_wetland_shrubs, 0.0) + COALESCE(per_unvegetated, 0.0) + COALESCE(per_button_bush, 0.0) +
-            COALESCE(per_perennial_native_hydrophytes, 0.0) + COALESCE(per_adventives, 0.0) + COALESCE(per_open_water, 0.0) +
-            COALESCE(per_unvegetated_open_water, 0.0) AS score FROM vibi_f_index;
+  SELECT *, row_number() OVER () AS view_id FROM (
+    SELECT *, null AS score FROM vibi_values
+    UNION
+    SELECT *, COALESCE(carex_metric_value, 0.0) + COALESCE(cyperaceae_metric_value, 0.0) + COALESCE(dicot_metric_value, 0.0) +
+              COALESCE(shade_metric_value, 0.0) + COALESCE(shrub_metric_value, 0.0) + COALESCE(hydrophyte_metric_value, 0.0) +
+              COALESCE(svp_metric_value, 0.0) + COALESCE(ap_ratio_metric_value, 0.0) + COALESCE(fqai_metric_value, 0.0) +
+              COALESCE(bryophyte_metric_value, 0.0) + COALESCE(per_hydrophyte_metric_value, 0.0) + COALESCE(sensitive_metric_value, 0.0) +
+              COALESCE(tolerant_metric_value, 0.0) + COALESCE(invasive_graminoids_metric_value, 0.0) + COALESCE(small_tree_metric_value, 0.0) +
+              COALESCE(subcanopy_iv, 0.0) + COALESCE(canopy_iv, 0.0) + COALESCE(biomass_metric_value, 0.0) + COALESCE(stems_ha_wetland_trees, 0.0) +
+              COALESCE(stems_ha_wetland_shrubs, 0.0) + COALESCE(per_unvegetated, 0.0) + COALESCE(per_button_bush, 0.0) +
+              COALESCE(per_perennial_native_hydrophytes, 0.0) + COALESCE(per_adventives, 0.0) + COALESCE(per_open_water, 0.0) +
+              COALESCE(per_unvegetated_open_water, 0.0) AS score FROM vibi_e_index
+    UNION
+    SELECT *, COALESCE(carex_metric_value, 0.0) + COALESCE(cyperaceae_metric_value, 0.0) + COALESCE(dicot_metric_value, 0.0) +
+              COALESCE(shade_metric_value, 0.0) + COALESCE(shrub_metric_value, 0.0) + COALESCE(hydrophyte_metric_value, 0.0) +
+              COALESCE(svp_metric_value, 0.0) + COALESCE(ap_ratio_metric_value, 0.0) + COALESCE(fqai_metric_value, 0.0) +
+              COALESCE(bryophyte_metric_value, 0.0) + COALESCE(per_hydrophyte_metric_value, 0.0) + COALESCE(sensitive_metric_value, 0.0) +
+              COALESCE(tolerant_metric_value, 0.0) + COALESCE(invasive_graminoids_metric_value, 0.0) + COALESCE(small_tree_metric_value, 0.0) +
+              COALESCE(subcanopy_iv, 0.0) + COALESCE(canopy_iv, 0.0) + COALESCE(biomass_metric_value, 0.0) + COALESCE(stems_ha_wetland_trees, 0.0) +
+              COALESCE(stems_ha_wetland_shrubs, 0.0) + COALESCE(per_unvegetated, 0.0) + COALESCE(per_button_bush, 0.0) +
+              COALESCE(per_perennial_native_hydrophytes, 0.0) + COALESCE(per_adventives, 0.0) + COALESCE(per_open_water, 0.0) +
+              COALESCE(per_unvegetated_open_water, 0.0) AS score FROM vibi_ecst_index
+    UNION
+    SELECT *, COALESCE(carex_metric_value, 0.0) + COALESCE(cyperaceae_metric_value, 0.0) + COALESCE(dicot_metric_value, 0.0) +
+              COALESCE(shade_metric_value, 0.0) + COALESCE(shrub_metric_value, 0.0) + COALESCE(hydrophyte_metric_value, 0.0) +
+              COALESCE(svp_metric_value, 0.0) + COALESCE(ap_ratio_metric_value, 0.0) + COALESCE(fqai_metric_value, 0.0) +
+              COALESCE(bryophyte_metric_value, 0.0) + COALESCE(per_hydrophyte_metric_value, 0.0) + COALESCE(sensitive_metric_value, 0.0) +
+              COALESCE(tolerant_metric_value, 0.0) + COALESCE(invasive_graminoids_metric_value, 0.0) + COALESCE(small_tree_metric_value, 0.0) +
+              COALESCE(subcanopy_iv, 0.0) + COALESCE(canopy_iv, 0.0) + COALESCE(biomass_metric_value, 0.0) + COALESCE(stems_ha_wetland_trees, 0.0) +
+              COALESCE(stems_ha_wetland_shrubs, 0.0) + COALESCE(per_unvegetated, 0.0) + COALESCE(per_button_bush, 0.0) +
+              COALESCE(per_perennial_native_hydrophytes, 0.0) + COALESCE(per_adventives, 0.0) + COALESCE(per_open_water, 0.0) +
+              COALESCE(per_unvegetated_open_water, 0.0) AS score FROM vibi_sh_index
+    UNION
+    SELECT *, COALESCE(carex_metric_value, 0.0) + COALESCE(cyperaceae_metric_value, 0.0) + COALESCE(dicot_metric_value, 0.0) +
+              COALESCE(shade_metric_value, 0.0) + COALESCE(shrub_metric_value, 0.0) + COALESCE(hydrophyte_metric_value, 0.0) +
+              COALESCE(svp_metric_value, 0.0) + COALESCE(ap_ratio_metric_value, 0.0) + COALESCE(fqai_metric_value, 0.0) +
+              COALESCE(bryophyte_metric_value, 0.0) + COALESCE(per_hydrophyte_metric_value, 0.0) + COALESCE(sensitive_metric_value, 0.0) +
+              COALESCE(tolerant_metric_value, 0.0) + COALESCE(invasive_graminoids_metric_value, 0.0) + COALESCE(small_tree_metric_value, 0.0) +
+              COALESCE(subcanopy_iv, 0.0) + COALESCE(canopy_iv, 0.0) + COALESCE(biomass_metric_value, 0.0) + COALESCE(stems_ha_wetland_trees, 0.0) +
+              COALESCE(stems_ha_wetland_shrubs, 0.0) + COALESCE(per_unvegetated, 0.0) + COALESCE(per_button_bush, 0.0) +
+              COALESCE(per_perennial_native_hydrophytes, 0.0) + COALESCE(per_adventives, 0.0) + COALESCE(per_open_water, 0.0) +
+              COALESCE(per_unvegetated_open_water, 0.0) AS score FROM vibi_f_index
+  ) a;
