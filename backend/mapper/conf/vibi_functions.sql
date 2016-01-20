@@ -1,5 +1,5 @@
-DROP FUNCTION IF EXISTS refresh_calculations();
-DROP FUNCTION IF EXISTS metric_value(numeric, numeric[], numeric[]);
+DROP FUNCTION IF EXISTS refresh_calculations() CASCADE;
+DROP FUNCTION IF EXISTS metric_value(numeric, numeric[], numeric[]) CASCADE;
 
 CREATE OR REPLACE FUNCTION metric_value(value numeric, metrics_index numeric[], metrics_values numeric[])
   RETURNS numeric LANGUAGE plpgsql AS $$

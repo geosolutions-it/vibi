@@ -66,7 +66,6 @@ CREATE MATERIALIZED VIEW plot_module_woody_dbh_cm AS
   FROM plot_module_woody_raw
   WHERE dbh_class_index > 10;
 
-
 CREATE MATERIALIZED VIEW reduced_fsd2_counts AS
   SELECT plot_no, species, dbh_class_index, sum(count::numeric) as counts
   FROM plot_module_woody_dbh
