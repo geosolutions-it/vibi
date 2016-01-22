@@ -181,30 +181,20 @@ CREATE TABLE CODE5 (
 
 -- species table below will be populated from most recent version of the Ohio EPA-maintained list
 CREATE TABLE species (
-  --  veg_id int4 PRIMARY KEY,
   scientific_name text PRIMARY KEY,
   acronym text,
-  authority text, --REFERENCES authority(authority),
-  cofc int4, -- wildcard ("*") in spreadsheet is null in table
+  authority text REFERENCES authority(authority),
+  cofc int4,
   tolerance text,
-  --  syn text,
   common_name text,
-  family text, --REFERENCES family(family),
-  --  fn int4,
-  ind text, -- REFERENCES ind(ind),
+  family text REFERENCES family(family),
+  ind text REFERENCES ind(ind),
   hydro text,
   form text REFERENCES form(form),
   habit text REFERENCES habit(habit),
   groupp text REFERENCES groupp(groupp),
   shade text REFERENCES shade(shade),
-  --  usda_id text,
-  --  oh_tore text,
-  --  type text, -- equivalent to group
   nativity text REFERENCES nativity(nativity), -- oh_status
-  --  emp text, -- separate regions in Ohio. To be used later.
-  --  mw text, -- ditto
-  --  ncne text, -- ditto
-  --  notes text
   CODE1 text REFERENCES code1(code1),
   CODE2 text REFERENCES code2(code2),
   CODE3 text REFERENCES code3(code3),

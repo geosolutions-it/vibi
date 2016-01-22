@@ -767,9 +767,14 @@
                             "name": "groupp"
                         },
                         {
-                            "header": "Nativity",
+                            "header": "Shade",
                             "mapping": "shade",
                             "name": "shade"
+                        },
+                        {
+                            "header": "Nativity",
+                            "mapping": "nativity",
+                            "name": "nativity"
                         },
                         {
                             "header": "Code1",
@@ -848,6 +853,10 @@
                         },
                         {
                             "mapping": "nativity",
+                            "name": "nativity"
+                        },
+                        {
+                            "mapping": "shade",
                             "name": "shade"
                         },
                         {
@@ -1177,7 +1186,7 @@
                             "name": "sub"
                         },
                         {
-                            "mapping": "module_id",
+                            "mapping": "moduleId",
                             "name": "module_id"
                         },
                         {
@@ -1263,7 +1272,7 @@
                           "name": "plot_no"
                         },
                         {
-                          "mapping": "module_id",
+                          "mapping": "moduleId",
                           "name": "module_id"
                         },
                         {
@@ -1349,7 +1358,7 @@
                             "name": "plot_no"
                         },
                         {
-                            "mapping": "module_id",
+                            "mapping": "moduleId",
                             "name": "module_id"
                         },
                         {
@@ -1426,23 +1435,23 @@
                     "editTitle": "Edit Woody Importance Value",
                     "fields": [
                         {
-                            "mapping": "Plot No",
+                            "mapping": "plotNo",
                             "name": "plot_no"
                         },
                         {
-                            "mapping": "Species",
+                            "mapping": "species",
                             "name": "species"
                         },
                         {
-                            "mapping": "SubcanopyIV Partial",
+                            "mapping": "subcanopyIvPartial",
                             "name": "subcanopy_iv_partial"
                         },
                         {
-                            "mapping": "Subcanopy IV Shade",
+                            "mapping": "subcanopyIvShade",
                             "name": "subcanopy_iv_shade"
                         },
                         {
-                            "mapping": "Canopy IV",
+                            "mapping": "canopyIv",
                             "name": "canopy_iv"
                         }
                     ],
@@ -1650,6 +1659,11 @@
                             "header": "Biomass Collected",
                             "mapping": "biomass_collected",
                             "name": "biomass_collected"
+                        },
+                        {
+                            "header": "Actual Or Derived",
+                            "mapping": "actual_or_derived",
+                            "name": "actual_or_derived"
                         }
                     ],
                     "createTitle": "Create a new Biomass Raw",
@@ -1696,6 +1710,10 @@
                         {
                             "mapping": "biomassCollected",
                             "name": "biomass_collected"
+                        },
+                        {
+                            "mapping": "actualOrDerived",
+                            "name": "actual_or_derived"
                         }
                     ],
                     "iconCls": "vibi_biomass_raw_ic",
@@ -1744,7 +1762,7 @@
                             "name": "code"
                         },
                         {
-                            "mapping": "CommunityClass",
+                            "mapping": "communityClass",
                             "name": "community_class"
                         }
                     ],
@@ -1790,11 +1808,11 @@
                     "editTitle": "Edit Cover Midpoint",
                     "fields": [
                         {
-                            "mapping": "Cover Code",
+                            "mapping": "coverCode",
                             "name": "cover_code"
                         },
                         {
-                            "mapping": "midpoint",
+                            "mapping": "midPoint",
                             "name": "midpoint"
                         }
                     ],
@@ -1834,8 +1852,8 @@
                             "name" : "vibi_type"
                         }, {
                             "header" : "Vibi Score",
-                            "mapping" : "vibi_score",
-                            "name" : "vibi_score"
+                            "mapping" : "score",
+                            "name" : "score"
                         }, {
                             "header" : "Carex",
                             "mapping" : "carex_metric_value",
@@ -1967,8 +1985,8 @@
                             "name" : "vibi_type"
                         }, 
                         {
-                            "mapping" : "vibiScore",
-                            "name" : "vibi_score"
+                            "mapping" : "score",
+                            "name" : "score"
                         },
                         {
                             "mapping" : "carexMetricValue",
@@ -2805,9 +2823,14 @@
                             "name": "groupp"
                         },
                         {
-                            "header": "Nativity",
+                            "header": "Shade",
                             "mapping": "shade",
                             "name": "shade"
+                        },
+                        {
+                            "header": "Nativity",
+                            "mapping": "nativity",
+                            "name": "nativity"
                         },
                         {
                             "header": "Code1",
@@ -2886,6 +2909,10 @@
                         },
                         {
                             "mapping": "nativity",
+                            "name": "nativity"
+                        },
+                        {
+                            "mapping": "shade",
                             "name": "shade"
                         },
                         {
@@ -3688,6 +3715,11 @@
                             "header": "Biomass Collected",
                             "mapping": "biomass_collected",
                             "name": "biomass_collected"
+                        },
+                        {
+                            "header": "Actual Or Derived",
+                            "mapping": "actual_or_derived",
+                            "name": "actual_or_derived"
                         }
                     ],
                     "createTitle": "Create a new Biomass Raw",
@@ -3734,6 +3766,10 @@
                         {
                             "mapping": "biomassCollected",
                             "name": "biomass_collected"
+                        },
+                        {
+                            "mapping": "actualOrDerived",
+                            "name": "actual_or_derived"
                         }
                     ],
                     "iconCls": "vibi_biomass_raw_ic",

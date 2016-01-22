@@ -753,9 +753,14 @@
                             "name": "groupp"
                         },
                         {
-                            "header": "Nativity",
+                            "header": "Shade",
                             "mapping": "shade",
                             "name": "shade"
+                        },
+                        {
+                            "header": "Nativity",
+                            "mapping": "nativity",
+                            "name": "nativity"
                         },
                         {
                             "header": "Code1",
@@ -834,6 +839,10 @@
                         },
                         {
                             "mapping": "nativity",
+                            "name": "nativity"
+                        },
+                        {
+                            "mapping": "shade",
                             "name": "shade"
                         },
                         {
@@ -1636,6 +1645,11 @@
                             "header": "Biomass Collected",
                             "mapping": "biomass_collected",
                             "name": "biomass_collected"
+                        },
+                        {
+                            "header": "Actual Or Derived",
+                            "mapping": "actual_or_derived",
+                            "name": "actual_or_derived"
                         }
                     ],
                     "createTitle": "Create a new Biomass Raw",
@@ -1682,6 +1696,10 @@
                         {
                             "mapping": "biomassCollected",
                             "name": "biomass_collected"
+                        },
+                        {
+                            "mapping": "actualOrDerived",
+                            "name": "actual_or_derived"
                         }
                     ],
                     "iconCls": "vibi_biomass_raw_ic",
@@ -2781,9 +2799,14 @@
                             "name": "groupp"
                         },
                         {
-                            "header": "Nativity",
+                            "header": "Shade",
                             "mapping": "shade",
                             "name": "shade"
+                        },
+                        {
+                            "header": "Nativity",
+                            "mapping": "nativity",
+                            "name": "nativity"
                         },
                         {
                             "header": "Code1",
@@ -2862,6 +2885,10 @@
                         },
                         {
                             "mapping": "nativity",
+                            "name": "nativity"
+                        },
+                        {
+                            "mapping": "shade",
                             "name": "shade"
                         },
                         {
@@ -3664,6 +3691,11 @@
                             "header": "Biomass Collected",
                             "mapping": "biomass_collected",
                             "name": "biomass_collected"
+                        },
+                        {
+                            "header": "Actual Or Derived",
+                            "mapping": "actual_or_derived",
+                            "name": "actual_or_derived"
                         }
                     ],
                     "createTitle": "Create a new Biomass Raw",
@@ -3710,6 +3742,10 @@
                         {
                             "mapping": "biomassCollected",
                             "name": "biomass_collected"
+                        },
+                        {
+                            "mapping": "actualOrDerived",
+                            "name": "actual_or_derived"
                         }
                     ],
                     "iconCls": "vibi_biomass_raw_ic",
