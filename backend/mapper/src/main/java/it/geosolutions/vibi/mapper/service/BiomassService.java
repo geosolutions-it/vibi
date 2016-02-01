@@ -110,6 +110,13 @@ public class BiomassService {
                 .withAttribute("J", "area_sampled", "Numeric")
                 .withAttribute("K", "weight_with_bag", "Numeric")
                 .withAttribute("L", "bag_weight", "Numeric")
+                .withAttribute(new ReferenceAttributeBuilder()
+                        .withTableName("biomass_accuracy")
+                        .withAttributeName("actual_or_derived")
+                        .withAttributeType("Text")
+                        .withAttributeId("biomass_accuracy", "M")
+                        .withCreateReference(true)
+                        .build())
                 .build();
 
         sheetProcessor.process(sheet, store);

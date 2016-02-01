@@ -52,7 +52,8 @@ CREATE MATERIALIZED VIEW herbaceous_site_cov AS
   GROUP BY plot_no;
 
 CREATE MATERIALIZED VIEW herbaceous_relative_cover AS
-  SELECT row_number() OVER () AS view_id, a.plot_no, a.species, (a.tot_cov / b.site_cov) as relative_cover
+  SELECT row_number() OVER () AS view_id, a.plot_no, a.species,
+    CASE WHEN COALESCE(b.site_cov, 0.0) = 0 THEN 0 ELSE (a.tot_cov / b.site_cov) END as relative_cover
   FROM herbaceous_tot_cov a
     LEFT JOIN herbaceous_site_cov b ON a.plot_no = b.plot_no;
 

@@ -64,7 +64,8 @@ public class MapperTest {
         assertThat(count("PLOT_MODULE_HERBACEOUS_INFO", dbUrl, user, pass), is(760));
         assertThat(count("PLOT_MODULE_HERBACEOUS", dbUrl, user, pass), is(10144));
         assertThat(count("PLOT_MODULE_WOODY_RAW", dbUrl, user, pass), is(1865));
-        assertThat(count("BIOMASS_RAW", dbUrl, user, pass), is(8));
+        assertThat(count("BIOMASS_RAW", dbUrl, user, pass), is(9));
+        assertThat(count("BIOMASS_ACCURACY", dbUrl, user, pass), is(2));
         checkPlotScores(1101, 53.0, 56.0, 56.0, 47.0, dbUrl, user, pass);
         checkPlotScores(1106, 26.0, 3.0, 23.0, 3.0, dbUrl, user, pass);
         checkPlotScores(1120, 0.0, 0.0, 0.0, 0.0, dbUrl, user, pass);
