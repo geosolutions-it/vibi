@@ -18,6 +18,7 @@ DROP TABLE IF EXISTS authroity CASCADE;
 DROP TABLE IF EXISTS family CASCADE;
 DROP TABLE IF EXISTS groupp CASCADE;
 DROP TABLE IF EXISTS herbaceous_relative_cover CASCADE;
+DROP TABLE IF EXISTS herbaceous_species_misc_info CASCADE;
 DROP TABLE IF EXISTS hgm_class CASCADE;
 DROP TABLE IF EXISTS hgm_group CASCADE;
 DROP TABLE IF EXISTS homogeneity CASCADE;
@@ -319,6 +320,17 @@ CREATE TABLE plot_module_herbaceous_info (
   depth integer references depth(depth),
   info text,
   cover_class_code integer references cover_midpoint_lookup(cover_code)
+);
+
+CREATE TABLE herbaceous_species_misc_info (
+species text references species(scientific_name),
+plot_no text references plot(plot_no),
+module_id int4 references module(module_id),
+voucher_no text,
+comment text,
+browse_intensity text,
+percent_flowering text,
+percent_fruiting text
 );
 
 CREATE TABLE plot_module_woody_raw (
