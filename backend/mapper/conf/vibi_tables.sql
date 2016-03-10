@@ -268,6 +268,10 @@ CREATE TABLE plot (
   VEGclass text references veg_class(veg_class),
   VEGSubclass text,
   twoo_plant text references plant_comm_code(code),
+  HGMClass text references hgm_class(hgm_class),
+  HGMSubclass text references hgm_subclass(hgm_subclass),
+  twoo_HGM text,
+  HGMgroup text references hgm_group(hgm_group),
   oneo_class_code_Mod_NatureServe text references class_code_Mod_NatureServe(code),
   --	oneo_community_Mod_NatureServe text references class_code_Mod_NatureServe(description), -- can be derived from code above
   cowardin_classification text,
