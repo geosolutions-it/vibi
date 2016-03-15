@@ -57,7 +57,6 @@ public class MapperTest {
     }
 
     private void checkData(String dbUrl, String user, String pass) {
-        assertThat(count("SPECIES", dbUrl, user, pass), is(3030));
         assertThat(count("CLASS_CODE_MOD_NATURESERVE", dbUrl, user, pass), is(154));
         assertThat(count("COVER_MIDPOINT_LOOKUP", dbUrl, user, pass), is(11));
         assertThat(count("PLOT", dbUrl, user, pass), is(30));
@@ -65,9 +64,9 @@ public class MapperTest {
         assertThat(count("PLOT_MODULE_HERBACEOUS", dbUrl, user, pass), is(10144));
         assertThat(count("PLOT_MODULE_WOODY_RAW", dbUrl, user, pass), is(1865));
         assertThat(count("BIOMASS_RAW", dbUrl, user, pass), is(9));
-        assertThat(count("BIOMASS_ACCURACY", dbUrl, user, pass), is(2));
-        checkPlotScores(1101, 53.0, 56.0, 56.0, 47.0, dbUrl, user, pass);
-        checkPlotScores(1106, 26.0, 3.0, 23.0, 3.0, dbUrl, user, pass);
+        assertThat(count("BIOMASS_ACCURACY", dbUrl, user, pass), is(4));
+        checkPlotScores(1101, 63.0, 70.0, 66.0, 61.0, dbUrl, user, pass);
+        checkPlotScores(1106, 23.0, 3.0, 20.0, 0.0, dbUrl, user, pass);
         checkPlotScores(1120, 0.0, 0.0, 0.0, 0.0, dbUrl, user, pass);
     }
 
@@ -121,7 +120,7 @@ public class MapperTest {
     }
 
     private double getScore(int plotNo, String scoreName, String dbUrl, String user, String pass) {
-        String query = String.format("SELECT score FROM metric_calculations WHERE plot_no = %d AND vibi_type = '%s';",
+        String query = String.format("SELECT score FROM metric_calculations WHERE plot_no = '%d' AND vibi_type = '%s';",
                 plotNo, scoreName);
         return new ExecuteQuery(dbUrl, user, pass, query) {
             double result;
