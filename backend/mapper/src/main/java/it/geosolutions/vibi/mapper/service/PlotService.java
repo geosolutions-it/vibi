@@ -1,5 +1,6 @@
 package it.geosolutions.vibi.mapper.service;
 
+import it.geosolutions.vibi.mapper.attributes.Attribute;
 import it.geosolutions.vibi.mapper.builders.ReferenceAttributeBuilder;
 import it.geosolutions.vibi.mapper.builders.SheetProcessorBuilder;
 import it.geosolutions.vibi.mapper.detectors.BoundsDetector;
@@ -7,6 +8,7 @@ import it.geosolutions.vibi.mapper.sheets.SheetContext;
 import it.geosolutions.vibi.mapper.sheets.SheetProcessor;
 import it.geosolutions.vibi.mapper.utils.Sheets;
 import it.geosolutions.vibi.mapper.utils.Type;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.geotools.data.DataStore;
@@ -36,7 +38,12 @@ public class PlotService {
 
         SheetProcessor sheetProcessor = new SheetProcessorBuilder()
                 .withTable("plot").withBoundsDetector(boundsDetector)
-                .withAttributeId("A", "plot_no")
+                .withAttribute(new Attribute("plot_no", Type.STRING, true) {
+                    @Override
+                    public Object getValue(SheetContext context) {
+                        return Sheets.getValue(context, Sheets.getIndex("A"), Type.INTEGER).toString();
+                    }
+                })
                 .withAttribute("B", "project_name", "Text")
                 .withAttribute("C", "plot_name", "Text")
                 .withAttribute("D", "plot_label", "Text")
