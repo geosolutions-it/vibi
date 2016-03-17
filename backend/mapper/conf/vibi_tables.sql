@@ -2,22 +2,12 @@ DROP TABLE IF EXISTS class_code_Mod_NatureServe CASCADE;
 DROP TABLE IF EXISTS hgm_subclass CASCADE;
 DROP TABLE IF EXISTS biomass_raw CASCADE;
 DROP TABLE IF EXISTS biomass_accuracy CASCADE;
-DROP TABLE IF EXISTS code1 CASCADE;
-DROP TABLE IF EXISTS code2 CASCADE;
-DROP TABLE IF EXISTS code3 CASCADE;
-DROP TABLE IF EXISTS code4 CASCADE;
-DROP TABLE IF EXISTS code5 CASCADE;
-DROP TABLE IF EXISTS corner CASCADE;
 DROP TABLE IF EXISTS cover_midpoint_lookup CASCADE;
 DROP TABLE IF EXISTS dbh_class CASCADE;
 DROP TABLE IF EXISTS depth CASCADE;
 DROP TABLE IF EXISTS disturbance_severity CASCADE;
 DROP TABLE IF EXISTS disturbance_type CASCADE;
 DROP TABLE IF EXISTS drainage CASCADE;
-DROP TABLE IF EXISTS authority CASCADE;
-DROP TABLE IF EXISTS family CASCADE;
-DROP TABLE IF EXISTS groupp CASCADE;
-DROP TABLE IF EXISTS herbaceous_relative_cover CASCADE;
 DROP TABLE IF EXISTS fds1_species_misc_info CASCADE;
 DROP TABLE IF EXISTS fds2_species_misc_info CASCADE;
 DROP TABLE IF EXISTS hgm_class CASCADE;
@@ -26,7 +16,6 @@ DROP TABLE IF EXISTS homogeneity CASCADE;
 DROP TABLE IF EXISTS hydrologic_regime CASCADE;
 DROP TABLE IF EXISTS landform_type CASCADE;
 DROP TABLE IF EXISTS module CASCADE;
-DROP TABLE IF EXISTS plant_comm_code CASCADE;
 DROP TABLE IF EXISTS plot CASCADE;
 DROP TABLE IF EXISTS plot_module_herbaceous CASCADE;
 DROP TABLE IF EXISTS plot_module_herbaceous_info CASCADE;
@@ -34,21 +23,14 @@ DROP TABLE IF EXISTS salinity CASCADE;
 DROP TABLE IF EXISTS species CASCADE;
 DROP TABLE IF EXISTS stand_size CASCADE;
 DROP TABLE IF EXISTS veg_class CASCADE;
-DROP TABLE IF EXISTS woody_importance_value CASCADE;
 DROP TABLE IF EXISTS plot_module_woody_raw CASCADE;
 DROP TABLE IF EXISTS ind CASCADE;
 DROP TABLE IF EXISTS form CASCADE;
 DROP TABLE IF EXISTS habit CASCADE;
 DROP TABLE IF EXISTS oh_status CASCADE;
 DROP TABLE IF EXISTS shade CASCADE;
-DROP TABLE IF EXISTS nativity CASCADE;
 DROP TABLE IF EXISTS reduced_fds2_dbh_index_basal_area CASCADE;
 DROP TABLE IF EXISTS rule CASCADE;
-
-CREATE TABLE plant_comm_code (
-  code text PRIMARY KEY,
-  description text
-); --may remove this table, not sure how it differs from other classification codes below
 
 
 CREATE TABLE veg_class (
@@ -79,7 +61,7 @@ CREATE TABLE landform_type (
   landform_type text  PRIMARY KEY
 );
 
-INSERT INTO landform_type VALUES ('active slope'), ('alluvial fan'), ('alluvial flat'), ('alluvial plain'), ('backswamp'), ('bar'), ('basin'), ('beach'), ('bluff'), ('braided channel or stream'), ('delta'), ('dome'), ('dune'), ('escarpment'), ('flat'), ('floodplain'), ('gorge'), ('hill'), ('hummock'), ('knob'), ('cliff'), ('crest'), ('levee'), ('mountain'), ('oxbow'), ('plain'), ('ravine'), ('ridge'), ('saddle'), ('shoulder'), ('sinkhole'), ('spit'), ('splay'), ('swale'), ('terrace'), ('valley'), ('other');
+INSERT INTO landform_type VALUES ('active slope'), ('alluvial fan'), ('alluvial flat'), ('alluvial plain'), ('backswamp'), ('bar'), ('basin'), ('beach'), ('bluff'), ('braided channel or stream'), ('delta'), ('dome'), ('dune'), ('escarpment'), ('flat'), ('floodplain'), ('gorge'), ('hill'), ('hummock'), ('knob'), ('cliff'), ('crest'), ('levee'), ('mountain'), ('oxbow'), ('plain'), ('ravine'), ('ridge'), ('saddle'), ('shoulder'), ('sinkhole'), ('spit'), ('splay'), ('swale'), ('terrace'), ('valley');
 
 CREATE TABLE homogeneity (
   homogeneity text  PRIMARY KEY
@@ -149,7 +131,7 @@ CREATE TABLE class_code_Mod_NatureServe (
 );
 
 INSERT INTO class_code_Mod_NatureServe (code, community_class) VALUES
-('A01', 'Dry Oak Forest and Woodland'), ('A02', 'Dry-Mesic Oak Forest and Woodland'), ('B01', 'Hemlock Forest'), ('B02', 'Hemlock-Hardwood Forest'), ('C01', 'Beech Forest'), ('C02', 'Beech-Maple Forest'), ('C03', 'Sugar Maple Forest'), ('C04', 'Beech-Red Oak Forest'), ('D', 'Mixed Forest'), ('E', 'Mesophytic Forest'), ('F', 'Pine-Oak Rocky Woodland'), ('G01', 'Dry Acidic Glade and Barrens'), ('G02', 'Alkaline Glade and Woodland'), ('G03', 'Calcareous Glade and Barrens'), ('H01', 'Interior Deep Soil Oak Savanna'), ('H02', 'Oak Barrens'), ('I01', 'Dry-Mesic Prairie');  
+('A01', 'Dry Oak Forest and Woodland'), ('A02', 'Dry-Mesic Oak Forest and Woodland'), ('B01', 'Hemlock Forest'), ('B02', 'Hemlock-Hardwood Forest'), ('C01', 'Beech Forest'), ('C02', 'Beech-Maple Forest'), ('C03', 'Sugar Maple Forest'), ('C04', 'Beech-Red Oak Forest'), ('D', 'Mixed Forest'), ('E', 'Mesophytic Forest'), ('F', 'Pine-Oak Rocky Woodland'), ('G01', 'Dry Acidic Glade and Barrens'), ('G02', 'Alkaline Glade and Woodland'), ('G03', 'Calcareous Glade and Barrens'), ('H01', 'Interior Deep Soil Oak Savanna'), ('H02', 'Oak Barrens'), ('I01', 'Dry-Mesic Prairie'), ('I02', 'Mesic Prairie'), ('I03', 'Wet-Mesic Prairie'), ('I04', 'Oak Opening Sand Prairies'), ('J01', 'Acidic Cliff and Talus'), ('J02', 'Calcareous Cliff and Talus'), ('J03', 'Circumneutral Cliff and Talus'), ('J04', 'Acidic Cliff and Rockhouse'), ('K01', 'Acidic Rocky Shore and Cliff'), ('K02', 'Alkaline Rocky Shore and Cliff'), ('K03', 'Alvar'), ('K04', 'Dune'), ('L01', 'Mesic Floodplain Forest (Upland)'), ('L02', 'Cottonwood Forest (Upland)'), ('L03', 'Sycamore Woodland (Upland)'), ('M01', 'Swamp White Oak Wet Flatwoods'), ('M02', 'Pin Oak Wet Flatwoods'), ('M03', 'Maple-Ash-Elm Swamp'), ('M04', 'Maple-Ash Swamp'), ('M05', 'Ash-Elm Swamp'), ('M06', 'Oak-Maple Swamp'), ('M07', 'Black Ash Swamp'), ('M08', 'Green Ash Swamp'), ('M09', 'Pumpkin Ash Swamp'), ('M10', 'Mixed Swamp Forest'), ('M11', 'Cottonwood Swamp'), ('M12', 'River Birch Swamp'), ('M13', 'Other Swamp Forest (Specify Dominants)'), ('N01', 'Skunk Cabbage Forest Seep'), ('N02', 'Skunk Cabbage-Sedge Forest Seep'), ('N03', 'Forested Sedge Seep'), ('N04', 'White Pine Bog'), ('O01', 'Tamarack Bog'), ('O02', 'Tamarack-Hardwood Bog'), ('O03', 'Tamarack Fen'), ;  
 
 CREATE TABLE cover_midpoint_lookup (
   cover_code int4 PRIMARY KEY,
@@ -258,22 +240,19 @@ CREATE TABLE plot (
   Total_Modules int4,
   Intensive_Modules int4,
   Plot_Configuration text,
+  plot_configuration_other text,
   Plot_size_for_cover_data_area_ha numeric,
   Estimate_of_per_open_water_entire_site numeric,
-  Estimate_of_perunvegetated_ow_entire_site numeric,
+  Estimate_of_per_unvegetated_ow_entire_site numeric,
   Estimate_per_invasives_entire_site numeric,
   centerline numeric,
-  Oneo_plant text references plant_comm_code(code),
-  oneo_text text,
   VEGclass text references veg_class(veg_class),
   VEGSubclass text,
-  twoo_plant text references plant_comm_code(code),
   HGMClass text references hgm_class(hgm_class),
   HGMSubclass text references hgm_subclass(hgm_subclass),
   twoo_HGM text,
   HGMgroup text references hgm_group(hgm_group),
   oneo_class_code_Mod_NatureServe text references class_code_Mod_NatureServe(code),
-  --	oneo_community_Mod_NatureServe text references class_code_Mod_NatureServe(description), -- can be derived from code above
   cowardin_classification text,
   cowardin_water_regime text,
   cowardin_special_modifier text,
@@ -284,6 +263,7 @@ CREATE TABLE plot (
   llww_modifiers text,
   llww_modifiers_other text,
   Landform_Type text references landform_type(landform_type),
+  landform_type_other text,
   Homogeneity text references homogeneity(homogeneity),
   Stand_size text references stand_size(stand_size),
   Drainage text references drainage(drainage),
