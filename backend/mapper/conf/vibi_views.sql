@@ -102,7 +102,6 @@ CREATE MATERIALIZED VIEW plot_module_woody_dbh_cm AS
   FROM plot_module_woody_raw
   WHERE dbh_class_index > 10;
 
-
 CREATE MATERIALIZED VIEW reduced_fds2_counts AS
   SELECT plot_no, species, dbh_class_index, sum(count::numeric) as counts
   FROM plot_module_woody_dbh
@@ -210,7 +209,6 @@ CREATE MATERIALIZED VIEW  alt_woody_importance_value AS
     CASE WHEN b.form = 'tree' THEN a.iv ELSE null END AS canopy_IV
   FROM alt_reduced_fds2_iv a
     LEFT JOIN species b ON a.species = b.scientific_name;
-
 
 CREATE MATERIALIZED VIEW biomass AS
   SELECT row_number() OVER () AS view_id, plot_no, date_time, module_id, corner, sample_id, area_sampled,
@@ -538,7 +536,6 @@ CREATE MATERIALIZED VIEW alt_vibi_values AS
     LEFT JOIN biomass_calculations f
       ON a.plot_no = f.plot_no;
 
-
 CREATE MATERIALIZED VIEW vibi_e_index AS
   SELECT a.plot_no,
     'vibi_e_index'::text as vibi_type,
@@ -823,7 +820,6 @@ CREATE MATERIALIZED VIEW alt_vibi_sh_index AS
     LEFT JOIN biomass_info d
       ON a.plot_no = d.plot_no;
 
-
 CREATE MATERIALIZED VIEW vibi_f_index AS
   SELECT a.plot_no,
     'vibi_f_index'::text as vibi_type,
@@ -923,7 +919,6 @@ CREATE MATERIALIZED VIEW alt_vibi_f_index AS
       ON a.plot_no = b.plot_no
     LEFT JOIN alt_herbaceous_site_cov c
       ON a.plot_no = c.plot_no;
-
 
 CREATE MATERIALIZED VIEW metric_calculations AS
   SELECT *, row_number() OVER () AS view_id FROM (
