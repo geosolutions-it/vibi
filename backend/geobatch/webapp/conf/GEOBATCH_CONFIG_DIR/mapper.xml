@@ -27,10 +27,11 @@
             <host>localhost</host>
             <port>5432</port>
             <schema>public</schema>
-            <database>postgres</database>
-            <user>postgres</user>
-            <passwd>postgres</passwd>
+            <database>vibi</database>
+            <user>vibi</user>
+            <passwd>vibi</passwd>
             <outputPath>/tmp</outputPath>
+            <dbUrl>jdbc:postgresql://localhost:5432/vibi</dbUrl>
         </MapperConfiguration>
 
     </EventConsumerConfiguration>

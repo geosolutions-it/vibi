@@ -16,11 +16,6 @@
     <dependencies>
         <dependency>
             <groupId>it.geosolutions.geobatch</groupId>
-            <artifactId>gb-action-scripting</artifactId>
-            <version>1.4-GT12.2-13032015</version>
-        </dependency>
-        <dependency>
-            <groupId>it.geosolutions.geobatch</groupId>
             <artifactId>gb-dao-xstream</artifactId>
             <version>1.4-GT12.2-13032015</version>
         </dependency>
@@ -128,7 +123,7 @@
                     <contextPath>geobatch</contextPath>
                     <connectors>
                         <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
-                            <port>8081</port>
+                            <port>8085</port>
                             <maxIdleTime>10000</maxIdleTime>
                         </connector>
                     </connectors>

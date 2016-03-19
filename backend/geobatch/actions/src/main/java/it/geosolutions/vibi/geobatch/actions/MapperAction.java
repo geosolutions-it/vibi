@@ -51,18 +51,16 @@ public final class MapperAction extends BaseAction<EventObject> {
 
                 @Override
                 public void doWork(HSSFWorkbook workBook) {
-                    LookupService.processLookupSpeciesSheet(workBook.getSheet("LOOKUP species"), store);
-                    MapperAction.super.listenerForwarder.progressing(20f, "LOOKUP SPECIES");
                     LookupService.processLookupNatureSOPEACommunitySheet(workBook.getSheet("LOOKUP NatureS+OEPA community"), store);
-                    MapperAction.super.listenerForwarder.progressing(27.5f, "LOOKUP NATURES+OEPA COMMUNITY");
+                    MapperAction.super.listenerForwarder.progressing(5.0f, "LOOKUP NATURES+OEPA COMMUNITY");
                     LookupService.processLookupMidPointSheet(workBook.getSheet("LOOKUP midpoint"), store);
-                    MapperAction.super.listenerForwarder.progressing(30f, "LOOKUP MIDPOINT");
+                    MapperAction.super.listenerForwarder.progressing(10.0f, "LOOKUP MIDPOINT");
                     PlotService.processPlotInfoSheet(workBook.getSheet("ENTER PLOT INFO"), store);
-                    MapperAction.super.listenerForwarder.progressing(45f, "ENTER PLOT INFO");
+                    MapperAction.super.listenerForwarder.progressing(30.0f, "ENTER PLOT INFO");
                     Fds1Service.processFds1Sheet(workBook.getSheet("ENTER FDS1"), store);
-                    MapperAction.super.listenerForwarder.progressing(65f, "ENTER FDS1");
+                    MapperAction.super.listenerForwarder.progressing(60.0f, "ENTER FDS1");
                     Fds2Service.processFds2Sheet(workBook.getSheet("ENTER FDS2"), store);
-                    MapperAction.super.listenerForwarder.progressing(85f, "ENTER FDS2");
+                    MapperAction.super.listenerForwarder.progressing(90.0f, "ENTER FDS2");
                     BiomassService.processBiomassSheet(workBook.getSheet("ENTER BIOMASS"), store);
                     MapperAction.super.listenerForwarder.progressing(92.5f, "ENTER BIOMASS");
                     Calculations.refresh(actionConfiguration.getDbUrl(), actionConfiguration.getUser(), actionConfiguration.getPasswd());

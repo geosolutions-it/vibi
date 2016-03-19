@@ -253,7 +253,7 @@ mxp.widgets.VibiGeoBatchConsumerGrid = Ext.extend(mxp.widgets.GeoBatchConsumerGr
     downloadFile: function(grid, rowIndex, colIndex) {
         var record = grid.getStore().getAt(rowIndex);
         var name = record.get('details').events[0];
-        window.open(this.adminUrl + "/mvc/vibi/download?folder=/var/tomcats/geobatch/conf/GEOBATCH_CONFIG_DIR/vibi/output&file=" + name);
+        window.open(this.adminUrl + "/mvc/vibi/download?file=" + name);
     }
 });
 

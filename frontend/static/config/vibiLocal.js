@@ -698,6 +698,11 @@
                     "canSearch": true,
                     "columns": [
                         {
+                            "header": "Veg Id",
+                            "mapping": "veg_id",
+                            "name": "veg_id"
+                        },
+                        {
                             "header": "Scientific Name",
                             "mapping": "scientific_name",
                             "name": "scientific_name"
@@ -718,9 +723,9 @@
                             "name": "cofc"
                         },
                         {
-                            "header": "Tolerance",
-                            "mapping": "tolerance",
-                            "name": "tolerance"
+                            "header": "Syn",
+                            "mapping": "syn",
+                            "name": "syn"
                         },
                         {
                             "header": "Common Name",
@@ -728,14 +733,19 @@
                             "name": "common_name"
                         },
                         {
-                            "header": "Ind",
+                            "header": "Family",
                             "mapping": "family",
                             "name": "family"
                         },
                         {
-                            "header": "Hydro",
-                            "mapping": "hydro",
-                            "name": "hydro"
+                            "header": "Fn",
+                            "mapping": "fn",
+                            "name": "fn"
+                        },
+                        {
+                            "header": "Wet",
+                            "mapping": "wet",
+                            "name": "wet"
                         },
                         {
                             "header": "Form",
@@ -748,44 +758,49 @@
                             "name": "habit"
                         },
                         {
-                            "header": "Groupp",
-                            "mapping": "groupp",
-                            "name": "groupp"
-                        },
-                        {
                             "header": "Shade",
                             "mapping": "shade",
                             "name": "shade"
                         },
                         {
-                            "header": "Nativity",
-                            "mapping": "nativity",
-                            "name": "nativity"
+                            "header": "Usda Id",
+                            "mapping": "usda_id",
+                            "name": "usda_id"
                         },
                         {
-                            "header": "Code1",
-                            "mapping": "code1",
-                            "name": "code1"
+                            "header": "Oh Tore",
+                            "mapping": "oh_tore",
+                            "name": "oh_tore"
                         },
                         {
-                            "header": "Code2",
-                            "mapping": "code2",
-                            "name": "code2"
+                            "header": "Type",
+                            "mapping": "type",
+                            "name": "type"
                         },
                         {
-                            "header": "Code3",
-                            "mapping": "code3",
-                            "name": "code3"
+                            "header": "Oh Status",
+                            "mapping": "oh_status",
+                            "name": "oh_status"
                         },
                         {
-                            "header": "Code4",
-                            "mapping": "code4",
-                            "name": "code4"
+                            "header": "EMP",
+                            "mapping": "emp",
+                            "name": "emp"
                         },
                         {
-                            "header": "Code5",
-                            "mapping": "code5",
-                            "name": "code5"
+                            "header": "MW",
+                            "mapping": "mw",
+                            "name": "mw"
+                        },
+                        {
+                            "header": "NCNE",
+                            "mapping": "ncne",
+                            "name": "ncne"
+                        },
+                        {
+                            "header": "Notes",
+                            "mapping": "notes",
+                            "name": "notes"
                         }
                     ],
                     "createTitle": "Create a new Specie",
@@ -793,6 +808,10 @@
                     "editHeight": 270,
                     "editTitle": "Edit Specie",
                     "fields": [
+                        {
+                            "mapping": "vegId",
+                            "name": "veg_id"
+                        },
                         {
                             "mapping": "scientificName",
                             "name": "scientific_name"
@@ -810,20 +829,24 @@
                             "name": "cofc"
                         },
                         {
-                            "mapping": "tolerance",
-                            "name": "tolerance"
+                            "mapping": "syn",
+                            "name": "syn"
                         },
                         {
                             "mapping": "commonName",
                             "name": "common_name"
                         },
                         {
-                            "mapping": "ind",
+                            "mapping": "family",
                             "name": "family"
                         },
                         {
-                            "mapping": "hydro",
-                            "name": "hydro"
+                            "mapping": "fn",
+                            "name": "fn"
+                        },
+                        {
+                            "mapping": "wet",
+                            "name": "wet"
                         },
                         {
                             "mapping": "form",
@@ -834,36 +857,40 @@
                             "name": "habit"
                         },
                         {
-                            "mapping": "groupp",
-                            "name": "groupp"
-                        },
-                        {
-                            "mapping": "nativity",
-                            "name": "nativity"
-                        },
-                        {
                             "mapping": "shade",
                             "name": "shade"
                         },
                         {
-                            "mapping": "code1",
-                            "name": "code1"
+                            "mapping": "usdaId",
+                            "name": "usda_id"
                         },
                         {
-                            "mapping": "code2",
-                            "name": "code2"
+                            "mapping": "ohTore",
+                            "name": "oh_tore"
                         },
                         {
-                            "mapping": "code3",
-                            "name": "code3"
+                            "mapping": "type",
+                            "name": "type"
                         },
                         {
-                            "mapping": "code4",
-                            "name": "code4"
+                            "mapping": "ohStatus",
+                            "name": "oh_status"
                         },
                         {
-                            "mapping": "code5",
-                            "name": "code5"
+                            "mapping": "emp",
+                            "name": "emp"
+                        },
+                        {
+                            "mapping": "mw",
+                            "name": "mw"
+                        },
+                        {
+                            "mapping": "ncne",
+                            "name": "ncne"
+                        },
+                        {
+                            "mapping": "notes",
+                            "name": "notes"
                         }
                     ],
                     "iconCls": "vibi_species_ic",
@@ -2744,6 +2771,11 @@
                     "canSearch": true,
                     "columns": [
                         {
+                            "header": "Veg Id",
+                            "mapping": "veg_id",
+                            "name": "veg_id"
+                        },
+                        {
                             "header": "Scientific Name",
                             "mapping": "scientific_name",
                             "name": "scientific_name"
@@ -2764,9 +2796,9 @@
                             "name": "cofc"
                         },
                         {
-                            "header": "Tolerance",
-                            "mapping": "tolerance",
-                            "name": "tolerance"
+                            "header": "Syn",
+                            "mapping": "syn",
+                            "name": "syn"
                         },
                         {
                             "header": "Common Name",
@@ -2774,14 +2806,19 @@
                             "name": "common_name"
                         },
                         {
-                            "header": "Ind",
+                            "header": "Family",
                             "mapping": "family",
                             "name": "family"
                         },
                         {
-                            "header": "Hydro",
-                            "mapping": "hydro",
-                            "name": "hydro"
+                            "header": "Fn",
+                            "mapping": "fn",
+                            "name": "fn"
+                        },
+                        {
+                            "header": "Wet",
+                            "mapping": "wet",
+                            "name": "wet"
                         },
                         {
                             "header": "Form",
@@ -2794,44 +2831,49 @@
                             "name": "habit"
                         },
                         {
-                            "header": "Groupp",
-                            "mapping": "groupp",
-                            "name": "groupp"
-                        },
-                        {
                             "header": "Shade",
                             "mapping": "shade",
                             "name": "shade"
                         },
                         {
-                            "header": "Nativity",
-                            "mapping": "nativity",
-                            "name": "nativity"
+                            "header": "Usda Id",
+                            "mapping": "usda_id",
+                            "name": "usda_id"
                         },
                         {
-                            "header": "Code1",
-                            "mapping": "code1",
-                            "name": "code1"
+                            "header": "Oh Tore",
+                            "mapping": "oh_tore",
+                            "name": "oh_tore"
                         },
                         {
-                            "header": "Code2",
-                            "mapping": "code2",
-                            "name": "code2"
+                            "header": "Type",
+                            "mapping": "type",
+                            "name": "type"
                         },
                         {
-                            "header": "Code3",
-                            "mapping": "code3",
-                            "name": "code3"
+                            "header": "Oh Status",
+                            "mapping": "oh_status",
+                            "name": "oh_status"
                         },
                         {
-                            "header": "Code4",
-                            "mapping": "code4",
-                            "name": "code4"
+                            "header": "EMP",
+                            "mapping": "emp",
+                            "name": "emp"
                         },
                         {
-                            "header": "Code5",
-                            "mapping": "code5",
-                            "name": "code5"
+                            "header": "MW",
+                            "mapping": "mw",
+                            "name": "mw"
+                        },
+                        {
+                            "header": "NCNE",
+                            "mapping": "ncne",
+                            "name": "ncne"
+                        },
+                        {
+                            "header": "Notes",
+                            "mapping": "notes",
+                            "name": "notes"
                         }
                     ],
                     "createTitle": "Create a new Specie",
@@ -2839,6 +2881,10 @@
                     "editHeight": 270,
                     "editTitle": "Edit Specie",
                     "fields": [
+                        {
+                            "mapping": "vegId",
+                            "name": "veg_id"
+                        },
                         {
                             "mapping": "scientificName",
                             "name": "scientific_name"
@@ -2856,20 +2902,24 @@
                             "name": "cofc"
                         },
                         {
-                            "mapping": "tolerance",
-                            "name": "tolerance"
+                            "mapping": "syn",
+                            "name": "syn"
                         },
                         {
                             "mapping": "commonName",
                             "name": "common_name"
                         },
                         {
-                            "mapping": "ind",
+                            "mapping": "family",
                             "name": "family"
                         },
                         {
-                            "mapping": "hydro",
-                            "name": "hydro"
+                            "mapping": "fn",
+                            "name": "fn"
+                        },
+                        {
+                            "mapping": "wet",
+                            "name": "wet"
                         },
                         {
                             "mapping": "form",
@@ -2880,36 +2930,40 @@
                             "name": "habit"
                         },
                         {
-                            "mapping": "groupp",
-                            "name": "groupp"
-                        },
-                        {
-                            "mapping": "nativity",
-                            "name": "nativity"
-                        },
-                        {
                             "mapping": "shade",
                             "name": "shade"
                         },
                         {
-                            "mapping": "code1",
-                            "name": "code1"
+                            "mapping": "usdaId",
+                            "name": "usda_id"
                         },
                         {
-                            "mapping": "code2",
-                            "name": "code2"
+                            "mapping": "ohTore",
+                            "name": "oh_tore"
                         },
                         {
-                            "mapping": "code3",
-                            "name": "code3"
+                            "mapping": "type",
+                            "name": "type"
                         },
                         {
-                            "mapping": "code4",
-                            "name": "code4"
+                            "mapping": "ohStatus",
+                            "name": "oh_status"
                         },
                         {
-                            "mapping": "code5",
-                            "name": "code5"
+                            "mapping": "emp",
+                            "name": "emp"
+                        },
+                        {
+                            "mapping": "mw",
+                            "name": "mw"
+                        },
+                        {
+                            "mapping": "ncne",
+                            "name": "ncne"
+                        },
+                        {
+                            "mapping": "notes",
+                            "name": "notes"
                         }
                     ],
                     "iconCls": "vibi_species_ic",
