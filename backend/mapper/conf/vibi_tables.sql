@@ -299,7 +299,7 @@ CREATE TABLE plot (
 
 CREATE TABLE plot_module_herbaceous (
   fid text PRIMARY KEY,
-  plot_no text references plot(plot_no),
+  plot_no text references plot(plot_no) ON UPDATE CASCADE ON DELETE CASCADE,
   module_id int4 references module(module_id),
   corner int4 references corner(corner),
   depth integer references depth(depth),
@@ -310,7 +310,7 @@ CREATE TABLE plot_module_herbaceous (
 
 CREATE TABLE plot_module_herbaceous_info (
   fid text PRIMARY KEY,
-  plot_no text references plot(plot_no),
+  plot_no text references plot(plot_no) ON UPDATE CASCADE ON DELETE CASCADE,
   module_id int4 references module(module_id),
   corner int4 references corner(corner),
   depth integer references depth(depth),
@@ -320,7 +320,7 @@ CREATE TABLE plot_module_herbaceous_info (
 
 CREATE TABLE fds1_species_misc_info (
 species text references species(scientific_name),
-plot_no text references plot(plot_no),
+plot_no text references plot(plot_no) ON UPDATE CASCADE ON DELETE CASCADE,
 module_id int4 references module(module_id),
 voucher_no text,
 comment text,
@@ -331,7 +331,7 @@ percent_fruiting text
 
 CREATE TABLE plot_module_woody_raw (
   fid text PRIMARY KEY,
-  plot_no text references plot(plot_no),
+  plot_no text references plot(plot_no) ON UPDATE CASCADE ON DELETE CASCADE,
   sub numeric,
   module_id int4 references module(module_id),
   species text references species(scientific_name),
@@ -342,7 +342,7 @@ CREATE TABLE plot_module_woody_raw (
 
 CREATE TABLE fds2_species_misc_info (
 species text references species(scientific_name),
-plot_no text references plot(plot_no),
+plot_no text references plot(plot_no) ON UPDATE CASCADE ON DELETE CASCADE,
 module_id int4 references module(module_id),
 voucher_no text,
 comment text,
@@ -363,7 +363,7 @@ INSERT INTO reduced_fds2_dbh_index_basal_area (dbh_class_index, basal_area) VALU
 --includes calculated fields
 CREATE TABLE biomass_raw (
   fid text PRIMARY KEY,
-  plot_no text references plot(plot_no),
+  plot_no text references plot(plot_no) ON UPDATE CASCADE ON DELETE CASCADE,
   date_time timestamptz,
   module_id int4 references module(module_id),
   corner int4 references corner(corner),
