@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2007 - 2015 GeoSolutions S.A.S.
+ *  Copyright (C) 2015 - 2016 GeoSolutions S.A.S.
  *  http://www.geo-solutions.it
  *
  *  GPLv3 + Classpath exception
@@ -88,7 +88,7 @@ mxp.widgets.VibiGeoBatchConsumerGrid = Ext.extend(mxp.widgets.GeoBatchConsumerGr
             iconCls: 'archive_ic',
             xtype: 'button',
             ref: '../archive',
-            hidden: this.mode === 'archived',
+            hidden: this.mode === 'archived' || !this.canArchive,
             text: this.archiveText,
             disabled: true,
             scope: this,
