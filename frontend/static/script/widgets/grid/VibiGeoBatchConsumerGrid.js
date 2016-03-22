@@ -24,6 +24,8 @@ mxp.widgets.VibiGeoBatchConsumerGrid = Ext.extend(mxp.widgets.GeoBatchConsumerGr
     adminUrl: 'http://vibi.geo-solutions.it/opensdi2-manager',
 
     tooltipDownload: 'Download File',
+    
+    errorDownloadingFile: 'Error Downloading file.',
 
     initComponent: function() {
 
@@ -241,7 +243,6 @@ mxp.widgets.VibiGeoBatchConsumerGrid = Ext.extend(mxp.widgets.GeoBatchConsumerGr
                     iconCls: 'inbox-download_ic',
                     width: 25,
                     tooltip: this.tooltipDownload,
-                    scope: this,
                     getClass: function(v, meta, rec) {
                         return 'x-grid-center-icon action_column_btn';
                     }
@@ -250,10 +251,45 @@ mxp.widgets.VibiGeoBatchConsumerGrid = Ext.extend(mxp.widgets.GeoBatchConsumerGr
             mxp.widgets.GeoBatchConsumerGrid.superclass.initComponent.call(this, arguments);
 
     },
-    downloadFile: function(grid, rowIndex, colIndex) {
+    /**
+     * Call back to start the file download
+     * BasicAuth will be used for authentication
+     */
+    downloadFile: function(grid, rowIndex, colIndex, item , e) {
+        
+        var runningBtnRef = e.target;
+        if(runningBtnRef.classList.contains('ic_loading')){
+            // Prevent multiple downloads of the same file
+            return;
+        }
+        
         var record = grid.getStore().getAt(rowIndex);
         var name = record.get('details').events[0];
-        window.open(this.adminUrl + "/mvc/vibi/download?file=" + name);
+        //window.open(this.adminUrl + "/mvc/vibi/download?file=" + name);
+        var fileDownloadURL = grid.adminUrl + "/mvc/vibi/download?file=" + name;
+
+        var xhr = new XMLHttpRequest();
+        // open() accepts username and password parameters but it never seemed to work.
+        xhr.open('GET', fileDownloadURL, true);
+        // Manually set the authorization header, seems to work.
+        xhr.setRequestHeader("Authorization", grid.auth);
+        xhr.responseType = 'blob';
+        xhr.onload = function (e) {
+            runningBtnRef.classList.remove('ic_loading');
+            if(xhr.status == 200){
+                saveAs(xhr.response, name);
+            }else{
+                // Notify the user something went wrong
+                Ext.Msg.show({
+                       msg: grid.errorDownloadingFile + '<br>Status: '+ xhr.status,
+                       buttons: Ext.Msg.OK,
+                       icon: Ext.MessageBox.ERROR
+                    });
+            }
+        }
+        //xhr.onprogress = function(e){if (e.lengthComputable) {console.log(e.loaded);}};
+        runningBtnRef.classList.add('ic_loading');
+        xhr.send();
     }
 });
 

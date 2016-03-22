@@ -4216,6 +4216,7 @@
         {
             "ptype": "mxp_updater",
             "geoBatchRestURL":"http://vibi.geo-solutions.it/geobatch/rest/",
+            "geoStoreRestURL":"http://vibi.geo-solutions.it/geostore/rest/",
             "uploadUrl":"http://vibi.geo-solutions.it/mvc/vibi/upload/",
             "flowId":"mapper",
             "setActiveOnOutput": false,
