@@ -118,6 +118,7 @@
                             "mapping": "plot_no",
                             "dataIndex": "plot_no",
                             "sortable": true,
+                            "filterable": true,
                             "name": "plot_no"
                         },
                         {
@@ -125,6 +126,7 @@
                             "mapping": "project_name",
                             "dataIndex": "project_name",
                             "sortable": true,
+                            "filterable": true,
                             "name": "project_name"
                         },
                         {
@@ -132,6 +134,7 @@
                             "mapping": "plot_name",
                             "dataIndex": "plot_name",
                             "sortable": true,
+                            "filterable": true,
                             "name": "plot_name"
                         },
                         {
@@ -139,6 +142,7 @@
                             "mapping": "plot_label",
                             "dataIndex": "plot_label",
                             "sortable": true,
+                            "filterable": true,
                             "name": "plot_label"
                         },
                         {
@@ -146,6 +150,7 @@
                             "mapping": "monitoring_event",
                             "dataIndex": "monitoring_event",
                             "sortable": true,
+                            "filterable": true,
                             "name": "monitoring_event"
                         },
                         {
@@ -153,6 +158,7 @@
                             "mapping": "timestamptz",
                             "dataIndex": "timestamptz",
                             "sortable": true,
+                            "filterable": true,
                             "name": "timestamptz"
                         },
                         {
@@ -160,6 +166,7 @@
                             "mapping": "party",
                             "dataIndex": "party",
                             "sortable": true,
+                            "filterable": true,
                             "name": "party"
                         },
                         {
@@ -167,6 +174,7 @@
                             "mapping": "plot_not_sampled",
                             "dataIndex": "plot_not_sampled",
                             "sortable": true,
+                            "filterable": true,
                             "name": "plot_not_sampled"
                         },
                         {
@@ -174,6 +182,7 @@
                             "mapping": "commentplot_not_sampled",
                             "dataIndex": "commentplot_not_sampled",
                             "sortable": true,
+                            "filterable": true,
                             "name": "commentplot_not_sampled"
                         },
                         {
@@ -181,6 +190,7 @@
                             "mapping": "sampling_quality",
                             "dataIndex": "sampling_quality",
                             "sortable": true,
+                            "filterable": true,
                             "name": "sampling_quality"
                         },
                         {
@@ -188,6 +198,7 @@
                             "mapping": "tax_accuracy_vascular",
                             "dataIndex": "tax_accuracy_vascular",
                             "sortable": true,
+                            "filterable": true,
                             "name": "tax_accuracy_vascular"
                         },
                         {
@@ -195,6 +206,7 @@
                             "mapping": "tax_accuracy_bryophytes",
                             "dataIndex": "tax_accuracy_bryophytes",
                             "sortable": true,
+                            "filterable": true,
                             "name": "tax_accuracy_bryophytes"
                         },
                         {
@@ -202,6 +214,7 @@
                             "mapping": "tax_accuracy_lichens",
                             "dataIndex": "tax_accuracy_lichens",
                             "sortable": true,
+                            "filterable": true,
                             "name": "tax_accuracy_lichens"
                         },
                         {
@@ -209,6 +222,7 @@
                             "mapping": "authority",
                             "dataIndex": "authority",
                             "sortable": true,
+                            "filterable": true,
                             "name": "authority"
                         },
                         {
@@ -216,6 +230,7 @@
                             "mapping": "state",
                             "dataIndex": "state",
                             "sortable": true,
+                            "filterable": true,
                             "name": "state"
                         },
                         {
@@ -223,6 +238,7 @@
                             "mapping": "county",
                             "dataIndex": "county",
                             "sortable": true,
+                            "filterable": true,
                             "name": "county"
                         },
                         {
@@ -230,6 +246,7 @@
                             "mapping": "quadrangle",
                             "dataIndex": "quadrangle",
                             "sortable": true,
+                            "filterable": true,
                             "name": "quadrangle"
                         },
                         {
@@ -237,6 +254,7 @@
                             "mapping": "local_place_name",
                             "dataIndex": "local_place_name",
                             "sortable": true,
+                            "filterable": true,
                             "name": "local_place_name"
                         },
                         {
@@ -244,6 +262,7 @@
                             "mapping": "landowner",
                             "dataIndex": "landowner",
                             "sortable": true,
+                            "filterable": true,
                             "name": "landowner"
                         },
                         {
@@ -251,6 +270,7 @@
                             "mapping": "xaxis_bearing_of_plot",
                             "dataIndex": "xaxis_bearing_of_plot",
                             "sortable": true,
+                            "filterable": true,
                             "name": "xaxis_bearing_of_plot"
                         },
                         {
@@ -258,6 +278,7 @@
                             "mapping": "enter_gps_location_in_plot",
                             "dataIndex": "enter_gps_location_in_plot",
                             "sortable": true,
+                            "filterable": true,
                             "name": "enter_gps_location_in_plot"
                         },
                         {
@@ -265,6 +286,7 @@
                             "mapping": "latitude",
                             "dataIndex": "latitude",
                             "sortable": true,
+                            "filterable": true,
                             "name": "latitude"
                         },
                         {
@@ -272,6 +294,7 @@
                             "mapping": "longitude",
                             "dataIndex": "longitude",
                             "sortable": true,
+                            "filterable": true,
                             "name": "longitude"
                         },
                         {
@@ -279,6 +302,7 @@
                             "mapping": "total_modules",
                             "dataIndex": "total_modules",
                             "sortable": true,
+                            "filterable": true,
                             "name": "total_modules"
                         },
                         {
@@ -286,6 +310,7 @@
                             "mapping": "intensive_modules",
                             "dataIndex": "intensive_modules",
                             "sortable": true,
+                            "filterable": true,
                             "name": "intensive_modules"
                         },
                         {
@@ -293,6 +318,7 @@
                             "mapping": "plot_configuration",
                             "dataIndex": "plot_configuration",
                             "sortable": true,
+                            "filterable": true,
                             "name": "plot_configuration"
                         },
                         {
@@ -300,6 +326,7 @@
                             "mapping": "plot_size_for_cover_data_area_ha",
                             "dataIndex": "plot_size_for_cover_data_area_ha",
                             "sortable": true,
+                            "filterable": true,
                             "name": "plot_size_for_cover_data_area_ha"
                         },
                         {
@@ -307,6 +334,7 @@
                             "mapping": "estimate_of_per_open_water_entire_site",
                             "dataIndex": "estimate_of_per_open_water_entire_site",
                             "sortable": true,
+                            "filterable": true,
                             "name": "estimate_of_per_open_water_entire_site"
                         },
                         {
@@ -314,6 +342,7 @@
                             "mapping": "estimate_of_perunvegetated_ow_entire_site",
                             "dataIndex": "estimate_of_perunvegetated_ow_entire_site",
                             "sortable": true,
+                            "filterable": true,
                             "name": "estimate_of_perunvegetated_ow_entire_site"
                         },
                         {
@@ -321,6 +350,7 @@
                             "mapping": "Estimate_per_invasives_entire_site",
                             "dataIndex": "Estimate_per_invasives_entire_site",
                             "sortable": true,
+                            "filterable": true,
                             "name": "Estimate_per_invasives_entire_site"
                         },
                         {
@@ -328,6 +358,7 @@
                             "mapping": "centerline",
                             "dataIndex": "centerline",
                             "sortable": true,
+                            "filterable": true,
                             "name": "centerline"
                         },
                         {
@@ -335,6 +366,7 @@
                             "mapping": "oneo_plant",
                             "dataIndex": "oneo_plant",
                             "sortable": true,
+                            "filterable": true,
                             "name": "oneo_plant"
                         },
                         {
@@ -342,6 +374,7 @@
                             "mapping": "oneo_text",
                             "dataIndex": "oneo_text",
                             "sortable": true,
+                            "filterable": true,
                             "name": "oneo_text"
                         },
                         {
@@ -349,6 +382,7 @@
                             "mapping": "vegclass",
                             "dataIndex": "vegclass",
                             "sortable": true,
+                            "filterable": true,
                             "name": "vegclass"
                         },
                         {
@@ -356,6 +390,7 @@
                             "mapping": "vegsubclass",
                             "dataIndex": "vegsubclass",
                             "sortable": true,
+                            "filterable": true,
                             "name": "vegsubclass"
                         },
                         {
@@ -363,6 +398,7 @@
                             "mapping": "twoo_plant",
                             "dataIndex": "twoo_plant",
                             "sortable": true,
+                            "filterable": true,
                             "name": "twoo_plant"
                         },
                         {
@@ -370,6 +406,7 @@
                             "mapping": "hgmclass",
                             "dataIndex": "hgmclass",
                             "sortable": true,
+                            "filterable": true,
                             "name": "hgmclass"
                         },
                         {
@@ -377,6 +414,7 @@
                             "mapping": "hgmsubclass",
                             "dataIndex": "hgmsubclass",
                             "sortable": true,
+                            "filterable": true,
                             "name": "hgmsubclass"
                         },
                         {
@@ -384,6 +422,7 @@
                             "mapping": "twoo_hgm",
                             "dataIndex": "twoo_hgm",
                             "sortable": true,
+                            "filterable": true,
                             "name": "twoo_hgm"
                         },
                         {
@@ -391,6 +430,7 @@
                             "mapping": "hgmgroup",
                             "dataIndex": "hgmgroup",
                             "sortable": true,
+                            "filterable": true,
                             "name": "hgmgroup"
                         },
                         {
@@ -398,6 +438,7 @@
                             "mapping": "oneo_class_code_mod_natureServe",
                             "dataIndex": "oneo_class_code_mod_natureServe",
                             "sortable": true,
+                            "filterable": true,
                             "name": "oneo_class_code_mod_natureServe"
                         },
                         {
@@ -405,6 +446,7 @@
                             "mapping": "veg_class_wetlands_only",
                             "dataIndex": "veg_class_wetlands_only",
                             "sortable": true,
+                            "filterable": true,
                             "name": "veg_class_wetlands_only"
                         },
                         {
@@ -412,6 +454,7 @@
                             "mapping": "landform_type",
                             "dataIndex": "landform_type",
                             "sortable": true,
+                            "filterable": true,
                             "name": "landform_type"
                         },
                         {
@@ -419,6 +462,7 @@
                             "mapping": "homogeneity",
                             "dataIndex": "homogeneity",
                             "sortable": true,
+                            "filterable": true,
                             "name": "homogeneity"
                         },
                         {
@@ -426,6 +470,7 @@
                             "mapping": "stand_size",
                             "dataIndex": "stand_size",
                             "sortable": true,
+                            "filterable": true,
                             "name": "stand_size"
                         },
                         {
@@ -433,6 +478,7 @@
                             "mapping": "drainage",
                             "dataIndex": "drainage",
                             "sortable": true,
+                            "filterable": true,
                             "name": "drainage"
                         },
                         {
@@ -440,6 +486,7 @@
                             "mapping": "salinity",
                             "dataIndex": "salinity",
                             "sortable": true,
+                            "filterable": true,
                             "name": "salinity"
                         },
                         {
@@ -447,6 +494,7 @@
                             "mapping": "hydrologic_regime",
                             "dataIndex": "hydrologic_regime",
                             "sortable": true,
+                            "filterable": true,
                             "name": "hydrologic_regime"
                         },
                         {
@@ -454,6 +502,7 @@
                             "mapping": "oneo_disturbance_type",
                             "dataIndex": "oneo_disturbance_type",
                             "sortable": true,
+                            "filterable": true,
                             "name": "oneo_disturbance_type"
                         },
                         {
@@ -461,6 +510,7 @@
                             "mapping": "oneo_disturbance_severity",
                             "dataIndex": "oneo_disturbance_severity",
                             "sortable": true,
+                            "filterable": true,
                             "name": "oneo_disturbance_severity"
                         },
                         {
@@ -468,6 +518,7 @@
                             "mapping": "oneo_disturbance_years_ago",
                             "dataIndex": "oneo_disturbance_years_ago",
                             "sortable": true,
+                            "filterable": true,
                             "name": "oneo_disturbance_years_ago"
                         },
                         {
@@ -475,6 +526,7 @@
                             "mapping": "oneo_distubance_per_of_plot",
                             "dataIndex": "oneo_distubance_per_of_plot",
                             "sortable": true,
+                            "filterable": true,
                             "name": "oneo_distubance_per_of_plot"
                         },
                         {
@@ -482,6 +534,7 @@
                             "mapping": "oneo_disturbance_description",
                             "dataIndex": "oneo_disturbance_description",
                             "sortable": true,
+                            "filterable": true,
                             "name": "oneo_disturbance_description"
                         },
                         {
@@ -489,6 +542,7 @@
                             "mapping": "twoo_disturbance_type",
                             "dataIndex": "twoo_disturbance_type",
                             "sortable": true,
+                            "filterable": true,
                             "name": "twoo_disturbance_type"
                         },
                         {
@@ -496,6 +550,7 @@
                             "mapping": "twoo_disturbance_severity",
                             "dataIndex": "twoo_disturbance_severity",
                             "sortable": true,
+                            "filterable": true,
                             "name": "twoo_disturbance_severity"
                         },
                         {
@@ -503,6 +558,7 @@
                             "mapping": "twoo_disturbance_years_ago",
                             "dataIndex": "twoo_disturbance_years_ago",
                             "sortable": true,
+                            "filterable": true,
                             "name": "twoo_disturbance_years_ago"
                         },
                         {
@@ -510,6 +566,7 @@
                             "mapping": "twoo_distubance_per_of_plot",
                             "dataIndex": "twoo_distubance_per_of_plot",
                             "sortable": true,
+                            "filterable": true,
                             "name": "twoo_distubance_per_of_plot"
                         },
                         {
@@ -517,6 +574,7 @@
                             "mapping": "twoo_disturbance_description",
                             "dataIndex": "twoo_disturbance_description",
                             "sortable": true,
+                            "filterable": true,
                             "name": "twoo_disturbance_description"
                         },
                         {
@@ -524,6 +582,7 @@
                             "mapping": "threeo_disturbance_type",
                             "dataIndex": "threeo_disturbance_type",
                             "sortable": true,
+                            "filterable": true,
                             "name": "threeo_disturbance_type"
                         },
                         {
@@ -531,6 +590,7 @@
                             "mapping": "threeo_disturbance_severity",
                             "dataIndex": "threeo_disturbance_severity",
                             "sortable": true,
+                            "filterable": true,
                             "name": "threeo_disturbance_severity"
                         },
                         {
@@ -538,6 +598,7 @@
                             "mapping": "threeo_disturbance_years_ago",
                             "dataIndex": "threeo_disturbance_years_ago",
                             "sortable": true,
+                            "filterable": true,
                             "name": "threeo_disturbance_years_ago"
                         },
                         {
@@ -545,6 +606,7 @@
                             "mapping": "threeo_distubance_per_of_plot",
                             "dataIndex": "threeo_distubance_per_of_plot",
                             "sortable": true,
+                            "filterable": true,
                             "name": "threeo_distubance_per_of_plot"
                         },
                         {
@@ -552,6 +614,7 @@
                             "mapping": "threeo_disturbance_description",
                             "dataIndex": "threeo_disturbance_description",
                             "sortable": true,
+                            "filterable": true,
                             "name": "threeo_disturbance_description"
                         }
                     ],
@@ -869,6 +932,7 @@
                             "mapping": "veg_id",
                             "dataIndex": "veg_id",
                             "sortable": true,
+                            "filterable": true,
                             "name": "veg_id"
                         },
                         {
@@ -876,6 +940,7 @@
                             "mapping": "scientific_name",
                             "dataIndex": "scientific_name",
                             "sortable": true,
+                            "filterable": true,
                             "name": "scientific_name"
                         },
                         {
@@ -883,6 +948,7 @@
                             "mapping": "acronym",
                             "dataIndex": "acronym",
                             "sortable": true,
+                            "filterable": true,
                             "name": "acronym"
                         },
                         {
@@ -890,6 +956,7 @@
                             "mapping": "authority",
                             "dataIndex": "authority",
                             "sortable": true,
+                            "filterable": true,
                             "name": "authority"
                         },
                         {
@@ -897,6 +964,7 @@
                             "mapping": "cofc",
                             "dataIndex": "cofc",
                             "sortable": true,
+                            "filterable": true,
                             "name": "cofc"
                         },
                         {
@@ -904,6 +972,7 @@
                             "mapping": "syn",
                             "dataIndex": "syn",
                             "sortable": true,
+                            "filterable": true,
                             "name": "syn"
                         },
                         {
@@ -911,6 +980,7 @@
                             "mapping": "common_name",
                             "dataIndex": "common_name",
                             "sortable": true,
+                            "filterable": true,
                             "name": "common_name"
                         },
                         {
@@ -918,6 +988,7 @@
                             "mapping": "family",
                             "dataIndex": "family",
                             "sortable": true,
+                            "filterable": true,
                             "name": "family"
                         },
                         {
@@ -925,6 +996,7 @@
                             "mapping": "fn",
                             "dataIndex": "fn",
                             "sortable": true,
+                            "filterable": true,
                             "name": "fn"
                         },
                         {
@@ -932,6 +1004,7 @@
                             "mapping": "wet",
                             "dataIndex": "wet",
                             "sortable": true,
+                            "filterable": true,
                             "name": "wet"
                         },
                         {
@@ -939,6 +1012,7 @@
                             "mapping": "form",
                             "dataIndex": "form",
                             "sortable": true,
+                            "filterable": true,
                             "name": "form"
                         },
                         {
@@ -946,6 +1020,7 @@
                             "mapping": "habit",
                             "dataIndex": "habit",
                             "sortable": true,
+                            "filterable": true,
                             "name": "habit"
                         },
                         {
@@ -953,6 +1028,7 @@
                             "mapping": "shade",
                             "dataIndex": "shade",
                             "sortable": true,
+                            "filterable": true,
                             "name": "shade"
                         },
                         {
@@ -960,6 +1036,7 @@
                             "mapping": "usda_id",
                             "dataIndex": "usda_id",
                             "sortable": true,
+                            "filterable": true,
                             "name": "usda_id"
                         },
                         {
@@ -967,6 +1044,7 @@
                             "mapping": "oh_tore",
                             "dataIndex": "oh_tore",
                             "sortable": true,
+                            "filterable": true,
                             "name": "oh_tore"
                         },
                         {
@@ -974,6 +1052,7 @@
                             "mapping": "type",
                             "dataIndex": "type",
                             "sortable": true,
+                            "filterable": true,
                             "name": "type"
                         },
                         {
@@ -981,6 +1060,7 @@
                             "mapping": "oh_status",
                             "dataIndex": "oh_status",
                             "sortable": true,
+                            "filterable": true,
                             "name": "oh_status"
                         },
                         {
@@ -988,6 +1068,7 @@
                             "mapping": "emp",
                             "dataIndex": "emp",
                             "sortable": true,
+                            "filterable": true,
                             "name": "emp"
                         },
                         {
@@ -995,6 +1076,7 @@
                             "mapping": "mw",
                             "dataIndex": "mw",
                             "sortable": true,
+                            "filterable": true,
                             "name": "mw"
                         },
                         {
@@ -1002,6 +1084,7 @@
                             "mapping": "ncne",
                             "dataIndex": "ncne",
                             "sortable": true,
+                            "filterable": true,
                             "name": "ncne"
                         },
                         {
@@ -1009,6 +1092,7 @@
                             "mapping": "notes",
                             "dataIndex": "notes",
                             "sortable": true,
+                            "filterable": true,
                             "name": "notes"
                         }
                     ],
@@ -1132,6 +1216,7 @@
                             "mapping": "plot_no",
                             "dataIndex": "plot_no",
                             "sortable": true,
+                            "filterable": true,
                             "name": "plot_no"
                         },
                         {
@@ -1139,6 +1224,7 @@
                             "mapping": "module_id",
                             "dataIndex": "module_id",
                             "sortable": true,
+                            "filterable": true,
                             "name": "module_id"
                         },
                         {
@@ -1146,6 +1232,7 @@
                             "mapping": "corner",
                             "dataIndex": "corner",
                             "sortable": true,
+                            "filterable": true,
                             "name": "corner"
                         },
                         {
@@ -1153,6 +1240,7 @@
                             "mapping": "depth",
                             "dataIndex": "depth",
                             "sortable": true,
+                            "filterable": true,
                             "name": "depth"
                         },
                         {
@@ -1160,6 +1248,7 @@
                             "mapping": "species",
                             "dataIndex": "species",
                             "sortable": true,
+                            "filterable": true,
                             "name": "species"
                         },
                         {
@@ -1167,6 +1256,7 @@
                             "mapping": "cover_class_code",
                             "dataIndex": "cover_class_code",
                             "sortable": true,
+                            "filterable": true,
                             "name": "cover_class_code"
                         }
                     ],
@@ -1230,6 +1320,7 @@
                             "mapping": "plot_no",
                             "dataIndex": "plot_no",
                             "sortable": true,
+                            "filterable": true,
                             "name": "plot_no"
                         },
                         {
@@ -1237,6 +1328,7 @@
                             "mapping": "module_id",
                             "dataIndex": "module_id",
                             "sortable": true,
+                            "filterable": true,
                             "name": "module_id"
                         },
                         {
@@ -1244,6 +1336,7 @@
                             "mapping": "corner",
                             "dataIndex": "corner",
                             "sortable": true,
+                            "filterable": true,
                             "name": "corner"
                         },
                         {
@@ -1251,6 +1344,7 @@
                             "mapping": "depth",
                             "dataIndex": "depth",
                             "sortable": true,
+                            "filterable": true,
                             "name": "depth"
                         },
                         {
@@ -1258,6 +1352,7 @@
                             "mapping": "info",
                             "dataIndex": "info",
                             "sortable": true,
+                            "filterable": true,
                             "name": "info"
                         },
                         {
@@ -1265,6 +1360,7 @@
                             "mapping": "cover_class_code",
                             "dataIndex": "cover_class_code",
                             "sortable": true,
+                            "filterable": true,
                             "name": "cover_class_code"
                         }
                     ],
@@ -1328,6 +1424,7 @@
                             "mapping": "plot_no",
                             "dataIndex": "plot_no",
                             "sortable": true,
+                            "filterable": true,
                             "name": "plot_no"
                         },
                         {
@@ -1335,6 +1432,7 @@
                             "mapping": "species",
                             "dataIndex": "species",
                             "sortable": true,
+                            "filterable": true,
                             "name": "species"
                         },
                         {
@@ -1342,6 +1440,7 @@
                             "mapping": "relative_cover",
                             "dataIndex": "relative_cover",
                             "sortable": true,
+                            "filterable": true,
                             "name": "relative_cover"
                         }
                     ],
@@ -1393,6 +1492,7 @@
                             "mapping": "plot_no",
                             "dataIndex": "plot_no",
                             "sortable": true,
+                            "filterable": true,
                             "name": "plot_no"
                         },
                         {
@@ -1400,6 +1500,7 @@
                             "mapping": "sub",
                             "dataIndex": "sub",
                             "sortable": true,
+                            "filterable": true,
                             "name": "sub"
                         },
                         {
@@ -1407,6 +1508,7 @@
                             "mapping": "module_id",
                             "dataIndex": "module_id",
                             "sortable": true,
+                            "filterable": true,
                             "name": "module_id"
                         },
                         {
@@ -1414,6 +1516,7 @@
                             "mapping": "species",
                             "dataIndex": "species",
                             "sortable": true,
+                            "filterable": true,
                             "name": "species"
                         },
                         {
@@ -1421,6 +1524,7 @@
                             "mapping": "dbh_class",
                             "dataIndex": "dbh_class",
                             "sortable": true,
+                            "filterable": true,
                             "name": "dbh_class"
                         },
                         {
@@ -1428,6 +1532,7 @@
                             "mapping": "dbh_class_index",
                             "dataIndex": "dbh_class_index",
                             "sortable": true,
+                            "filterable": true,
                             "name": "dbh_class_index"
                         },
                         {
@@ -1435,6 +1540,7 @@
                             "mapping": "count",
                             "dataIndex": "count",
                             "sortable": true,
+                            "filterable": true,
                             "name": "count"
                         }
                     ],
@@ -1502,6 +1608,7 @@
                             "mapping": "plot_no",
                             "dataIndex": "plot_no",
                             "sortable": true,
+                            "filterable": true,
                             "name": "plot_no"
                         },
                         {
@@ -1509,6 +1616,7 @@
                             "mapping": "module_id",
                             "dataIndex": "module_id",
                             "sortable": true,
+                            "filterable": true,
                             "name": "module_id"
                         },
                         {
@@ -1516,6 +1624,7 @@
                             "mapping": "species",
                             "dataIndex": "species",
                             "sortable": true,
+                            "filterable": true,
                             "name": "species"
                         },
                         {
@@ -1523,6 +1632,7 @@
                             "mapping": "dbh_class",
                             "dataIndex": "dbh_class",
                             "sortable": true,
+                            "filterable": true,
                             "name": "dbh_class"
                         },
                         {
@@ -1530,6 +1640,7 @@
                             "mapping": "dbh_class_index",
                             "dataIndex": "dbh_class_index",
                             "sortable": true,
+                            "filterable": true,
                             "name": "dbh_class_index"
                         },
                         {
@@ -1537,6 +1648,7 @@
                             "mapping": "count",
                             "dataIndex": "count",
                             "sortable": true,
+                            "filterable": true,
                             "name": "count"
                         }
                     ],
@@ -1600,6 +1712,7 @@
                             "mapping": "plot_no",
                             "dataIndex": "plot_no",
                             "sortable": true,
+                            "filterable": true,
                             "name": "plot_no"
                         },
                         {
@@ -1607,6 +1720,7 @@
                             "mapping": "module_id",
                             "dataIndex": "module_id",
                             "sortable": true,
+                            "filterable": true,
                             "name": "module_id"
                         },
                         {
@@ -1614,6 +1728,7 @@
                             "mapping": "species",
                             "dataIndex": "species",
                             "sortable": true,
+                            "filterable": true,
                             "name": "species"
                         },
                         {
@@ -1621,6 +1736,7 @@
                             "mapping": "dbh_class",
                             "dataIndex": "dbh_class",
                             "sortable": true,
+                            "filterable": true,
                             "name": "dbh_class"
                         },
                         {
@@ -1628,6 +1744,7 @@
                             "mapping": "dbh_class_index",
                             "dataIndex": "dbh_class_index",
                             "sortable": true,
+                            "filterable": true,
                             "name": "dbh_class_index"
                         },
                         {
@@ -1635,6 +1752,7 @@
                             "mapping": "dbh_cm",
                             "dataIndex": "dbh_cm",
                             "sortable": true,
+                            "filterable": true,
                             "name": "dbh_cm"
                         }
                     ],
@@ -1698,6 +1816,7 @@
                             "mapping": "plot_no",
                             "dataIndex": "plot_no",
                             "sortable": true,
+                            "filterable": true,
                             "name": "plot_no"
                         },
                         {
@@ -1705,6 +1824,7 @@
                             "mapping": "species",
                             "dataIndex": "species",
                             "sortable": true,
+                            "filterable": true,
                             "name": "species"
                         },
                         {
@@ -1712,6 +1832,7 @@
                             "mapping": "subcanopy_iv_partial",
                             "dataIndex": "subcanopy_iv_partial",
                             "sortable": true,
+                            "filterable": true,
                             "name": "subcanopy_iv_partial"
                         },
                         {
@@ -1719,6 +1840,7 @@
                             "mapping": "subcanopy_iv_shade",
                             "dataIndex": "subcanopy_iv_shade",
                             "sortable": true,
+                            "filterable": true,
                             "name": "subcanopy_iv_shade"
                         },
                         {
@@ -1726,6 +1848,7 @@
                             "mapping": "canopy_iv",
                             "dataIndex": "canopy_iv",
                             "sortable": true,
+                            "filterable": true,
                             "name": "canopy_iv"
                         }
                     ],
@@ -1785,6 +1908,7 @@
                             "mapping": "plot_no",
                             "dataIndex": "plot_no",
                             "sortable": true,
+                            "filterable": true,
                             "name": "plot_no"
                         },
                         {
@@ -1792,6 +1916,7 @@
                             "mapping": "date_time",
                             "dataIndex": "date_time",
                             "sortable": true,
+                            "filterable": true,
                             "name": "date_time"
                         },
                         {
@@ -1799,6 +1924,7 @@
                             "mapping": "Module Id",
                             "dataIndex": "Module Id",
                             "sortable": true,
+                            "filterable": true,
                             "name": "module_id"
                         },
                         {
@@ -1806,6 +1932,7 @@
                             "mapping": "corner",
                             "dataIndex": "corner",
                             "sortable": true,
+                            "filterable": true,
                             "name": "corner"
                         },
                         {
@@ -1813,6 +1940,7 @@
                             "mapping": "sample_id",
                             "dataIndex": "sample_id",
                             "sortable": true,
+                            "filterable": true,
                             "name": "sample_id"
                         },
                         {
@@ -1820,6 +1948,7 @@
                             "mapping": "area_sampled",
                             "dataIndex": "area_sampled",
                             "sortable": true,
+                            "filterable": true,
                             "name": "area_sampled"
                         },
                         {
@@ -1827,6 +1956,7 @@
                             "mapping": "weight_with_bag",
                             "dataIndex": "weight_with_bag",
                             "sortable": true,
+                            "filterable": true,
                             "name": "weight_with_bag"
                         },
                         {
@@ -1834,6 +1964,7 @@
                             "mapping": "bag_weight",
                             "dataIndex": "bag_weight",
                             "sortable": true,
+                            "filterable": true,
                             "name": "bag_weight"
                         },
                         {
@@ -1841,6 +1972,7 @@
                             "mapping": "biomass_collected",
                             "dataIndex": "biomass_collected",
                             "sortable": true,
+                            "filterable": true,
                             "name": "biomass_collected"
                         },
                         {
@@ -1848,6 +1980,7 @@
                             "mapping": "actual_or_derived",
                             "dataIndex": "actual_or_derived",
                             "sortable": true,
+                            "filterable": true,
                             "name": "actual_or_derived"
                         },
                         {
@@ -1855,6 +1988,7 @@
                             "mapping": "biomass_weight_grams",
                             "dataIndex": "biomass_weight_grams",
                             "sortable": true,
+                            "filterable": true,
                             "name": "biomass_weight_grams"
                         },
                         {
@@ -1862,6 +1996,7 @@
                             "mapping": "grams_per_sq_meter",
                             "dataIndex": "grams_per_sq_meter",
                             "sortable": true,
+                            "filterable": true,
                             "name": "grams_per_sq_meter"
                         }
                     ],
@@ -1949,6 +2084,7 @@
                             "mapping": "plot_no",
                             "dataIndex": "plot_no",
                             "sortable": true,
+                            "filterable": true,
                             "name": "plot_no"
                         },
                         {
@@ -1956,6 +2092,7 @@
                             "mapping": "date_time",
                             "dataIndex": "date_time",
                             "sortable": true,
+                            "filterable": true,
                             "name": "date_time"
                         },
                         {
@@ -1963,6 +2100,7 @@
                             "mapping": "Module Id",
                             "dataIndex": "Module Id",
                             "sortable": true,
+                            "filterable": true,
                             "name": "module_id"
                         },
                         {
@@ -1970,6 +2108,7 @@
                             "mapping": "corner",
                             "dataIndex": "corner",
                             "sortable": true,
+                            "filterable": true,
                             "name": "corner"
                         },
                         {
@@ -1977,6 +2116,7 @@
                             "mapping": "sample_id",
                             "dataIndex": "sample_id",
                             "sortable": true,
+                            "filterable": true,
                             "name": "sample_id"
                         },
                         {
@@ -1984,6 +2124,7 @@
                             "mapping": "area_sampled",
                             "dataIndex": "area_sampled",
                             "sortable": true,
+                            "filterable": true,
                             "name": "area_sampled"
                         },
                         {
@@ -1991,6 +2132,7 @@
                             "mapping": "weight_with_bag",
                             "dataIndex": "weight_with_bag",
                             "sortable": true,
+                            "filterable": true,
                             "name": "weight_with_bag"
                         },
                         {
@@ -1998,6 +2140,7 @@
                             "mapping": "bag_weight",
                             "dataIndex": "bag_weight",
                             "sortable": true,
+                            "filterable": true,
                             "name": "bag_weight"
                         },
                         {
@@ -2005,6 +2148,7 @@
                             "mapping": "biomass_collected",
                             "dataIndex": "biomass_collected",
                             "sortable": true,
+                            "filterable": true,
                             "name": "biomass_collected"
                         },
                         {
@@ -2012,6 +2156,7 @@
                             "mapping": "actual_or_derived",
                             "dataIndex": "actual_or_derived",
                             "sortable": true,
+                            "filterable": true,
                             "name": "actual_or_derived"
                         }
                     ],
@@ -2092,6 +2237,7 @@
                             "mapping": "code",
                             "dataIndex": "code",
                             "sortable": true,
+                            "filterable": true,
                             "name": "code"
                         },
                         {
@@ -2099,6 +2245,7 @@
                             "mapping": "community_class",
                             "dataIndex": "community_class",
                             "sortable": true,
+                            "filterable": true,
                             "name": "community_class"
                         }
                     ],
@@ -2146,6 +2293,7 @@
                             "mapping": "cover_code",
                             "dataIndex": "cover_code",
                             "sortable": true,
+                            "filterable": true,
                             "name": "cover_code"
                         },
                         {
@@ -2153,6 +2301,7 @@
                             "mapping": "midpoint",
                             "dataIndex": "midpoint",
                             "sortable": true,
+                            "filterable": true,
                             "name": "midpoint"
                         }
                     ],
@@ -2185,7 +2334,6 @@
                     }
                 },
                 {
-
                     "api": {},
                     "autoExpandColumn": false,
                     "minColumnWidth": 80,
@@ -2201,138 +2349,161 @@
                             "mapping" : "plot_no",
                             "dataIndex" : "plot_no",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "plot_no"
                         }, {
                             "header" : "Vibi Type",
                             "mapping" : "vibi_type",
                             "dataIndex" : "vibi_type",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "vibi_type"
                         }, {
                             "header" : "Vibi Score",
                             "mapping" : "score",
                             "dataIndex" : "score",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "score"
                         }, {
                             "header" : "Carex",
                             "mapping" : "carex_metric_value",
                             "dataIndex" : "carex_metric_value",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "carex_metric_value"
                         }, {
                             "header" : "Cyperaceae",
                             "mapping" : "cyperaceae_metric_value",
                             "dataIndex" : "cyperaceae_metric_value",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "cyperaceae_metric_value"
                         }, {
                             "header" : "Dicot",
                             "mapping" : "dicot_metric_value",
                             "dataIndex" : "dicot_metric_value",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "dicot_metric_value"
                         }, {
                             "header" : "Shade",
                             "mapping" : "shade_metric_value",
                             "dataIndex" : "shade_metric_value",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "shade_metric_value"
                         }, {
                             "header" : "Shrub",
                             "mapping" : "shrub_metric_value",
                             "dataIndex" : "shrub_metric_value",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "shrub_metric_value"
                         }, {
                             "header" : "Hydrophyte",
                             "mapping" : "hydrophyte_metric_value",
                             "dataIndex" : "hydrophyte_metric_value",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "hydrophyte_metric_value"
                         }, {
                             "header" : "SVP",
                             "mapping" : "svp_metric_value",
                             "dataIndex" : "svp_metric_value",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "svp_metric_value"
                         }, {
                             "header" : "Ap Ratio",
                             "mapping" : "ap_ratio_metric_value",
                             "dataIndex" : "ap_ratio_metric_value",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "ap_ratio_metric_value"
                         }, {
                             "header" : "FQAI",
                             "mapping" : "fqai_metric_value",
                             "dataIndex" : "fqai_metric_value",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "fqai_metric_value"
                         }, {
                             "header" : "Bryophyte",
                             "mapping" : "bryophyte_metric_value",
                             "dataIndex" : "bryophyte_metric_value",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "bryophyte_metric_value"
                         }, {
                             "header" : "Per Hydrophyte",
                             "mapping" : "per_hydrophyte_metric_value",
                             "dataIndex" : "per_hydrophyte_metric_value",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "per_hydrophyte_metric_value"
                         }, {
                             "header" : "Sensitive",
                             "mapping" : "sensitive_metric_value",
                             "dataIndex" : "sensitive_metric_value",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "sensitive_metric_value"
                         }, {
                             "header" : "Tolerant",
                             "mapping" : "tolerant_metric_value",
                             "dataIndex" : "tolerant_metric_value",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "tolerant_metric_value"
                         }, {
                             "header" : "Invasive Graminoids",
                             "mapping" : "invasive_graminoids_metric_value",
                             "dataIndex" : "invasive_graminoids_metric_value",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "invasive_graminoids_metric_value"
                         }, {
                             "header" : "Small Tree",
                             "mapping" : "small_tree_metric_value",
                             "dataIndex" : "small_tree_metric_value",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "small_tree_metric_value"
                         }, {
                             "header" : "Subcanopy IV",
                             "mapping" : "subcanopy_iv",
                             "dataIndex" : "subcanopy_iv",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "subcanopy_iv"
                         }, {
                             "header" : "Canopy IV",
                             "mapping" : "canopy_iv",
                             "dataIndex" : "canopy_iv",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "canopy_iv"
                         }, {
                             "header" : "Biomass",
                             "mapping" : "biomass_metric_value",
                             "dataIndex" : "biomass_metric_value",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "biomass_metric_value"
                         }, {
                             "header" : "Stems HA Wetland Trees",
                             "mapping" : "stems_ha_wetland_trees",
                             "dataIndex" : "stems_ha_wetland_trees",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "stems_ha_wetland_trees"
                         }, {
                             "header" : "Stems HA Wetland Shrubs",
                             "mapping" : "stems_ha_wetland_shrubs",
                             "dataIndex" : "stems_ha_wetland_shrubs",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "stems_ha_wetland_shrubs"
                         },
                         {
@@ -2340,6 +2511,7 @@
                             "mapping": "per_unvegetated",
                             "dataIndex": "per_unvegetated",
                             "sortable": true,
+                            "filterable": true,
                             "name": "per_unvegetated"
                         },
                         {
@@ -2347,6 +2519,7 @@
                             "mapping": "per_button_bush",
                             "dataIndex": "per_button_bush",
                             "sortable": true,
+                            "filterable": true,
                             "name": "per_button_bush"
                         },
                         {
@@ -2354,6 +2527,7 @@
                             "mapping": "per_perennial_native_hydrophytes",
                             "dataIndex": "per_perennial_native_hydrophytes",
                             "sortable": true,
+                            "filterable": true,
                             "name": "per_perennial_native_hydrophytes"
                         },
                         {
@@ -2361,6 +2535,7 @@
                             "mapping": "per_adventives",
                             "dataIndex": "per_adventives",
                             "sortable": true,
+                            "filterable": true,
                             "name": "per_adventives"
                         },
                         {
@@ -2368,6 +2543,7 @@
                             "mapping": "per_open_water",
                             "dataIndex": "per_open_water",
                             "sortable": true,
+                            "filterable": true,
                             "name": "per_open_water"
                         },
                         {
@@ -2375,6 +2551,7 @@
                             "mapping": "per_unvegetated_open_water",
                             "dataIndex": "per_unvegetated_open_water",
                             "sortable": true,
+                            "filterable": true,
                             "name": "per_unvegetated_open_water"
                         },
                         {
@@ -2382,6 +2559,7 @@
                             "mapping": "per_bare_ground",
                             "dataIndex": "per_bare_ground",
                             "sortable": true,
+                            "filterable": true,
                             "name": "per_bare_ground"
                         }
                     ],
@@ -2598,14 +2776,16 @@
                             "header": "Plot No",
                             "mapping": "plot_no",
                             "dataIndex": "plot_no",
-                            "name": "plot_no",
-                            "sortable": true
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "plot_no"
                         },
                         {
                             "header": "Project Name",
                             "mapping": "project_name",
                             "dataIndex": "project_name",
                             "sortable": true,
+                            "filterable": true,
                             "name": "project_name"
                         },
                         {
@@ -2613,6 +2793,7 @@
                             "mapping": "plot_name",
                             "dataIndex": "plot_name",
                             "sortable": true,
+                            "filterable": true,
                             "name": "plot_name"
                         },
                         {
@@ -2620,6 +2801,7 @@
                             "mapping": "plot_label",
                             "dataIndex": "plot_label",
                             "sortable": true,
+                            "filterable": true,
                             "name": "plot_label"
                         },
                         {
@@ -2627,6 +2809,7 @@
                             "mapping": "monitoring_event",
                             "dataIndex": "monitoring_event",
                             "sortable": true,
+                            "filterable": true,
                             "name": "monitoring_event"
                         },
                         {
@@ -2634,6 +2817,7 @@
                             "mapping": "timestamptz",
                             "dataIndex": "timestamptz",
                             "sortable": true,
+                            "filterable": true,
                             "name": "timestamptz"
                         },
                         {
@@ -2641,6 +2825,7 @@
                             "mapping": "party",
                             "dataIndex": "party",
                             "sortable": true,
+                            "filterable": true,
                             "name": "party"
                         },
                         {
@@ -2648,6 +2833,7 @@
                             "mapping": "plot_not_sampled",
                             "dataIndex": "plot_not_sampled",
                             "sortable": true,
+                            "filterable": true,
                             "name": "plot_not_sampled"
                         },
                         {
@@ -2655,6 +2841,7 @@
                             "mapping": "commentplot_not_sampled",
                             "dataIndex": "commentplot_not_sampled",
                             "sortable": true,
+                            "filterable": true,
                             "name": "commentplot_not_sampled"
                         },
                         {
@@ -2662,6 +2849,7 @@
                             "mapping": "sampling_quality",
                             "dataIndex": "sampling_quality",
                             "sortable": true,
+                            "filterable": true,
                             "name": "sampling_quality"
                         },
                         {
@@ -2669,6 +2857,7 @@
                             "mapping": "tax_accuracy_vascular",
                             "dataIndex": "tax_accuracy_vascular",
                             "sortable": true,
+                            "filterable": true,
                             "name": "tax_accuracy_vascular"
                         },
                         {
@@ -2676,6 +2865,7 @@
                             "mapping": "tax_accuracy_bryophytes",
                             "dataIndex": "tax_accuracy_bryophytes",
                             "sortable": true,
+                            "filterable": true,
                             "name": "tax_accuracy_bryophytes"
                         },
                         {
@@ -2683,6 +2873,7 @@
                             "mapping": "tax_accuracy_lichens",
                             "dataIndex": "tax_accuracy_lichens",
                             "sortable": true,
+                            "filterable": true,
                             "name": "tax_accuracy_lichens"
                         },
                         {
@@ -2690,6 +2881,7 @@
                             "mapping": "authority",
                             "dataIndex": "authority",
                             "sortable": true,
+                            "filterable": true,
                             "name": "authority"
                         },
                         {
@@ -2697,6 +2889,7 @@
                             "mapping": "state",
                             "dataIndex": "state",
                             "sortable": true,
+                            "filterable": true,
                             "name": "state"
                         },
                         {
@@ -2704,6 +2897,7 @@
                             "mapping": "county",
                             "dataIndex": "county",
                             "sortable": true,
+                            "filterable": true,
                             "name": "county"
                         },
                         {
@@ -2711,6 +2905,7 @@
                             "mapping": "quadrangle",
                             "dataIndex": "quadrangle",
                             "sortable": true,
+                            "filterable": true,
                             "name": "quadrangle"
                         },
                         {
@@ -2718,6 +2913,7 @@
                             "mapping": "local_place_name",
                             "dataIndex": "local_place_name",
                             "sortable": true,
+                            "filterable": true,
                             "name": "local_place_name"
                         },
                         {
@@ -2725,6 +2921,7 @@
                             "mapping": "landowner",
                             "dataIndex": "landowner",
                             "sortable": true,
+                            "filterable": true,
                             "name": "landowner"
                         },
                         {
@@ -2732,6 +2929,7 @@
                             "mapping": "xaxis_bearing_of_plot",
                             "dataIndex": "xaxis_bearing_of_plot",
                             "sortable": true,
+                            "filterable": true,
                             "name": "xaxis_bearing_of_plot"
                         },
                         {
@@ -2739,6 +2937,7 @@
                             "mapping": "enter_gps_location_in_plot",
                             "dataIndex": "enter_gps_location_in_plot",
                             "sortable": true,
+                            "filterable": true,
                             "name": "enter_gps_location_in_plot"
                         },
                         {
@@ -2746,6 +2945,7 @@
                             "mapping": "latitude",
                             "dataIndex": "latitude",
                             "sortable": true,
+                            "filterable": true,
                             "name": "latitude"
                         },
                         {
@@ -2753,6 +2953,7 @@
                             "mapping": "longitude",
                             "dataIndex": "longitude",
                             "sortable": true,
+                            "filterable": true,
                             "name": "longitude"
                         },
                         {
@@ -2760,6 +2961,7 @@
                             "mapping": "total_modules",
                             "dataIndex": "total_modules",
                             "sortable": true,
+                            "filterable": true,
                             "name": "total_modules"
                         },
                         {
@@ -2767,6 +2969,7 @@
                             "mapping": "intensive_modules",
                             "dataIndex": "intensive_modules",
                             "sortable": true,
+                            "filterable": true,
                             "name": "intensive_modules"
                         },
                         {
@@ -2774,6 +2977,7 @@
                             "mapping": "plot_configuration",
                             "dataIndex": "plot_configuration",
                             "sortable": true,
+                            "filterable": true,
                             "name": "plot_configuration"
                         },
                         {
@@ -2781,6 +2985,7 @@
                             "mapping": "plot_size_for_cover_data_area_ha",
                             "dataIndex": "plot_size_for_cover_data_area_ha",
                             "sortable": true,
+                            "filterable": true,
                             "name": "plot_size_for_cover_data_area_ha"
                         },
                         {
@@ -2788,6 +2993,7 @@
                             "mapping": "estimate_of_per_open_water_entire_site",
                             "dataIndex": "estimate_of_per_open_water_entire_site",
                             "sortable": true,
+                            "filterable": true,
                             "name": "estimate_of_per_open_water_entire_site"
                         },
                         {
@@ -2795,6 +3001,7 @@
                             "mapping": "estimate_of_perunvegetated_ow_entire_site",
                             "dataIndex": "estimate_of_perunvegetated_ow_entire_site",
                             "sortable": true,
+                            "filterable": true,
                             "name": "estimate_of_perunvegetated_ow_entire_site"
                         },
                         {
@@ -2802,6 +3009,7 @@
                             "mapping": "Estimate_per_invasives_entire_site",
                             "dataIndex": "Estimate_per_invasives_entire_site",
                             "sortable": true,
+                            "filterable": true,
                             "name": "Estimate_per_invasives_entire_site"
                         },
                         {
@@ -2809,6 +3017,7 @@
                             "mapping": "centerline",
                             "dataIndex": "centerline",
                             "sortable": true,
+                            "filterable": true,
                             "name": "centerline"
                         },
                         {
@@ -2816,6 +3025,7 @@
                             "mapping": "oneo_plant",
                             "dataIndex": "oneo_plant",
                             "sortable": true,
+                            "filterable": true,
                             "name": "oneo_plant"
                         },
                         {
@@ -2823,6 +3033,7 @@
                             "mapping": "oneo_text",
                             "dataIndex": "oneo_text",
                             "sortable": true,
+                            "filterable": true,
                             "name": "oneo_text"
                         },
                         {
@@ -2830,6 +3041,7 @@
                             "mapping": "vegclass",
                             "dataIndex": "vegclass",
                             "sortable": true,
+                            "filterable": true,
                             "name": "vegclass"
                         },
                         {
@@ -2837,6 +3049,7 @@
                             "mapping": "vegsubclass",
                             "dataIndex": "vegsubclass",
                             "sortable": true,
+                            "filterable": true,
                             "name": "vegsubclass"
                         },
                         {
@@ -2844,6 +3057,7 @@
                             "mapping": "twoo_plant",
                             "dataIndex": "twoo_plant",
                             "sortable": true,
+                            "filterable": true,
                             "name": "twoo_plant"
                         },
                         {
@@ -2851,6 +3065,7 @@
                             "mapping": "hgmclass",
                             "dataIndex": "hgmclass",
                             "sortable": true,
+                            "filterable": true,
                             "name": "hgmclass"
                         },
                         {
@@ -2858,6 +3073,7 @@
                             "mapping": "hgmsubclass",
                             "dataIndex": "hgmsubclass",
                             "sortable": true,
+                            "filterable": true,
                             "name": "hgmsubclass"
                         },
                         {
@@ -2865,6 +3081,7 @@
                             "mapping": "twoo_hgm",
                             "dataIndex": "twoo_hgm",
                             "sortable": true,
+                            "filterable": true,
                             "name": "twoo_hgm"
                         },
                         {
@@ -2872,6 +3089,7 @@
                             "mapping": "hgmgroup",
                             "dataIndex": "hgmgroup",
                             "sortable": true,
+                            "filterable": true,
                             "name": "hgmgroup"
                         },
                         {
@@ -2879,6 +3097,7 @@
                             "mapping": "oneo_class_code_mod_natureServe",
                             "dataIndex": "oneo_class_code_mod_natureServe",
                             "sortable": true,
+                            "filterable": true,
                             "name": "oneo_class_code_mod_natureServe"
                         },
                         {
@@ -2886,6 +3105,7 @@
                             "mapping": "veg_class_wetlands_only",
                             "dataIndex": "veg_class_wetlands_only",
                             "sortable": true,
+                            "filterable": true,
                             "name": "veg_class_wetlands_only"
                         },
                         {
@@ -2893,6 +3113,7 @@
                             "mapping": "landform_type",
                             "dataIndex": "landform_type",
                             "sortable": true,
+                            "filterable": true,
                             "name": "landform_type"
                         },
                         {
@@ -2900,6 +3121,7 @@
                             "mapping": "homogeneity",
                             "dataIndex": "homogeneity",
                             "sortable": true,
+                            "filterable": true,
                             "name": "homogeneity"
                         },
                         {
@@ -2907,6 +3129,7 @@
                             "mapping": "stand_size",
                             "dataIndex": "stand_size",
                             "sortable": true,
+                            "filterable": true,
                             "name": "stand_size"
                         },
                         {
@@ -2914,6 +3137,7 @@
                             "mapping": "drainage",
                             "dataIndex": "drainage",
                             "sortable": true,
+                            "filterable": true,
                             "name": "drainage"
                         },
                         {
@@ -2921,6 +3145,7 @@
                             "mapping": "salinity",
                             "dataIndex": "salinity",
                             "sortable": true,
+                            "filterable": true,
                             "name": "salinity"
                         },
                         {
@@ -2928,6 +3153,7 @@
                             "mapping": "hydrologic_regime",
                             "dataIndex": "hydrologic_regime",
                             "sortable": true,
+                            "filterable": true,
                             "name": "hydrologic_regime"
                         },
                         {
@@ -2935,6 +3161,7 @@
                             "mapping": "oneo_disturbance_type",
                             "dataIndex": "oneo_disturbance_type",
                             "sortable": true,
+                            "filterable": true,
                             "name": "oneo_disturbance_type"
                         },
                         {
@@ -2942,6 +3169,7 @@
                             "mapping": "oneo_disturbance_severity",
                             "dataIndex": "oneo_disturbance_severity",
                             "sortable": true,
+                            "filterable": true,
                             "name": "oneo_disturbance_severity"
                         },
                         {
@@ -2949,6 +3177,7 @@
                             "mapping": "oneo_disturbance_years_ago",
                             "dataIndex": "oneo_disturbance_years_ago",
                             "sortable": true,
+                            "filterable": true,
                             "name": "oneo_disturbance_years_ago"
                         },
                         {
@@ -2956,6 +3185,7 @@
                             "mapping": "oneo_distubance_per_of_plot",
                             "dataIndex": "oneo_distubance_per_of_plot",
                             "sortable": true,
+                            "filterable": true,
                             "name": "oneo_distubance_per_of_plot"
                         },
                         {
@@ -2963,6 +3193,7 @@
                             "mapping": "oneo_disturbance_description",
                             "dataIndex": "oneo_disturbance_description",
                             "sortable": true,
+                            "filterable": true,
                             "name": "oneo_disturbance_description"
                         },
                         {
@@ -2970,6 +3201,7 @@
                             "mapping": "twoo_disturbance_type",
                             "dataIndex": "twoo_disturbance_type",
                             "sortable": true,
+                            "filterable": true,
                             "name": "twoo_disturbance_type"
                         },
                         {
@@ -2977,6 +3209,7 @@
                             "mapping": "twoo_disturbance_severity",
                             "dataIndex": "twoo_disturbance_severity",
                             "sortable": true,
+                            "filterable": true,
                             "name": "twoo_disturbance_severity"
                         },
                         {
@@ -2984,6 +3217,7 @@
                             "mapping": "twoo_disturbance_years_ago",
                             "dataIndex": "twoo_disturbance_years_ago",
                             "sortable": true,
+                            "filterable": true,
                             "name": "twoo_disturbance_years_ago"
                         },
                         {
@@ -2991,6 +3225,7 @@
                             "mapping": "twoo_distubance_per_of_plot",
                             "dataIndex": "twoo_distubance_per_of_plot",
                             "sortable": true,
+                            "filterable": true,
                             "name": "twoo_distubance_per_of_plot"
                         },
                         {
@@ -2998,6 +3233,7 @@
                             "mapping": "twoo_disturbance_description",
                             "dataIndex": "twoo_disturbance_description",
                             "sortable": true,
+                            "filterable": true,
                             "name": "twoo_disturbance_description"
                         },
                         {
@@ -3005,6 +3241,7 @@
                             "mapping": "threeo_disturbance_type",
                             "dataIndex": "threeo_disturbance_type",
                             "sortable": true,
+                            "filterable": true,
                             "name": "threeo_disturbance_type"
                         },
                         {
@@ -3012,6 +3249,7 @@
                             "mapping": "threeo_disturbance_severity",
                             "dataIndex": "threeo_disturbance_severity",
                             "sortable": true,
+                            "filterable": true,
                             "name": "threeo_disturbance_severity"
                         },
                         {
@@ -3019,6 +3257,7 @@
                             "mapping": "threeo_disturbance_years_ago",
                             "dataIndex": "threeo_disturbance_years_ago",
                             "sortable": true,
+                            "filterable": true,
                             "name": "threeo_disturbance_years_ago"
                         },
                         {
@@ -3026,6 +3265,7 @@
                             "mapping": "threeo_distubance_per_of_plot",
                             "dataIndex": "threeo_distubance_per_of_plot",
                             "sortable": true,
+                            "filterable": true,
                             "name": "threeo_distubance_per_of_plot"
                         },
                         {
@@ -3033,6 +3273,7 @@
                             "mapping": "threeo_disturbance_description",
                             "dataIndex": "threeo_disturbance_description",
                             "sortable": true,
+                            "filterable": true,
                             "name": "threeo_disturbance_description"
                         }
                     ],
@@ -3350,6 +3591,7 @@
                             "mapping": "veg_id",
                             "dataIndex": "veg_id",
                             "sortable": true,
+                            "filterable": true,
                             "name": "veg_id"
                         },
                         {
@@ -3357,6 +3599,7 @@
                             "mapping": "scientific_name",
                             "dataIndex": "scientific_name",
                             "sortable": true,
+                            "filterable": true,
                             "name": "scientific_name"
                         },
                         {
@@ -3364,6 +3607,7 @@
                             "mapping": "acronym",
                             "dataIndex": "acronym",
                             "sortable": true,
+                            "filterable": true,
                             "name": "acronym"
                         },
                         {
@@ -3371,6 +3615,7 @@
                             "mapping": "authority",
                             "dataIndex": "authority",
                             "sortable": true,
+                            "filterable": true,
                             "name": "authority"
                         },
                         {
@@ -3378,6 +3623,7 @@
                             "mapping": "cofc",
                             "dataIndex": "cofc",
                             "sortable": true,
+                            "filterable": true,
                             "name": "cofc"
                         },
                         {
@@ -3385,6 +3631,7 @@
                             "mapping": "syn",
                             "dataIndex": "syn",
                             "sortable": true,
+                            "filterable": true,
                             "name": "syn"
                         },
                         {
@@ -3392,6 +3639,7 @@
                             "mapping": "common_name",
                             "dataIndex": "common_name",
                             "sortable": true,
+                            "filterable": true,
                             "name": "common_name"
                         },
                         {
@@ -3399,6 +3647,7 @@
                             "mapping": "family",
                             "dataIndex": "family",
                             "sortable": true,
+                            "filterable": true,
                             "name": "family"
                         },
                         {
@@ -3406,6 +3655,7 @@
                             "mapping": "fn",
                             "dataIndex": "fn",
                             "sortable": true,
+                            "filterable": true,
                             "name": "fn"
                         },
                         {
@@ -3413,6 +3663,7 @@
                             "mapping": "wet",
                             "dataIndex": "wet",
                             "sortable": true,
+                            "filterable": true,
                             "name": "wet"
                         },
                         {
@@ -3420,6 +3671,7 @@
                             "mapping": "form",
                             "dataIndex": "form",
                             "sortable": true,
+                            "filterable": true,
                             "name": "form"
                         },
                         {
@@ -3427,6 +3679,7 @@
                             "mapping": "habit",
                             "dataIndex": "habit",
                             "sortable": true,
+                            "filterable": true,
                             "name": "habit"
                         },
                         {
@@ -3434,6 +3687,7 @@
                             "mapping": "shade",
                             "dataIndex": "shade",
                             "sortable": true,
+                            "filterable": true,
                             "name": "shade"
                         },
                         {
@@ -3441,6 +3695,7 @@
                             "mapping": "usda_id",
                             "dataIndex": "usda_id",
                             "sortable": true,
+                            "filterable": true,
                             "name": "usda_id"
                         },
                         {
@@ -3448,6 +3703,7 @@
                             "mapping": "oh_tore",
                             "dataIndex": "oh_tore",
                             "sortable": true,
+                            "filterable": true,
                             "name": "oh_tore"
                         },
                         {
@@ -3455,6 +3711,7 @@
                             "mapping": "type",
                             "dataIndex": "type",
                             "sortable": true,
+                            "filterable": true,
                             "name": "type"
                         },
                         {
@@ -3462,6 +3719,7 @@
                             "mapping": "oh_status",
                             "dataIndex": "oh_status",
                             "sortable": true,
+                            "filterable": true,
                             "name": "oh_status"
                         },
                         {
@@ -3469,6 +3727,7 @@
                             "mapping": "emp",
                             "dataIndex": "emp",
                             "sortable": true,
+                            "filterable": true,
                             "name": "emp"
                         },
                         {
@@ -3476,6 +3735,7 @@
                             "mapping": "mw",
                             "dataIndex": "mw",
                             "sortable": true,
+                            "filterable": true,
                             "name": "mw"
                         },
                         {
@@ -3483,6 +3743,7 @@
                             "mapping": "ncne",
                             "dataIndex": "ncne",
                             "sortable": true,
+                            "filterable": true,
                             "name": "ncne"
                         },
                         {
@@ -3490,6 +3751,7 @@
                             "mapping": "notes",
                             "dataIndex": "notes",
                             "sortable": true,
+                            "filterable": true,
                             "name": "notes"
                         }
                     ],
@@ -3613,6 +3875,7 @@
                             "mapping": "plot_no",
                             "dataIndex": "plot_no",
                             "sortable": true,
+                            "filterable": true,
                             "name": "plot_no"
                         },
                         {
@@ -3620,6 +3883,7 @@
                             "mapping": "module_id",
                             "dataIndex": "module_id",
                             "sortable": true,
+                            "filterable": true,
                             "name": "module_id"
                         },
                         {
@@ -3627,6 +3891,7 @@
                             "mapping": "corner",
                             "dataIndex": "corner",
                             "sortable": true,
+                            "filterable": true,
                             "name": "corner"
                         },
                         {
@@ -3634,6 +3899,7 @@
                             "mapping": "depth",
                             "dataIndex": "depth",
                             "sortable": true,
+                            "filterable": true,
                             "name": "depth"
                         },
                         {
@@ -3641,6 +3907,7 @@
                             "mapping": "species",
                             "dataIndex": "species",
                             "sortable": true,
+                            "filterable": true,
                             "name": "species"
                         },
                         {
@@ -3648,6 +3915,7 @@
                             "mapping": "cover_class_code",
                             "dataIndex": "cover_class_code",
                             "sortable": true,
+                            "filterable": true,
                             "name": "cover_class_code"
                         }
                     ],
@@ -3711,6 +3979,7 @@
                             "mapping": "plot_no",
                             "dataIndex": "plot_no",
                             "sortable": true,
+                            "filterable": true,
                             "name": "plot_no"
                         },
                         {
@@ -3718,6 +3987,7 @@
                             "mapping": "module_id",
                             "dataIndex": "module_id",
                             "sortable": true,
+                            "filterable": true,
                             "name": "module_id"
                         },
                         {
@@ -3725,6 +3995,7 @@
                             "mapping": "corner",
                             "dataIndex": "corner",
                             "sortable": true,
+                            "filterable": true,
                             "name": "corner"
                         },
                         {
@@ -3732,6 +4003,7 @@
                             "mapping": "depth",
                             "dataIndex": "depth",
                             "sortable": true,
+                            "filterable": true,
                             "name": "depth"
                         },
                         {
@@ -3739,6 +4011,7 @@
                             "mapping": "info",
                             "dataIndex": "info",
                             "sortable": true,
+                            "filterable": true,
                             "name": "info"
                         },
                         {
@@ -3746,6 +4019,7 @@
                             "mapping": "cover_class_code",
                             "dataIndex": "cover_class_code",
                             "sortable": true,
+                            "filterable": true,
                             "name": "cover_class_code"
                         }
                     ],
@@ -3809,6 +4083,7 @@
                             "mapping": "plot_no",
                             "dataIndex": "plot_no",
                             "sortable": true,
+                            "filterable": true,
                             "name": "plot_no"
                         },
                         {
@@ -3816,6 +4091,7 @@
                             "mapping": "species",
                             "dataIndex": "species",
                             "sortable": true,
+                            "filterable": true,
                             "name": "species"
                         },
                         {
@@ -3823,6 +4099,7 @@
                             "mapping": "relative_cover",
                             "dataIndex": "relative_cover",
                             "sortable": true,
+                            "filterable": true,
                             "name": "relative_cover"
                         }
                     ],
@@ -3874,6 +4151,7 @@
                             "mapping": "plot_no",
                             "dataIndex": "plot_no",
                             "sortable": true,
+                            "filterable": true,
                             "name": "plot_no"
                         },
                         {
@@ -3881,6 +4159,7 @@
                             "mapping": "sub",
                             "dataIndex": "sub",
                             "sortable": true,
+                            "filterable": true,
                             "name": "sub"
                         },
                         {
@@ -3888,6 +4167,7 @@
                             "mapping": "module_id",
                             "dataIndex": "module_id",
                             "sortable": true,
+                            "filterable": true,
                             "name": "module_id"
                         },
                         {
@@ -3895,6 +4175,7 @@
                             "mapping": "species",
                             "dataIndex": "species",
                             "sortable": true,
+                            "filterable": true,
                             "name": "species"
                         },
                         {
@@ -3902,6 +4183,7 @@
                             "mapping": "dbh_class",
                             "dataIndex": "dbh_class",
                             "sortable": true,
+                            "filterable": true,
                             "name": "dbh_class"
                         },
                         {
@@ -3909,6 +4191,7 @@
                             "mapping": "dbh_class_index",
                             "dataIndex": "dbh_class_index",
                             "sortable": true,
+                            "filterable": true,
                             "name": "dbh_class_index"
                         },
                         {
@@ -3916,6 +4199,7 @@
                             "mapping": "count",
                             "dataIndex": "count",
                             "sortable": true,
+                            "filterable": true,
                             "name": "count"
                         }
                     ],
@@ -3983,6 +4267,7 @@
                             "mapping": "plot_no",
                             "dataIndex": "plot_no",
                             "sortable": true,
+                            "filterable": true,
                             "name": "plot_no"
                         },
                         {
@@ -3990,6 +4275,7 @@
                             "mapping": "module_id",
                             "dataIndex": "module_id",
                             "sortable": true,
+                            "filterable": true,
                             "name": "module_id"
                         },
                         {
@@ -3997,6 +4283,7 @@
                             "mapping": "species",
                             "dataIndex": "species",
                             "sortable": true,
+                            "filterable": true,
                             "name": "species"
                         },
                         {
@@ -4004,6 +4291,7 @@
                             "mapping": "dbh_class",
                             "dataIndex": "dbh_class",
                             "sortable": true,
+                            "filterable": true,
                             "name": "dbh_class"
                         },
                         {
@@ -4011,6 +4299,7 @@
                             "mapping": "dbh_class_index",
                             "dataIndex": "dbh_class_index",
                             "sortable": true,
+                            "filterable": true,
                             "name": "dbh_class_index"
                         },
                         {
@@ -4018,6 +4307,7 @@
                             "mapping": "count",
                             "dataIndex": "count",
                             "sortable": true,
+                            "filterable": true,
                             "name": "count"
                         }
                     ],
@@ -4081,6 +4371,7 @@
                             "mapping": "plot_no",
                             "dataIndex": "plot_no",
                             "sortable": true,
+                            "filterable": true,
                             "name": "plot_no"
                         },
                         {
@@ -4088,6 +4379,7 @@
                             "mapping": "module_id",
                             "dataIndex": "module_id",
                             "sortable": true,
+                            "filterable": true,
                             "name": "module_id"
                         },
                         {
@@ -4095,6 +4387,7 @@
                             "mapping": "species",
                             "dataIndex": "species",
                             "sortable": true,
+                            "filterable": true,
                             "name": "species"
                         },
                         {
@@ -4102,6 +4395,7 @@
                             "mapping": "dbh_class",
                             "dataIndex": "dbh_class",
                             "sortable": true,
+                            "filterable": true,
                             "name": "dbh_class"
                         },
                         {
@@ -4109,6 +4403,7 @@
                             "mapping": "dbh_class_index",
                             "dataIndex": "dbh_class_index",
                             "sortable": true,
+                            "filterable": true,
                             "name": "dbh_class_index"
                         },
                         {
@@ -4116,6 +4411,7 @@
                             "mapping": "dbh_cm",
                             "dataIndex": "dbh_cm",
                             "sortable": true,
+                            "filterable": true,
                             "name": "dbh_cm"
                         }
                     ],
@@ -4179,6 +4475,7 @@
                             "mapping": "plot_no",
                             "dataIndex": "plot_no",
                             "sortable": true,
+                            "filterable": true,
                             "name": "plot_no"
                         },
                         {
@@ -4186,6 +4483,7 @@
                             "mapping": "species",
                             "dataIndex": "species",
                             "sortable": true,
+                            "filterable": true,
                             "name": "species"
                         },
                         {
@@ -4193,6 +4491,7 @@
                             "mapping": "subcanopy_iv_partial",
                             "dataIndex": "subcanopy_iv_partial",
                             "sortable": true,
+                            "filterable": true,
                             "name": "subcanopy_iv_partial"
                         },
                         {
@@ -4200,6 +4499,7 @@
                             "mapping": "subcanopy_iv_shade",
                             "dataIndex": "subcanopy_iv_shade",
                             "sortable": true,
+                            "filterable": true,
                             "name": "subcanopy_iv_shade"
                         },
                         {
@@ -4207,6 +4507,7 @@
                             "mapping": "canopy_iv",
                             "dataIndex": "canopy_iv",
                             "sortable": true,
+                            "filterable": true,
                             "name": "canopy_iv"
                         }
                     ],
@@ -4266,6 +4567,7 @@
                             "mapping": "plot_no",
                             "dataIndex": "plot_no",
                             "sortable": true,
+                            "filterable": true,
                             "name": "plot_no"
                         },
                         {
@@ -4273,13 +4575,15 @@
                             "mapping": "date_time",
                             "dataIndex": "date_time",
                             "sortable": true,
+                            "filterable": true,
                             "name": "date_time"
                         },
                         {
                             "header": "Module Id",
-                            "mapping": "Module Id",
-                            "dataIndex": "Module Id",
+                            "mapping": "module_id",
+                            "dataIndex": "module_id",
                             "sortable": true,
+                            "filterable": true,
                             "name": "module_id"
                         },
                         {
@@ -4287,6 +4591,7 @@
                             "mapping": "corner",
                             "dataIndex": "corner",
                             "sortable": true,
+                            "filterable": true,
                             "name": "corner"
                         },
                         {
@@ -4294,6 +4599,7 @@
                             "mapping": "sample_id",
                             "dataIndex": "sample_id",
                             "sortable": true,
+                            "filterable": true,
                             "name": "sample_id"
                         },
                         {
@@ -4301,6 +4607,7 @@
                             "mapping": "area_sampled",
                             "dataIndex": "area_sampled",
                             "sortable": true,
+                            "filterable": true,
                             "name": "area_sampled"
                         },
                         {
@@ -4308,6 +4615,7 @@
                             "mapping": "weight_with_bag",
                             "dataIndex": "weight_with_bag",
                             "sortable": true,
+                            "filterable": true,
                             "name": "weight_with_bag"
                         },
                         {
@@ -4315,6 +4623,7 @@
                             "mapping": "bag_weight",
                             "dataIndex": "bag_weight",
                             "sortable": true,
+                            "filterable": true,
                             "name": "bag_weight"
                         },
                         {
@@ -4322,6 +4631,7 @@
                             "mapping": "biomass_collected",
                             "dataIndex": "biomass_collected",
                             "sortable": true,
+                            "filterable": true,
                             "name": "biomass_collected"
                         },
                         {
@@ -4329,6 +4639,7 @@
                             "mapping": "actual_or_derived",
                             "dataIndex": "actual_or_derived",
                             "sortable": true,
+                            "filterable": true,
                             "name": "actual_or_derived"
                         },
                         {
@@ -4336,6 +4647,7 @@
                             "mapping": "biomass_weight_grams",
                             "dataIndex": "biomass_weight_grams",
                             "sortable": true,
+                            "filterable": true,
                             "name": "biomass_weight_grams"
                         },
                         {
@@ -4343,6 +4655,7 @@
                             "mapping": "grams_per_sq_meter",
                             "dataIndex": "grams_per_sq_meter",
                             "sortable": true,
+                            "filterable": true,
                             "name": "grams_per_sq_meter"
                         }
                     ],
@@ -4434,6 +4747,7 @@
                             "mapping": "plot_no",
                             "dataIndex": "plot_no",
                             "sortable": true,
+                            "filterable": true,
                             "name": "plot_no"
                         },
                         {
@@ -4441,13 +4755,15 @@
                             "mapping": "date_time",
                             "dataIndex": "date_time",
                             "sortable": true,
+                            "filterable": true,
                             "name": "date_time"
                         },
                         {
                             "header": "Module Id",
-                            "mapping": "Module Id",
-                            "dataIndex": "Module Id",
+                            "mapping": "module_id",
+                            "dataIndex": "module_id",
                             "sortable": true,
+                            "filterable": true,
                             "name": "module_id"
                         },
                         {
@@ -4455,6 +4771,7 @@
                             "mapping": "corner",
                             "dataIndex": "corner",
                             "sortable": true,
+                            "filterable": true,
                             "name": "corner"
                         },
                         {
@@ -4462,6 +4779,7 @@
                             "mapping": "sample_id",
                             "dataIndex": "sample_id",
                             "sortable": true,
+                            "filterable": true,
                             "name": "sample_id"
                         },
                         {
@@ -4469,6 +4787,7 @@
                             "mapping": "area_sampled",
                             "dataIndex": "area_sampled",
                             "sortable": true,
+                            "filterable": true,
                             "name": "area_sampled"
                         },
                         {
@@ -4476,6 +4795,7 @@
                             "mapping": "weight_with_bag",
                             "dataIndex": "weight_with_bag",
                             "sortable": true,
+                            "filterable": true,
                             "name": "weight_with_bag"
                         },
                         {
@@ -4483,6 +4803,7 @@
                             "mapping": "bag_weight",
                             "dataIndex": "bag_weight",
                             "sortable": true,
+                            "filterable": true,
                             "name": "bag_weight"
                         },
                         {
@@ -4490,6 +4811,7 @@
                             "mapping": "biomass_collected",
                             "dataIndex": "biomass_collected",
                             "sortable": true,
+                            "filterable": true,
                             "name": "biomass_collected"
                         },
                         {
@@ -4497,6 +4819,7 @@
                             "mapping": "actual_or_derived",
                             "dataIndex": "actual_or_derived",
                             "sortable": true,
+                            "filterable": true,
                             "name": "actual_or_derived"
                         }
                     ],
@@ -4581,6 +4904,7 @@
                             "mapping": "code",
                             "dataIndex": "code",
                             "sortable": true,
+                            "filterable": true,
                             "name": "code"
                         },
                         {
@@ -4588,6 +4912,7 @@
                             "mapping": "community_class",
                             "dataIndex": "community_class",
                             "sortable": true,
+                            "filterable": true,
                             "name": "community_class"
                         }
                     ],
@@ -4635,6 +4960,7 @@
                             "mapping": "cover_code",
                             "dataIndex": "cover_code",
                             "sortable": true,
+                            "filterable": true,
                             "name": "cover_code"
                         },
                         {
@@ -4642,6 +4968,7 @@
                             "mapping": "midpoint",
                             "dataIndex": "midpoint",
                             "sortable": true,
+                            "filterable": true,
                             "name": "midpoint"
                         }
                     ],
@@ -4690,138 +5017,161 @@
                             "mapping" : "plot_no",
                             "dataIndex" : "plot_no",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "plot_no"
                         }, {
                             "header" : "Vibi Type",
                             "mapping" : "vibi_type",
                             "dataIndex" : "vibi_type",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "vibi_type"
                         }, {
                             "header" : "Vibi Score",
                             "mapping" : "score",
                             "dataIndex" : "score",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "score"
                         }, {
                             "header" : "Carex",
                             "mapping" : "carex_metric_value",
                             "dataIndex" : "carex_metric_value",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "carex_metric_value"
                         }, {
                             "header" : "Cyperaceae",
                             "mapping" : "cyperaceae_metric_value",
                             "dataIndex" : "cyperaceae_metric_value",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "cyperaceae_metric_value"
                         }, {
                             "header" : "Dicot",
                             "mapping" : "dicot_metric_value",
                             "dataIndex" : "dicot_metric_value",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "dicot_metric_value"
                         }, {
                             "header" : "Shade",
                             "mapping" : "shade_metric_value",
                             "dataIndex" : "shade_metric_value",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "shade_metric_value"
                         }, {
                             "header" : "Shrub",
                             "mapping" : "shrub_metric_value",
                             "dataIndex" : "shrub_metric_value",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "shrub_metric_value"
                         }, {
                             "header" : "Hydrophyte",
                             "mapping" : "hydrophyte_metric_value",
                             "dataIndex" : "hydrophyte_metric_value",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "hydrophyte_metric_value"
                         }, {
                             "header" : "SVP",
                             "mapping" : "svp_metric_value",
                             "dataIndex" : "svp_metric_value",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "svp_metric_value"
                         }, {
                             "header" : "Ap Ratio",
                             "mapping" : "ap_ratio_metric_value",
                             "dataIndex" : "ap_ratio_metric_value",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "ap_ratio_metric_value"
                         }, {
                             "header" : "FQAI",
                             "mapping" : "fqai_metric_value",
                             "dataIndex" : "fqai_metric_value",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "fqai_metric_value"
                         }, {
                             "header" : "Bryophyte",
                             "mapping" : "bryophyte_metric_value",
                             "dataIndex" : "bryophyte_metric_value",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "bryophyte_metric_value"
                         }, {
                             "header" : "Per Hydrophyte",
                             "mapping" : "per_hydrophyte_metric_value",
                             "dataIndex" : "per_hydrophyte_metric_value",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "per_hydrophyte_metric_value"
                         }, {
                             "header" : "Sensitive",
                             "mapping" : "sensitive_metric_value",
                             "dataIndex" : "sensitive_metric_value",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "sensitive_metric_value"
                         }, {
                             "header" : "Tolerant",
                             "mapping" : "tolerant_metric_value",
                             "dataIndex" : "tolerant_metric_value",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "tolerant_metric_value"
                         }, {
                             "header" : "Invasive Graminoids",
                             "mapping" : "invasive_graminoids_metric_value",
                             "dataIndex" : "invasive_graminoids_metric_value",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "invasive_graminoids_metric_value"
                         }, {
                             "header" : "Small Tree",
                             "mapping" : "small_tree_metric_value",
                             "dataIndex" : "small_tree_metric_value",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "small_tree_metric_value"
                         }, {
                             "header" : "Subcanopy IV",
                             "mapping" : "subcanopy_iv",
                             "dataIndex" : "subcanopy_iv",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "subcanopy_iv"
                         }, {
                             "header" : "Canopy IV",
                             "mapping" : "canopy_iv",
                             "dataIndex" : "canopy_iv",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "canopy_iv"
                         }, {
                             "header" : "Biomass",
                             "mapping" : "biomass_metric_value",
                             "dataIndex" : "biomass_metric_value",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "biomass_metric_value"
                         }, {
                             "header" : "Stems HA Wetland Trees",
                             "mapping" : "stems_ha_wetland_trees",
                             "dataIndex" : "stems_ha_wetland_trees",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "stems_ha_wetland_trees"
                         }, {
                             "header" : "Stems HA Wetland Shrubs",
                             "mapping" : "stems_ha_wetland_shrubs",
                             "dataIndex" : "stems_ha_wetland_shrubs",
                             "sortable": true,
+                            "filterable": true,
                             "name" : "stems_ha_wetland_shrubs"
                         },
                         {
@@ -4829,6 +5179,7 @@
                             "mapping": "per_unvegetated",
                             "dataIndex": "per_unvegetated",
                             "sortable": true,
+                            "filterable": true,
                             "name": "per_unvegetated"
                         },
                         {
@@ -4836,6 +5187,7 @@
                             "mapping": "per_button_bush",
                             "dataIndex": "per_button_bush",
                             "sortable": true,
+                            "filterable": true,
                             "name": "per_button_bush"
                         },
                         {
@@ -4843,6 +5195,7 @@
                             "mapping": "per_perennial_native_hydrophytes",
                             "dataIndex": "per_perennial_native_hydrophytes",
                             "sortable": true,
+                            "filterable": true,
                             "name": "per_perennial_native_hydrophytes"
                         },
                         {
@@ -4850,6 +5203,7 @@
                             "mapping": "per_adventives",
                             "dataIndex": "per_adventives",
                             "sortable": true,
+                            "filterable": true,
                             "name": "per_adventives"
                         },
                         {
@@ -4857,6 +5211,7 @@
                             "mapping": "per_open_water",
                             "dataIndex": "per_open_water",
                             "sortable": true,
+                            "filterable": true,
                             "name": "per_open_water"
                         },
                         {
@@ -4864,6 +5219,7 @@
                             "mapping": "per_unvegetated_open_water",
                             "dataIndex": "per_unvegetated_open_water",
                             "sortable": true,
+                            "filterable": true,
                             "name": "per_unvegetated_open_water"
                         },
                         {
@@ -4871,6 +5227,7 @@
                             "mapping": "per_bare_ground",
                             "dataIndex": "per_bare_ground",
                             "sortable": true,
+                            "filterable": true,
                             "name": "per_bare_ground"
                         }
                     ],
