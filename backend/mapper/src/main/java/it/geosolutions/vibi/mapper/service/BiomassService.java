@@ -14,15 +14,17 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.geotools.data.DataStore;
+import org.geotools.data.Transaction;
 import org.opengis.feature.simple.SimpleFeatureType;
 
 import java.util.Date;
+import java.util.UUID;
 
 public class BiomassService {
 
     private static final SimpleFeatureType PLOT_TYPE = VibiService.createFeatureType("plot", "");
 
-    public static void processBiomassSheet(Sheet sheet, DataStore store) {
+    public static void processBiomassSheet(Sheet sheet, DataStore store, Transaction transaction) {
 
         BoundsDetector boundsDetector = new BoundsDetector() {
 
@@ -56,7 +58,7 @@ public class BiomassService {
             public void update(SheetContext context) {
                 Cell siteCell = context.getRow().getCell(Sheets.getIndex("A"), Row.RETURN_BLANK_AS_NULL);
                 if (siteCell != null) {
-                    context.putValue("BIOMASS_PLOT_NO", Type.INTEGER.extract(siteCell));
+                    context.putValue("BIOMASS_PLOT_NO", VibiService.extractPlotNo(siteCell));
                 }
                 Cell dateCell = context.getRow().getCell(Sheets.getIndex("D"), Row.RETURN_BLANK_AS_NULL);
                 if (dateCell != null) {
@@ -72,16 +74,15 @@ public class BiomassService {
                 .withAttribute(new Attribute("fid", Type.STRING, true) {
                     @Override
                     public Object getValue(SheetContext context) {
-                        return String.format("%d-%d-%d", getPlotNo(context),
-                                Sheets.extract(context.getRow(), "F", Type.INTEGER),
-                                Sheets.extract(context.getRow(), "H", Type.INTEGER));
+                        return UUID.randomUUID().toString();
                     }
                 })
-                .withAttribute(new Attribute("plot_no", Type.INTEGER) {
+                .withAttribute(new Attribute("plot_no", Type.STRING) {
                     @Override
                     public Object getValue(SheetContext context) {
-                        int plotNo = getPlotNo(context);
-                        VibiService.testForeignKeyExists(context.getStore(), context.getRow(), PLOT_TYPE, plotNo);
+                        String plotNo = getPlotNo(context);
+                        VibiService.testForeignKeyExists(context.getStore(),
+                                context.getTransaction(), context.getRow(), PLOT_TYPE, plotNo);
                         return plotNo;
                     }
                 })
@@ -97,14 +98,12 @@ public class BiomassService {
                         .withAttributeName("module_id")
                         .withAttributeType("Integer")
                         .withAttributeId("module_id", "F")
-                        .withCreateReference(true)
                         .build())
                 .withAttribute(new ReferenceAttributeBuilder()
                         .withTableName("corner")
                         .withAttributeName("corner")
                         .withAttributeType("Integer")
                         .withAttributeId("corner", "H")
-                        .withCreateReference(true)
                         .build())
                 .withAttribute("I", "sample_id", "Integer")
                 .withAttribute("J", "area_sampled", "Numeric")
@@ -115,11 +114,10 @@ public class BiomassService {
                         .withAttributeName("actual_or_derived")
                         .withAttributeType("Text")
                         .withAttributeId("biomass_accuracy", "M")
-                        .withCreateReference(true)
                         .build())
                 .build();
 
-        sheetProcessor.process(sheet, store);
+        sheetProcessor.process(sheet, store, transaction);
     }
 
     private static Date getDateTime(SheetContext context) {
@@ -131,12 +129,12 @@ public class BiomassService {
         return (Date) dateTime;
     }
 
-    private static int getPlotNo(SheetContext context) {
+    private static String getPlotNo(SheetContext context) {
         Object plotNo = context.getValue("BIOMASS_PLOT_NO");
         if (plotNo == null) {
             throw new VibiException("Plot number cannot be found in the context of row '%d' of spreadsheet '%s'.",
                     context.getRow().getRowNum() + 1, context.getSheet().getSheetName());
         }
-        return (int) plotNo;
+        return (String) plotNo;
     }
 }

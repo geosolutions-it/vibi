@@ -6,6 +6,8 @@ import it.geosolutions.vibi.mapper.service.VibiService;
 import org.apache.log4j.Logger;
 import org.geotools.data.DataStore;
 import org.geotools.data.DataStoreFinder;
+import org.geotools.data.DefaultTransaction;
+import org.geotools.data.Transaction;
 import org.junit.Test;
 
 import java.net.URL;
@@ -15,6 +17,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsNull.notNullValue;
@@ -47,30 +50,51 @@ public class MapperTest {
                 dbParameters.get("port"), dbParameters.get("database"), dbParameters.get("schema"));
         String user = dbParameters.get("user").toString();
         String pass = dbParameters.get("passwd").toString();
-        URL resource = MapperTest.class.getClassLoader().getResource("2011_PCAP_DATA_1101-1130_mod.xls");
-        assertThat(resource, notNullValue());
-        parseWorkBook(store, resource.getFile(), dbUrl, user, pass);
-        checkData(dbUrl, user, pass);
+        URL resourceA = MapperTest.class.getClassLoader().getResource("2011_PCAP_DATA_1101-1130_mod.xls");
+        assertThat(resourceA, notNullValue());
+        parseWorkBook(store, resourceA.getFile(), dbUrl, user, pass);
+        checkDataA(dbUrl, user, pass);
         // check that parsing the same workbook is idempotent
-        parseWorkBook(store, resource.getFile(), dbUrl, user, pass);
-        checkData(dbUrl, user, pass);
+        parseWorkBook(store, resourceA.getFile(), dbUrl, user, pass);
+        checkDataA(dbUrl, user, pass);
+        // test the submission of a spreadsheet that only contains plot info
+        URL resourceB = MapperTest.class.getClassLoader().getResource("2011_PCAP_DATA_1101-1130_mod_empty.xls");
+        assertThat(resourceB, notNullValue());
+        parseWorkBook(store, resourceB.getFile(), dbUrl, user, pass);
+        checkDataB(dbUrl, user, pass);
     }
 
-    private void checkData(String dbUrl, String user, String pass) {
+    private void checkDataA(String dbUrl, String user, String pass) {
         assertThat(count("CLASS_CODE_MOD_NATURESERVE", dbUrl, user, pass), is(154));
         assertThat(count("COVER_MIDPOINT_LOOKUP", dbUrl, user, pass), is(11));
         assertThat(count("PLOT", dbUrl, user, pass), is(30));
         assertThat(count("PLOT_MODULE_HERBACEOUS_INFO", dbUrl, user, pass), is(760));
-        assertThat(count("PLOT_MODULE_HERBACEOUS", dbUrl, user, pass), is(10144));
+        assertThat(count("PLOT_MODULE_HERBACEOUS", dbUrl, user, pass), is(10480));
         assertThat(count("PLOT_MODULE_WOODY_RAW", dbUrl, user, pass), is(1865));
         assertThat(count("BIOMASS_RAW", dbUrl, user, pass), is(9));
         assertThat(count("BIOMASS_ACCURACY", dbUrl, user, pass), is(4));
-        checkPlotScores(1101, 63.0, 70.0, 66.0, 61.0, dbUrl, user, pass);
-        checkPlotScores(1106, 23.0, 3.0, 20.0, 0.0, dbUrl, user, pass);
+        assertThat(count("METRIC_CALCULATIONS", dbUrl, user, pass), is(150));
+        checkPlotScores(1101, 66.0, 63.0, 70.0, 61.0, dbUrl, user, pass);
+        checkPlotScores(1106, 20.0, 23.0, 3.0, 0.0, dbUrl, user, pass);
         checkPlotScores(1120, 0.0, 0.0, 0.0, 0.0, dbUrl, user, pass);
     }
 
-    private void checkPlotScores(int plotNo, double ecstIndex, double fIndex, double eIndex,
+    private void checkDataB(String dbUrl, String user, String pass) {
+        assertThat(count("CLASS_CODE_MOD_NATURESERVE", dbUrl, user, pass), is(154));
+        assertThat(count("COVER_MIDPOINT_LOOKUP", dbUrl, user, pass), is(11));
+        assertThat(count("PLOT", dbUrl, user, pass), is(30));
+        assertThat(count("PLOT_MODULE_HERBACEOUS_INFO", dbUrl, user, pass), is(0));
+        assertThat(count("PLOT_MODULE_HERBACEOUS", dbUrl, user, pass), is(0));
+        assertThat(count("PLOT_MODULE_WOODY_RAW", dbUrl, user, pass), is(0));
+        assertThat(count("BIOMASS_RAW", dbUrl, user, pass), is(0));
+        assertThat(count("BIOMASS_ACCURACY", dbUrl, user, pass), is(4));
+        assertThat(count("METRIC_CALCULATIONS", dbUrl, user, pass), is(0));
+        checkPlotScores(1101, 0.0, 0.0, 0.0, 0.0, dbUrl, user, pass);
+        checkPlotScores(1106, 0.0, 0.0, 0.0, 0.0, dbUrl, user, pass);
+        checkPlotScores(1120, 0.0, 0.0, 0.0, 0.0, dbUrl, user, pass);
+    }
+
+    private void checkPlotScores(int plotNo, double eIndex, double ecstIndex, double fIndex,
                                  double shIndex, String dbUrl, String user, String pass) {
         assertThat(getScore(plotNo, "vibi_ecst_index", dbUrl, user, pass), is(ecstIndex));
         assertThat(getScore(plotNo, "vibi_f_index", dbUrl, user, pass), is(fIndex));
@@ -99,10 +123,16 @@ public class MapperTest {
         return parameters;
     }
 
-    private static void parseWorkBook(DataStore store, String workBookPath, String dbUrl, String user, String pass) {
-        LOGGER.info("Start parsing workbook: " + workBookPath);
-        VibiService.submit(workBookPath, store);
-        Calculations.initJdbcDriver("org.postgresql.Driver");
+    private static void parseWorkBook(DataStore store, String workBookPath, String dbUrl, String user, String pass) throws Exception {
+        Transaction transaction = new DefaultTransaction(UUID.randomUUID().toString());
+        try {
+            LOGGER.info("Start parsing workbook: " + workBookPath);
+            VibiService.submit(workBookPath, store, transaction);
+            Calculations.initJdbcDriver("org.postgresql.Driver");
+        } finally {
+            transaction.commit();
+            transaction.close();
+        }
         Calculations.refresh(dbUrl, user, pass);
     }
 

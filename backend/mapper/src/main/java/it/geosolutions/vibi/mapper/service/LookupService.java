@@ -9,6 +9,7 @@ import it.geosolutions.vibi.mapper.utils.Type;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.geotools.data.DataStore;
+import org.geotools.data.Transaction;
 
 public class LookupService {
 
@@ -31,17 +32,17 @@ public class LookupService {
         }
     };
 
-    public static void processLookupNatureSOPEACommunitySheet(Sheet sheet, DataStore store) {
+    public static void processLookupNatureSOPEACommunitySheet(Sheet sheet, DataStore store, Transaction transaction) {
 
         SheetProcessor sheetProcessor = new SheetProcessorBuilder()
                 .withTable("class_code_mod_natureserve").withBoundsDetector(commonBoundsDetector)
                 .withAttributeId("A", "code")
                 .withAttribute("c", "community_class", "Text")
                 .build();
-        sheetProcessor.process(sheet, store);
+        sheetProcessor.process(sheet, store, transaction);
     }
 
-    public static void processLookupMidPointSheet(Sheet sheet, DataStore store) {
+    public static void processLookupMidPointSheet(Sheet sheet, DataStore store, Transaction transaction) {
 
         BoundsDetector boundsDetector = new BoundsDetector() {
             @Override
@@ -67,6 +68,6 @@ public class LookupService {
                 .withAttributeId("A", "cover_code")
                 .withAttribute("B", "midpoint", "Double")
                 .build();
-        sheetProcessor.process(sheet, store);
+        sheetProcessor.process(sheet, store, transaction);
     }
 }

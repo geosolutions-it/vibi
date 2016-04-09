@@ -9,13 +9,14 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.geotools.data.DataStore;
-import org.geotools.data.DataUtilities;
+import org.geotools.data.Transaction;
 import org.geotools.factory.Hints;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.opengis.feature.simple.SimpleFeatureType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static it.geosolutions.vibi.mapper.service.VibiService.createFeatureType;
 
@@ -26,6 +27,10 @@ public class Fds2Service {
     private static final SimpleFeatureType PLOT_MODULE_WOODY_RAW = createFeatureType("plot_module_woody_raw",
             "plot_no:Integer,sub:Double,module_id:Integer,species:String,dbh_class:String,dbh_class_index:Integer,count:String");
 
+    private static final SimpleFeatureType FDS2_SPECIES_MISC_INFO = createFeatureType("fds2_species_misc_info",
+            "species:String,plot_no:String,module_id:Integer,voucher_no:String,comment:String," +
+                    "browse_intensity:String,percent_flowering:String,percent_fruiting:String");
+
     private static final SimpleFeatureType PLOT_TYPE = createFeatureType("plot", "");
 
     private static final SimpleFeatureType MODULE_TYPE = createFeatureType("module", "");
@@ -34,18 +39,18 @@ public class Fds2Service {
 
     private static final SimpleFeatureType DBH_CLASS = createFeatureType("dbh_class", "");
 
-    public static void processFds2Sheet(Sheet sheet, DataStore store) {
+    public static void processFds2Sheet(Sheet sheet, DataStore store, Transaction transaction) {
         LOGGER.info(String.format("Start parsing spreadsheet '%s'.", sheet.getSheetName()));
         Row row = findHeaderRow(sheet);
         if (row == null) {
-            throw new VibiException("No header could be found on spreadsheet '%s'.", sheet.getSheetName());
+            return;
         }
         List<DbhClass> dbhClassList = getDbhClassList(row);
-        Integer plotNo = null;
+        String plotNo = null;
         row = sheet.getRow(row.getRowNum() + 1);
         while (row != null) {
             try {
-                plotNo = processRow(store, dbhClassList, plotNo, row);
+                plotNo = processRow(store, transaction, dbhClassList, plotNo, row);
                 row = sheet.getRow(row.getRowNum() + 1);
             } catch (VibiException exception) {
                 throw exception;
@@ -60,10 +65,15 @@ public class Fds2Service {
         for (Row row : sheet) {
             Cell cell = row.getCell(Sheets.getIndex("A"), Row.RETURN_BLANK_AS_NULL);
             if (cell != null && ((String) Type.STRING.extract(cell)).equalsIgnoreCase("site name")) {
-                return sheet.getRow(row.getRowNum());
+                Row headerRow = sheet.getRow(row.getRowNum());
+                Cell plotNoCell = sheet.getRow(headerRow.getRowNum() + 1).getCell(Sheets.getIndex("A"), Row.RETURN_BLANK_AS_NULL);
+                if (plotNoCell == null) {
+                    return null;
+                }
+                return headerRow;
             }
         }
-        return null;
+        throw new VibiException("No header could be found on spreadsheet '%s'.", sheet.getSheetName());
     }
 
     private static List<DbhClass> getDbhClassList(Row row) {
@@ -81,8 +91,9 @@ public class Fds2Service {
         return dbhClassList;
     }
 
-    private static Integer processRow(DataStore store, List<DbhClass> dbhClassList, Integer existingPlotNo, Row row) {
-        Integer plotNo = extractPlotNo(row, existingPlotNo);
+    private static String processRow(DataStore store, Transaction transaction,
+                                     List<DbhClass> dbhClassList, String existingPlotNo, Row row) {
+        String plotNo = extractPlotNo(row, existingPlotNo);
         if (plotNo == null) {
             throw new VibiException("Could not map row '%d' of sheet '%s' to site code.",
                     row.getRowNum(), row.getSheet().getSheetName());
@@ -94,25 +105,46 @@ public class Fds2Service {
         Object sub = Type.DOUBLE.extract(row.getCell(Sheets.getIndex("F"), Row.RETURN_BLANK_AS_NULL));
         Object module = Type.INTEGER.extract(row.getCell(Sheets.getIndex("G"), Row.RETURN_BLANK_AS_NULL));
         Object species = Type.STRING.extract(speciesCell);
+        createAndStoreMiscFeature(store, transaction, row, (String) species, plotNo, (int) module,
+                (String) Sheets.extract(row, "I", Type.STRING),
+                (String) Sheets.extract(row, "J", Type.STRING),
+                (String) Sheets.extract(row, "K", Type.STRING));
         for (DbhClass dbhClass : dbhClassList) {
             Cell countCell = row.getCell(dbhClass.columnIndex, Row.RETURN_BLANK_AS_NULL);
             if (countCell != null) {
                 Object count = Type.STRING.extract(countCell);
-                processDbhClass(store, row, dbhClass.dbhClass, dbhClass.dbhClassIndex, plotNo, sub, module, species, count);
+                processDbhClass(store, transaction, row, dbhClass.dbhClass, dbhClass.dbhClassIndex, plotNo, sub, module, species, count);
             }
         }
         return plotNo;
     }
 
-    private static void processDbhClass(DataStore store, Row row, Object dbhClass, Object dbhClassIndex, Object plotNo,
+    private static void createAndStoreMiscFeature(DataStore store, Transaction transaction, Row row, String species, String plotNo, int module,
+                                                  String voucherNo, String comment, String browseIntensity) {
+        species = VibiService.testSpeciesForeignKey(store, transaction, row, SPECIES_TYPE, species);
+        VibiService.testForeignKeyExists(store, transaction, row, PLOT_TYPE, plotNo);
+        VibiService.testForeignKeyExists(store, transaction, row, MODULE_TYPE, module);
+        String id = UUID.randomUUID().toString();
+        SimpleFeatureBuilder featureBuilder = new SimpleFeatureBuilder(FDS2_SPECIES_MISC_INFO);
+        featureBuilder.featureUserData(Hints.USE_PROVIDED_FID, Boolean.TRUE);
+        featureBuilder.set("species", species);
+        featureBuilder.set("plot_no", plotNo);
+        featureBuilder.set("module_id", module);
+        featureBuilder.set("voucher_no", voucherNo);
+        featureBuilder.set("comment", comment);
+        featureBuilder.set("browse_intensity", browseIntensity);
+        Store.persistFeature(store, transaction, featureBuilder.buildFeature(id));
+    }
+
+    private static void processDbhClass(DataStore store, Transaction transaction, Row row, Object dbhClass, Object dbhClassIndex, Object plotNo,
                                         Object sub, Object module, Object species, Object count) {
-        VibiService.testForeignKeyExists(store, row, PLOT_TYPE, plotNo);
-        species = VibiService.testSpeciesForeignKey(store, row, SPECIES_TYPE, (String) species);
-        VibiService.createForeignKeyIfNeed(store, MODULE_TYPE, module);
-        VibiService.createForeignKeyIfNeed(store, DBH_CLASS, dbhClass);
+        VibiService.testForeignKeyExists(store, transaction, row, PLOT_TYPE, plotNo);
+        species = VibiService.testSpeciesForeignKey(store, transaction, row, SPECIES_TYPE, (String) species);
+        VibiService.testForeignKeyExists(store, transaction, row, MODULE_TYPE, module);
+        VibiService.testForeignKeyExists(store, transaction, row, DBH_CLASS, dbhClass);
         SimpleFeatureBuilder featureBuilder = new SimpleFeatureBuilder(PLOT_MODULE_WOODY_RAW);
         featureBuilder.featureUserData(Hints.USE_PROVIDED_FID, Boolean.TRUE);
-        String id = String.format("%s-%s-%s-%s", plotNo, module, species, dbhClass);
+        String id = UUID.randomUUID().toString();
         featureBuilder.set("plot_no", plotNo);
         featureBuilder.set("sub", sub);
         featureBuilder.set("module_id", module);
@@ -120,13 +152,13 @@ public class Fds2Service {
         featureBuilder.set("dbh_class", dbhClass);
         featureBuilder.set("dbh_class_index", dbhClassIndex);
         featureBuilder.set("count", count);
-        Store.persistFeature(store, featureBuilder.buildFeature(id));
+        Store.persistFeature(store, transaction, featureBuilder.buildFeature(id));
     }
 
-    private static Integer extractPlotNo(Row row, Integer plotNo) {
+    private static String extractPlotNo(Row row, String plotNo) {
         Cell cell = row.getCell(Sheets.getIndex("A"), Row.RETURN_BLANK_AS_NULL);
         if (cell != null) {
-            return (Integer) Type.INTEGER.extract(cell);
+            return VibiService.extractPlotNo(cell);
         }
         return plotNo;
     }
