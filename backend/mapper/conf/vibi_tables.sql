@@ -394,12 +394,12 @@ CREATE TABLE rule (
 );
 
 INSERT INTO rule (id, allow, priority, _user, _group, service, operation, entity, format, size) VALUES
-  (0, true,  0, 'admin', '*',         '*',        '*',      '*', '*', -1),
-  (1, false, 1, '*',     'everyone',  '*',        '*',      '*', '*', -1),
-  (2, false, 2, '*',     'uploaders', '*',        '*',      '*', '*', -1),
-  (3, false, 3, '*',     'dataread',  '*',        '*',      '*', '*', -1),
-  (4, true,  4, '*',     'everyone',  'crud',     'read',   '*', '*', -1),
-  (5, true,  5, '*',     'uploaders', 'download', '*',      '*', '*', -1),
-  (6, true,  6, '*',     'uploaders', 'crud',     '*',      '*', '*', -1),
-  (7, true,  7, '*',     'dataread',  'dowload',  'export', '*', '*', -1),
-  (8, true,  8, '*',     'uploaders', 'upload',   '*',      '*', '*', -1);
+  (0, true,  0, 'admin', '*',         '*',        '*',      '*',                          '*', -1),
+  (1, false, 1, '*',     '*',         '*',        '*',      'AltMetrics',                 '*', -1),
+  (2, false, 2, '*',     '*',         '*',        '*',      'AltHerbaceousRelativeCover', '*', -1),
+  (3, false, 3, '*',     '*',         '*',        '*',      'AltWoodyImportanceValue',    '*', -1),
+  (4, true,  4, '*',     'everyone',  'crud',     'read',   '*',                          '*', -1),
+  (5, true,  5, '*',     'uploaders', 'download', '*',      '*',                          '*', -1),
+  (6, true,  6, '*',     'uploaders', 'crud',     '*',      '*',                          '*', -1),
+  (7, true,  7, '*',     'dataread',  'dowload',  'export', '*',                          '*', -1),
+  (8, true,  8, '*',     'uploaders', 'upload',   '*',      '*',                          '*', -1);
