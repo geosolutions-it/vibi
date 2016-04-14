@@ -138,12 +138,12 @@
                             "name": "plot_name"
                         },
                         {
-                            "header": "Plot Label",
-                            "mapping": "plot_label",
-                            "dataIndex": "plot_label",
+                            "header": "Project Label",
+                            "mapping": "Project_Label",
+                            "dataIndex": "Project_Label",
                             "sortable": true,
                             "filterable": true,
-                            "name": "plot_label"
+                            "name": "Project_Label"
                         },
                         {
                             "header": "Monitoring Event",
@@ -192,38 +192,6 @@
                             "sortable": true,
                             "filterable": true,
                             "name": "sampling_quality"
-                        },
-                        {
-                            "header": "Tax Accuracy Vascular",
-                            "mapping": "tax_accuracy_vascular",
-                            "dataIndex": "tax_accuracy_vascular",
-                            "sortable": true,
-                            "filterable": true,
-                            "name": "tax_accuracy_vascular"
-                        },
-                        {
-                            "header": "Tax Accuracy Bryophytes",
-                            "mapping": "tax_accuracy_bryophytes",
-                            "dataIndex": "tax_accuracy_bryophytes",
-                            "sortable": true,
-                            "filterable": true,
-                            "name": "tax_accuracy_bryophytes"
-                        },
-                        {
-                            "header": "Tax Accuracy Lichens",
-                            "mapping": "tax_accuracy_lichens",
-                            "dataIndex": "tax_accuracy_lichens",
-                            "sortable": true,
-                            "filterable": true,
-                            "name": "tax_accuracy_lichens"
-                        },
-                        {
-                            "header": "Authority",
-                            "mapping": "authority",
-                            "dataIndex": "authority",
-                            "sortable": true,
-                            "filterable": true,
-                            "name": "authority"
                         },
                         {
                             "header": "State",
@@ -298,6 +266,14 @@
                             "name": "longitude"
                         },
                         {
+                            "header": "Plot Placement",
+                            "mapping": "plot_placement",
+                            "dataIndex": "plot_placement",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "plot_placement"
+                        },
+                        {
                             "header": "Total Modules",
                             "mapping": "total_modules",
                             "dataIndex": "total_modules",
@@ -322,6 +298,14 @@
                             "name": "plot_configuration"
                         },
                         {
+                            "header": "Plot Configuration Other",
+                            "mapping": "plot_configuration_other",
+                            "dataIndex": "plot_configuration_other",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "plot_configuration_other"
+                        },
+                        {
                             "header": "Plot Size For Cover Data Area Ha",
                             "mapping": "plot_size_for_cover_data_area_ha",
                             "dataIndex": "plot_size_for_cover_data_area_ha",
@@ -338,12 +322,12 @@
                             "name": "estimate_of_per_open_water_entire_site"
                         },
                         {
-                            "header": "Estimate Of Per Unvegetated Ow Entire Site",
-                            "mapping": "estimate_of_perunvegetated_ow_entire_site",
-                            "dataIndex": "estimate_of_perunvegetated_ow_entire_site",
+                            "header": "Estimate Of Per Unvegetated OW Entire Site",
+                            "mapping": "Estimate_of_per_unvegetated_ow_entire_site",
+                            "dataIndex": "Estimate_of_per_unvegetated_ow_entire_site",
                             "sortable": true,
                             "filterable": true,
-                            "name": "estimate_of_perunvegetated_ow_entire_site"
+                            "name": "Estimate_of_per_unvegetated_ow_entire_site"
                         },
                         {
                             "header": "Estimate Per Invasives Entire Site",
@@ -362,22 +346,6 @@
                             "name": "centerline"
                         },
                         {
-                            "header": "Oneo Plant",
-                            "mapping": "oneo_plant",
-                            "dataIndex": "oneo_plant",
-                            "sortable": true,
-                            "filterable": true,
-                            "name": "oneo_plant"
-                        },
-                        {
-                            "header": "Oneo Text",
-                            "mapping": "oneo_text",
-                            "dataIndex": "oneo_text",
-                            "sortable": true,
-                            "filterable": true,
-                            "name": "oneo_text"
-                        },
-                        {
                             "header": "Veg Class",
                             "mapping": "vegclass",
                             "dataIndex": "vegclass",
@@ -392,14 +360,6 @@
                             "sortable": true,
                             "filterable": true,
                             "name": "vegsubclass"
-                        },
-                        {
-                            "header": "Twoo Plant",
-                            "mapping": "twoo_plant",
-                            "dataIndex": "twoo_plant",
-                            "sortable": true,
-                            "filterable": true,
-                            "name": "twoo_plant"
                         },
                         {
                             "header": "Hgm Class",
@@ -442,12 +402,84 @@
                             "name": "oneo_class_code_mod_natureServe"
                         },
                         {
-                            "header": "Veg Class Wetlands Only",
-                            "mapping": "veg_class_wetlands_only",
-                            "dataIndex": "veg_class_wetlands_only",
+                            "header": "Leap Land Cover Classification",
+                            "mapping": "leap_landcover_classification",
+                            "dataIndex": "leap_landcover_classification",
                             "sortable": true,
                             "filterable": true,
-                            "name": "veg_class_wetlands_only"
+                            "name": "leap_landcover_classification"
+                        },
+                        {
+                            "header": "Cowardin Classification",
+                            "mapping": "cowardin_classification",
+                            "dataIndex": "cowardin_classification",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "cowardin_classification"
+                        },
+                        {
+                            "header": "Cowardin Water Regime",
+                            "mapping": "cowardin_water_regime",
+                            "dataIndex": "cowardin_water_regime",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "cowardin_water_regime"
+                        },
+                        {
+                            "header": "Cowardin Special Modifier",
+                            "mapping": "cowardin_special_modifier",
+                            "dataIndex": "cowardin_special_modifier",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "cowardin_special_modifier"
+                        },
+                        {
+                            "header": "cowardin Special Modifier Other",
+                            "mapping": "cowardin_special_modifier_other",
+                            "dataIndex": "cowardin_special_modifier_other",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "cowardin_special_modifier_other"
+                        },
+                        {
+                            "header": "Landscape Position",
+                            "mapping": "landscape_position",
+                            "dataIndex": "landscape_position",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "landscape_position"
+                        },
+                        {
+                            "header": "Inland Landform",
+                            "mapping": "inland_landform",
+                            "dataIndex": "inland_landform",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "inland_landform"
+                        },
+                        {
+                            "header": "Water Flow Path",
+                            "mapping": "water_flow_path",
+                            "dataIndex": "water_flow_path",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "water_flow_path"
+                        },
+                        {
+                            "header": "Llww Modifiers",
+                            "mapping": "llww_modifiers",
+                            "dataIndex": "llww_modifiers",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "llww_modifiers"
+                        },
+                        {
+                            "header": "Llww Modifiers Other",
+                            "mapping": "llww_modifiers_other",
+                            "dataIndex": "llww_modifiers_other",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "llww_modifiers_other"
                         },
                         {
                             "header": "Landform Type",
@@ -456,6 +488,14 @@
                             "sortable": true,
                             "filterable": true,
                             "name": "landform_type"
+                        },
+                        {
+                            "header": "Landform Type Other",
+                            "mapping": "landform_type_other",
+                            "dataIndex": "landform_type_other",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "landform_type_other"
                         },
                         {
                             "header": "Homogeneity",
@@ -636,8 +676,8 @@
                             "name": "plot_name"
                         },
                         {
-                            "mapping": "plotLabel",
-                            "name": "plot_label"
+                            "mapping": "projectLabel",
+                            "name": "Project_Label"
                         },
                         {
                             "mapping": "monitoringEvent",
@@ -664,22 +704,6 @@
                         {
                             "mapping": "samplingQuality",
                             "name": "sampling_quality"
-                        },
-                        {
-                            "mapping": "taxAccuracyVascular",
-                            "name": "tax_accuracy_vascular"
-                        },
-                        {
-                            "mapping": "taxAccuracyBryophytes",
-                            "name": "tax_accuracy_bryophytes"
-                        },
-                        {
-                            "mapping": "taxAccuracyLichens",
-                            "name": "tax_accuracy_lichens"
-                        },
-                        {
-                            "mapping": "authority",
-                            "name": "authority"
                         },
                         {
                             "mapping": "state",
@@ -720,6 +744,10 @@
                             "name": "longitude"
                         },
                         {
+                            "mapping": "plotPlacement",
+                            "name": "plot_placement"
+                        },
+                        {
                             "mapping": "totalModule",
                             "name": "total_modules"
                         },
@@ -737,14 +765,17 @@
                             "name": "plot_size_for_cover_data_area_ha"
                         },
                         {
+                            "mapping": "plotConfigurationOther",
+                            "name": "plot_configuration_other"
+                        },
+                        {
                             "mapping": "estimateOfPerOpenWaterEntireSite",
                             "name": "estimate_of_per_open_water_entire_site",
                             "type": "string"
                         },
                         {
-                            "mapping": "estimateOfPerunvegetatedOwEntireSite",
-                            "name": "estimate_of_perunvegetated_ow_entire_site",
-                            "type": "string"
+                            "mapping": "EstimateOfPerUnvegetatedOwEntireSite",
+                            "name": "Estimate_of_per_unvegetated_ow_entire_site"
                         },
                         {
                             "mapping": "estimatePerInvasivesEntireSite",
@@ -756,14 +787,6 @@
                             "name": "centerline"
                         },
                         {
-                            "mapping": "oneoPlant",
-                            "name": "oneo_plant"
-                        },
-                        {
-                            "mapping": "oneoText",
-                            "name": "oneo_text"
-                        },
-                        {
                             "mapping": "vegclass",
                             "name": "vegclass",
                             "type": "string"
@@ -772,10 +795,6 @@
                             "mapping": "vegsubclass",
                             "name": "vegsubclass",
                             "type": "string"
-                        },
-                        {
-                            "mapping": "twooPlant",
-                            "name": "twoo_plant"
                         },
                         {
                             "mapping": "hgmclass",
@@ -799,13 +818,52 @@
                             "name": "oneo_class_code_mod_natureServe"
                         },
                         {
-                            "mapping": "vegClassWetlandsOnly",
-                            "name": "veg_class_wetlands_only",
-                            "type": "string"
+                            "mapping": "leapLandcoverClassification",
+                            "name": "leap_landcover_classification"
+                        },
+                        {
+                            "mapping": "cowardinClassification",
+                            "name": "cowardin_classification"
+                        },
+                        {
+                            "mapping": "cowardinWaterRegime",
+                            "name": "cowardin_water_regime"
+                        },
+                        {
+                            "mapping": "cowardinSpecialModifier",
+                            "name": "cowardin_special_modifier"
+                        },
+                        {
+                            "mapping": "cowardinSpecialModifierOther",
+                            "name": "cowardin_special_modifier_other"
+                        },
+                        {
+                            "mapping": "landscapePosition",
+                            "name": "landscape_position"
+                        },
+                        {
+                            "mapping": "inlandLandform",
+                            "name": "inland_landform"
+                        },
+                        {
+                            "mapping": "waterFlowPath",
+                            "name": "water_flow_path"
+                        },
+                        {
+                            "mapping": "llwwModifiers",
+                            "name": "llww_modifiers"
+                        },
+                        {
+                            "mapping": "llwwModifiersOther",
+                            "name": "llww_modifiers_other"
                         },
                         {
                             "mapping": "landformType",
                             "name": "landform_type"
+                        },
+                        {
+                            "mapping": "landformTypeOther",
+                            "name": "landform_type_other"
                         },
                         {
                             "mapping": "homogeneity",
@@ -1921,8 +1979,8 @@
                         },
                         {
                             "header": "Module Id",
-                            "mapping": "Module Id",
-                            "dataIndex": "Module Id",
+                            "mapping": "module_id",
+                            "dataIndex": "module_id",
                             "sortable": true,
                             "filterable": true,
                             "name": "module_id"
@@ -2097,8 +2155,8 @@
                         },
                         {
                             "header": "Module Id",
-                            "mapping": "Module Id",
-                            "dataIndex": "Module Id",
+                            "mapping": "module_id",
+                            "dataIndex": "module_id",
                             "sortable": true,
                             "filterable": true,
                             "name": "module_id"
@@ -2338,6 +2396,318 @@
                     "autoExpandColumn": false,
                     "minColumnWidth": 80,
                     "autoload": false,
+                    "basePath": "mvc/vibi/leapLandcoverClassification/",
+                    "canCreate": false,
+                    "canDelete": false,
+                    "canEdit": false,
+                    "canSearch": true,
+                    "columns": [
+                        {
+                            "header": "Code",
+                            "mapping": "code",
+                            "dataIndex": "code",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "code"
+                        },
+                        {
+                            "header": "Description",
+                            "mapping": "description",
+                            "dataIndex": "description",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "description"
+                        }
+                    ],
+                    "createTitle": "Create a new Leap Landcover Classification",
+                    "displayField": "label",
+                    "editHeight": 270,
+                    "editTitle": "Edit Leap Landcover Classification",
+                    "fields": [
+                        {
+                            "mapping": "code",
+                            "name": "code"
+                        },
+                        {
+                            "mapping": "description",
+                            "name": "description"
+                        }
+                    ],
+                    "iconCls": "vibi_leap_land_cover_calssification_ic",
+                    "id": "Leap Landcover Classification",
+                    "idProperty": "id",
+                    "totalProperty" : "totalCount",
+                    "name": "Leap Landcover Classification",
+                    "pluralName": "Leap Landcover Classifications",
+                    "restful": true,
+                    "root": "data",
+                    "paramNames" : {
+                        "start" : "firstResult",
+                        "limit" : "maxResults",
+                        "query" : "keyword"
+                    }
+                },
+                {
+                    "api": {},
+                    "autoExpandColumn": false,
+                    "minColumnWidth": 80,
+                    "autoload": false,
+                    "basePath": "mvc/vibi/fds1SpeciesMiscInfo/",
+                    "canCreate": false,
+                    "canDelete": false,
+                    "canEdit": false,
+                    "canSearch": true,
+                    "columns": [
+                        {
+                            "header": "Species",
+                            "mapping": "species",
+                            "dataIndex": "species",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "species"
+                        },
+                        {
+                            "header": "Plot No",
+                            "mapping": "plot_no",
+                            "dataIndex": "plot_no",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "plot_no"
+                        },
+                        {
+                            "header": "Module Id",
+                            "mapping": "module_id",
+                            "dataIndex": "module_id",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "module_id"
+                        },
+                        {
+                            "header": "Voucher No",
+                            "mapping": "voucher_no",
+                            "dataIndex": "voucher_no",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "voucher_no"
+                        },
+                        {
+                            "header": "Comment",
+                            "mapping": "comment",
+                            "dataIndex": "comment",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "comment"
+                        },
+                        {
+                            "header": "Browse Intensity",
+                            "mapping": "browse_intensity",
+                            "dataIndex": "browse_intensity",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "browse_intensity"
+                        },
+                        {
+                            "header": "Percent Flowering",
+                            "mapping": "percent_flowering",
+                            "dataIndex": "percent_flowering",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "percent_flowering"
+                        },
+                        {
+                            "header": "Percent Fruiting",
+                            "mapping": "percent_fruiting",
+                            "dataIndex": "percent_fruiting",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "percent_fruiting"
+                        }
+                    ],
+                    "createTitle": "Fds1 Species Misc Info",
+                    "displayField": "label",
+                    "editHeight": 270,
+                    "editTitle": "Edit Fds1 Species Misc Info",
+                    "fields": [
+                        {
+                            "mapping": "species",
+                            "name": "species"
+                        },
+                        {
+                            "mapping": "plotNo",
+                            "name": "plot_no"
+                        },
+                        {
+                            "mapping": "moduleId",
+                            "name": "module_id"
+                        },
+                        {
+                            "mapping": "voucherNo",
+                            "name": "voucher_no"
+                        },
+                        {
+                            "mapping": "comment",
+                            "name": "comment"
+                        },
+                        {
+                            "mapping": "browseIntensity",
+                            "name": "browse_intensity"
+                        },
+                        {
+                            "mapping": "percentFlowering",
+                            "name": "percent_flowering"
+                        },
+                        {
+                            "mapping": "percentFruiting",
+                            "name": "percent_fruiting"
+                        }
+                    ],
+                    "iconCls": "vibi_fds1_species_misc_info_ic",
+                    "id": "Fds1 Species Misc Info",
+                    "idProperty": "id",
+                    "totalProperty" : "totalCount",
+                    "name": "Fds1 Species Misc Info",
+                    "pluralName": "Fds1 Species Misc Info",
+                    "restful": true,
+                    "root": "data",
+                    "paramNames" : {
+                        "start" : "firstResult",
+                        "limit" : "maxResults",
+                        "query" : "keyword"
+                    }
+                },
+                {
+                    "api": {},
+                    "autoExpandColumn": false,
+                    "minColumnWidth": 80,
+                    "autoload": false,
+                    "basePath": "mvc/vibi/fds2SpeciesMiscInfo/",
+                    "canCreate": false,
+                    "canDelete": false,
+                    "canEdit": false,
+                    "canSearch": true,
+                    "columns": [
+                        {
+                            "header": "Species",
+                            "mapping": "species",
+                            "dataIndex": "species",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "species"
+                        },
+                        {
+                            "header": "Plot No",
+                            "mapping": "plot_no",
+                            "dataIndex": "plot_no",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "plot_no"
+                        },
+                        {
+                            "header": "Module Id",
+                            "mapping": "module_id",
+                            "dataIndex": "module_id",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "module_id"
+                        },
+                        {
+                            "header": "Voucher No",
+                            "mapping": "voucher_no",
+                            "dataIndex": "voucher_no",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "voucher_no"
+                        },
+                        {
+                            "header": "Comment",
+                            "mapping": "comment",
+                            "dataIndex": "comment",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "comment"
+                        },
+                        {
+                            "header": "Browse Intensity",
+                            "mapping": "browse_intensity",
+                            "dataIndex": "browse_intensity",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "browse_intensity"
+                        },
+                        {
+                            "header": "Percent Flowering",
+                            "mapping": "percent_flowering",
+                            "dataIndex": "percent_flowering",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "percent_flowering"
+                        },
+                        {
+                            "header": "Percent Fruiting",
+                            "mapping": "percent_fruiting",
+                            "dataIndex": "percent_fruiting",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "percent_fruiting"
+                        }
+                    ],
+                    "createTitle": "Fds2 Species Misc Info",
+                    "displayField": "label",
+                    "editHeight": 270,
+                    "editTitle": "Edit Fds2 Species Misc Info",
+                    "fields": [
+                        {
+                            "mapping": "species",
+                            "name": "species"
+                        },
+                        {
+                            "mapping": "plotNo",
+                            "name": "plot_no"
+                        },
+                        {
+                            "mapping": "moduleId",
+                            "name": "module_id"
+                        },
+                        {
+                            "mapping": "voucherNo",
+                            "name": "voucher_no"
+                        },
+                        {
+                            "mapping": "comment",
+                            "name": "comment"
+                        },
+                        {
+                            "mapping": "browseIntensity",
+                            "name": "browse_intensity"
+                        },
+                        {
+                            "mapping": "percentFlowering",
+                            "name": "percent_flowering"
+                        },
+                        {
+                            "mapping": "percentFruiting",
+                            "name": "percent_fruiting"
+                        }
+                    ],
+                    "iconCls": "vibi_fds2_species_misc_info_ic",
+                    "id": "Fds2 Species Misc Info",
+                    "idProperty": "id",
+                    "totalProperty" : "totalCount",
+                    "name": "Fds2 Species Misc Info",
+                    "pluralName": "Fds2 Species Misc Info",
+                    "restful": true,
+                    "root": "data",
+                    "paramNames" : {
+                        "start" : "firstResult",
+                        "limit" : "maxResults",
+                        "query" : "keyword"
+                    }
+                },
+                {
+                    "api": {},
+                    "autoExpandColumn": false,
+                    "minColumnWidth": 80,
+                    "autoload": false,
                     "basePath": "mvc/vibi/metrics/",
                     "canCreate": false,
                     "canDelete": false,
@@ -2492,19 +2862,19 @@
                             "filterable": true,
                             "name" : "biomass_metric_value"
                         }, {
-                            "header" : "Stems HA Wetland Trees",
-                            "mapping" : "stems_ha_wetland_trees",
-                            "dataIndex" : "stems_ha_wetland_trees",
+                            "header" : "Steams HA Wetland Trees",
+                            "mapping" : "steams_ha_wetland_trees",
+                            "dataIndex" : "steams_ha_wetland_trees",
                             "sortable": true,
                             "filterable": true,
-                            "name" : "stems_ha_wetland_trees"
+                            "name" : "steams_ha_wetland_trees"
                         }, {
-                            "header" : "Stems HA Wetland Shrubs",
-                            "mapping" : "stems_ha_wetland_shrubs",
-                            "dataIndex" : "stems_ha_wetland_shrubs",
+                            "header" : "Steams HA Wetland Shrubs",
+                            "mapping" : "steams_ha_wetland_shrubs",
+                            "dataIndex" : "steams_ha_wetland_shrubs",
                             "sortable": true,
                             "filterable": true,
-                            "name" : "stems_ha_wetland_shrubs"
+                            "name" : "steams_ha_wetland_shrubs"
                         },
                         {
                             "header": "Per Unvegetated",
@@ -2664,11 +3034,11 @@
                         },
                         {
                             "mapping" : "steamsHaWetlandTrees",
-                            "name" : "stems_ha_wetland_trees"
+                            "name" : "steams_ha_wetland_trees"
                         },
                         {
                             "mapping" : "steamsHaWetlandShrubs",
-                            "name" : "stems_ha_wetland_shrubs"
+                            "name" : "steams_ha_wetland_shrubs"
                         },
                         {
                           "mapping": "perUnvegetated",
@@ -2705,6 +3075,546 @@
                     "name": "Metrics",
                     "totalProperty" : "totalCount",
                     "pluralName": "Metrics",
+                    "restful": true,
+                    "root": "data",
+                    "paramNames" : {
+                        "start" : "firstResult",
+                        "limit" : "maxResults",
+                        "query" : "keyword"
+                    }
+                },
+                {
+                    "api": {},
+                    "autoExpandColumn": false,
+                    "minColumnWidth": 80,
+                    "autoload": false,
+                    "basePath": "mvc/vibi/altHerbaceousRelativeCover/",
+                    "canCreate": false,
+                    "canDelete": false,
+                    "canEdit": false,
+                    "canSearch": true,
+                    "columns": [
+                        {
+                            "header": "Plot No",
+                            "mapping": "plot_no",
+                            "dataIndex": "plot_no",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "plot_no"
+                        },
+                        {
+                            "header": "Species",
+                            "mapping": "species",
+                            "dataIndex": "species",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "species"
+                        },
+                        {
+                            "header": "Relative Cover",
+                            "mapping": "relative_cover",
+                            "dataIndex": "relative_cover",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "relative_cover"
+                        }
+                    ],
+                    "createTitle": "Create a new Alt Herbaceous Relative Cover",
+                    "displayField": "label",
+                    "editHeight": 270,
+                    "editTitle": "Edit Alt Herbaceous Relative Cover",
+                    "fields": [
+                        {
+                            "mapping": "plotNo",
+                            "name": "plot_no"
+                        },
+                        {
+                            "mapping": "species",
+                            "name": "species"
+                        },
+                        {
+                            "mapping": "relativeCover",
+                            "name": "relative_cover"
+                        }
+                    ],
+                    "iconCls": "vibi_herbaceous_relative_cover_ic",
+                    "id": "Alt Herbaceous Relative Cover",
+                    "idProperty": "id",
+                    "totalProperty" : "totalCount",
+                    "name": "Alt Herbaceous Relative Cover",
+                    "pluralName": "Alt Herbaceous Relative Cover",
+                    "restful": true,
+                    "root": "data",
+                    "paramNames" : {
+                        "start" : "firstResult",
+                        "limit" : "maxResults",
+                        "query" : "keyword"
+                    }
+                },
+                {
+                    "api": {},
+                    "autoExpandColumn": false,
+                    "minColumnWidth": 80,
+                    "autoload": false,
+                    "basePath": "mvc/vibi/altWoodyImportanceValue/",
+                    "canCreate": false,
+                    "canDelete": false,
+                    "canEdit": false,
+                    "canSearch": true,
+                    "columns": [
+                        {
+                            "header": "Plot No",
+                            "mapping": "plot_no",
+                            "dataIndex": "plot_no",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "plot_no"
+                        },
+                        {
+                            "header": "Species",
+                            "mapping": "species",
+                            "dataIndex": "species",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "species"
+                        },
+                        {
+                            "header": "Subcanopy IV Partial",
+                            "mapping": "subcanopy_iv_partial",
+                            "dataIndex": "subcanopy_iv_partial",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "subcanopy_iv_partial"
+                        },
+                        {
+                            "header": "Subcanopy IV Shade",
+                            "mapping": "subcanopy_iv_shade",
+                            "dataIndex": "subcanopy_iv_shade",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "subcanopy_iv_shade"
+                        },
+                        {
+                            "header": "Canopy IV",
+                            "mapping": "canopy_iv",
+                            "dataIndex": "canopy_iv",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "canopy_iv"
+                        }
+                    ],
+                    "createTitle": "Create a new Alt Woody Importance Value",
+                    "displayField": "label",
+                    "editHeight": 270,
+                    "editTitle": "Edit Alt Woody Importance Value",
+                    "fields": [
+                        {
+                            "mapping": "plotNo",
+                            "name": "plot_no"
+                        },
+                        {
+                            "mapping": "species",
+                            "name": "species"
+                        },
+                        {
+                            "mapping": "subcanopyIvPartial",
+                            "name": "subcanopy_iv_partial"
+                        },
+                        {
+                            "mapping": "subcanopyIvShade",
+                            "name": "subcanopy_iv_shade"
+                        },
+                        {
+                            "mapping": "canopyIv",
+                            "name": "canopy_iv"
+                        }
+                    ],
+                    "iconCls": "vibi_woody_importance_value_ic",
+                    "id": "Alt Woody Importance Value",
+                    "idProperty": "id",
+                    "totalProperty" : "totalCount",
+                    "name": "Alt Woody Importance Value",
+                    "pluralName": "Alt Woody Importance Values",
+                    "restful": true,
+                    "root": "data",
+                    "paramNames" : {
+                        "start" : "firstResult",
+                        "limit" : "maxResults",
+                        "query" : "keyword"
+                    }
+                },
+                {
+                    "api": {},
+                    "autoExpandColumn": false,
+                    "minColumnWidth": 80,
+                    "autoload": false,
+                    "basePath": "mvc/vibi/altMetrics/",
+                    "canCreate": false,
+                    "canDelete": false,
+                    "canEdit": false,
+                    "canSearch": true,
+                    "columns": [
+                        {
+                            "header" : "Plot No",
+                            "mapping" : "plot_no",
+                            "dataIndex" : "plot_no",
+                            "sortable": true,
+                            "filterable": true,
+                            "name" : "plot_no"
+                        }, {
+                            "header" : "Vibi Type",
+                            "mapping" : "vibi_type",
+                            "dataIndex" : "vibi_type",
+                            "sortable": true,
+                            "filterable": true,
+                            "name" : "vibi_type"
+                        }, {
+                            "header" : "Vibi Score",
+                            "mapping" : "score",
+                            "dataIndex" : "score",
+                            "sortable": true,
+                            "filterable": true,
+                            "name" : "score"
+                        }, {
+                            "header" : "Carex",
+                            "mapping" : "carex_metric_value",
+                            "dataIndex" : "carex_metric_value",
+                            "sortable": true,
+                            "filterable": true,
+                            "name" : "carex_metric_value"
+                        }, {
+                            "header" : "Cyperaceae",
+                            "mapping" : "cyperaceae_metric_value",
+                            "dataIndex" : "cyperaceae_metric_value",
+                            "sortable": true,
+                            "filterable": true,
+                            "name" : "cyperaceae_metric_value"
+                        }, {
+                            "header" : "Dicot",
+                            "mapping" : "dicot_metric_value",
+                            "dataIndex" : "dicot_metric_value",
+                            "sortable": true,
+                            "filterable": true,
+                            "name" : "dicot_metric_value"
+                        }, {
+                            "header" : "Shade",
+                            "mapping" : "shade_metric_value",
+                            "dataIndex" : "shade_metric_value",
+                            "sortable": true,
+                            "filterable": true,
+                            "name" : "shade_metric_value"
+                        }, {
+                            "header" : "Shrub",
+                            "mapping" : "shrub_metric_value",
+                            "dataIndex" : "shrub_metric_value",
+                            "sortable": true,
+                            "filterable": true,
+                            "name" : "shrub_metric_value"
+                        }, {
+                            "header" : "Hydrophyte",
+                            "mapping" : "hydrophyte_metric_value",
+                            "dataIndex" : "hydrophyte_metric_value",
+                            "sortable": true,
+                            "filterable": true,
+                            "name" : "hydrophyte_metric_value"
+                        }, {
+                            "header" : "SVP",
+                            "mapping" : "svp_metric_value",
+                            "dataIndex" : "svp_metric_value",
+                            "sortable": true,
+                            "filterable": true,
+                            "name" : "svp_metric_value"
+                        }, {
+                            "header" : "Ap Ratio",
+                            "mapping" : "ap_ratio_metric_value",
+                            "dataIndex" : "ap_ratio_metric_value",
+                            "sortable": true,
+                            "filterable": true,
+                            "name" : "ap_ratio_metric_value"
+                        }, {
+                            "header" : "FQAI",
+                            "mapping" : "fqai_metric_value",
+                            "dataIndex" : "fqai_metric_value",
+                            "sortable": true,
+                            "filterable": true,
+                            "name" : "fqai_metric_value"
+                        }, {
+                            "header" : "Bryophyte",
+                            "mapping" : "bryophyte_metric_value",
+                            "dataIndex" : "bryophyte_metric_value",
+                            "sortable": true,
+                            "filterable": true,
+                            "name" : "bryophyte_metric_value"
+                        }, {
+                            "header" : "Per Hydrophyte",
+                            "mapping" : "per_hydrophyte_metric_value",
+                            "dataIndex" : "per_hydrophyte_metric_value",
+                            "sortable": true,
+                            "filterable": true,
+                            "name" : "per_hydrophyte_metric_value"
+                        }, {
+                            "header" : "Sensitive",
+                            "mapping" : "sensitive_metric_value",
+                            "dataIndex" : "sensitive_metric_value",
+                            "sortable": true,
+                            "filterable": true,
+                            "name" : "sensitive_metric_value"
+                        }, {
+                            "header" : "Tolerant",
+                            "mapping" : "tolerant_metric_value",
+                            "dataIndex" : "tolerant_metric_value",
+                            "sortable": true,
+                            "filterable": true,
+                            "name" : "tolerant_metric_value"
+                        }, {
+                            "header" : "Invasive Graminoids",
+                            "mapping" : "invasive_graminoids_metric_value",
+                            "dataIndex" : "invasive_graminoids_metric_value",
+                            "sortable": true,
+                            "filterable": true,
+                            "name" : "invasive_graminoids_metric_value"
+                        }, {
+                            "header" : "Small Tree",
+                            "mapping" : "small_tree_metric_value",
+                            "dataIndex" : "small_tree_metric_value",
+                            "sortable": true,
+                            "filterable": true,
+                            "name" : "small_tree_metric_value"
+                        }, {
+                            "header" : "Subcanopy IV",
+                            "mapping" : "subcanopy_iv",
+                            "dataIndex" : "subcanopy_iv",
+                            "sortable": true,
+                            "filterable": true,
+                            "name" : "subcanopy_iv"
+                        }, {
+                            "header" : "Canopy IV",
+                            "mapping" : "canopy_iv",
+                            "dataIndex" : "canopy_iv",
+                            "sortable": true,
+                            "filterable": true,
+                            "name" : "canopy_iv"
+                        }, {
+                            "header" : "Biomass",
+                            "mapping" : "biomass_metric_value",
+                            "dataIndex" : "biomass_metric_value",
+                            "sortable": true,
+                            "filterable": true,
+                            "name" : "biomass_metric_value"
+                        }, {
+                            "header" : "Steams HA Wetland Trees",
+                            "mapping" : "steams_ha_wetland_trees",
+                            "dataIndex" : "steams_ha_wetland_trees",
+                            "sortable": true,
+                            "filterable": true,
+                            "name" : "steams_ha_wetland_trees"
+                        }, {
+                            "header" : "Steams HA Wetland Shrubs",
+                            "mapping" : "steams_ha_wetland_shrubs",
+                            "dataIndex" : "steams_ha_wetland_shrubs",
+                            "sortable": true,
+                            "filterable": true,
+                            "name" : "steams_ha_wetland_shrubs"
+                        },
+                        {
+                            "header": "Per Unvegetated",
+                            "mapping": "per_unvegetated",
+                            "dataIndex": "per_unvegetated",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "per_unvegetated"
+                        },
+                        {
+                            "header": "Per Button Bush",
+                            "mapping": "per_button_bush",
+                            "dataIndex": "per_button_bush",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "per_button_bush"
+                        },
+                        {
+                            "header": "Per Perennial Native Hydrophytes",
+                            "mapping": "per_perennial_native_hydrophytes",
+                            "dataIndex": "per_perennial_native_hydrophytes",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "per_perennial_native_hydrophytes"
+                        },
+                        {
+                            "header": "Per Adventives",
+                            "mapping": "per_adventives",
+                            "dataIndex": "per_adventives",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "per_adventives"
+                        },
+                        {
+                            "header": "Per PpenWater",
+                            "mapping": "per_open_water",
+                            "dataIndex": "per_open_water",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "per_open_water"
+                        },
+                        {
+                            "header": "Per Unvegetated OpenWater",
+                            "mapping": "per_unvegetated_open_water",
+                            "dataIndex": "per_unvegetated_open_water",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "per_unvegetated_open_water"
+                        },
+                        {
+                            "header": "Per Bare Ground",
+                            "mapping": "per_bare_ground",
+                            "dataIndex": "per_bare_ground",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "per_bare_ground"
+                        }
+                    ],
+                    "createTitle": "Create new Alt Metrics",
+                    "displayField": "label",
+                    "editHeight": 270,
+                    "editTitle": "Edit Alt Metrics",
+                    "fields": [
+                        {
+                            "mapping" : "plotNo",
+                            "name" : "plot_no"
+                        },
+                        {
+                            "mapping" : "vibiType",
+                            "name" : "vibi_type"
+                        }, 
+                        {
+                            "mapping" : "score",
+                            "name" : "score",
+                            "type": "string"
+                        },
+                        {
+                            "mapping" : "carexMetricValue",
+                            "name" : "carex_metric_value",
+                            "type": "string"
+                        },
+                        {
+                            "mapping" : "cyperaceaeMetricValue",
+                            "name" : "cyperaceae_metric_value",
+                            "type": "string"
+                        },
+                        {
+                            "mapping" : "dicotMetricValue",
+                            "name" : "dicot_metric_value",
+                            "type": "string"
+                        },
+                        {
+                            "mapping" : "shadeMetricValue",
+                            "name" : "shade_metric_value",
+                            "type": "string"
+                        },
+                        {
+                            "mapping" : "shrubMetricValue",
+                            "name" : "shrub_metric_value",
+                            "type": "string"
+                        },
+                        {
+                            "mapping" : "hydrophyteMetricValue",
+                            "name" : "hydrophyte_metric_value",
+                            "type": "string"
+                        },
+                        {
+                            "mapping" : "svpMetricValue",
+                            "name" : "svp_metric_value",
+                            "type": "string"
+                        },
+                        {
+                            "mapping" : "apRatioMetricValue",
+                            "name" : "ap_ratio_metric_value",
+                            "type": "string"
+                        },
+                        {
+                            "mapping" : "fqaiMetricValue",
+                            "name" : "fqai_metric_value"
+                        },
+                        {
+                            "mapping" : "bryophyteMetricValue",
+                            "name" : "bryophyte_metric_value"
+                        },
+                        {
+                            "mapping" : "perHydrophyteMetricValue",
+                            "name" : "per_hydrophyte_metric_value"
+                        },
+                        {
+                            "mapping" : "sensitiveMetricValue",
+                            "name" : "sensitive_metric_value"
+                        },
+                        {
+                            "mapping" : "tolerantMetricValue",
+                            "name" : "tolerant_metric_value"
+                        },
+                        {
+                            "mapping" : "invasiveGraminoidsMetricValue",
+                            "name" : "invasive_graminoids_metric_value",
+                            "type": "string"
+                        },
+                        {
+                            "mapping" : "small_tree",
+                            "name" : "small_tree_metric_value"
+                        },
+                        {
+                            "mapping" : "subcanopyIv",
+                            "name" : "subcanopy_iv"
+                        },
+                        {
+                            "mapping" : "canopyIv",
+                            "name" : "canopy_iv"
+                        },
+                        {
+                            "mapping" : "biomassMetricValue",
+                            "name" : "biomass_metric_value"
+                        },
+                        {
+                            "mapping" : "steamsHaWetlandTrees",
+                            "name" : "steams_ha_wetland_trees"
+                        },
+                        {
+                            "mapping" : "steamsHaWetlandShrubs",
+                            "name" : "steams_ha_wetland_shrubs"
+                        },
+                        {
+                          "mapping": "perUnvegetated",
+                          "name": "per_unvegetated"
+                        },
+                        {
+                          "mapping": "perButtonBush",
+                          "name": "per_button_bush"
+                        },
+                        {
+                          "mapping": "perPerennialNativeHydrophytes",
+                          "name": "per_perennial_native_hydrophytes"
+                        },
+                        {
+                          "mapping": "perAdventives",
+                          "name": "per_adventives"
+                        },
+                        {
+                          "mapping": "perPpenWater",
+                          "name": "per_open_water"
+                        },
+                        {
+                          "mapping": "perUnvegetatedOpenWater",
+                          "name": "per_unvegetated_open_water"
+                        },
+                        {
+                          "mapping": "perBareGround",
+                          "name": "per_bare_ground"
+                        }
+                    ],
+                    "iconCls": "vibi_metric_calculations_ic",
+                    "id": "Alt Metrics",
+                    "idProperty": "id",
+                    "name": "Alt Metrics",
+                    "totalProperty" : "totalCount",
+                    "pluralName": "Alt Metrics",
                     "restful": true,
                     "root": "data",
                     "paramNames" : {
@@ -2797,12 +3707,12 @@
                             "name": "plot_name"
                         },
                         {
-                            "header": "Plot Label",
-                            "mapping": "plot_label",
-                            "dataIndex": "plot_label",
+                            "header": "Project Label",
+                            "mapping": "Project_Label",
+                            "dataIndex": "Project_Label",
                             "sortable": true,
                             "filterable": true,
-                            "name": "plot_label"
+                            "name": "Project_Label"
                         },
                         {
                             "header": "Monitoring Event",
@@ -2851,38 +3761,6 @@
                             "sortable": true,
                             "filterable": true,
                             "name": "sampling_quality"
-                        },
-                        {
-                            "header": "Tax Accuracy Vascular",
-                            "mapping": "tax_accuracy_vascular",
-                            "dataIndex": "tax_accuracy_vascular",
-                            "sortable": true,
-                            "filterable": true,
-                            "name": "tax_accuracy_vascular"
-                        },
-                        {
-                            "header": "Tax Accuracy Bryophytes",
-                            "mapping": "tax_accuracy_bryophytes",
-                            "dataIndex": "tax_accuracy_bryophytes",
-                            "sortable": true,
-                            "filterable": true,
-                            "name": "tax_accuracy_bryophytes"
-                        },
-                        {
-                            "header": "Tax Accuracy Lichens",
-                            "mapping": "tax_accuracy_lichens",
-                            "dataIndex": "tax_accuracy_lichens",
-                            "sortable": true,
-                            "filterable": true,
-                            "name": "tax_accuracy_lichens"
-                        },
-                        {
-                            "header": "Authority",
-                            "mapping": "authority",
-                            "dataIndex": "authority",
-                            "sortable": true,
-                            "filterable": true,
-                            "name": "authority"
                         },
                         {
                             "header": "State",
@@ -2957,6 +3835,14 @@
                             "name": "longitude"
                         },
                         {
+                            "header": "Plot Placement",
+                            "mapping": "plot_placement",
+                            "dataIndex": "plot_placement",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "plot_placement"
+                        },
+                        {
                             "header": "Total Modules",
                             "mapping": "total_modules",
                             "dataIndex": "total_modules",
@@ -2981,6 +3867,14 @@
                             "name": "plot_configuration"
                         },
                         {
+                            "header": "Plot Configuration Other",
+                            "mapping": "plot_configuration_other",
+                            "dataIndex": "plot_configuration_other",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "plot_configuration_other"
+                        },
+                        {
                             "header": "Plot Size For Cover Data Area Ha",
                             "mapping": "plot_size_for_cover_data_area_ha",
                             "dataIndex": "plot_size_for_cover_data_area_ha",
@@ -2997,12 +3891,12 @@
                             "name": "estimate_of_per_open_water_entire_site"
                         },
                         {
-                            "header": "Estimate Of Per Unvegetated Ow Entire Site",
-                            "mapping": "estimate_of_perunvegetated_ow_entire_site",
-                            "dataIndex": "estimate_of_perunvegetated_ow_entire_site",
+                            "header": "Estimate Of Per Unvegetated OW Entire Site",
+                            "mapping": "Estimate_of_per_unvegetated_ow_entire_site",
+                            "dataIndex": "Estimate_of_per_unvegetated_ow_entire_site",
                             "sortable": true,
                             "filterable": true,
-                            "name": "estimate_of_perunvegetated_ow_entire_site"
+                            "name": "Estimate_of_per_unvegetated_ow_entire_site"
                         },
                         {
                             "header": "Estimate Per Invasives Entire Site",
@@ -3021,22 +3915,6 @@
                             "name": "centerline"
                         },
                         {
-                            "header": "Oneo Plant",
-                            "mapping": "oneo_plant",
-                            "dataIndex": "oneo_plant",
-                            "sortable": true,
-                            "filterable": true,
-                            "name": "oneo_plant"
-                        },
-                        {
-                            "header": "Oneo Text",
-                            "mapping": "oneo_text",
-                            "dataIndex": "oneo_text",
-                            "sortable": true,
-                            "filterable": true,
-                            "name": "oneo_text"
-                        },
-                        {
                             "header": "Veg Class",
                             "mapping": "vegclass",
                             "dataIndex": "vegclass",
@@ -3051,14 +3929,6 @@
                             "sortable": true,
                             "filterable": true,
                             "name": "vegsubclass"
-                        },
-                        {
-                            "header": "Twoo Plant",
-                            "mapping": "twoo_plant",
-                            "dataIndex": "twoo_plant",
-                            "sortable": true,
-                            "filterable": true,
-                            "name": "twoo_plant"
                         },
                         {
                             "header": "Hgm Class",
@@ -3101,12 +3971,84 @@
                             "name": "oneo_class_code_mod_natureServe"
                         },
                         {
-                            "header": "Veg Class Wetlands Only",
-                            "mapping": "veg_class_wetlands_only",
-                            "dataIndex": "veg_class_wetlands_only",
+                            "header": "Leap Land Cover Classification",
+                            "mapping": "leap_landcover_classification",
+                            "dataIndex": "leap_landcover_classification",
                             "sortable": true,
                             "filterable": true,
-                            "name": "veg_class_wetlands_only"
+                            "name": "leap_landcover_classification"
+                        },
+                        {
+                            "header": "Cowardin Classification",
+                            "mapping": "cowardin_classification",
+                            "dataIndex": "cowardin_classification",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "cowardin_classification"
+                        },
+                        {
+                            "header": "Cowardin Water Regime",
+                            "mapping": "cowardin_water_regime",
+                            "dataIndex": "cowardin_water_regime",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "cowardin_water_regime"
+                        },
+                        {
+                            "header": "Cowardin Special Modifier",
+                            "mapping": "cowardin_special_modifier",
+                            "dataIndex": "cowardin_special_modifier",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "cowardin_special_modifier"
+                        },
+                        {
+                            "header": "cowardin Special Modifier Other",
+                            "mapping": "cowardin_special_modifier_other",
+                            "dataIndex": "cowardin_special_modifier_other",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "cowardin_special_modifier_other"
+                        },
+                        {
+                            "header": "Landscape Position",
+                            "mapping": "landscape_position",
+                            "dataIndex": "landscape_position",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "landscape_position"
+                        },
+                        {
+                            "header": "Inland Landform",
+                            "mapping": "inland_landform",
+                            "dataIndex": "inland_landform",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "inland_landform"
+                        },
+                        {
+                            "header": "Water Flow Path",
+                            "mapping": "water_flow_path",
+                            "dataIndex": "water_flow_path",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "water_flow_path"
+                        },
+                        {
+                            "header": "Llww Modifiers",
+                            "mapping": "llww_modifiers",
+                            "dataIndex": "llww_modifiers",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "llww_modifiers"
+                        },
+                        {
+                            "header": "Llww Modifiers Other",
+                            "mapping": "llww_modifiers_other",
+                            "dataIndex": "llww_modifiers_other",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "llww_modifiers_other"
                         },
                         {
                             "header": "Landform Type",
@@ -3115,6 +4057,14 @@
                             "sortable": true,
                             "filterable": true,
                             "name": "landform_type"
+                        },
+                        {
+                            "header": "Landform Type Other",
+                            "mapping": "landform_type_other",
+                            "dataIndex": "landform_type_other",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "landform_type_other"
                         },
                         {
                             "header": "Homogeneity",
@@ -3295,8 +4245,8 @@
                             "name": "plot_name"
                         },
                         {
-                            "mapping": "plotLabel",
-                            "name": "plot_label"
+                            "mapping": "projectLabel",
+                            "name": "Project_Label"
                         },
                         {
                             "mapping": "monitoringEvent",
@@ -3323,22 +4273,6 @@
                         {
                             "mapping": "samplingQuality",
                             "name": "sampling_quality"
-                        },
-                        {
-                            "mapping": "taxAccuracyVascular",
-                            "name": "tax_accuracy_vascular"
-                        },
-                        {
-                            "mapping": "taxAccuracyBryophytes",
-                            "name": "tax_accuracy_bryophytes"
-                        },
-                        {
-                            "mapping": "taxAccuracyLichens",
-                            "name": "tax_accuracy_lichens"
-                        },
-                        {
-                            "mapping": "authority",
-                            "name": "authority"
                         },
                         {
                             "mapping": "state",
@@ -3379,6 +4313,10 @@
                             "name": "longitude"
                         },
                         {
+                            "mapping": "plotPlacement",
+                            "name": "plot_placement"
+                        },
+                        {
                             "mapping": "totalModule",
                             "name": "total_modules"
                         },
@@ -3396,14 +4334,17 @@
                             "name": "plot_size_for_cover_data_area_ha"
                         },
                         {
+                            "mapping": "plotConfigurationOther",
+                            "name": "plot_configuration_other"
+                        },
+                        {
                             "mapping": "estimateOfPerOpenWaterEntireSite",
                             "name": "estimate_of_per_open_water_entire_site",
                             "type": "string"
                         },
                         {
-                            "mapping": "estimateOfPerunvegetatedOwEntireSite",
-                            "name": "estimate_of_perunvegetated_ow_entire_site",
-                            "type": "string"
+                            "mapping": "EstimateOfPerUnvegetatedOwEntireSite",
+                            "name": "Estimate_of_per_unvegetated_ow_entire_site"
                         },
                         {
                             "mapping": "estimatePerInvasivesEntireSite",
@@ -3415,14 +4356,6 @@
                             "name": "centerline"
                         },
                         {
-                            "mapping": "oneoPlant",
-                            "name": "oneo_plant"
-                        },
-                        {
-                            "mapping": "oneoText",
-                            "name": "oneo_text"
-                        },
-                        {
                             "mapping": "vegclass",
                             "name": "vegclass",
                             "type": "string"
@@ -3431,10 +4364,6 @@
                             "mapping": "vegsubclass",
                             "name": "vegsubclass",
                             "type": "string"
-                        },
-                        {
-                            "mapping": "twooPlant",
-                            "name": "twoo_plant"
                         },
                         {
                             "mapping": "hgmclass",
@@ -3458,13 +4387,52 @@
                             "name": "oneo_class_code_mod_natureServe"
                         },
                         {
-                            "mapping": "vegClassWetlandsOnly",
-                            "name": "veg_class_wetlands_only",
-                            "type": "string"
+                            "mapping": "leapLandcoverClassification",
+                            "name": "leap_landcover_classification"
+                        },
+                        {
+                            "mapping": "cowardinClassification",
+                            "name": "cowardin_classification"
+                        },
+                        {
+                            "mapping": "cowardinWaterRegime",
+                            "name": "cowardin_water_regime"
+                        },
+                        {
+                            "mapping": "cowardinSpecialModifier",
+                            "name": "cowardin_special_modifier"
+                        },
+                        {
+                            "mapping": "cowardinSpecialModifierOther",
+                            "name": "cowardin_special_modifier_other"
+                        },
+                        {
+                            "mapping": "landscapePosition",
+                            "name": "landscape_position"
+                        },
+                        {
+                            "mapping": "inlandLandform",
+                            "name": "inland_landform"
+                        },
+                        {
+                            "mapping": "waterFlowPath",
+                            "name": "water_flow_path"
+                        },
+                        {
+                            "mapping": "llwwModifiers",
+                            "name": "llww_modifiers"
+                        },
+                        {
+                            "mapping": "llwwModifiersOther",
+                            "name": "llww_modifiers_other"
                         },
                         {
                             "mapping": "landformType",
                             "name": "landform_type"
+                        },
+                        {
+                            "mapping": "landformTypeOther",
+                            "name": "landform_type_other"
                         },
                         {
                             "mapping": "homogeneity",
@@ -4665,10 +5633,6 @@
                     "editTitle": "Edit Biomass",
                     "fields": [
                         {
-                            "mapping": "fid",
-                            "name": "fid"
-                        },
-                        {
                             "mapping": "plotNo",
                             "name": "plot_no"
                         },
@@ -4828,10 +5792,6 @@
                     "editHeight": 270,
                     "editTitle": "Edit Biomass Raw",
                     "fields": [
-                        {
-                            "mapping": "fid",
-                            "name": "fid"
-                        },
                         {
                             "mapping": "plotNo",
                             "name": "plot_no"
@@ -5001,7 +5961,318 @@
                     }
                 },
                 {
-
+                    "api": {},
+                    "autoExpandColumn": false,
+                    "minColumnWidth": 80,
+                    "autoload": false,
+                    "basePath": "mvc/vibi/leapLandcoverClassification/",
+                    "canCreate": false,
+                    "canDelete": false,
+                    "canEdit": false,
+                    "canSearch": true,
+                    "columns": [
+                        {
+                            "header": "Code",
+                            "mapping": "code",
+                            "dataIndex": "code",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "code"
+                        },
+                        {
+                            "header": "Description",
+                            "mapping": "description",
+                            "dataIndex": "description",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "description"
+                        }
+                    ],
+                    "createTitle": "Create a new Leap Landcover Classification",
+                    "displayField": "label",
+                    "editHeight": 270,
+                    "editTitle": "Edit Leap Landcover Classification",
+                    "fields": [
+                        {
+                            "mapping": "code",
+                            "name": "code"
+                        },
+                        {
+                            "mapping": "description",
+                            "name": "description"
+                        }
+                    ],
+                    "iconCls": "vibi_leap_land_cover_calssification_ic",
+                    "id": "Leap Landcover Classification",
+                    "idProperty": "id",
+                    "totalProperty" : "totalCount",
+                    "name": "Leap Landcover Classification",
+                    "pluralName": "Leap Landcover Classifications",
+                    "restful": true,
+                    "root": "data",
+                    "paramNames" : {
+                        "start" : "firstResult",
+                        "limit" : "maxResults",
+                        "query" : "keyword"
+                    }
+                },
+                {
+                    "api": {},
+                    "autoExpandColumn": false,
+                    "minColumnWidth": 80,
+                    "autoload": false,
+                    "basePath": "mvc/vibi/fds1SpeciesMiscInfo/",
+                    "canCreate": false,
+                    "canDelete": false,
+                    "canEdit": false,
+                    "canSearch": true,
+                    "columns": [
+                        {
+                            "header": "Species",
+                            "mapping": "species",
+                            "dataIndex": "species",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "species"
+                        },
+                        {
+                            "header": "Plot No",
+                            "mapping": "plot_no",
+                            "dataIndex": "plot_no",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "plot_no"
+                        },
+                        {
+                            "header": "Module Id",
+                            "mapping": "module_id",
+                            "dataIndex": "module_id",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "module_id"
+                        },
+                        {
+                            "header": "Voucher No",
+                            "mapping": "voucher_no",
+                            "dataIndex": "voucher_no",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "voucher_no"
+                        },
+                        {
+                            "header": "Comment",
+                            "mapping": "comment",
+                            "dataIndex": "comment",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "comment"
+                        },
+                        {
+                            "header": "Browse Intensity",
+                            "mapping": "browse_intensity",
+                            "dataIndex": "browse_intensity",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "browse_intensity"
+                        },
+                        {
+                            "header": "Percent Flowering",
+                            "mapping": "percent_flowering",
+                            "dataIndex": "percent_flowering",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "percent_flowering"
+                        },
+                        {
+                            "header": "Percent Fruiting",
+                            "mapping": "percent_fruiting",
+                            "dataIndex": "percent_fruiting",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "percent_fruiting"
+                        }
+                    ],
+                    "createTitle": "Fds1 Species Misc Info",
+                    "displayField": "label",
+                    "editHeight": 270,
+                    "editTitle": "Edit Fds1 Species Misc Info",
+                    "fields": [
+                        {
+                            "mapping": "species",
+                            "name": "species"
+                        },
+                        {
+                            "mapping": "plotNo",
+                            "name": "plot_no"
+                        },
+                        {
+                            "mapping": "moduleId",
+                            "name": "module_id"
+                        },
+                        {
+                            "mapping": "voucherNo",
+                            "name": "voucher_no"
+                        },
+                        {
+                            "mapping": "comment",
+                            "name": "comment"
+                        },
+                        {
+                            "mapping": "browseIntensity",
+                            "name": "browse_intensity"
+                        },
+                        {
+                            "mapping": "percentFlowering",
+                            "name": "percent_flowering"
+                        },
+                        {
+                            "mapping": "percentFruiting",
+                            "name": "percent_fruiting"
+                        }
+                    ],
+                    "iconCls": "vibi_fds1_species_misc_info_ic",
+                    "id": "Fds1 Species Misc Info",
+                    "idProperty": "id",
+                    "totalProperty" : "totalCount",
+                    "name": "Fds1 Species Misc Info",
+                    "pluralName": "Fds1 Species Misc Info",
+                    "restful": true,
+                    "root": "data",
+                    "paramNames" : {
+                        "start" : "firstResult",
+                        "limit" : "maxResults",
+                        "query" : "keyword"
+                    }
+                },
+                {
+                    "api": {},
+                    "autoExpandColumn": false,
+                    "minColumnWidth": 80,
+                    "autoload": false,
+                    "basePath": "mvc/vibi/fds2SpeciesMiscInfo/",
+                    "canCreate": false,
+                    "canDelete": false,
+                    "canEdit": false,
+                    "canSearch": true,
+                    "columns": [
+                        {
+                            "header": "Species",
+                            "mapping": "species",
+                            "dataIndex": "species",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "species"
+                        },
+                        {
+                            "header": "Plot No",
+                            "mapping": "plot_no",
+                            "dataIndex": "plot_no",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "plot_no"
+                        },
+                        {
+                            "header": "Module Id",
+                            "mapping": "module_id",
+                            "dataIndex": "module_id",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "module_id"
+                        },
+                        {
+                            "header": "Voucher No",
+                            "mapping": "voucher_no",
+                            "dataIndex": "voucher_no",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "voucher_no"
+                        },
+                        {
+                            "header": "Comment",
+                            "mapping": "comment",
+                            "dataIndex": "comment",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "comment"
+                        },
+                        {
+                            "header": "Browse Intensity",
+                            "mapping": "browse_intensity",
+                            "dataIndex": "browse_intensity",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "browse_intensity"
+                        },
+                        {
+                            "header": "Percent Flowering",
+                            "mapping": "percent_flowering",
+                            "dataIndex": "percent_flowering",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "percent_flowering"
+                        },
+                        {
+                            "header": "Percent Fruiting",
+                            "mapping": "percent_fruiting",
+                            "dataIndex": "percent_fruiting",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "percent_fruiting"
+                        }
+                    ],
+                    "createTitle": "Fds2 Species Misc Info",
+                    "displayField": "label",
+                    "editHeight": 270,
+                    "editTitle": "Edit Fds2 Species Misc Info",
+                    "fields": [
+                        {
+                            "mapping": "species",
+                            "name": "species"
+                        },
+                        {
+                            "mapping": "plotNo",
+                            "name": "plot_no"
+                        },
+                        {
+                            "mapping": "moduleId",
+                            "name": "module_id"
+                        },
+                        {
+                            "mapping": "voucherNo",
+                            "name": "voucher_no"
+                        },
+                        {
+                            "mapping": "comment",
+                            "name": "comment"
+                        },
+                        {
+                            "mapping": "browseIntensity",
+                            "name": "browse_intensity"
+                        },
+                        {
+                            "mapping": "percentFlowering",
+                            "name": "percent_flowering"
+                        },
+                        {
+                            "mapping": "percentFruiting",
+                            "name": "percent_fruiting"
+                        }
+                    ],
+                    "iconCls": "vibi_fds2_species_misc_info_ic",
+                    "id": "Fds2 Species Misc Info",
+                    "idProperty": "id",
+                    "totalProperty" : "totalCount",
+                    "name": "Fds2 Species Misc Info",
+                    "pluralName": "Fds2 Species Misc Info",
+                    "restful": true,
+                    "root": "data",
+                    "paramNames" : {
+                        "start" : "firstResult",
+                        "limit" : "maxResults",
+                        "query" : "keyword"
+                    }
+                },
+                {
                     "api": {},
                     "autoExpandColumn": false,
                     "minColumnWidth": 80,
@@ -5160,19 +6431,19 @@
                             "filterable": true,
                             "name" : "biomass_metric_value"
                         }, {
-                            "header" : "Stems HA Wetland Trees",
-                            "mapping" : "stems_ha_wetland_trees",
-                            "dataIndex" : "stems_ha_wetland_trees",
+                            "header" : "Steams HA Wetland Trees",
+                            "mapping" : "steams_ha_wetland_trees",
+                            "dataIndex" : "steams_ha_wetland_trees",
                             "sortable": true,
                             "filterable": true,
-                            "name" : "stems_ha_wetland_trees"
+                            "name" : "steams_ha_wetland_trees"
                         }, {
-                            "header" : "Stems HA Wetland Shrubs",
-                            "mapping" : "stems_ha_wetland_shrubs",
-                            "dataIndex" : "stems_ha_wetland_shrubs",
+                            "header" : "Steams HA Wetland Shrubs",
+                            "mapping" : "steams_ha_wetland_shrubs",
+                            "dataIndex" : "steams_ha_wetland_shrubs",
                             "sortable": true,
                             "filterable": true,
-                            "name" : "stems_ha_wetland_shrubs"
+                            "name" : "steams_ha_wetland_shrubs"
                         },
                         {
                             "header": "Per Unvegetated",
@@ -5332,11 +6603,11 @@
                         },
                         {
                             "mapping" : "steamsHaWetlandTrees",
-                            "name" : "stems_ha_wetland_trees"
+                            "name" : "steams_ha_wetland_trees"
                         },
                         {
                             "mapping" : "steamsHaWetlandShrubs",
-                            "name" : "stems_ha_wetland_shrubs"
+                            "name" : "steams_ha_wetland_shrubs"
                         },
                         {
                           "mapping": "perUnvegetated",

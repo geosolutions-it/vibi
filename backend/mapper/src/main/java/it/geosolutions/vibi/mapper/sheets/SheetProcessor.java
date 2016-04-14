@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.geotools.data.DataStore;
+import org.geotools.data.Transaction;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
@@ -31,9 +32,9 @@ public final class SheetProcessor {
         this.featureType = Store.constructFeatureType(tableName, attributes);
     }
 
-    public void process(Sheet sheet, DataStore store) {
+    public void process(Sheet sheet, DataStore store, Transaction transaction) {
         LOGGER.info(String.format("Start parsing spreadsheet '%s'.", sheet.getSheetName()));
-        SheetContext context = new SheetContext(sheet, store);
+        SheetContext context = new SheetContext(sheet, store, transaction);
         Row row = findDataStartRow(context);
         while (row != null) {
             try {
@@ -70,6 +71,6 @@ public final class SheetProcessor {
             throw new VibiException("Error processing row '%d' o sheet '%s', primary key is null or empty.",
                     context.getRow().getRowNum() + 1, context.getSheet().getSheetName());
         }
-        Store.persistFeature(context.getStore(), feature.second);
+        Store.persistFeature(context.getStore(), context.getTransaction(), feature.second);
     }
 }

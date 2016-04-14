@@ -8,8 +8,8 @@ DROP MATERIALIZED VIEW IF EXISTS plot_module_woody_dbh_cm CASCADE;
 DROP MATERIALIZED VIEW IF EXISTS reduced_fds2_counts CASCADE;
 DROP MATERIALIZED VIEW IF EXISTS reduced_fds2_counts_cm2 CASCADE;
 DROP MATERIALIZED VIEW IF EXISTS reduced_fds2_class_freq CASCADE;
-DROP MATERIALIZED VIEW IF EXISTS reduced_fds2_tot_stems CASCADE;
-DROP MATERIALIZED VIEW IF EXISTS reduced_fds2_tot_stems_all_spp CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS reduced_fds2_tot_steams CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS reduced_fds2_tot_steams_all_spp CASCADE;
 DROP MATERIALIZED VIEW IF EXISTS reduced_fds2_basal_cm2 CASCADE;
 DROP MATERIALIZED VIEW IF EXISTS reduced_fds2_basal_cm2_ha CASCADE;
 DROP MATERIALIZED VIEW IF EXISTS reduced_fds2_basal_cm2_ha_tot CASCADE;
@@ -24,7 +24,7 @@ DROP MATERIALIZED VIEW IF EXISTS reduced_fds2_avg_iv CASCADE;
 DROP MATERIALIZED VIEW IF EXISTS reduced_fds2_calculations_iv CASCADE;
 DROP MATERIALIZED VIEW IF EXISTS calculations_reduced_fds1 CASCADE;
 DROP MATERIALIZED VIEW IF EXISTS calculations_reduced_fds2_canopy CASCADE;
-DROP MATERIALIZED VIEW IF EXISTS calculations_reduced_fds2_stems CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS calculations_reduced_fds2_steams CASCADE;
 DROP MATERIALIZED VIEW IF EXISTS herbaceous_info_tot_cov CASCADE;
 DROP MATERIALIZED VIEW IF EXISTS herbaceous_info_tot_count CASCADE;
 DROP MATERIALIZED VIEW IF EXISTS herbaceous_info_relative_cover CASCADE;
@@ -132,15 +132,15 @@ CREATE MATERIALIZED VIEW alt_reduced_fds2_freq AS
   FROM plot_module_woody_raw a LEFT JOIN plot b ON a.plot_no = b.plot_no
   GROUP BY species, a.plot_no, b.total_modules;
 
-CREATE MATERIALIZED VIEW reduced_fds2_tot_stems AS
-  SELECT b.plot_no, a.species, sum(a.counts) as tot_stems, (sum(a.counts) / b.plot_size_for_cover_data_area_ha) as tot_stems_ha
+CREATE MATERIALIZED VIEW reduced_fds2_tot_steams AS
+  SELECT b.plot_no, a.species, sum(a.counts) as tot_steams, (sum(a.counts) / b.plot_size_for_cover_data_area_ha) as tot_steams_ha
   FROM reduced_fds2_counts a
     LEFT JOIN plot AS b ON a.plot_no = b.plot_no
   GROUP BY b.plot_no, a.species;
 
-CREATE MATERIALIZED VIEW reduced_fds2_tot_stems_all_spp AS
-  SELECT plot_no, sum(tot_stems_ha) as tot_stems_all_spp
-  FROM reduced_fds2_tot_stems
+CREATE MATERIALIZED VIEW reduced_fds2_tot_steams_all_spp AS
+  SELECT plot_no, sum(tot_steams_ha) as tot_steams_all_spp
+  FROM reduced_fds2_tot_steams
   GROUP BY plot_no;
 
 CREATE MATERIALIZED VIEW reduced_fds2_basal_cm2 AS
@@ -177,11 +177,11 @@ CREATE MATERIALIZED VIEW reduced_fds2_basal_cm2_ha_all_spp AS
   GROUP BY plot_no;
 
 CREATE MATERIALIZED VIEW reduced_fds2_iv AS
-  SELECT a.plot_no, a.species, (d.tot_cm2_ha / e.tot_cm2_all_spp + b.tot_stems_ha / c.tot_stems_all_spp + a.rel_class_freq) / 3 AS iv
+  SELECT a.plot_no, a.species, (d.tot_cm2_ha / e.tot_cm2_all_spp + b.tot_steams_ha / c.tot_steams_all_spp + a.rel_class_freq) / 3 AS iv
   FROM reduced_fds2_class_freq a
-    LEFT JOIN reduced_fds2_tot_stems b
+    LEFT JOIN reduced_fds2_tot_steams b
       ON a.plot_no = b.plot_no AND a.species = b.species
-    LEFT JOIN reduced_fds2_tot_stems_all_spp c
+    LEFT JOIN reduced_fds2_tot_steams_all_spp c
       ON a.plot_no = c.plot_no
     LEFT JOIN reduced_fds2_basal_cm2_ha_tot d
       ON a.plot_no = d.plot_no AND a.species = d.species
@@ -189,11 +189,11 @@ CREATE MATERIALIZED VIEW reduced_fds2_iv AS
       ON a.plot_no = e.plot_no;
 	  
 CREATE MATERIALIZED VIEW alt_reduced_fds2_iv AS
-  SELECT a.plot_no, a.species, (d.tot_cm2_ha / e.tot_cm2_all_spp + b.tot_stems_ha / c.tot_stems_all_spp + a.alt_rel_freq) / 3 AS iv
+  SELECT a.plot_no, a.species, (d.tot_cm2_ha / e.tot_cm2_all_spp + b.tot_steams_ha / c.tot_steams_all_spp + a.alt_rel_freq) / 3 AS iv
   FROM alt_reduced_fds2_freq a
-    LEFT JOIN reduced_fds2_tot_stems b
+    LEFT JOIN reduced_fds2_tot_steams b
       ON a.plot_no = b.plot_no AND a.species = b.species
-    LEFT JOIN reduced_fds2_tot_stems_all_spp c
+    LEFT JOIN reduced_fds2_tot_steams_all_spp c
       ON a.plot_no = c.plot_no
     LEFT JOIN reduced_fds2_basal_cm2_ha_tot d
       ON a.plot_no = d.plot_no AND a.species = d.species
@@ -263,9 +263,9 @@ CREATE MATERIALIZED VIEW reduced_fds2_den AS
 
 CREATE MATERIALIZED VIEW reduced_fds2_rel_den AS
   SELECT a.plot_no, a.species, a.dbh_class_index,
-    CASE WHEN a.counts_den > 0 THEN a.counts_den / b.tot_stems_all_spp ELSE 0 END AS counts_rel_den
+    CASE WHEN a.counts_den > 0 THEN a.counts_den / b.tot_steams_all_spp ELSE 0 END AS counts_rel_den
   FROM reduced_fds2_den a
-    LEFT JOIN reduced_fds2_tot_stems_all_spp b
+    LEFT JOIN reduced_fds2_tot_steams_all_spp b
       ON a.plot_no = b.plot_no;
 
 CREATE MATERIALIZED VIEW reduced_fds2_rel_den_calculations AS
@@ -419,12 +419,12 @@ CREATE MATERIALIZED VIEW alt_calculations_reduced_fds2_canopy AS
     LEFT JOIN alt_reduced_fds2_calculations_iv c
       ON a.plot_no = c.plot_no;
 
-CREATE MATERIALIZED VIEW calculations_reduced_fds2_stems AS
+CREATE MATERIALIZED VIEW calculations_reduced_fds2_steams AS
   SELECT a.plot_no,
-    sum(CASE WHEN c.oh_status = 'native' AND c.ncne = 'FACW' OR c.ncne = 'OBL' AND c.form = 'tree' THEN b.tot_stems_ha ELSE 0 END) AS stems_wetland_trees,
-    sum(CASE WHEN c.oh_status = 'native' AND c.ncne = 'FACW' OR c.ncne = 'OBL' AND c.form = 'shrub' THEN b.tot_stems_ha ELSE 0 END) AS stems_wetland_shrubs
+    sum(CASE WHEN c.oh_status = 'native' AND c.ncne = 'FACW' OR c.ncne = 'OBL' AND c.form = 'tree' THEN b.tot_steams_ha ELSE 0 END) AS steams_wetland_trees,
+    sum(CASE WHEN c.oh_status = 'native' AND c.ncne = 'FACW' OR c.ncne = 'OBL' AND c.form = 'shrub' THEN b.tot_steams_ha ELSE 0 END) AS steams_wetland_shrubs
   FROM plot a
-    LEFT JOIN reduced_fds2_tot_stems b
+    LEFT JOIN reduced_fds2_tot_steams b
       ON a.plot_no = b.plot_no
     LEFT JOIN species c
       ON b.species = c.scientific_name
@@ -479,8 +479,8 @@ CREATE MATERIALIZED VIEW vibi_values AS
     subcanopy_iv,
     canopy_iv,
     biomass AS biomass_metric_value,
-    stems_wetland_trees AS stems_ha_wetland_trees,
-    stems_wetland_shrubs AS stems_ha_wetland_shrubs,
+    steams_wetland_trees AS steams_ha_wetland_trees,
+    steams_wetland_shrubs AS steams_ha_wetland_shrubs,
     unvegetated_partial + habit_an_sum AS per_unvegetated,
     button_bush AS per_button_bush,
     perennial_native_hydrophytes AS per_perennial_native_hydrophytes,
@@ -491,7 +491,7 @@ CREATE MATERIALIZED VIEW vibi_values AS
   FROM plot a
     LEFT JOIN calculations_reduced_fds2_canopy b
       ON a.plot_no = b.plot_no
-    LEFT JOIN calculations_reduced_fds2_stems c
+    LEFT JOIN calculations_reduced_fds2_steams c
       ON a.plot_no = c.plot_no
     LEFT JOIN calculations_plot_module_herbaceous_info d
       ON a.plot_no = d.plot_no
@@ -521,8 +521,8 @@ CREATE MATERIALIZED VIEW alt_vibi_values AS
     subcanopy_iv,
     canopy_iv,
     biomass AS biomass_metric_value,
-    stems_wetland_trees AS stems_ha_wetland_trees,
-    stems_wetland_shrubs AS stems_ha_wetland_shrubs,
+    steams_wetland_trees AS steams_ha_wetland_trees,
+    steams_wetland_shrubs AS steams_ha_wetland_shrubs,
     unvegetated_partial + habit_an_sum AS per_unvegetated,
     button_bush AS per_button_bush,
     perennial_native_hydrophytes AS per_perennial_native_hydrophytes,
@@ -533,7 +533,7 @@ CREATE MATERIALIZED VIEW alt_vibi_values AS
   FROM plot a
     LEFT JOIN alt_calculations_reduced_fds2_canopy b
       ON a.plot_no = b.plot_no
-    LEFT JOIN calculations_reduced_fds2_stems c
+    LEFT JOIN calculations_reduced_fds2_steams c
       ON a.plot_no = c.plot_no
     LEFT JOIN calculations_plot_module_herbaceous_info d
       ON a.plot_no = d.plot_no
@@ -574,8 +574,8 @@ CREATE MATERIALIZED VIEW vibi_e_index AS
     WHEN d.biomass_collected = 'YES'
       THEN metric_value(b.biomass_metric_value, ARRAY[100.0, 201.0, 451.0, 801.0], ARRAY[0.0, 10.0, 7.0, 3.0, 0.0])
     ELSE 0.0 END AS biomass_metric_value,
-    null::numeric AS stems_ha_wetland_trees,
-    null::numeric AS stems_ha_wetland_shrubs,
+    null::numeric AS steams_ha_wetland_trees,
+    null::numeric AS steams_ha_wetland_shrubs,
     null::numeric AS per_unvegetated,
     null::numeric AS per_button_bush,
     null::numeric AS per_perennial_native_hydrophytes,
@@ -623,8 +623,8 @@ CREATE MATERIALIZED VIEW alt_vibi_e_index AS
     WHEN d.biomass_collected = 'YES'
       THEN metric_value(b.biomass_metric_value, ARRAY[100.0, 201.0, 451.0, 801.0], ARRAY[0.0, 10.0, 7.0, 3.0, 0.0])
     ELSE 0.0 END AS biomass_metric_value,
-    null::numeric AS stems_ha_wetland_trees,
-    null::numeric AS stems_ha_wetland_shrubs,
+    null::numeric AS steams_ha_wetland_trees,
+    null::numeric AS steams_ha_wetland_shrubs,
     null::numeric AS per_unvegetated,
     null::numeric AS per_button_bush,
     null::numeric AS per_perennial_native_hydrophytes,
@@ -672,8 +672,8 @@ CREATE MATERIALIZED VIEW vibi_ecst_index AS
     WHEN d.biomass_collected = 'YES'
       THEN metric_value(b.biomass_metric_value, ARRAY[100.0, 201.0, 451.0, 801.0], ARRAY[0.0, 10.0, 7.0, 3.0, 0.0])
     ELSE 0.0 END AS biomass_metric_value,
-    null::numeric AS stems_ha_wetland_trees,
-    null::numeric AS stems_ha_wetland_shrubs,
+    null::numeric AS steams_ha_wetland_trees,
+    null::numeric AS steams_ha_wetland_shrubs,
     null::numeric AS per_unvegetated,
     null::numeric AS per_button_bush,
     null::numeric AS per_perennial_native_hydrophytes,
@@ -721,8 +721,8 @@ CREATE MATERIALIZED VIEW alt_vibi_ecst_index AS
     WHEN d.biomass_collected = 'YES'
       THEN metric_value(b.biomass_metric_value, ARRAY[100.0, 201.0, 451.0, 801.0], ARRAY[0.0, 10.0, 7.0, 3.0, 0.0])
     ELSE 0.0 END AS biomass_metric_value,
-    null::numeric AS stems_ha_wetland_trees,
-    null::numeric AS stems_ha_wetland_shrubs,
+    null::numeric AS steams_ha_wetland_trees,
+    null::numeric AS steams_ha_wetland_shrubs,
     null::numeric AS per_unvegetated,
     null::numeric AS per_button_bush,
     null::numeric AS per_perennial_native_hydrophytes,
@@ -765,8 +765,8 @@ CREATE MATERIALIZED VIEW vibi_sh_index AS
     metric_value(b.subcanopy_iv::numeric, ARRAY[0.0205, 0.0505, 0.1046], ARRAY[0.0, 3.0, 7.0, 10.0]) AS subcanopy_iv,
     null::numeric AS canopy_iv,
     null::numeric AS biomass_metric_value,
-    null::numeric AS stems_ha_wetland_trees,
-    null::numeric AS stems_ha_wetland_shrubs,
+    null::numeric AS steams_ha_wetland_trees,
+    null::numeric AS steams_ha_wetland_shrubs,
     null::numeric AS per_unvegetated,
     null::numeric AS per_button_bush,
     null::numeric AS per_perennial_native_hydrophytes,
@@ -809,8 +809,8 @@ CREATE MATERIALIZED VIEW alt_vibi_sh_index AS
     metric_value(b.subcanopy_iv::numeric, ARRAY[0.0205, 0.0505, 0.1046], ARRAY[0.0, 3.0, 7.0, 10.0]) AS subcanopy_iv,
     null::numeric AS canopy_iv,
     null::numeric AS biomass_metric_value,
-    null::numeric AS stems_ha_wetland_trees,
-    null::numeric AS stems_ha_wetland_shrubs,
+    null::numeric AS steams_ha_wetland_trees,
+    null::numeric AS steams_ha_wetland_shrubs,
     null::numeric AS per_unvegetated,
     null::numeric AS per_button_bush,
     null::numeric AS per_perennial_native_hydrophytes,
@@ -861,8 +861,8 @@ CREATE MATERIALIZED VIEW vibi_f_index AS
       metric_value(b.canopy_iv::numeric, ARRAY[0.1405, 0.1705, 0.2105], ARRAY[10.0, 7.0, 3.0, 0.0])
     ELSE 0.0 END AS canopy_iv,
     null::numeric AS biomass_metric_value,
-    null::numeric AS stems_ha_wetland_trees,
-    null::numeric AS stems_ha_wetland_shrubs,
+    null::numeric AS steams_ha_wetland_trees,
+    null::numeric AS steams_ha_wetland_shrubs,
     null::numeric AS per_unvegetated,
     null::numeric AS per_button_bush,
     null::numeric AS per_perennial_native_hydrophytes,
@@ -911,8 +911,8 @@ CREATE MATERIALIZED VIEW alt_vibi_f_index AS
       metric_value(b.canopy_iv::numeric, ARRAY[0.1405, 0.1705, 0.2105], ARRAY[10.0, 7.0, 3.0, 0.0])
     ELSE 0.0 END AS canopy_iv,
     null::numeric AS biomass_metric_value,
-    null::numeric AS stems_ha_wetland_trees,
-    null::numeric AS stems_ha_wetland_shrubs,
+    null::numeric AS steams_ha_wetland_trees,
+    null::numeric AS steams_ha_wetland_shrubs,
     null::numeric AS per_unvegetated,
     null::numeric AS per_button_bush,
     null::numeric AS per_perennial_native_hydrophytes,
@@ -935,8 +935,8 @@ CREATE MATERIALIZED VIEW metric_calculations AS
               COALESCE(svp_metric_value, 0.0) + COALESCE(ap_ratio_metric_value, 0.0) + COALESCE(fqai_metric_value, 0.0) +
               COALESCE(bryophyte_metric_value, 0.0) + COALESCE(per_hydrophyte_metric_value, 0.0) + COALESCE(sensitive_metric_value, 0.0) +
               COALESCE(tolerant_metric_value, 0.0) + COALESCE(invasive_graminoids_metric_value, 0.0) + COALESCE(small_tree_metric_value, 0.0) +
-              COALESCE(subcanopy_iv, 0.0) + COALESCE(canopy_iv, 0.0) + COALESCE(biomass_metric_value, 0.0) + COALESCE(stems_ha_wetland_trees, 0.0) +
-              COALESCE(stems_ha_wetland_shrubs, 0.0) + COALESCE(per_unvegetated, 0.0) + COALESCE(per_button_bush, 0.0) +
+              COALESCE(subcanopy_iv, 0.0) + COALESCE(canopy_iv, 0.0) + COALESCE(biomass_metric_value, 0.0) + COALESCE(steams_ha_wetland_trees, 0.0) +
+              COALESCE(steams_ha_wetland_shrubs, 0.0) + COALESCE(per_unvegetated, 0.0) + COALESCE(per_button_bush, 0.0) +
               COALESCE(per_perennial_native_hydrophytes, 0.0) + COALESCE(per_adventives, 0.0) + COALESCE(per_open_water, 0.0) +
               COALESCE(per_unvegetated_open_water, 0.0) AS score FROM vibi_e_index
     UNION
@@ -945,8 +945,8 @@ CREATE MATERIALIZED VIEW metric_calculations AS
               COALESCE(svp_metric_value, 0.0) + COALESCE(ap_ratio_metric_value, 0.0) + COALESCE(fqai_metric_value, 0.0) +
               COALESCE(bryophyte_metric_value, 0.0) + COALESCE(per_hydrophyte_metric_value, 0.0) + COALESCE(sensitive_metric_value, 0.0) +
               COALESCE(tolerant_metric_value, 0.0) + COALESCE(invasive_graminoids_metric_value, 0.0) + COALESCE(small_tree_metric_value, 0.0) +
-              COALESCE(subcanopy_iv, 0.0) + COALESCE(canopy_iv, 0.0) + COALESCE(biomass_metric_value, 0.0) + COALESCE(stems_ha_wetland_trees, 0.0) +
-              COALESCE(stems_ha_wetland_shrubs, 0.0) + COALESCE(per_unvegetated, 0.0) + COALESCE(per_button_bush, 0.0) +
+              COALESCE(subcanopy_iv, 0.0) + COALESCE(canopy_iv, 0.0) + COALESCE(biomass_metric_value, 0.0) + COALESCE(steams_ha_wetland_trees, 0.0) +
+              COALESCE(steams_ha_wetland_shrubs, 0.0) + COALESCE(per_unvegetated, 0.0) + COALESCE(per_button_bush, 0.0) +
               COALESCE(per_perennial_native_hydrophytes, 0.0) + COALESCE(per_adventives, 0.0) + COALESCE(per_open_water, 0.0) +
               COALESCE(per_unvegetated_open_water, 0.0) AS score FROM vibi_ecst_index
     UNION
@@ -955,8 +955,8 @@ CREATE MATERIALIZED VIEW metric_calculations AS
               COALESCE(svp_metric_value, 0.0) + COALESCE(ap_ratio_metric_value, 0.0) + COALESCE(fqai_metric_value, 0.0) +
               COALESCE(bryophyte_metric_value, 0.0) + COALESCE(per_hydrophyte_metric_value, 0.0) + COALESCE(sensitive_metric_value, 0.0) +
               COALESCE(tolerant_metric_value, 0.0) + COALESCE(invasive_graminoids_metric_value, 0.0) + COALESCE(small_tree_metric_value, 0.0) +
-              COALESCE(subcanopy_iv, 0.0) + COALESCE(canopy_iv, 0.0) + COALESCE(biomass_metric_value, 0.0) + COALESCE(stems_ha_wetland_trees, 0.0) +
-              COALESCE(stems_ha_wetland_shrubs, 0.0) + COALESCE(per_unvegetated, 0.0) + COALESCE(per_button_bush, 0.0) +
+              COALESCE(subcanopy_iv, 0.0) + COALESCE(canopy_iv, 0.0) + COALESCE(biomass_metric_value, 0.0) + COALESCE(steams_ha_wetland_trees, 0.0) +
+              COALESCE(steams_ha_wetland_shrubs, 0.0) + COALESCE(per_unvegetated, 0.0) + COALESCE(per_button_bush, 0.0) +
               COALESCE(per_perennial_native_hydrophytes, 0.0) + COALESCE(per_adventives, 0.0) + COALESCE(per_open_water, 0.0) +
               COALESCE(per_unvegetated_open_water, 0.0) AS score FROM vibi_sh_index
     UNION
@@ -965,8 +965,8 @@ CREATE MATERIALIZED VIEW metric_calculations AS
               COALESCE(svp_metric_value, 0.0) + COALESCE(ap_ratio_metric_value, 0.0) + COALESCE(fqai_metric_value, 0.0) +
               COALESCE(bryophyte_metric_value, 0.0) + COALESCE(per_hydrophyte_metric_value, 0.0) + COALESCE(sensitive_metric_value, 0.0) +
               COALESCE(tolerant_metric_value, 0.0) + COALESCE(invasive_graminoids_metric_value, 0.0) + COALESCE(small_tree_metric_value, 0.0) +
-              COALESCE(subcanopy_iv, 0.0) + COALESCE(canopy_iv, 0.0) + COALESCE(biomass_metric_value, 0.0) + COALESCE(stems_ha_wetland_trees, 0.0) +
-              COALESCE(stems_ha_wetland_shrubs, 0.0) + COALESCE(per_unvegetated, 0.0) + COALESCE(per_button_bush, 0.0) +
+              COALESCE(subcanopy_iv, 0.0) + COALESCE(canopy_iv, 0.0) + COALESCE(biomass_metric_value, 0.0) + COALESCE(steams_ha_wetland_trees, 0.0) +
+              COALESCE(steams_ha_wetland_shrubs, 0.0) + COALESCE(per_unvegetated, 0.0) + COALESCE(per_button_bush, 0.0) +
               COALESCE(per_perennial_native_hydrophytes, 0.0) + COALESCE(per_adventives, 0.0) + COALESCE(per_open_water, 0.0) +
               COALESCE(per_unvegetated_open_water, 0.0) AS score FROM vibi_f_index
   ) a;
@@ -980,8 +980,8 @@ CREATE MATERIALIZED VIEW alt_metric_calculations AS
               COALESCE(svp_metric_value, 0.0) + COALESCE(ap_ratio_metric_value, 0.0) + COALESCE(fqai_metric_value, 0.0) +
               COALESCE(bryophyte_metric_value, 0.0) + COALESCE(per_hydrophyte_metric_value, 0.0) + COALESCE(sensitive_metric_value, 0.0) +
               COALESCE(tolerant_metric_value, 0.0) + COALESCE(invasive_graminoids_metric_value, 0.0) + COALESCE(small_tree_metric_value, 0.0) +
-              COALESCE(subcanopy_iv, 0.0) + COALESCE(canopy_iv, 0.0) + COALESCE(biomass_metric_value, 0.0) + COALESCE(stems_ha_wetland_trees, 0.0) +
-              COALESCE(stems_ha_wetland_shrubs, 0.0) + COALESCE(per_unvegetated, 0.0) + COALESCE(per_button_bush, 0.0) +
+              COALESCE(subcanopy_iv, 0.0) + COALESCE(canopy_iv, 0.0) + COALESCE(biomass_metric_value, 0.0) + COALESCE(steams_ha_wetland_trees, 0.0) +
+              COALESCE(steams_ha_wetland_shrubs, 0.0) + COALESCE(per_unvegetated, 0.0) + COALESCE(per_button_bush, 0.0) +
               COALESCE(per_perennial_native_hydrophytes, 0.0) + COALESCE(per_adventives, 0.0) + COALESCE(per_open_water, 0.0) +
               COALESCE(per_unvegetated_open_water, 0.0) AS score FROM alt_vibi_e_index
     UNION
@@ -990,8 +990,8 @@ CREATE MATERIALIZED VIEW alt_metric_calculations AS
               COALESCE(svp_metric_value, 0.0) + COALESCE(ap_ratio_metric_value, 0.0) + COALESCE(fqai_metric_value, 0.0) +
               COALESCE(bryophyte_metric_value, 0.0) + COALESCE(per_hydrophyte_metric_value, 0.0) + COALESCE(sensitive_metric_value, 0.0) +
               COALESCE(tolerant_metric_value, 0.0) + COALESCE(invasive_graminoids_metric_value, 0.0) + COALESCE(small_tree_metric_value, 0.0) +
-              COALESCE(subcanopy_iv, 0.0) + COALESCE(canopy_iv, 0.0) + COALESCE(biomass_metric_value, 0.0) + COALESCE(stems_ha_wetland_trees, 0.0) +
-              COALESCE(stems_ha_wetland_shrubs, 0.0) + COALESCE(per_unvegetated, 0.0) + COALESCE(per_button_bush, 0.0) +
+              COALESCE(subcanopy_iv, 0.0) + COALESCE(canopy_iv, 0.0) + COALESCE(biomass_metric_value, 0.0) + COALESCE(steams_ha_wetland_trees, 0.0) +
+              COALESCE(steams_ha_wetland_shrubs, 0.0) + COALESCE(per_unvegetated, 0.0) + COALESCE(per_button_bush, 0.0) +
               COALESCE(per_perennial_native_hydrophytes, 0.0) + COALESCE(per_adventives, 0.0) + COALESCE(per_open_water, 0.0) +
               COALESCE(per_unvegetated_open_water, 0.0) AS score FROM alt_vibi_ecst_index
     UNION
@@ -1000,8 +1000,8 @@ CREATE MATERIALIZED VIEW alt_metric_calculations AS
               COALESCE(svp_metric_value, 0.0) + COALESCE(ap_ratio_metric_value, 0.0) + COALESCE(fqai_metric_value, 0.0) +
               COALESCE(bryophyte_metric_value, 0.0) + COALESCE(per_hydrophyte_metric_value, 0.0) + COALESCE(sensitive_metric_value, 0.0) +
               COALESCE(tolerant_metric_value, 0.0) + COALESCE(invasive_graminoids_metric_value, 0.0) + COALESCE(small_tree_metric_value, 0.0) +
-              COALESCE(subcanopy_iv, 0.0) + COALESCE(canopy_iv, 0.0) + COALESCE(biomass_metric_value, 0.0) + COALESCE(stems_ha_wetland_trees, 0.0) +
-              COALESCE(stems_ha_wetland_shrubs, 0.0) + COALESCE(per_unvegetated, 0.0) + COALESCE(per_button_bush, 0.0) +
+              COALESCE(subcanopy_iv, 0.0) + COALESCE(canopy_iv, 0.0) + COALESCE(biomass_metric_value, 0.0) + COALESCE(steams_ha_wetland_trees, 0.0) +
+              COALESCE(steams_ha_wetland_shrubs, 0.0) + COALESCE(per_unvegetated, 0.0) + COALESCE(per_button_bush, 0.0) +
               COALESCE(per_perennial_native_hydrophytes, 0.0) + COALESCE(per_adventives, 0.0) + COALESCE(per_open_water, 0.0) +
               COALESCE(per_unvegetated_open_water, 0.0) AS score FROM alt_vibi_sh_index
     UNION
@@ -1010,8 +1010,8 @@ CREATE MATERIALIZED VIEW alt_metric_calculations AS
               COALESCE(svp_metric_value, 0.0) + COALESCE(ap_ratio_metric_value, 0.0) + COALESCE(fqai_metric_value, 0.0) +
               COALESCE(bryophyte_metric_value, 0.0) + COALESCE(per_hydrophyte_metric_value, 0.0) + COALESCE(sensitive_metric_value, 0.0) +
               COALESCE(tolerant_metric_value, 0.0) + COALESCE(invasive_graminoids_metric_value, 0.0) + COALESCE(small_tree_metric_value, 0.0) +
-              COALESCE(subcanopy_iv, 0.0) + COALESCE(canopy_iv, 0.0) + COALESCE(biomass_metric_value, 0.0) + COALESCE(stems_ha_wetland_trees, 0.0) +
-              COALESCE(stems_ha_wetland_shrubs, 0.0) + COALESCE(per_unvegetated, 0.0) + COALESCE(per_button_bush, 0.0) +
+              COALESCE(subcanopy_iv, 0.0) + COALESCE(canopy_iv, 0.0) + COALESCE(biomass_metric_value, 0.0) + COALESCE(steams_ha_wetland_trees, 0.0) +
+              COALESCE(steams_ha_wetland_shrubs, 0.0) + COALESCE(per_unvegetated, 0.0) + COALESCE(per_button_bush, 0.0) +
               COALESCE(per_perennial_native_hydrophytes, 0.0) + COALESCE(per_adventives, 0.0) + COALESCE(per_open_water, 0.0) +
               COALESCE(per_unvegetated_open_water, 0.0) AS score FROM alt_vibi_f_index
   ) a;

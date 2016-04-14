@@ -10,12 +10,14 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.geotools.data.DataStore;
+import org.geotools.data.Transaction;
 import org.geotools.factory.Hints;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.opengis.feature.simple.SimpleFeatureType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static it.geosolutions.vibi.mapper.service.VibiService.createFeatureType;
 
@@ -24,10 +26,14 @@ public class Fds1Service {
     private final static Logger LOGGER = Logger.getLogger(Fds1Service.class);
 
     private static final SimpleFeatureType PLOT_MODULE_HERBACEOUS_INFO_TYPE = createFeatureType("plot_module_herbaceous_info",
-            "plot_no:Integer,module_id:Integer,corner:Integer,depth:Integer,info:String,cover_class_code:Integer");
+            "plot_no:String,module_id:Integer,corner:Integer,depth:Integer,info:String,cover_class_code:Integer");
 
     private static final SimpleFeatureType PLOT_MODULE_HERBACEOUS_TYPE = createFeatureType("plot_module_herbaceous",
-            "plot_no:Integer,module_id:Integer,corner:Integer,depth:Integer,species:String,cover_class_code:Integer");
+            "plot_no:String,module_id:Integer,corner:Integer,depth:Integer,species:String,cover_class_code:Integer");
+
+    private static final SimpleFeatureType FDS1_SPECIES_MISC_INFO = createFeatureType("fds1_species_misc_info",
+            "species:String,plot_no:String,module_id:Integer,voucher_no:String,comment:String," +
+                    "browse_intensity:String,percent_flowering:String,percent_fruiting:String");
 
     private static final SimpleFeatureType PLOT_TYPE = createFeatureType("plot", "");
 
@@ -41,11 +47,11 @@ public class Fds1Service {
 
     private static final SimpleFeatureType COVER_MIDPOINT_LOOKUP = createFeatureType("cover_midpoint_lookup", "");
 
-    public static void processFds1Sheet(Sheet sheet, DataStore store) {
+    public static void processFds1Sheet(Sheet sheet, DataStore store, Transaction transaction) {
         LOGGER.info(String.format("Start parsing spreadsheet '%s'.", sheet.getSheetName()));
         int nextTableIndex = findNextTableIndex(sheet, 0);
         while (nextTableIndex != -1) {
-            nextTableIndex = findNextTableIndex(sheet, processTable(sheet, store, nextTableIndex));
+            nextTableIndex = findNextTableIndex(sheet, processTable(sheet, store, transaction, nextTableIndex));
         }
     }
 
@@ -59,7 +65,10 @@ public class Fds1Service {
                 }
                 String value = Sheets.extract(row, "O", Type.STRING);
                 if (value != null && value.toLowerCase().contains("mod")) {
-                    return index;
+                    Cell cell = sheet.getRow(row.getRowNum() + 3).getCell(Sheets.getIndex("A"), Row.RETURN_BLANK_AS_NULL);
+                    if (cell != null) {
+                        return index;
+                    }
                 }
                 index++;
             }
@@ -71,23 +80,24 @@ public class Fds1Service {
         }
     }
 
-    private static int processTable(Sheet sheet, DataStore store, int startRowIndex) {
+    private static int processTable(Sheet sheet, DataStore store, Transaction transaction, int startRowIndex) {
         List<ModuleAndCorner> modulesAndCorners = getModulesAndCorners(sheet.getRow(startRowIndex + 1));
-        int plotNo = getPlotNo(sheet, startRowIndex);
-        processInfoRow(store, sheet.getRow(startRowIndex + 3), "%open water", plotNo, modulesAndCorners);
-        processInfoRow(store, sheet.getRow(startRowIndex + 4), "%unvegetated open water", plotNo, modulesAndCorners);
-        processInfoRow(store, sheet.getRow(startRowIndex + 5), "%bare ground", plotNo, modulesAndCorners);
-        processInfoRow(store, sheet.getRow(startRowIndex + 6), "%litter cover", plotNo, modulesAndCorners);
-        return processSpeciesRows(store, sheet, startRowIndex, plotNo, modulesAndCorners);
+        String plotNo = getPlotNo(sheet, startRowIndex);
+        processInfoRow(store, transaction, sheet.getRow(startRowIndex + 3), "%open water", plotNo, modulesAndCorners);
+        processInfoRow(store, transaction, sheet.getRow(startRowIndex + 4), "%unvegetated open water", plotNo, modulesAndCorners);
+        processInfoRow(store, transaction, sheet.getRow(startRowIndex + 5), "%bare ground", plotNo, modulesAndCorners);
+        processInfoRow(store, transaction, sheet.getRow(startRowIndex + 6), "%litter cover", plotNo, modulesAndCorners);
+        return processSpeciesRows(store, transaction, sheet, startRowIndex, plotNo, modulesAndCorners);
     }
 
-    private static int getPlotNo(Sheet sheet, int startRowIndex) {
+    private static String getPlotNo(Sheet sheet, int startRowIndex) {
         int siteHeaderRowIndex = startRowIndex;
         try {
             for (int i = 1; i <= 7; i++) {
                 Cell siteCell = sheet.getRow(siteHeaderRowIndex).getCell(Sheets.getIndex("A"), Row.RETURN_BLANK_AS_NULL);
                 if (siteCell != null && Type.STRING.extract(siteCell).toString().trim().equalsIgnoreCase("site")) {
-                    return extractInteger(sheet.getRow(siteHeaderRowIndex + 1).getCell(Sheets.getIndex("A"), Row.RETURN_BLANK_AS_NULL));
+                    return VibiService.extractPlotNo(
+                            sheet.getRow(siteHeaderRowIndex + 1).getCell(Sheets.getIndex("A"), Row.RETURN_BLANK_AS_NULL));
                 }
                 siteHeaderRowIndex++;
             }
@@ -101,8 +111,8 @@ public class Fds1Service {
                 startRowIndex + 1, sheet.getSheetName());
     }
 
-    private static void processInfoRow(DataStore store, Row row, String expectedInfo,
-                                       int plotNo, List<ModuleAndCorner> modulesAndCorners) {
+    private static void processInfoRow(DataStore store, Transaction transaction, Row row, String expectedInfo,
+                                       String plotNo, List<ModuleAndCorner> modulesAndCorners) {
         try {
             String info = extractString(row.getCell(Sheets.getIndex("L"), Row.RETURN_BLANK_AS_NULL)).trim();
             if (!info.equals(expectedInfo)) {
@@ -112,7 +122,7 @@ public class Fds1Service {
             for (ModuleAndCorner moduleAndCorner : modulesAndCorners) {
                 Tuple<Integer, Integer> depthAndCoverClassCode = extractDepthAndCoverClassCode(row, moduleAndCorner);
                 if (depthAndCoverClassCode.first != null || depthAndCoverClassCode.second != null) {
-                    createAndStoreInfoFeature(store, row, plotNo, moduleAndCorner.module, moduleAndCorner.corner,
+                    createAndStoreInfoFeature(store, transaction, row, plotNo, moduleAndCorner.module, moduleAndCorner.corner,
                             info, depthAndCoverClassCode.first, depthAndCoverClassCode.second);
                 }
             }
@@ -124,8 +134,8 @@ public class Fds1Service {
         }
     }
 
-    private static int processSpeciesRows(DataStore store, Sheet sheet, int startRowIndex,
-                                          int plotNo, List<ModuleAndCorner> modulesAndCorners) {
+    private static int processSpeciesRows(DataStore store, Transaction transaction, Sheet sheet, int startRowIndex,
+                                          String plotNo, List<ModuleAndCorner> modulesAndCorners) {
         int index = startRowIndex + 7;
         boolean moreData = true;
         while (moreData) {
@@ -137,7 +147,7 @@ public class Fds1Service {
             }
             String species = extractString(speciesCell);
             try {
-                processSpeciesRow(store, row, plotNo, species, modulesAndCorners);
+                processSpeciesRow(store, transaction, row, plotNo, species, modulesAndCorners);
             } catch (VibiException exception) {
                 throw exception;
             } catch (Exception exception) {
@@ -150,12 +160,16 @@ public class Fds1Service {
     }
 
 
-    private static void processSpeciesRow(DataStore store, Row row, int plotNo,
+    private static void processSpeciesRow(DataStore store, Transaction transaction, Row row, String plotNo,
                                           String species, List<ModuleAndCorner> modulesAndCorners) {
         for (ModuleAndCorner moduleAndCorner : modulesAndCorners) {
             Tuple<Integer, Integer> depthAndCoverClassCode = extractDepthAndCoverClassCode(row, moduleAndCorner);
-            createAndStoreSpeciesFeature(store, row, plotNo, moduleAndCorner.module, moduleAndCorner.corner,
+            createAndStoreSpeciesFeature(store, transaction, row, plotNo, moduleAndCorner.module, moduleAndCorner.corner,
                     species, depthAndCoverClassCode.first, depthAndCoverClassCode.second);
+            createAndStoreMiscFeature(store, transaction, row, species, plotNo, moduleAndCorner.module,
+                    (String) Sheets.extract(row, "M", Type.STRING),
+                    (String) Sheets.extract(row, "N", Type.STRING),
+                    (String) Sheets.extract(row, "K", Type.STRING));
         }
     }
 
@@ -168,22 +182,22 @@ public class Fds1Service {
     }
 
     private static <T> T safeDefault(T original, T fallBack) {
-        if(original == null) {
+        if (original == null) {
             return fallBack;
         }
         return original;
     }
 
-    private static SimpleFeatureBuilder createCommonFeatureBuilder(DataStore store, Row row, int plotNo, int module, int corner,
-                                                                   Integer depth, Integer coverClassCode, SimpleFeatureType type) {
-        VibiService.testForeignKeyExists(store, row, PLOT_TYPE, plotNo);
-        VibiService.createForeignKeyIfNeed(store, MODULE_TYPE, module);
-        VibiService.createForeignKeyIfNeed(store, CORNER_TYPE, corner);
+    private static SimpleFeatureBuilder createCommonFeatureBuilder(DataStore store, Transaction transaction, Row row, String plotNo,
+                                                                   int module, int corner, Integer depth, Integer coverClassCode, SimpleFeatureType type) {
+        VibiService.testForeignKeyExists(store, transaction, row, PLOT_TYPE, plotNo);
+        VibiService.testForeignKeyExists(store, transaction, row, MODULE_TYPE, module);
+        VibiService.testForeignKeyExists(store, transaction, row, CORNER_TYPE, corner);
         if (depth != null) {
-            VibiService.createForeignKeyIfNeed(store, DEPTH_TYPE, depth);
+            VibiService.testForeignKeyExists(store, transaction, row, DEPTH_TYPE, depth);
         }
         if (coverClassCode != null) {
-            VibiService.createForeignKeyIfNeed(store, COVER_MIDPOINT_LOOKUP, coverClassCode);
+            VibiService.testForeignKeyExists(store, transaction, row, COVER_MIDPOINT_LOOKUP, coverClassCode);
         }
         SimpleFeatureBuilder featureBuilder = new SimpleFeatureBuilder(type);
         featureBuilder.featureUserData(Hints.USE_PROVIDED_FID, Boolean.TRUE);
@@ -195,24 +209,40 @@ public class Fds1Service {
         return featureBuilder;
     }
 
-    private static void createAndStoreSpeciesFeature(DataStore store, Row row, int plotNo, int module, int corner,
-                                                     String species, Integer depth, Integer coverClassCode) {
-
-        species = VibiService.testSpeciesForeignKey(store, row, SPECIES_TYPE, species);
-        String id = String.format("%d-%d-%d-%s", plotNo, module, corner, species.toLowerCase());
+    private static void createAndStoreSpeciesFeature(DataStore store, Transaction transaction, Row row, String plotNo, int module,
+                                                     int corner, String species, Integer depth, Integer coverClassCode) {
+        species = VibiService.testSpeciesForeignKey(store, transaction, row, SPECIES_TYPE, species);
+        String id = UUID.randomUUID().toString();
         SimpleFeatureBuilder featureBuilder = createCommonFeatureBuilder(
-                store, row, plotNo, module, corner, depth, coverClassCode, PLOT_MODULE_HERBACEOUS_TYPE);
+                store, transaction, row, plotNo, module, corner, depth, coverClassCode, PLOT_MODULE_HERBACEOUS_TYPE);
         featureBuilder.set("species", species);
-        Store.persistFeature(store, featureBuilder.buildFeature(id));
+        Store.persistFeature(store, transaction, featureBuilder.buildFeature(id));
     }
 
-    private static void createAndStoreInfoFeature(DataStore store, Row row, int plotNo, int module, int corner,
+    private static void createAndStoreMiscFeature(DataStore store, Transaction transaction, Row row, String species, String plotNo, int module,
+                                                  String voucherNo, String comment, String browseIntensity) {
+        species = VibiService.testSpeciesForeignKey(store, transaction, row, SPECIES_TYPE, species);
+        VibiService.testForeignKeyExists(store, transaction, row, PLOT_TYPE, plotNo);
+        VibiService.testForeignKeyExists(store, transaction, row, MODULE_TYPE, module);
+        String id = UUID.randomUUID().toString();
+        SimpleFeatureBuilder featureBuilder = new SimpleFeatureBuilder(FDS1_SPECIES_MISC_INFO);
+        featureBuilder.featureUserData(Hints.USE_PROVIDED_FID, Boolean.TRUE);
+        featureBuilder.set("species", species);
+        featureBuilder.set("plot_no", plotNo);
+        featureBuilder.set("module_id", module);
+        featureBuilder.set("voucher_no", voucherNo);
+        featureBuilder.set("comment", comment);
+        featureBuilder.set("browse_intensity", browseIntensity);
+        Store.persistFeature(store, transaction, featureBuilder.buildFeature(id));
+    }
+
+    private static void createAndStoreInfoFeature(DataStore store, Transaction transaction, Row row, String plotNo, int module, int corner,
                                                   String info, Integer depth, Integer coverClassCode) {
-        String id = String.format("%d-%d-%d-%s", plotNo, module, corner, info.toLowerCase());
+        String id = UUID.randomUUID().toString();
         SimpleFeatureBuilder featureBuilder = createCommonFeatureBuilder(
-                store, row, plotNo, module, corner, depth, coverClassCode, PLOT_MODULE_HERBACEOUS_INFO_TYPE);
+                store, transaction, row, plotNo, module, corner, depth, coverClassCode, PLOT_MODULE_HERBACEOUS_INFO_TYPE);
         featureBuilder.set("info", info);
-        Store.persistFeature(store, featureBuilder.buildFeature(id));
+        Store.persistFeature(store, transaction, featureBuilder.buildFeature(id));
     }
 
     private static List<ModuleAndCorner> getModulesAndCorners(Row row) {

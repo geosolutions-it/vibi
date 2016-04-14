@@ -223,7 +223,7 @@ INSERT INTO oh_status VALUES ('adventive'), ('cryptogeni'), ('native');
   CONSTRAINT species_pkey PRIMARY KEY (scientific_name)
 );
 -- species table will be populated from most recent version of the Ohio EPA-maintained list
-COPY species FROM 'H:/G_drive_Nat_Res_Reinier/Projects/FQAI_updates/OEPA_species_table_12_4_2015.csv' DELIMITER ',' CSV HEADER;
+-- COPY species FROM 'H:/G_drive_Nat_Res_Reinier/Projects/FQAI_updates/OEPA_species_table_12_4_2015.csv' DELIMITER ',' CSV HEADER;
 
 -- From "ENTER PLOT INFO" Tab. Ignore columns after column "BM"
 CREATE TABLE plot (
@@ -319,14 +319,15 @@ CREATE TABLE plot_module_herbaceous_info (
 );
 
 CREATE TABLE fds1_species_misc_info (
-species text references species(scientific_name),
-plot_no text references plot(plot_no) ON UPDATE CASCADE ON DELETE CASCADE,
-module_id int4 references module(module_id),
-voucher_no text,
-comment text,
-browse_intensity text,
-percent_flowering text,
-percent_fruiting text
+  fid text PRIMARY KEY,
+  species text references species(scientific_name),
+  plot_no text references plot(plot_no) ON UPDATE CASCADE ON DELETE CASCADE,
+  module_id int4 references module(module_id),
+  voucher_no text,
+  comment text,
+  browse_intensity text,
+  percent_flowering text,
+  percent_fruiting text
 );
 
 CREATE TABLE plot_module_woody_raw (
@@ -341,14 +342,15 @@ CREATE TABLE plot_module_woody_raw (
 );
 
 CREATE TABLE fds2_species_misc_info (
-species text references species(scientific_name),
-plot_no text references plot(plot_no) ON UPDATE CASCADE ON DELETE CASCADE,
-module_id int4 references module(module_id),
-voucher_no text,
-comment text,
-browse_intensity text,
-percent_flowering text,
-percent_fruiting text
+  fid text PRIMARY KEY,
+  species text references species(scientific_name),
+  plot_no text references plot(plot_no) ON UPDATE CASCADE ON DELETE CASCADE,
+  module_id int4 references module(module_id),
+  voucher_no text,
+  comment text,
+  browse_intensity text,
+  percent_flowering text,
+  percent_fruiting text
 );
 
 CREATE TABLE reduced_fds2_dbh_index_basal_area (
@@ -379,6 +381,8 @@ CREATE TABLE biomass_raw (
 
 CREATE TABLE rule (
   id int8 PRIMARY KEY,
+  priority INTEGER NOT NULL,
+  allow BOOLEAN NOT NULL,
   _user TEXT NOT NULL,
   _group TEXT NOT NULL,
   service TEXT NOT NULL,
@@ -386,8 +390,16 @@ CREATE TABLE rule (
   entity TEXT NOT NULL,
   format TEXT NOT NULL,
   size INT8,
-  UNIQUE (_user, _group, service, operation, entity, format)
+  UNIQUE (_user, priority, allow, _group, service, operation, entity, format)
 );
 
-INSERT INTO rule (id, _user, _group, service, operation, entity, format, size) VALUES
-  (0, 'admin', '*', '*', '*','*', '*', -1);
+INSERT INTO rule (id, allow, priority, _user, _group, service, operation, entity, format, size) VALUES
+  (0, true,  0, 'admin', '*',         '*',        '*',      '*', '*', -1),
+  (1, false, 1, '*',     'everyone',  '*',        '*',      '*', '*', -1),
+  (2, false, 2, '*',     'uploaders', '*',        '*',      '*', '*', -1),
+  (3, false, 3, '*',     'dataread',  '*',        '*',      '*', '*', -1),
+  (4, true,  4, '*',     'everyone',  'crud',     'read',   '*', '*', -1),
+  (5, true,  5, '*',     'uploaders', 'download', '*',      '*', '*', -1),
+  (6, true,  6, '*',     'uploaders', 'crud',     '*',      '*', '*', -1),
+  (7, true,  7, '*',     'dataread',  'dowload',  'export', '*', '*', -1),
+  (8, true,  8, '*',     'uploaders', 'upload',   '*',      '*', '*', -1);

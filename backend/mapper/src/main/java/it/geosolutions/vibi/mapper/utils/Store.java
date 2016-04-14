@@ -4,13 +4,17 @@ import it.geosolutions.vibi.mapper.attributes.Attribute;
 import it.geosolutions.vibi.mapper.exceptions.Validations;
 import it.geosolutions.vibi.mapper.exceptions.VibiException;
 import it.geosolutions.vibi.mapper.sheets.SheetContext;
-import org.geotools.data.*;
+import org.geotools.data.DataStore;
+import org.geotools.data.DataUtilities;
+import org.geotools.data.FeatureStore;
+import org.geotools.data.Transaction;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
 import org.geotools.factory.Hints;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.geotools.filter.identity.FeatureIdImpl;
 import org.opengis.feature.Property;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
@@ -65,21 +69,21 @@ public final class Store {
         }
     }
 
-    public static void persistFeature(DataStore store, SimpleFeature simpleFeature) {
-        persistFeature(store, simpleFeature, true);
+    public static void persistFeature(DataStore store, Transaction transaction, SimpleFeature simpleFeature) {
+        persistFeature(store, transaction, simpleFeature, true);
     }
 
-    public static void persistFeature(DataStore store, SimpleFeature simpleFeature, boolean update) {
-        SimpleFeature foundFeature = find(store, simpleFeature);
+    public static void persistFeature(DataStore store, Transaction transaction, SimpleFeature simpleFeature, boolean update) {
+        SimpleFeature foundFeature = find(store, transaction, simpleFeature);
         if (foundFeature == null) {
-            create(store, simpleFeature);
+            create(store, transaction, simpleFeature);
         } else if (update) {
-            update(store, simpleFeature);
+            update(store, transaction, simpleFeature);
         }
     }
 
-    public static SimpleFeature find(DataStore store, final SimpleFeature simpleFeature) {
-        return new InTransaction(store, simpleFeature.getFeatureType().getTypeName(), "find") {
+    public static SimpleFeature find(DataStore store, Transaction transaction, final SimpleFeature simpleFeature) {
+        return new InTransaction(store, transaction, simpleFeature.getFeatureType().getTypeName()) {
 
             SimpleFeature feature;
 
@@ -100,8 +104,8 @@ public final class Store {
         }.feature;
     }
 
-    public static void create(DataStore store, final SimpleFeature simpleFeature) {
-        new InTransaction(store, simpleFeature.getFeatureType().getTypeName(), "create") {
+    public static void create(DataStore store, Transaction transaction, final SimpleFeature simpleFeature) {
+        new InTransaction(store, transaction, simpleFeature.getFeatureType().getTypeName()) {
 
             @Override
             public void doWork(FeatureStore<SimpleFeatureType, SimpleFeature> featureStore) throws Exception {
@@ -110,7 +114,20 @@ public final class Store {
         };
     }
 
-    public static void update(DataStore store, final SimpleFeature simpleFeature) {
+    public static void delete(DataStore store, Transaction transaction, final String featureTypeName, final String featureId) {
+        new InTransaction(store, transaction, featureTypeName) {
+
+            @Override
+            public void doWork(FeatureStore<SimpleFeatureType, SimpleFeature> featureStore) throws Exception {
+                String encodedId = featureId;
+                encodedId = encodedId.replace("'", "''");
+                encodedId = URLEncoder.encode(encodedId);
+                featureStore.removeFeatures(filterFactory.id(new FeatureIdImpl(encodedId)));
+            }
+        };
+    }
+
+    public static void update(DataStore store, Transaction transaction, final SimpleFeature simpleFeature) {
 
         final List<Property> properties = filterInvalidProperties(simpleFeature.getProperties());
 
@@ -118,7 +135,7 @@ public final class Store {
             return;
         }
 
-        new InTransaction(store, simpleFeature.getFeatureType().getTypeName(), "update") {
+        new InTransaction(store, transaction, simpleFeature.getFeatureType().getTypeName()) {
 
             @Override
             public void doWork(FeatureStore<SimpleFeatureType, SimpleFeature> featureStore) throws Exception {
@@ -158,22 +175,13 @@ public final class Store {
 
     private static abstract class InTransaction {
 
-        public InTransaction(DataStore store, String featureTypeName, String handle) {
-            Transaction transaction = new DefaultTransaction(handle);
+        public InTransaction(DataStore store, Transaction transaction, String featureTypeName) {
             FeatureStore<SimpleFeatureType, SimpleFeature> featureStore = getFeatureStore(store, featureTypeName);
             featureStore.setTransaction(transaction);
             try {
                 doWork(featureStore);
-                transaction.commit();
             } catch (Exception exception) {
                 throw new RuntimeException(String.format("Error persisting feature of type '%s'.", featureTypeName), exception);
-            } finally {
-                try {
-                    transaction.close();
-                } catch (Exception exception) {
-                    throw new RuntimeException(String.format("Error closing transaction when persisting feature of type '%s'.",
-                            featureTypeName), exception);
-                }
             }
         }
 
