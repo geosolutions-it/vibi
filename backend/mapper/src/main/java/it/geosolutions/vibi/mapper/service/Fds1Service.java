@@ -121,10 +121,8 @@ public class Fds1Service {
             }
             for (ModuleAndCorner moduleAndCorner : modulesAndCorners) {
                 Tuple<Integer, Integer> depthAndCoverClassCode = extractDepthAndCoverClassCode(row, moduleAndCorner);
-                if (depthAndCoverClassCode.first != null || depthAndCoverClassCode.second != null) {
-                    createAndStoreInfoFeature(store, transaction, row, plotNo, moduleAndCorner.module, moduleAndCorner.corner,
-                            info, depthAndCoverClassCode.first, depthAndCoverClassCode.second);
-                }
+                createAndStoreInfoFeature(store, transaction, row, plotNo, moduleAndCorner.module, moduleAndCorner.corner,
+                        info, depthAndCoverClassCode.first, depthAndCoverClassCode.second);
             }
         } catch (VibiException exception) {
             throw exception;
@@ -178,7 +176,7 @@ public class Fds1Service {
         Integer depth = depthCell == null ? null : extractInteger(depthCell);
         Cell coverClassCodeCell = row.getCell(moduleAndCorner.coverClassCodeIndex, Row.RETURN_BLANK_AS_NULL);
         Integer coverClassCode = depthCell == null ? null : extractInteger(coverClassCodeCell);
-        return Tuple.tuple(safeDefault(depth, 0), safeDefault(coverClassCode, 0));
+        return Tuple.tuple(depth, coverClassCode);
     }
 
     private static <T> T safeDefault(T original, T fallBack) {

@@ -65,8 +65,7 @@ DROP MATERIALIZED VIEW IF EXISTS woody_plot_x_species_matrix CASCADE;
 CREATE MATERIALIZED VIEW herbaceous_tot_cov AS
   SELECT a.plot_no, a.species, sum(b.midpoint) as tot_cov
   FROM plot_module_herbaceous a
-    LEFT JOIN cover_midpoint_lookup b ON a.cover_class_code = b.cover_code
-  WHERE a.cover_class_code NOTNULL
+    LEFT OUTER JOIN cover_midpoint_lookup b ON a.cover_class_code = b.cover_code
   GROUP BY a.plot_no, a.species;
   
 CREATE MATERIALIZED VIEW alt_herbaceous_avg_cov AS
