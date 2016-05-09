@@ -25,7 +25,15 @@ Ext.override(mxp.widgets.JSONEntityRESTManager, {
     exportJSONText: 'Export to JSON',
     exportCSVText: 'Export to CSV',
     exportEXCELText: 'Export to EXCEL',
+    exportSQLText: 'Full DB Dump',
     defaultMaxResults: 100000,
+    /** Valid Export Formats are:
+        - 'JSON' (GeoJSON)
+        - 'CSV'  (CSV)
+        - 'XSL'  (Excel)
+        - 'SQL'  (Full DB dump)
+     */
+    exportFormats: ['JSON', 'CSV', 'XSL'],
     
     /**
      * Save the given url, using the given Authorization header, with fileName name
@@ -57,8 +65,97 @@ Ext.override(mxp.widgets.JSONEntityRESTManager, {
      */
     getEditorBBar: function(entity, defaultPageSize, store, plugins) {
         
+        // If it is not defined, use the default
+        if(!entity.exportFormats){
+            entity.exportFormats = this.exportFormats;
+        }
+        // if no export formats are set, do not display the export button
+        if(!entity.exportFormats || entity.exportFormats.length == 0){
+            return [
+                new Ext.PagingToolbar({
+                            pageSize: entity.pageSize || defaultPageSize,
+                            store: store,
+                            displayInfo: true,
+                            displayMsg: 'Displaying data {0} - {1} of {2}',
+                            emptyMsg: "No data to display",
+                            plugins: plugins
+                })
+            ];
+        }
+        
         // Results can be limited in the configuration file
         var maxResults = entity.maxResults || this.defaultMaxResults; 
+        
+        var selectedFormats = [];
+        for (var index = 0; index < entity.exportFormats.length; ++index){
+            switch(entity.exportFormats[index]){
+                case 'CSV':
+                    selectedFormats.push({
+                        iconCls: "archive_ic",
+                        text: this.exportCSVText,
+                        handler: function() {                    
+
+                            var exportUrl = this.me.baseUrl + entity.basePath + "/export?format=csv&maxResults="+maxResults;
+                            this.me.downloadFile(exportUrl, this.me.auth, entity.name.replace(/\s/g, "_").toLowerCase() +".csv");
+                        },
+                        scope: {
+                            me: this,
+                            entity: entity
+                        }
+                    });
+                    break;
+                case 'XSL':
+                    selectedFormats.push({
+                        iconCls: "archive_ic",
+                        text: this.exportEXCELText,
+                        handler: function() {                    
+
+                            var exportUrl = this.me.baseUrl + entity.basePath + "/export?format=excel&maxResults="+maxResults;
+                            this.me.downloadFile(exportUrl, this.me.auth, entity.name.replace(/\s/g, "_").toLowerCase() +".xls");
+                            
+                        },
+                        scope: {
+                            me: this,
+                            entity: entity
+                        }
+                    });
+                    break;
+                case 'JSON':
+                    selectedFormats.push({
+                        iconCls: "archive_ic",
+                        text: this.exportJSONText,
+                        handler: function() {  
+                            
+                            var exportUrl = this.me.baseUrl + entity.basePath + "?maxResults="+maxResults;
+                            this.me.downloadFile(exportUrl, this.me.auth, entity.name.replace(/\s/g, "_").toLowerCase() +".json");
+                            
+                        },
+                        scope: {
+                            me: this,
+                            entity: entity
+                        }
+                    });
+                    break;
+                case 'SQL':
+                    selectedFormats.push({
+                        iconCls: "archive_ic",
+                        text: this.exportSQLText,
+                        handler: function() {  
+                            var exportUrl = this.me.baseUrl + "mvc/vibi/sqlDump" ;
+                            this.me.downloadFile(exportUrl, this.me.auth, "full.dump");
+                        },
+                        scope: {
+                            me: this,
+                            entity: entity
+                        }
+                    });
+                    break;
+                default:
+                    break;
+            }
+            
+        };
+        
         
         return [
             new Ext.PagingToolbar({
@@ -79,49 +176,7 @@ Ext.override(mxp.widgets.JSONEntityRESTManager, {
                 menu:{
                     xtype: "menu",
                     showSeparator: true, 
-                    items: [
-                    {
-                        iconCls: "archive_ic",
-                        text: this.exportCSVText,
-                        handler: function() {                    
-
-                            var exportUrl = this.me.baseUrl + entity.basePath + "/export?format=csv&maxResults="+maxResults;
-                            this.me.downloadFile(exportUrl, this.me.auth, entity.name.replace(/\s/g, "_").toLowerCase() +".csv");
-                        },
-                        scope: {
-                            me: this,
-                            entity: entity
-                        }
-                    },
-                    {
-                        iconCls: "archive_ic",
-                        text: this.exportEXCELText,
-                        handler: function() {                    
-
-                            var exportUrl = this.me.baseUrl + entity.basePath + "/export?format=excel&maxResults="+maxResults;
-                            this.me.downloadFile(exportUrl, this.me.auth, entity.name.replace(/\s/g, "_").toLowerCase() +".xls");
-                            
-                        },
-                        scope: {
-                            me: this,
-                            entity: entity
-                        }
-                    },
-                    {
-                        iconCls: "archive_ic",
-                        text: this.exportJSONText,
-                        handler: function() {  
-                            
-                            var exportUrl = this.me.baseUrl + entity.basePath + "?maxResults="+maxResults;
-                            this.me.downloadFile(exportUrl, this.me.auth, entity.name.replace(/\s/g, "_").toLowerCase() +".json");
-                            
-                        },
-                        scope: {
-                            me: this,
-                            entity: entity
-                        }
-                    }
-                    ]
+                    items: selectedFormats
                 }
             }
         ]
