@@ -178,7 +178,18 @@ mxp.widgets.VibiGeoBatchConsumerGrid = Ext.extend(mxp.widgets.GeoBatchConsumerGr
                 dataIndex: 'details',
                 width: 180,
                 renderer: function(val) {
-                    return (val && val.progress && val.progress.length > 0) ? (val.progress[0].task || '') : ''
+                    var progressObj = false;
+                    if (val && val.actions && val.actions.length > 0) {
+                        if(val.actions[0].progress && val.actions[0].progress.length > 0){
+                            progressObj = val.actions[0].progress[0];
+                        }
+                    }else if (val && val.progress && val.progress.length > 0) {
+                        progressObj = val.progress[0];
+                    }
+                    if(progressObj){
+                        return progressObj.task || '';
+                    }
+                    return '';
                 }
             }, {
                 id: 'progress',
@@ -186,8 +197,16 @@ mxp.widgets.VibiGeoBatchConsumerGrid = Ext.extend(mxp.widgets.GeoBatchConsumerGr
                 dataIndex: 'details',
                 width: 180,
                 renderer: function(val, metaData, record, rowIndex, colIndex, store) {
-                    if (val && val.progress && val.progress.length > 0) {
-                        var progress = Math.round((val.progress[0].progress || 0) * 100) / 100;
+                    var progressObj = false;
+                    if (val && val.actions && val.actions.length > 0) {
+                        if(val.actions[0].progress && val.actions[0].progress.length > 0){
+                            progressObj = val.actions[0].progress[0];
+                        }
+                    }else if (val && val.progress && val.progress.length > 0) {
+                        progressObj = val.progress[0];
+                    }
+                    if(progressObj){
+                        var progress = Math.round((progressObj.progress || 0) * 100) / 100;
                         var id = Ext.id();
 
                         return '<span id="progressbar-' + id + '">' +

@@ -15,10 +15,6 @@
 
     <EventConsumerConfiguration>
 
-	<listenerId>Logger</listenerId>
-        <listenerId>Cumulator</listenerId>
-        <listenerId>Status</listenerId>
-
         <MapperConfiguration>
             <id>mapper</id>
             <name>mapper</name>
@@ -32,6 +28,9 @@
             <passwd>vibi</passwd>
             <outputPath>/tmp</outputPath>
             <dbUrl>jdbc:postgresql://localhost:5432/vibi</dbUrl>
+            <listenerId>Logger</listenerId>
+            <listenerId>Cumulator</listenerId>
+            <listenerId>Status</listenerId>
         </MapperConfiguration>
 
     </EventConsumerConfiguration>
