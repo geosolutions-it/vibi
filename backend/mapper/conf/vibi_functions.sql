@@ -25,14 +25,14 @@ BEGIN
   REFRESH MATERIALIZED VIEW plot_module_woody_dbh;
   REFRESH MATERIALIZED VIEW plot_module_woody_dbh_cm;
   REFRESH MATERIALIZED VIEW reduced_fds2_counts;
-  REFRESH MATERIALIZED VIEW reduced_fds2_tot_steams;
-  REFRESH MATERIALIZED VIEW calculations_reduced_fds2_steams;
+  REFRESH MATERIALIZED VIEW reduced_fds2_tot_stems;
+  REFRESH MATERIALIZED VIEW calculations_reduced_fds2_stems;
   REFRESH MATERIALIZED VIEW reduced_fds2_counts_cm2;
   REFRESH MATERIALIZED VIEW reduced_fds2_basal_cm2_ha;
   REFRESH MATERIALIZED VIEW reduced_fds2_basal_cm2_ha_tot;
   REFRESH MATERIALIZED VIEW reduced_fds2_basal_cm2_ha_all_spp;
   REFRESH MATERIALIZED VIEW reduced_fds2_class_freq;
-  REFRESH MATERIALIZED VIEW reduced_fds2_tot_steams_all_spp;
+  REFRESH MATERIALIZED VIEW reduced_fds2_tot_stems_all_spp;
   REFRESH MATERIALIZED VIEW reduced_fds2_den;
   REFRESH MATERIALIZED VIEW reduced_fds2_rel_den;
   REFRESH MATERIALIZED VIEW reduced_fds2_rel_den_calculations;
