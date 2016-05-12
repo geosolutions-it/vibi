@@ -1814,7 +1814,7 @@
                             "name": "dbh_class_index"
                         },
                         {
-                            "header": "Dbh Cm",
+                            "header": "Dbh Cm&sup2;",
                             "mapping": "dbh_cm",
                             "dataIndex": "dbh_cm",
                             "sortable": true,
@@ -5395,7 +5395,7 @@
                             "name": "dbh_class_index"
                         },
                         {
-                            "header": "Dbh Cm",
+                            "header": "Dbh Cm&sup2;",
                             "mapping": "dbh_cm",
                             "dataIndex": "dbh_cm",
                             "sortable": true,
