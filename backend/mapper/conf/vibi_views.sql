@@ -66,14 +66,14 @@ CREATE MATERIALIZED VIEW herbaceous_tot_cov AS
   SELECT a.plot_no, a.species, sum(b.midpoint) as tot_cov
   FROM plot_module_herbaceous a
     LEFT OUTER JOIN cover_midpoint_lookup b ON a.cover_class_code = b.cover_code
-  GROUP BY a.plot_no, a.species;
+  GROUP BY a.plot_no, a.group_id, a.species;
   
 CREATE MATERIALIZED VIEW alt_herbaceous_avg_cov AS
   SELECT a.plot_no, a.species, avg(b.midpoint) as avg_cov
   FROM plot_module_herbaceous a
     LEFT JOIN cover_midpoint_lookup b ON a.cover_class_code = b.cover_code
   WHERE a.cover_class_code NOTNULL
-  GROUP BY a.plot_no, a.species; 
+  GROUP BY a.plot_no, a.group_id, a.species;
 
 CREATE MATERIALIZED VIEW herbaceous_site_cov AS
   SELECT plot_no, sum(tot_cov) as site_cov
@@ -98,44 +98,44 @@ CREATE MATERIALIZED VIEW alt_herbaceous_relative_cover AS
     LEFT JOIN alt_herbaceous_site_cov b ON a.plot_no = b.plot_no;
 
 CREATE MATERIALIZED VIEW plot_module_woody_dbh AS
-  SELECT row_number() OVER () AS view_id, plot_no, module_id, species, dbh_class_index, dbh_class, count::numeric / sub AS count
+  SELECT row_number() OVER () AS view_id, plot_no, module_id, group_id, species, dbh_class_index, dbh_class, count::numeric / sub AS count
   FROM plot_module_woody_raw
   WHERE dbh_class_index <= 10;
 
 CREATE MATERIALIZED VIEW plot_module_woody_dbh_cm AS
-  SELECT row_number() OVER () AS view_id, plot_no, module_id, species, dbh_class_index, dbh_class, (count::numeric / 2) ^ 2 * pi() AS dbh_cm
+  SELECT row_number() OVER () AS view_id, plot_no, module_id, group_id, species, dbh_class_index, dbh_class, (count::numeric / 2) ^ 2 * pi() AS dbh_cm
   FROM plot_module_woody_raw
   WHERE dbh_class_index > 10;
 
 CREATE MATERIALIZED VIEW reduced_fds2_counts AS
-  SELECT plot_no, species, dbh_class_index, sum(count::numeric) as counts
+  SELECT plot_no, group_id, species, dbh_class_index, sum(count::numeric) as counts
   FROM plot_module_woody_dbh
-  GROUP BY plot_no, species, dbh_class_index
+  GROUP BY plot_no, group_id, species, dbh_class_index
   UNION
-  SELECT plot_no, species, -1 as dbh_class_index, count(*) as counts
+  SELECT plot_no, group_id, species, -1 as dbh_class_index, count(*) as counts
   FROM plot_module_woody_dbh_cm
-  GROUP BY plot_no, species;
+  GROUP BY plot_no, group_id, species;
 
 CREATE MATERIALIZED VIEW reduced_fds2_counts_cm2 AS
-  SELECT plot_no, species, dbh_class_index, sum(dbh_cm::numeric) as counts
+  SELECT plot_no, group_id, species, dbh_class_index, sum(dbh_cm::numeric) as counts
   FROM plot_module_woody_dbh_cm
-  GROUP BY plot_no, species, dbh_class_index;
+  GROUP BY plot_no, group_id, species, dbh_class_index;
 
 CREATE MATERIALIZED VIEW reduced_fds2_class_freq AS
   SELECT plot_no, species, count(*) as class_freq, count(*) / 12.0 as rel_class_freq
   FROM reduced_fds2_counts
-  GROUP BY plot_no, species;
+  GROUP BY plot_no, group_id, species;
   
 CREATE MATERIALIZED VIEW alt_reduced_fds2_freq AS 
   SELECT a.plot_no, a.species, count(DISTINCT a.module_id::numeric) / b.total_modules::numeric AS alt_rel_freq
   FROM plot_module_woody_raw a LEFT JOIN plot b ON a.plot_no = b.plot_no
-  GROUP BY species, a.plot_no, b.total_modules;
+  GROUP BY a.group_id, species, a.plot_no, b.total_modules;
 
 CREATE MATERIALIZED VIEW reduced_fds2_tot_stems AS
   SELECT b.plot_no, a.species, sum(a.counts) as tot_stems, (sum(a.counts) / b.plot_size_for_cover_data_area_ha) as tot_stems_ha
   FROM reduced_fds2_counts a
     LEFT JOIN plot AS b ON a.plot_no = b.plot_no
-  GROUP BY b.plot_no, a.species;
+  GROUP BY b.plot_no, a.group_id, a.species;
 
 CREATE MATERIALIZED VIEW reduced_fds2_tot_stems_all_spp AS
   SELECT plot_no, sum(tot_stems_ha) as tot_stems_all_spp
@@ -143,7 +143,7 @@ CREATE MATERIALIZED VIEW reduced_fds2_tot_stems_all_spp AS
   GROUP BY plot_no;
 
 CREATE MATERIALIZED VIEW reduced_fds2_basal_cm2 AS
-  SELECT a.plot_no, a.species, a.dbh_class_index, (a.counts * b.basal_area) as basal_cm2
+  SELECT a.plot_no, a.group_id, a.species, a.dbh_class_index, (a.counts * b.basal_area) as basal_cm2
   FROM reduced_fds2_counts a
     LEFT JOIN reduced_fds2_dbh_index_basal_area b
       ON a.dbh_class_index = b.dbh_class_index
@@ -152,7 +152,7 @@ CREATE MATERIALIZED VIEW reduced_fds2_basal_cm2 AS
   SELECT * FROM reduced_fds2_counts_cm2 as basal_cm2;
 
 CREATE MATERIALIZED VIEW reduced_fds2_basal_cm2_ha AS
-  SELECT a.plot_no, a.species, a.dbh_class_index, (a.counts * b.basal_area) / c.plot_size_for_cover_data_area_ha AS basal_cm2_ha
+  SELECT a.plot_no, a.group_id, a.species, a.dbh_class_index, (a.counts * b.basal_area) / c.plot_size_for_cover_data_area_ha AS basal_cm2_ha
   FROM reduced_fds2_counts a
     LEFT JOIN reduced_fds2_dbh_index_basal_area b
       ON a.dbh_class_index = b.dbh_class_index
@@ -160,7 +160,7 @@ CREATE MATERIALIZED VIEW reduced_fds2_basal_cm2_ha AS
       ON a.plot_no = c.plot_no
   WHERE a.dbh_class_index >= 0
   UNION
-  SELECT a.plot_no, a.species, a.dbh_class_index, a.counts / b.plot_size_for_cover_data_area_ha AS basal_cm2_ha
+  SELECT a.plot_no, a.group_id, a.species, a.dbh_class_index, a.counts / b.plot_size_for_cover_data_area_ha AS basal_cm2_ha
   FROM reduced_fds2_counts_cm2 a
     LEFT JOIN plot b
       ON a.plot_no = b.plot_no;
@@ -168,7 +168,7 @@ CREATE MATERIALIZED VIEW reduced_fds2_basal_cm2_ha AS
 CREATE MATERIALIZED VIEW reduced_fds2_basal_cm2_ha_tot AS
   SELECT plot_no, species, sum(basal_cm2_ha) AS tot_cm2_ha
   FROM reduced_fds2_basal_cm2_ha
-  GROUP BY plot_no, species;
+  GROUP BY plot_no, group_id, species;
 
 CREATE MATERIALIZED VIEW reduced_fds2_basal_cm2_ha_all_spp AS
   SELECT plot_no, sum(basal_cm2_ha) AS  tot_cm2_all_spp

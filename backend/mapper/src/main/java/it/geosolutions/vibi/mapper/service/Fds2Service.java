@@ -25,11 +25,11 @@ public class Fds2Service {
     private final static Logger LOGGER = Logger.getLogger(Fds2Service.class);
 
     private static final SimpleFeatureType PLOT_MODULE_WOODY_RAW = createFeatureType("plot_module_woody_raw",
-            "plot_no:Integer,sub:Double,module_id:Integer,species:String,dbh_class:String,dbh_class_index:Integer,count:String");
+            "plot_no:Integer,sub:Double,module_id:Integer,species:String,dbh_class:String,dbh_class_index:Integer,count:String,group_id:String");
 
     private static final SimpleFeatureType FDS2_SPECIES_MISC_INFO = createFeatureType("fds2_species_misc_info",
             "species:String,plot_no:String,module_id:Integer,voucher_no:String,comment:String," +
-                    "browse_intensity:String,percent_flowering:String,percent_fruiting:String");
+                    "browse_intensity:String,percent_flowering:String,percent_fruiting:String,group_id:String");
 
     private static final SimpleFeatureType PLOT_TYPE = createFeatureType("plot", "");
 
@@ -105,7 +105,8 @@ public class Fds2Service {
         Object sub = Type.DOUBLE.extract(row.getCell(Sheets.getIndex("F"), Row.RETURN_BLANK_AS_NULL));
         Object module = Type.INTEGER.extract(row.getCell(Sheets.getIndex("G"), Row.RETURN_BLANK_AS_NULL));
         Object species = Type.STRING.extract(speciesCell);
-        createAndStoreMiscFeature(store, transaction, row, (String) species, plotNo, (int) module,
+        String groupId = UUID.randomUUID().toString();
+        createAndStoreMiscFeature(store, transaction, row, groupId, (String) species, plotNo, (int) module,
                 (String) Sheets.extract(row, "I", Type.STRING),
                 (String) Sheets.extract(row, "J", Type.STRING),
                 (String) Sheets.extract(row, "K", Type.STRING));
@@ -113,20 +114,21 @@ public class Fds2Service {
             Cell countCell = row.getCell(dbhClass.columnIndex, Row.RETURN_BLANK_AS_NULL);
             if (countCell != null) {
                 Object count = Type.STRING.extract(countCell);
-                processDbhClass(store, transaction, row, dbhClass.dbhClass, dbhClass.dbhClassIndex, plotNo, sub, module, species, count);
+                processDbhClass(store, transaction, row, groupId, dbhClass.dbhClass, dbhClass.dbhClassIndex, plotNo, sub, module, species, count);
             }
         }
         return plotNo;
     }
 
-    private static void createAndStoreMiscFeature(DataStore store, Transaction transaction, Row row, String species, String plotNo, int module,
-                                                  String voucherNo, String comment, String browseIntensity) {
+    private static void createAndStoreMiscFeature(DataStore store, Transaction transaction, Row row, String groupId, String species, String plotNo,
+                                                  int module, String voucherNo, String comment, String browseIntensity) {
         species = VibiService.testSpeciesForeignKey(store, transaction, row, SPECIES_TYPE, species);
         VibiService.testForeignKeyExists(store, transaction, row, PLOT_TYPE, plotNo);
         VibiService.testForeignKeyExists(store, transaction, row, MODULE_TYPE, module);
         String id = UUID.randomUUID().toString();
         SimpleFeatureBuilder featureBuilder = new SimpleFeatureBuilder(FDS2_SPECIES_MISC_INFO);
         featureBuilder.featureUserData(Hints.USE_PROVIDED_FID, Boolean.TRUE);
+        featureBuilder.set("group_id", groupId);
         featureBuilder.set("species", species);
         featureBuilder.set("plot_no", plotNo);
         featureBuilder.set("module_id", module);
@@ -136,8 +138,8 @@ public class Fds2Service {
         Store.persistFeature(store, transaction, featureBuilder.buildFeature(id));
     }
 
-    private static void processDbhClass(DataStore store, Transaction transaction, Row row, Object dbhClass, Object dbhClassIndex, Object plotNo,
-                                        Object sub, Object module, Object species, Object count) {
+    private static void processDbhClass(DataStore store, Transaction transaction, Row row, String groupId, Object dbhClass,
+                                        Object dbhClassIndex, Object plotNo, Object sub, Object module, Object species, Object count) {
         VibiService.testForeignKeyExists(store, transaction, row, PLOT_TYPE, plotNo);
         species = VibiService.testSpeciesForeignKey(store, transaction, row, SPECIES_TYPE, (String) species);
         VibiService.testForeignKeyExists(store, transaction, row, MODULE_TYPE, module);
@@ -145,6 +147,7 @@ public class Fds2Service {
         SimpleFeatureBuilder featureBuilder = new SimpleFeatureBuilder(PLOT_MODULE_WOODY_RAW);
         featureBuilder.featureUserData(Hints.USE_PROVIDED_FID, Boolean.TRUE);
         String id = UUID.randomUUID().toString();
+        featureBuilder.set("group_id", plotNo);
         featureBuilder.set("plot_no", plotNo);
         featureBuilder.set("sub", sub);
         featureBuilder.set("module_id", module);

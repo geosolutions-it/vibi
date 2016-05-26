@@ -304,7 +304,8 @@ CREATE TABLE plot_module_herbaceous (
   corner int4 references corner(corner),
   depth integer references depth(depth),
   species text references species(scientific_name),
-  cover_class_code integer references cover_midpoint_lookup(cover_code)
+  cover_class_code integer references cover_midpoint_lookup(cover_code),
+  group_id text
   --  cover_class_midpoint numeric references cover_midpoint_lookup(midpoint)  -- this should be auto populated based on code above
 );
 
@@ -327,7 +328,8 @@ CREATE TABLE fds1_species_misc_info (
   comment text,
   browse_intensity text,
   percent_flowering text,
-  percent_fruiting text
+  percent_fruiting text,
+  group_id text
 );
 
 CREATE TABLE plot_module_woody_raw (
@@ -338,6 +340,7 @@ CREATE TABLE plot_module_woody_raw (
   species text references species(scientific_name),
   dbh_class text references dbh_class(dbh_class),
   dbh_class_index int4,
+  group_id text,
   count text
 );
 
@@ -350,7 +353,8 @@ CREATE TABLE fds2_species_misc_info (
   comment text,
   browse_intensity text,
   percent_flowering text,
-  percent_fruiting text
+  percent_fruiting text,
+  group_id text
 );
 
 CREATE TABLE reduced_fds2_dbh_index_basal_area (

@@ -2861,19 +2861,19 @@
                             "filterable": true,
                             "name" : "biomass_metric_value"
                         }, {
-                            "header" : "Steams HA Wetland Trees",
-                            "mapping" : "steams_ha_wetland_trees",
-                            "dataIndex" : "steams_ha_wetland_trees",
+                            "header" : "Stems HA Wetland Trees",
+                            "mapping" : "stems_ha_wetland_trees",
+                            "dataIndex" : "stems_ha_wetland_trees",
                             "sortable": true,
                             "filterable": true,
-                            "name" : "steams_ha_wetland_trees"
+                            "name" : "stems_ha_wetland_trees"
                         }, {
-                            "header" : "Steams HA Wetland Shrubs",
-                            "mapping" : "steams_ha_wetland_shrubs",
-                            "dataIndex" : "steams_ha_wetland_shrubs",
+                            "header" : "Stems HA Wetland Shrubs",
+                            "mapping" : "stems_ha_wetland_shrubs",
+                            "dataIndex" : "stems_ha_wetland_shrubs",
                             "sortable": true,
                             "filterable": true,
-                            "name" : "steams_ha_wetland_shrubs"
+                            "name" : "stems_ha_wetland_shrubs"
                         },
                         {
                             "header": "Per Unvegetated",
@@ -3032,12 +3032,12 @@
                             "name" : "biomass_metric_value"
                         },
                         {
-                            "mapping" : "steamsHaWetlandTrees",
-                            "name" : "steams_ha_wetland_trees"
+                            "mapping" : "stemsHaWetlandTrees",
+                            "name" : "stems_ha_wetland_trees"
                         },
                         {
-                            "mapping" : "steamsHaWetlandShrubs",
-                            "name" : "steams_ha_wetland_shrubs"
+                            "mapping" : "stemsHaWetlandShrubs",
+                            "name" : "stems_ha_wetland_shrubs"
                         },
                         {
                           "mapping": "perUnvegetated",
@@ -3401,19 +3401,19 @@
                             "filterable": true,
                             "name" : "biomass_metric_value"
                         }, {
-                            "header" : "Steams HA Wetland Trees",
-                            "mapping" : "steams_ha_wetland_trees",
-                            "dataIndex" : "steams_ha_wetland_trees",
+                            "header" : "Stems HA Wetland Trees",
+                            "mapping" : "stems_ha_wetland_trees",
+                            "dataIndex" : "stems_ha_wetland_trees",
                             "sortable": true,
                             "filterable": true,
-                            "name" : "steams_ha_wetland_trees"
+                            "name" : "stems_ha_wetland_trees"
                         }, {
-                            "header" : "Steams HA Wetland Shrubs",
-                            "mapping" : "steams_ha_wetland_shrubs",
-                            "dataIndex" : "steams_ha_wetland_shrubs",
+                            "header" : "Stems HA Wetland Shrubs",
+                            "mapping" : "stems_ha_wetland_shrubs",
+                            "dataIndex" : "stems_ha_wetland_shrubs",
                             "sortable": true,
                             "filterable": true,
-                            "name" : "steams_ha_wetland_shrubs"
+                            "name" : "stems_ha_wetland_shrubs"
                         },
                         {
                             "header": "Per Unvegetated",
@@ -3572,12 +3572,12 @@
                             "name" : "biomass_metric_value"
                         },
                         {
-                            "mapping" : "steamsHaWetlandTrees",
-                            "name" : "steams_ha_wetland_trees"
+                            "mapping" : "stemsHaWetlandTrees",
+                            "name" : "stems_ha_wetland_trees"
                         },
                         {
-                            "mapping" : "steamsHaWetlandShrubs",
-                            "name" : "steams_ha_wetland_shrubs"
+                            "mapping" : "stemsHaWetlandShrubs",
+                            "name" : "stems_ha_wetland_shrubs"
                         },
                         {
                           "mapping": "perUnvegetated",
@@ -6428,19 +6428,19 @@
                             "filterable": true,
                             "name" : "biomass_metric_value"
                         }, {
-                            "header" : "Steams HA Wetland Trees",
-                            "mapping" : "steams_ha_wetland_trees",
-                            "dataIndex" : "steams_ha_wetland_trees",
+                            "header" : "Stems HA Wetland Trees",
+                            "mapping" : "stems_ha_wetland_trees",
+                            "dataIndex" : "stems_ha_wetland_trees",
                             "sortable": true,
                             "filterable": true,
-                            "name" : "steams_ha_wetland_trees"
+                            "name" : "stems_ha_wetland_trees"
                         }, {
-                            "header" : "Steams HA Wetland Shrubs",
-                            "mapping" : "steams_ha_wetland_shrubs",
-                            "dataIndex" : "steams_ha_wetland_shrubs",
+                            "header" : "Stems HA Wetland Shrubs",
+                            "mapping" : "stems_ha_wetland_shrubs",
+                            "dataIndex" : "stems_ha_wetland_shrubs",
                             "sortable": true,
                             "filterable": true,
-                            "name" : "steams_ha_wetland_shrubs"
+                            "name" : "stems_ha_wetland_shrubs"
                         },
                         {
                             "header": "Per Unvegetated",
@@ -6599,12 +6599,12 @@
                             "name" : "biomass_metric_value"
                         },
                         {
-                            "mapping" : "steamsHaWetlandTrees",
-                            "name" : "steams_ha_wetland_trees"
+                            "mapping" : "stemsHaWetlandTrees",
+                            "name" : "stems_ha_wetland_trees"
                         },
                         {
-                            "mapping" : "steamsHaWetlandShrubs",
-                            "name" : "steams_ha_wetland_shrubs"
+                            "mapping" : "stemsHaWetlandShrubs",
+                            "name" : "stems_ha_wetland_shrubs"
                         },
                         {
                           "mapping": "perUnvegetated",

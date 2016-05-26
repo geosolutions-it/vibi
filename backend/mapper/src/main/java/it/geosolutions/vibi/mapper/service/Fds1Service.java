@@ -29,11 +29,11 @@ public class Fds1Service {
             "plot_no:String,module_id:Integer,corner:Integer,depth:Integer,info:String,cover_class_code:Integer");
 
     private static final SimpleFeatureType PLOT_MODULE_HERBACEOUS_TYPE = createFeatureType("plot_module_herbaceous",
-            "plot_no:String,module_id:Integer,corner:Integer,depth:Integer,species:String,cover_class_code:Integer");
+            "plot_no:String,module_id:Integer,corner:Integer,depth:Integer,species:String,cover_class_code:Integer,group_id:String");
 
     private static final SimpleFeatureType FDS1_SPECIES_MISC_INFO = createFeatureType("fds1_species_misc_info",
             "species:String,plot_no:String,module_id:Integer,voucher_no:String,comment:String," +
-                    "browse_intensity:String,percent_flowering:String,percent_fruiting:String");
+                    "browse_intensity:String,percent_flowering:String,percent_fruiting:String,group_id:String");
 
     private static final SimpleFeatureType PLOT_TYPE = createFeatureType("plot", "");
 
@@ -144,8 +144,9 @@ public class Fds1Service {
                 continue;
             }
             String species = extractString(speciesCell);
+            String groupId = UUID.randomUUID().toString();
             try {
-                processSpeciesRow(store, transaction, row, plotNo, species, modulesAndCorners);
+                processSpeciesRow(store, transaction, row, groupId, plotNo, species, modulesAndCorners);
             } catch (VibiException exception) {
                 throw exception;
             } catch (Exception exception) {
@@ -158,13 +159,13 @@ public class Fds1Service {
     }
 
 
-    private static void processSpeciesRow(DataStore store, Transaction transaction, Row row, String plotNo,
+    private static void processSpeciesRow(DataStore store, Transaction transaction, Row row, String groupId, String plotNo,
                                           String species, List<ModuleAndCorner> modulesAndCorners) {
         for (ModuleAndCorner moduleAndCorner : modulesAndCorners) {
             Tuple<Integer, Integer> depthAndCoverClassCode = extractDepthAndCoverClassCode(row, moduleAndCorner);
-            createAndStoreSpeciesFeature(store, transaction, row, plotNo, moduleAndCorner.module, moduleAndCorner.corner,
+            createAndStoreSpeciesFeature(store, transaction, row, groupId, plotNo, moduleAndCorner.module, moduleAndCorner.corner,
                     species, depthAndCoverClassCode.first, depthAndCoverClassCode.second);
-            createAndStoreMiscFeature(store, transaction, row, species, plotNo, moduleAndCorner.module,
+            createAndStoreMiscFeature(store, transaction, row, groupId, species, plotNo, moduleAndCorner.module,
                     (String) Sheets.extract(row, "M", Type.STRING),
                     (String) Sheets.extract(row, "N", Type.STRING),
                     (String) Sheets.extract(row, "K", Type.STRING));
@@ -186,7 +187,7 @@ public class Fds1Service {
         return original;
     }
 
-    private static SimpleFeatureBuilder createCommonFeatureBuilder(DataStore store, Transaction transaction, Row row, String plotNo,
+    private static SimpleFeatureBuilder createCommonFeatureBuilder(DataStore store, Transaction transaction, Row row, String groupId, String plotNo,
                                                                    int module, int corner, Integer depth, Integer coverClassCode, SimpleFeatureType type) {
         VibiService.testForeignKeyExists(store, transaction, row, PLOT_TYPE, plotNo);
         VibiService.testForeignKeyExists(store, transaction, row, MODULE_TYPE, module);
@@ -199,6 +200,9 @@ public class Fds1Service {
         }
         SimpleFeatureBuilder featureBuilder = new SimpleFeatureBuilder(type);
         featureBuilder.featureUserData(Hints.USE_PROVIDED_FID, Boolean.TRUE);
+        if (groupId != null) {
+            featureBuilder.set("group_id", groupId);
+        }
         featureBuilder.set("plot_no", plotNo);
         featureBuilder.set("module_id", module);
         featureBuilder.set("corner", corner);
@@ -207,24 +211,25 @@ public class Fds1Service {
         return featureBuilder;
     }
 
-    private static void createAndStoreSpeciesFeature(DataStore store, Transaction transaction, Row row, String plotNo, int module,
+    private static void createAndStoreSpeciesFeature(DataStore store, Transaction transaction, Row row, String groupId, String plotNo, int module,
                                                      int corner, String species, Integer depth, Integer coverClassCode) {
         species = VibiService.testSpeciesForeignKey(store, transaction, row, SPECIES_TYPE, species);
         String id = UUID.randomUUID().toString();
         SimpleFeatureBuilder featureBuilder = createCommonFeatureBuilder(
-                store, transaction, row, plotNo, module, corner, depth, coverClassCode, PLOT_MODULE_HERBACEOUS_TYPE);
+                store, transaction, row, groupId, plotNo, module, corner, depth, coverClassCode, PLOT_MODULE_HERBACEOUS_TYPE);
         featureBuilder.set("species", species);
         Store.persistFeature(store, transaction, featureBuilder.buildFeature(id));
     }
 
-    private static void createAndStoreMiscFeature(DataStore store, Transaction transaction, Row row, String species, String plotNo, int module,
-                                                  String voucherNo, String comment, String browseIntensity) {
+    private static void createAndStoreMiscFeature(DataStore store, Transaction transaction, Row row, String groupId, String species, String plotNo,
+                                                  int module, String voucherNo, String comment, String browseIntensity) {
         species = VibiService.testSpeciesForeignKey(store, transaction, row, SPECIES_TYPE, species);
         VibiService.testForeignKeyExists(store, transaction, row, PLOT_TYPE, plotNo);
         VibiService.testForeignKeyExists(store, transaction, row, MODULE_TYPE, module);
         String id = UUID.randomUUID().toString();
         SimpleFeatureBuilder featureBuilder = new SimpleFeatureBuilder(FDS1_SPECIES_MISC_INFO);
         featureBuilder.featureUserData(Hints.USE_PROVIDED_FID, Boolean.TRUE);
+        featureBuilder.set("group_id", groupId);
         featureBuilder.set("species", species);
         featureBuilder.set("plot_no", plotNo);
         featureBuilder.set("module_id", module);
@@ -238,7 +243,7 @@ public class Fds1Service {
                                                   String info, Integer depth, Integer coverClassCode) {
         String id = UUID.randomUUID().toString();
         SimpleFeatureBuilder featureBuilder = createCommonFeatureBuilder(
-                store, transaction, row, plotNo, module, corner, depth, coverClassCode, PLOT_MODULE_HERBACEOUS_INFO_TYPE);
+                store, transaction, row, null, plotNo, module, corner, depth, coverClassCode, PLOT_MODULE_HERBACEOUS_INFO_TYPE);
         featureBuilder.set("info", info);
         Store.persistFeature(store, transaction, featureBuilder.buildFeature(id));
     }
