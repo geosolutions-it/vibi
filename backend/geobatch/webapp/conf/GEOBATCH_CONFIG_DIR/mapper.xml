@@ -14,7 +14,10 @@
     </EventGeneratorConfiguration>
 
     <EventConsumerConfiguration>
-
+        
+        <listenerId>Logger</listenerId>
+        <listenerId>Cumulator</listenerId>
+        
         <MapperConfiguration>
             <id>mapper</id>
             <name>mapper</name>
