@@ -20,7 +20,6 @@ Build the WAR package
 
 > \MapStore> ant war -Dapplication=vibi/frontend
 
-
 # BackEnd
 The Backend is based on GeoStore, GeoBatch with some custom actions and a custom OpenSDI-Manager2
 
@@ -44,3 +43,7 @@ Get OpenSDI code and move to the C047 branch
 Build the war package
 
 > \OpenSDI-Manager2\src> mvn clean install
+
+# Documentation
+
+For more information please refer to the [online documentation](https://github.com/geosolutions-it/vibi/wiki/Documentation)
