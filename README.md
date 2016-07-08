@@ -5,9 +5,12 @@ To run this application, clone this repository inside the "application" folder o
 Then run (or build) MapStore with the *application=\<folder_name>* environment variable.
 
 ### Example:
+Get MapStore code
+> git clone https://github.com/geosolutions-it/MapStore.git
 
-Get the code
-> \MapStore\mapcomposer\app\applications> git clone __ADD_THIS_REPO_URL__
+Get VIBI frontend code
+> cd MapStore\mapcomposer\app\applications  
+> \MapStore\mapcomposer\app\applications> git clone https://github.com/geosolutions-it/vibi.git
 
 Run in debug mode
 
@@ -19,4 +22,25 @@ Build the WAR package
 
 
 # BackEnd
+The Backend is based on GeoStore, GeoBatch with some custom actions and a custom OpenSDI-Manager2
 
+## GeoBatch
+
+Build the WAR package
+
+> cd backend  
+> \backend> mvn clean install
+
+## GeoStore
+
+Follow the [GeoStore documentation](https://github.com/geosolutions-it/geostore/wiki/Building-instructions)
+
+## OpenSDI-Manager2
+
+Get OpenSDI code and move to the C047 branch
+
+> git clone https://github.com/geosolutions-it/OpenSDI-Manager2.git --branch C047
+
+Build the war package
+
+> \OpenSDI-Manager2\src> mvn clean install
