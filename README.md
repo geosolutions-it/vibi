@@ -4,7 +4,7 @@ MapStore application for VIBI web manager
 To run this application, clone this repository inside the "application" folder of a MapStore instance.
 Then run (or build) MapStore with the *application=\<folder_name>* environment variable.
 
-### Example:
+## VIBI
 Get MapStore code
 > git clone https://github.com/geosolutions-it/MapStore.git
 
@@ -12,7 +12,7 @@ Get VIBI frontend code
 > cd MapStore\mapcomposer\app\applications  
 > \MapStore\mapcomposer\app\applications> git clone https://github.com/geosolutions-it/vibi.git
 
-Run in debug mode
+To run in debug mode
 
 > \MapStore> ant debug -Dapplication=vibi/frontend
 
@@ -30,6 +30,8 @@ Build the WAR package
 > cd backend  
 > \backend> mvn clean install
 
+For more information about GeoBatch, please refer to the [online documentation](https://github.com/geosolutions-it/geobatch/wiki)
+
 ## GeoStore
 
 Follow the [GeoStore documentation](https://github.com/geosolutions-it/geostore/wiki/Building-instructions)
@@ -43,6 +45,23 @@ Get OpenSDI code and move to the C047 branch
 Build the war package
 
 > \OpenSDI-Manager2\src> mvn clean install
+
+# Example of deploy
+
+The backend applications should be deployed in different tomcats due to dependencies conflicts.
+
+## Tomcat Frontend
+
+ - GeoStore
+ - MapStore
+
+## Tomcat Backend 1
+
+- GeoBatch
+
+## Tomcat Backend 2
+
+- OpenSDI-Manager2
 
 # Documentation
 
