@@ -686,7 +686,9 @@
                         },
                         {
                             "mapping": "dateTimer",
-                            "name": "timestamptz"
+                            "name": "timestamptz",
+                            "type": "date",
+                            "dateFormat": "time"
                         },
                         {
                             "mapping": "party",
@@ -2078,8 +2080,10 @@
                             "name": "plot_no"
                         },
                         {
-                            "mapping": "dateTime",
-                            "name": "date_time"
+                            "mapping": "date_time",
+                            "name": "date_time",
+                            "type": "date",
+                            "dateFormat": "time"
                         },
                         {
                             "mapping": "moduleId",
@@ -2239,8 +2243,10 @@
                             "name": "plot_no"
                         },
                         {
-                            "mapping": "dateTime",
-                            "name": "date_time"
+                            "mapping": "date_time",
+                            "name": "date_time",
+                            "type": "date",
+                            "dateFormat": "time"
                         },
                         {
                             "mapping": "moduleId",
@@ -4274,7 +4280,9 @@
                         },
                         {
                             "mapping": "dateTimer",
-                            "name": "timestamptz"
+                            "name": "timestamptz",
+                            "type": "date",
+                            "dateFormat": "time"
                         },
                         {
                             "mapping": "party",
@@ -5657,8 +5665,10 @@
                             "name": "plot_no"
                         },
                         {
-                            "mapping": "dateTime",
-                            "name": "date_time"
+                            "mapping": "date_time",
+                            "name": "date_time",
+                            "type": "date",
+                            "dateFormat": "time"
                         },
                         {
                             "mapping": "moduleId",
@@ -5817,8 +5827,10 @@
                             "name": "plot_no"
                         },
                         {
-                            "mapping": "dateTime",
-                            "name": "date_time"
+                            "mapping": "date_time",
+                            "name": "date_time",
+                            "type": "date",
+                            "dateFormat": "time"
                         },
                         {
                             "mapping": "moduleId",
