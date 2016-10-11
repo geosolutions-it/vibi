@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/geosolutions-it/vibi.png?label=ready&title=Ready)](https://waffle.io/geosolutions-it/vibi)
 # FrontEnd
 MapStore application for VIBI web manager
 
