@@ -71,6 +71,15 @@ public abstract class Type {
         if (clazz.isInstance(rawValue)) {
             return rawValue;
         }
+        if (clazz.equals(String.class) && rawValue instanceof Number) {
+            // hacker for plot number, module numbers and cornern numbers
+            Number number = (Number) rawValue;
+            double numberAsDouble =  number.doubleValue();
+            if ((numberAsDouble == Math.floor(numberAsDouble)) && !Double.isInfinite(numberAsDouble)) {
+                // is an integer so avoid any trailing zeros
+                return String.valueOf(number.intValue());
+            }
+        }
         Object value = Converters.convert(rawValue, clazz);
         if (value == null) {
             throw new VibiException("Cannot convert value '%s' of sheet '%s', row '%d' and column '%s' to '%s'.",

@@ -1263,6 +1263,22 @@
                             "name": "plot_no"
                         },
                         {
+                            "header": "Monitoring Event",
+                            "mapping": "monitoring_event",
+                            "dataIndex": "monitoring_event",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "header": "Date Timer",
+                            "mapping": "timestamptz",
+                            "dataIndex": "timestamptz",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "timestamptz"
+                        },
+                        {
                             "header": "Module Id",
                             "mapping": "module_id",
                             "dataIndex": "module_id",
@@ -1308,6 +1324,20 @@
                     "editHeight": 270,
                     "editTitle": "Edit Plot Module Herbaceous",
                     "fields": [
+                        {
+                            "mapping": "plotNo",
+                            "name": "plot_no"
+                        },
+                        {
+                            "mapping": "monitoringEvent",
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "mapping": "dateTimer",
+                            "name": "timestamptz",
+                            "type": "date",
+                            "dateFormat": "time"
+                        },
                         {
                             "mapping": "plotNo",
                             "name": "plot_no"
@@ -1367,6 +1397,22 @@
                             "name": "plot_no"
                         },
                         {
+                            "header": "Monitoring Event",
+                            "mapping": "monitoring_event",
+                            "dataIndex": "monitoring_event",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "header": "Date Timer",
+                            "mapping": "timestamptz",
+                            "dataIndex": "timestamptz",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "timestamptz"
+                        },
+                        {
                             "header": "Module Id",
                             "mapping": "module_id",
                             "dataIndex": "module_id",
@@ -1415,6 +1461,16 @@
                         {
                           "mapping": "plotNo",
                           "name": "plot_no"
+                        },
+                        {
+                          "mapping": "monitoringEvent",
+                          "name": "monitoring_event"
+                        },
+                        {
+                          "mapping": "dateTimer",
+                          "name": "timestamptz",
+                          "type": "date",
+                          "dateFormat": "time"
                         },
                         {
                           "mapping": "moduleId",
@@ -1471,6 +1527,22 @@
                             "name": "plot_no"
                         },
                         {
+                            "header": "Monitoring Event",
+                            "mapping": "monitoring_event",
+                            "dataIndex": "monitoring_event",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "header": "Date Timer",
+                            "mapping": "timestamptz",
+                            "dataIndex": "timestamptz",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "timestamptz"
+                        },
+                        {
                             "header": "Species",
                             "mapping": "species",
                             "dataIndex": "species",
@@ -1495,6 +1567,16 @@
                         {
                             "mapping": "plotNo",
                             "name": "plot_no"
+                        },
+                        {
+                            "mapping": "monitoringEvent",
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "mapping": "dateTimer",
+                            "name": "timestamptz",
+                            "type": "date",
+                            "dateFormat": "time"
                         },
                         {
                             "mapping": "species",
@@ -1537,6 +1619,22 @@
                             "sortable": true,
                             "filterable": true,
                             "name": "plot_no"
+                        },
+                        {
+                            "header": "Monitoring Event",
+                            "mapping": "monitoring_event",
+                            "dataIndex": "monitoring_event",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "header": "Date Timer",
+                            "mapping": "timestamptz",
+                            "dataIndex": "timestamptz",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "timestamptz"
                         },
                         {
                             "header": "Sub",
@@ -1597,6 +1695,16 @@
                             "name": "plot_no"
                         },
                         {
+                            "mapping": "monitoringEvent",
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "mapping": "dateTimer",
+                            "name": "timestamptz",
+                            "type": "date",
+                            "dateFormat": "time"
+                        },
+                        {
                             "mapping": "sub",
                             "name": "sub"
                         },
@@ -1655,6 +1763,22 @@
                             "name": "plot_no"
                         },
                         {
+                            "header": "Monitoring Event",
+                            "mapping": "monitoring_event",
+                            "dataIndex": "monitoring_event",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "header": "Date Timer",
+                            "mapping": "timestamptz",
+                            "dataIndex": "timestamptz",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "timestamptz"
+                        },
+                        {
                             "header": "Module Id",
                             "mapping": "module_id",
                             "dataIndex": "module_id",
@@ -1703,6 +1827,16 @@
                         {
                           "mapping": "plotNo",
                           "name": "plot_no"
+                        },
+                        {
+                          "mapping": "monitoringEvent",
+                          "name": "monitoring_event"
+                        },
+                        {
+                          "mapping": "dateTimer",
+                          "name": "timestamptz",
+                          "type": "date",
+                          "dateFormat": "time"
                         },
                         {
                           "mapping": "moduleId",
@@ -1759,6 +1893,22 @@
                             "name": "plot_no"
                         },
                         {
+                            "header": "Monitoring Event",
+                            "mapping": "monitoring_event",
+                            "dataIndex": "monitoring_event",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "header": "Date Timer",
+                            "mapping": "timestamptz",
+                            "dataIndex": "timestamptz",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "timestamptz"
+                        },
+                        {
                             "header": "Module Id",
                             "mapping": "module_id",
                             "dataIndex": "module_id",
@@ -1807,6 +1957,16 @@
                         {
                             "mapping": "plotNo",
                             "name": "plot_no"
+                        },
+                        {
+                            "mapping": "monitoringEvent",
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "mapping": "dateTimer",
+                            "name": "timestamptz",
+                            "type": "date",
+                            "dateFormat": "time"
                         },
                         {
                             "mapping": "moduleId",
@@ -1863,6 +2023,22 @@
                             "name": "plot_no"
                         },
                         {
+                            "header": "Monitoring Event",
+                            "mapping": "monitoring_event",
+                            "dataIndex": "monitoring_event",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "header": "Date Timer",
+                            "mapping": "timestamptz",
+                            "dataIndex": "timestamptz",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "timestamptz"
+                        },
+                        {
                             "header": "Species",
                             "mapping": "species",
                             "dataIndex": "species",
@@ -1903,6 +2079,16 @@
                         {
                             "mapping": "plotNo",
                             "name": "plot_no"
+                        },
+                        {
+                            "mapping": "monitoringEvent",
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "mapping": "dateTimer",
+                            "name": "timestamptz",
+                            "type": "date",
+                            "dateFormat": "time"
                         },
                         {
                             "mapping": "species",
@@ -1953,6 +2139,22 @@
                             "sortable": true,
                             "filterable": true,
                             "name": "plot_no"
+                        },
+                        {
+                            "header": "Monitoring Event",
+                            "mapping": "monitoring_event",
+                            "dataIndex": "monitoring_event",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "header": "Date Timer",
+                            "mapping": "timestamptz",
+                            "dataIndex": "timestamptz",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "timestamptz"
                         },
                         {
                             "header": "Date Time",
@@ -2053,6 +2255,16 @@
                             "name": "plot_no"
                         },
                         {
+                            "mapping": "monitoringEvent",
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "mapping": "dateTimer",
+                            "name": "timestamptz",
+                            "type": "date",
+                            "dateFormat": "time"
+                        },
+                        {
                             "mapping": "dateTime",
                             "name": "date_time"
                         },
@@ -2129,6 +2341,22 @@
                             "sortable": true,
                             "filterable": true,
                             "name": "plot_no"
+                        },
+                        {
+                            "header": "Monitoring Event",
+                            "mapping": "monitoring_event",
+                            "dataIndex": "monitoring_event",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "header": "Date Timer",
+                            "mapping": "timestamptz",
+                            "dataIndex": "timestamptz",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "timestamptz"
                         },
                         {
                             "header": "Date Time",
@@ -2211,6 +2439,16 @@
                         {
                             "mapping": "plotNo",
                             "name": "plot_no"
+                        },
+                        {
+                            "mapping": "monitoringEvent",
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "mapping": "dateTimer",
+                            "name": "timestamptz",
+                            "type": "date",
+                            "dateFormat": "time"
                         },
                         {
                             "mapping": "dateTime",
@@ -2460,6 +2698,22 @@
                             "name": "plot_no"
                         },
                         {
+                            "header": "Monitoring Event",
+                            "mapping": "monitoring_event",
+                            "dataIndex": "monitoring_event",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "header": "Date Timer",
+                            "mapping": "timestamptz",
+                            "dataIndex": "timestamptz",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "timestamptz"
+                        },
+                        {
                             "header": "Module Id",
                             "mapping": "module_id",
                             "dataIndex": "module_id",
@@ -2520,6 +2774,16 @@
                         {
                             "mapping": "plotNo",
                             "name": "plot_no"
+                        },
+                        {
+                            "mapping": "monitoringEvent",
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "mapping": "dateTimer",
+                            "name": "timestamptz",
+                            "type": "date",
+                            "dateFormat": "time"
                         },
                         {
                             "mapping": "moduleId",
@@ -2588,6 +2852,22 @@
                             "name": "plot_no"
                         },
                         {
+                            "header": "Monitoring Event",
+                            "mapping": "monitoring_event",
+                            "dataIndex": "monitoring_event",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "header": "Date Timer",
+                            "mapping": "timestamptz",
+                            "dataIndex": "timestamptz",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "timestamptz"
+                        },
+                        {
                             "header": "Module Id",
                             "mapping": "module_id",
                             "dataIndex": "module_id",
@@ -2650,6 +2930,16 @@
                             "name": "plot_no"
                         },
                         {
+                            "mapping": "monitoringEvent",
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "mapping": "dateTimer",
+                            "name": "timestamptz",
+                            "type": "date",
+                            "dateFormat": "time"
+                        },
+                        {
                             "mapping": "moduleId",
                             "name": "module_id"
                         },
@@ -2700,12 +2990,28 @@
                     "canSearch": true,
                     "columns": [
                         {
-                            "header" : "Plot No",
-                            "mapping" : "plot_no",
-                            "dataIndex" : "plot_no",
+                            "header": "Plot No",
+                            "mapping": "plot_no",
+                            "dataIndex": "plot_no",
                             "sortable": true,
                             "filterable": true,
-                            "name" : "plot_no"
+                            "name": "plot_no"
+                        },
+                        {
+                            "header": "Monitoring Event",
+                            "mapping": "monitoring_event",
+                            "dataIndex": "monitoring_event",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "header": "Date Timer",
+                            "mapping": "timestamptz",
+                            "dataIndex": "timestamptz",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "timestamptz"
                         }, {
                             "header" : "Vibi Type",
                             "mapping" : "vibi_type",
@@ -2924,8 +3230,18 @@
                     "editTitle": "Edit Metrics",
                     "fields": [
                         {
-                            "mapping" : "plotNo",
-                            "name" : "plot_no"
+                            "mapping": "plotNo",
+                            "name": "plot_no"
+                        },
+                        {
+                            "mapping": "monitoringEvent",
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "mapping": "dateTimer",
+                            "name": "timestamptz",
+                            "type": "date",
+                            "dateFormat": "time"
                         },
                         {
                             "mapping" : "vibiType",
@@ -3088,6 +3404,22 @@
                             "name": "plot_no"
                         },
                         {
+                            "header": "Monitoring Event",
+                            "mapping": "monitoring_event",
+                            "dataIndex": "monitoring_event",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "header": "Date Timer",
+                            "mapping": "timestamptz",
+                            "dataIndex": "timestamptz",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "timestamptz"
+                        },
+                        {
                             "header": "Species",
                             "mapping": "species",
                             "dataIndex": "species",
@@ -3112,6 +3444,16 @@
                         {
                             "mapping": "plotNo",
                             "name": "plot_no"
+                        },
+                        {
+                            "mapping": "monitoringEvent",
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "mapping": "dateTimer",
+                            "name": "timestamptz",
+                            "type": "date",
+                            "dateFormat": "time"
                         },
                         {
                             "mapping": "species",
@@ -3156,6 +3498,22 @@
                             "name": "plot_no"
                         },
                         {
+                            "header": "Monitoring Event",
+                            "mapping": "monitoring_event",
+                            "dataIndex": "monitoring_event",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "header": "Date Timer",
+                            "mapping": "timestamptz",
+                            "dataIndex": "timestamptz",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "timestamptz"
+                        },
+                        {
                             "header": "Species",
                             "mapping": "species",
                             "dataIndex": "species",
@@ -3196,6 +3554,16 @@
                         {
                             "mapping": "plotNo",
                             "name": "plot_no"
+                        },
+                        {
+                            "mapping": "monitoringEvent",
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "mapping": "dateTimer",
+                            "name": "timestamptz",
+                            "type": "date",
+                            "dateFormat": "time"
                         },
                         {
                             "mapping": "species",
@@ -3240,12 +3608,28 @@
                     "canSearch": true,
                     "columns": [
                         {
-                            "header" : "Plot No",
-                            "mapping" : "plot_no",
-                            "dataIndex" : "plot_no",
+                            "header": "Plot No",
+                            "mapping": "plot_no",
+                            "dataIndex": "plot_no",
                             "sortable": true,
                             "filterable": true,
-                            "name" : "plot_no"
+                            "name": "plot_no"
+                        },
+                        {
+                            "header": "Monitoring Event",
+                            "mapping": "monitoring_event",
+                            "dataIndex": "monitoring_event",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "header": "Date Timer",
+                            "mapping": "timestamptz",
+                            "dataIndex": "timestamptz",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "timestamptz"
                         }, {
                             "header" : "Vibi Type",
                             "mapping" : "vibi_type",
@@ -3464,8 +3848,18 @@
                     "editTitle": "Edit Alt Metrics",
                     "fields": [
                         {
-                            "mapping" : "plotNo",
-                            "name" : "plot_no"
+                            "mapping": "plotNo",
+                            "name": "plot_no"
+                        },
+                        {
+                            "mapping": "monitoringEvent",
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "mapping": "dateTimer",
+                            "name": "timestamptz",
+                            "type": "date",
+                            "dateFormat": "time"
                         },
                         {
                             "mapping" : "vibiType",
@@ -4208,7 +4602,7 @@
                         {
                             "mapping": "plotNo",
                             "name": "plot_no"
-                        },
+                        }
                         {
                             "mapping": "projectName",
                             "name": "project_name"
@@ -4820,6 +5214,22 @@
                             "name": "plot_no"
                         },
                         {
+                            "header": "Monitoring Event",
+                            "mapping": "monitoring_event",
+                            "dataIndex": "monitoring_event",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "header": "Date Timer",
+                            "mapping": "timestamptz",
+                            "dataIndex": "timestamptz",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "timestamptz"
+                        },
+                        {
                             "header": "Module Id",
                             "mapping": "module_id",
                             "dataIndex": "module_id",
@@ -4868,6 +5278,16 @@
                         {
                             "mapping": "plotNo",
                             "name": "plot_no"
+                        },
+                        {
+                            "mapping": "monitoringEvent",
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "mapping": "dateTimer",
+                            "name": "timestamptz",
+                            "type": "date",
+                            "dateFormat": "time"
                         },
                         {
                             "mapping": "moduleId",
@@ -4924,6 +5344,22 @@
                             "name": "plot_no"
                         },
                         {
+                            "header": "Monitoring Event",
+                            "mapping": "monitoring_event",
+                            "dataIndex": "monitoring_event",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "header": "Date Timer",
+                            "mapping": "timestamptz",
+                            "dataIndex": "timestamptz",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "timestamptz"
+                        },
+                        {
                             "header": "Module Id",
                             "mapping": "module_id",
                             "dataIndex": "module_id",
@@ -4972,6 +5408,16 @@
                         {
                           "mapping": "plotNo",
                           "name": "plot_no"
+                        },
+                        {
+                          "mapping": "monitoringEvent",
+                          "name": "monitoring_event"
+                        },
+                        {
+                          "mapping": "dateTimer",
+                          "name": "timestamptz",
+                          "type": "date",
+                          "dateFormat": "time"
                         },
                         {
                           "mapping": "moduleId",
@@ -5028,6 +5474,22 @@
                             "name": "plot_no"
                         },
                         {
+                            "header": "Monitoring Event",
+                            "mapping": "monitoring_event",
+                            "dataIndex": "monitoring_event",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "header": "Date Timer",
+                            "mapping": "timestamptz",
+                            "dataIndex": "timestamptz",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "timestamptz"
+                        },
+                        {
                             "header": "Species",
                             "mapping": "species",
                             "dataIndex": "species",
@@ -5052,6 +5514,16 @@
                         {
                             "mapping": "plotNo",
                             "name": "plot_no"
+                        },
+                        {
+                            "mapping": "monitoringEvent",
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "mapping": "dateTimer",
+                            "name": "timestamptz",
+                            "type": "date",
+                            "dateFormat": "time"
                         },
                         {
                             "mapping": "species",
@@ -5094,6 +5566,22 @@
                             "sortable": true,
                             "filterable": true,
                             "name": "plot_no"
+                        },
+                        {
+                            "header": "Monitoring Event",
+                            "mapping": "monitoring_event",
+                            "dataIndex": "monitoring_event",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "header": "Date Timer",
+                            "mapping": "timestamptz",
+                            "dataIndex": "timestamptz",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "timestamptz"
                         },
                         {
                             "header": "Sub",
@@ -5154,6 +5642,16 @@
                             "name": "plot_no"
                         },
                         {
+                            "mapping": "monitoringEvent",
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "mapping": "dateTimer",
+                            "name": "timestamptz",
+                            "type": "date",
+                            "dateFormat": "time"
+                        },
+                        {
                             "mapping": "sub",
                             "name": "sub"
                         },
@@ -5212,6 +5710,22 @@
                             "name": "plot_no"
                         },
                         {
+                            "header": "Monitoring Event",
+                            "mapping": "monitoring_event",
+                            "dataIndex": "monitoring_event",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "header": "Date Timer",
+                            "mapping": "timestamptz",
+                            "dataIndex": "timestamptz",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "timestamptz"
+                        },
+                        {
                             "header": "Module Id",
                             "mapping": "module_id",
                             "dataIndex": "module_id",
@@ -5260,6 +5774,16 @@
                         {
                           "mapping": "plotNo",
                           "name": "plot_no"
+                        },
+                        {
+                          "mapping": "monitoringEvent",
+                          "name": "monitoring_event"
+                        },
+                        {
+                          "mapping": "dateTimer",
+                          "name": "timestamptz",
+                          "type": "date",
+                          "dateFormat": "time"
                         },
                         {
                           "mapping": "moduleId",
@@ -5316,6 +5840,22 @@
                             "name": "plot_no"
                         },
                         {
+                            "header": "Monitoring Event",
+                            "mapping": "monitoring_event",
+                            "dataIndex": "monitoring_event",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "header": "Date Timer",
+                            "mapping": "timestamptz",
+                            "dataIndex": "timestamptz",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "timestamptz"
+                        },
+                        {
                             "header": "Module Id",
                             "mapping": "module_id",
                             "dataIndex": "module_id",
@@ -5364,6 +5904,16 @@
                         {
                             "mapping": "plotNo",
                             "name": "plot_no"
+                        },
+                        {
+                            "mapping": "monitoringEvent",
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "mapping": "dateTimer",
+                            "name": "timestamptz",
+                            "type": "date",
+                            "dateFormat": "time"
                         },
                         {
                             "mapping": "moduleId",
@@ -5420,6 +5970,22 @@
                             "name": "plot_no"
                         },
                         {
+                            "header": "Monitoring Event",
+                            "mapping": "monitoring_event",
+                            "dataIndex": "monitoring_event",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "header": "Date Timer",
+                            "mapping": "timestamptz",
+                            "dataIndex": "timestamptz",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "timestamptz"
+                        },
+                        {
                             "header": "Species",
                             "mapping": "species",
                             "dataIndex": "species",
@@ -5460,6 +6026,16 @@
                         {
                             "mapping": "plotNo",
                             "name": "plot_no"
+                        },
+                        {
+                            "mapping": "monitoringEvent",
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "mapping": "dateTimer",
+                            "name": "timestamptz",
+                            "type": "date",
+                            "dateFormat": "time"
                         },
                         {
                             "mapping": "species",
@@ -5510,6 +6086,22 @@
                             "sortable": true,
                             "filterable": true,
                             "name": "plot_no"
+                        },
+                        {
+                            "header": "Monitoring Event",
+                            "mapping": "monitoring_event",
+                            "dataIndex": "monitoring_event",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "header": "Date Timer",
+                            "mapping": "timestamptz",
+                            "dataIndex": "timestamptz",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "timestamptz"
                         },
                         {
                             "header": "Date Time",
@@ -5610,6 +6202,16 @@
                             "name": "plot_no"
                         },
                         {
+                            "mapping": "monitoringEvent",
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "mapping": "dateTimer",
+                            "name": "timestamptz",
+                            "type": "date",
+                            "dateFormat": "time"
+                        },
+                        {
                             "mapping": "dateTime",
                             "name": "date_time"
                         },
@@ -5686,6 +6288,22 @@
                             "sortable": true,
                             "filterable": true,
                             "name": "plot_no"
+                        },
+                        {
+                            "header": "Monitoring Event",
+                            "mapping": "monitoring_event",
+                            "dataIndex": "monitoring_event",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "header": "Date Timer",
+                            "mapping": "timestamptz",
+                            "dataIndex": "timestamptz",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "timestamptz"
                         },
                         {
                             "header": "Date Time",
@@ -5768,6 +6386,16 @@
                         {
                             "mapping": "plotNo",
                             "name": "plot_no"
+                        },
+                        {
+                            "mapping": "monitoringEvent",
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "mapping": "dateTimer",
+                            "name": "timestamptz",
+                            "type": "date",
+                            "dateFormat": "time"
                         },
                         {
                             "mapping": "dateTime",
@@ -6017,6 +6645,22 @@
                             "name": "plot_no"
                         },
                         {
+                            "header": "Monitoring Event",
+                            "mapping": "monitoring_event",
+                            "dataIndex": "monitoring_event",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "header": "Date Timer",
+                            "mapping": "timestamptz",
+                            "dataIndex": "timestamptz",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "timestamptz"
+                        },
+                        {
                             "header": "Module Id",
                             "mapping": "module_id",
                             "dataIndex": "module_id",
@@ -6077,6 +6721,16 @@
                         {
                             "mapping": "plotNo",
                             "name": "plot_no"
+                        },
+                        {
+                            "mapping": "monitoringEvent",
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "mapping": "dateTimer",
+                            "name": "timestamptz",
+                            "type": "date",
+                            "dateFormat": "time"
                         },
                         {
                             "mapping": "moduleId",
@@ -6145,6 +6799,22 @@
                             "name": "plot_no"
                         },
                         {
+                            "header": "Monitoring Event",
+                            "mapping": "monitoring_event",
+                            "dataIndex": "monitoring_event",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "header": "Date Timer",
+                            "mapping": "timestamptz",
+                            "dataIndex": "timestamptz",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "timestamptz"
+                        },
+                        {
                             "header": "Module Id",
                             "mapping": "module_id",
                             "dataIndex": "module_id",
@@ -6207,6 +6877,16 @@
                             "name": "plot_no"
                         },
                         {
+                            "mapping": "monitoringEvent",
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "mapping": "dateTimer",
+                            "name": "timestamptz",
+                            "type": "date",
+                            "dateFormat": "time"
+                        },
+                        {
                             "mapping": "moduleId",
                             "name": "module_id"
                         },
@@ -6257,12 +6937,28 @@
                     "canSearch": true,
                     "columns": [
                         {
-                            "header" : "Plot No",
-                            "mapping" : "plot_no",
-                            "dataIndex" : "plot_no",
+                            "header": "Plot No",
+                            "mapping": "plot_no",
+                            "dataIndex": "plot_no",
                             "sortable": true,
                             "filterable": true,
-                            "name" : "plot_no"
+                            "name": "plot_no"
+                        },
+                        {
+                            "header": "Monitoring Event",
+                            "mapping": "monitoring_event",
+                            "dataIndex": "monitoring_event",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "header": "Date Timer",
+                            "mapping": "timestamptz",
+                            "dataIndex": "timestamptz",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "timestamptz"
                         }, {
                             "header" : "Vibi Type",
                             "mapping" : "vibi_type",
@@ -6481,8 +7177,18 @@
                     "editTitle": "Edit Metrics",
                     "fields": [
                         {
-                            "mapping" : "plotNo",
-                            "name" : "plot_no"
+                            "mapping": "plotNo",
+                            "name": "plot_no"
+                        },
+                        {
+                            "mapping": "monitoringEvent",
+                            "name": "monitoring_event"
+                        },
+                        {
+                            "mapping": "dateTimer",
+                            "name": "timestamptz",
+                            "type": "date",
+                            "dateFormat": "time"
                         },
                         {
                             "mapping" : "vibiType",

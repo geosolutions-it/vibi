@@ -18,13 +18,14 @@ import org.geotools.data.Transaction;
 import org.opengis.feature.simple.SimpleFeatureType;
 
 import java.util.Date;
+import java.util.Map;
 import java.util.UUID;
 
 public class BiomassService {
 
     private static final SimpleFeatureType PLOT_TYPE = VibiService.createFeatureType("plot", "");
 
-    public static void processBiomassSheet(Sheet sheet, DataStore store, Transaction transaction) {
+    public static void processBiomassSheet(final Map<Object, Object> globalContext, Sheet sheet, DataStore store, Transaction transaction) {
 
         BoundsDetector boundsDetector = new BoundsDetector() {
 
@@ -77,13 +78,14 @@ public class BiomassService {
                         return UUID.randomUUID().toString();
                     }
                 })
-                .withAttribute(new Attribute("plot_no", Type.STRING) {
+                .withAttribute(new Attribute("plot_id", Type.STRING) {
                     @Override
                     public Object getValue(SheetContext context) {
                         String plotNo = getPlotNo(context);
+                        String plotId = VibiService.getPlotId(globalContext, plotNo);
                         VibiService.testForeignKeyExists(context.getStore(),
-                                context.getTransaction(), context.getRow(), PLOT_TYPE, plotNo);
-                        return plotNo;
+                                context.getTransaction(), context.getRow(), PLOT_TYPE, plotId);
+                        return plotId;
                     }
                 })
                 .withAttribute(new Attribute("date_time", Type.DATE) {
@@ -96,13 +98,13 @@ public class BiomassService {
                 .withAttribute(new ReferenceAttributeBuilder()
                         .withTableName("module")
                         .withAttributeName("module_id")
-                        .withAttributeType("Integer")
+                        .withAttributeType("Text")
                         .withAttributeId("module_id", "F")
                         .build())
                 .withAttribute(new ReferenceAttributeBuilder()
                         .withTableName("corner")
                         .withAttributeName("corner")
-                        .withAttributeType("Integer")
+                        .withAttributeType("Text")
                         .withAttributeId("corner", "H")
                         .build())
                 .withAttribute("I", "sample_id", "Integer")

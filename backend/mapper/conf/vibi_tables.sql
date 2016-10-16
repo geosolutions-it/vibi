@@ -34,7 +34,6 @@ DROP TABLE IF EXISTS shade CASCADE;
 DROP TABLE IF EXISTS reduced_fds2_dbh_index_basal_area CASCADE;
 DROP TABLE IF EXISTS rule CASCADE;
 
-
 CREATE TABLE veg_class (
   veg_class text PRIMARY KEY
 );
@@ -108,16 +107,16 @@ CREATE TABLE disturbance_severity (
 INSERT INTO disturbance_severity VALUES ('low'), ('medium low'), ('medium'), ('medium high'), ('high'), ('very high'); 
 
 CREATE TABLE module (
-  module_id int4 PRIMARY KEY
+  module_id text PRIMARY KEY
 );
 
-INSERT INTO module VALUES (1), (2), (3), (4), (5), (6), (7), (8), (9), (10);
+INSERT INTO module VALUES ('1'), ('2'), ('3'), ('4'), ('5'), ('6'), ('7'), ('8'), ('9'), ('10'), ('R');
 
 CREATE TABLE corner (
-  corner int4 PRIMARY KEY
+  corner text PRIMARY KEY
 );
 
-INSERT INTO corner VALUES (1), (2), (3), (4);
+INSERT INTO corner VALUES ('1'), ('2'), ('3'), ('4'), ('R');
 
 CREATE TABLE depth (
   depth int4 PRIMARY KEY
@@ -227,7 +226,8 @@ INSERT INTO oh_status VALUES ('adventive'), ('cryptogeni'), ('native');
 
 -- From "ENTER PLOT INFO" Tab. Ignore columns after column "BM"
 CREATE TABLE plot (
-  Plot_No text PRIMARY KEY,
+  Plot_Id text PRIMARY KEY,
+  Plot_No text,
   Project_Name text,
   Plot_Name text,
   Project_Label text,
@@ -299,9 +299,9 @@ CREATE TABLE plot (
 
 CREATE TABLE plot_module_herbaceous (
   fid text PRIMARY KEY,
-  plot_no text references plot(plot_no) ON UPDATE CASCADE ON DELETE CASCADE,
-  module_id int4 references module(module_id),
-  corner int4 references corner(corner),
+  plot_id text references plot(plot_id) ON UPDATE CASCADE ON DELETE CASCADE,
+  module_id text references module(module_id),
+  corner text references corner(corner),
   depth integer references depth(depth),
   species text references species(scientific_name),
   cover_class_code integer references cover_midpoint_lookup(cover_code),
@@ -311,9 +311,9 @@ CREATE TABLE plot_module_herbaceous (
 
 CREATE TABLE plot_module_herbaceous_info (
   fid text PRIMARY KEY,
-  plot_no text references plot(plot_no) ON UPDATE CASCADE ON DELETE CASCADE,
-  module_id int4 references module(module_id),
-  corner int4 references corner(corner),
+  plot_id text references plot(plot_id) ON UPDATE CASCADE ON DELETE CASCADE,
+  module_id text references module(module_id),
+  corner text references corner(corner),
   depth integer references depth(depth),
   info text,
   cover_class_code integer references cover_midpoint_lookup(cover_code)
@@ -322,8 +322,8 @@ CREATE TABLE plot_module_herbaceous_info (
 CREATE TABLE fds1_species_misc_info (
   fid text PRIMARY KEY,
   species text references species(scientific_name),
-  plot_no text references plot(plot_no) ON UPDATE CASCADE ON DELETE CASCADE,
-  module_id int4 references module(module_id),
+  plot_id text references plot(plot_id) ON UPDATE CASCADE ON DELETE CASCADE,
+  module_id text references module(module_id),
   voucher_no text,
   comment text,
   browse_intensity text,
@@ -334,9 +334,9 @@ CREATE TABLE fds1_species_misc_info (
 
 CREATE TABLE plot_module_woody_raw (
   fid text PRIMARY KEY,
-  plot_no text references plot(plot_no) ON UPDATE CASCADE ON DELETE CASCADE,
+  plot_id text references plot(plot_id) ON UPDATE CASCADE ON DELETE CASCADE,
   sub numeric,
-  module_id int4 references module(module_id),
+  module_id text references module(module_id),
   species text references species(scientific_name),
   dbh_class text references dbh_class(dbh_class),
   dbh_class_index int4,
@@ -347,8 +347,8 @@ CREATE TABLE plot_module_woody_raw (
 CREATE TABLE fds2_species_misc_info (
   fid text PRIMARY KEY,
   species text references species(scientific_name),
-  plot_no text references plot(plot_no) ON UPDATE CASCADE ON DELETE CASCADE,
-  module_id int4 references module(module_id),
+  plot_id text references plot(plot_id) ON UPDATE CASCADE ON DELETE CASCADE,
+  module_id text references module(module_id),
   voucher_no text,
   comment text,
   browse_intensity text,
@@ -369,10 +369,10 @@ INSERT INTO reduced_fds2_dbh_index_basal_area (dbh_class_index, basal_area) VALU
 --includes calculated fields
 CREATE TABLE biomass_raw (
   fid text PRIMARY KEY,
-  plot_no text references plot(plot_no) ON UPDATE CASCADE ON DELETE CASCADE,
+  plot_id text references plot(plot_id) ON UPDATE CASCADE ON DELETE CASCADE,
   date_time timestamptz,
-  module_id int4 references module(module_id),
-  corner int4 references corner(corner),
+  module_id text references module(module_id),
+  corner text references corner(corner),
   sample_id int4,
   area_sampled numeric,
   weight_with_bag numeric,

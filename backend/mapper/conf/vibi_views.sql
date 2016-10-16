@@ -63,87 +63,87 @@ DROP MATERIALIZED VIEW IF EXISTS herb_plot_x_species_matrix CASCADE;
 DROP MATERIALIZED VIEW IF EXISTS woody_plot_x_species_matrix CASCADE;
 
 CREATE MATERIALIZED VIEW herbaceous_tot_cov AS
-  SELECT a.plot_no, a.species, sum(b.midpoint) as tot_cov
+  SELECT a.plot_id, a.species, sum(b.midpoint) as tot_cov
   FROM plot_module_herbaceous a
     LEFT OUTER JOIN cover_midpoint_lookup b ON a.cover_class_code = b.cover_code
-  GROUP BY a.plot_no, a.group_id, a.species;
+  GROUP BY a.plot_id, a.group_id, a.species;
   
 CREATE MATERIALIZED VIEW alt_herbaceous_avg_cov AS
-  SELECT a.plot_no, a.species, avg(b.midpoint) as avg_cov
+  SELECT a.plot_id, a.species, avg(b.midpoint) as avg_cov
   FROM plot_module_herbaceous a
     LEFT JOIN cover_midpoint_lookup b ON a.cover_class_code = b.cover_code
   WHERE a.cover_class_code NOTNULL
-  GROUP BY a.plot_no, a.group_id, a.species;
+  GROUP BY a.plot_id, a.group_id, a.species;
 
 CREATE MATERIALIZED VIEW herbaceous_site_cov AS
-  SELECT plot_no, sum(tot_cov) as site_cov
+  SELECT plot_id, sum(tot_cov) as site_cov
   FROM herbaceous_tot_cov
-  GROUP BY plot_no;
+  GROUP BY plot_id;
   
 CREATE MATERIALIZED VIEW alt_herbaceous_site_cov AS
-  SELECT plot_no, sum(avg_cov) as site_cov
+  SELECT plot_id, sum(avg_cov) as site_cov
   FROM alt_herbaceous_avg_cov
-  GROUP BY plot_no;
+  GROUP BY plot_id;
 
 CREATE MATERIALIZED VIEW herbaceous_relative_cover AS
-  SELECT row_number() OVER () AS view_id, a.plot_no, a.species,
+  SELECT row_number() OVER () AS view_id, a.plot_id, a.species,
     CASE WHEN COALESCE(b.site_cov, 0.0) = 0 THEN 0 ELSE (a.tot_cov / b.site_cov) END as relative_cover
   FROM herbaceous_tot_cov a
-    LEFT JOIN herbaceous_site_cov b ON a.plot_no = b.plot_no;
+    LEFT JOIN herbaceous_site_cov b ON a.plot_id = b.plot_id;
 	
 CREATE MATERIALIZED VIEW alt_herbaceous_relative_cover AS
-  SELECT row_number() OVER () AS view_id, a.plot_no, a.species,
+  SELECT row_number() OVER () AS view_id, a.plot_id, a.species,
     CASE WHEN COALESCE(b.site_cov, 0.0) = 0 THEN 0 ELSE (a.avg_cov / b.site_cov) END as relative_cover
   FROM alt_herbaceous_avg_cov a
-    LEFT JOIN alt_herbaceous_site_cov b ON a.plot_no = b.plot_no;
+    LEFT JOIN alt_herbaceous_site_cov b ON a.plot_id = b.plot_id;
 
 CREATE MATERIALIZED VIEW plot_module_woody_dbh AS
-  SELECT row_number() OVER () AS view_id, plot_no, module_id, group_id, species, dbh_class_index, dbh_class, count::numeric / sub AS count
+  SELECT row_number() OVER () AS view_id, plot_id, module_id, group_id, species, dbh_class_index, dbh_class, count::numeric / sub AS count
   FROM plot_module_woody_raw
   WHERE dbh_class_index <= 10;
 
 CREATE MATERIALIZED VIEW plot_module_woody_dbh_cm AS
-  SELECT row_number() OVER () AS view_id, plot_no, module_id, group_id, species, dbh_class_index, dbh_class, (count::numeric / 2) ^ 2 * pi() AS dbh_cm
+  SELECT row_number() OVER () AS view_id, plot_id, module_id, group_id, species, dbh_class_index, dbh_class, (count::numeric / 2) ^ 2 * pi() AS dbh_cm
   FROM plot_module_woody_raw
   WHERE dbh_class_index > 10;
 
 CREATE MATERIALIZED VIEW reduced_fds2_counts AS
-  SELECT plot_no, group_id, species, dbh_class_index, sum(count::numeric) as counts
+  SELECT plot_id, group_id, species, dbh_class_index, sum(count::numeric) as counts
   FROM plot_module_woody_dbh
-  GROUP BY plot_no, group_id, species, dbh_class_index
+  GROUP BY plot_id, group_id, species, dbh_class_index
   UNION
-  SELECT plot_no, group_id, species, -1 as dbh_class_index, count(*) as counts
+  SELECT plot_id, group_id, species, -1 as dbh_class_index, count(*) as counts
   FROM plot_module_woody_dbh_cm
-  GROUP BY plot_no, group_id, species;
+  GROUP BY plot_id, group_id, species;
 
 CREATE MATERIALIZED VIEW reduced_fds2_counts_cm2 AS
-  SELECT plot_no, group_id, species, dbh_class_index, sum(dbh_cm::numeric) as counts
+  SELECT plot_id, group_id, species, dbh_class_index, sum(dbh_cm::numeric) as counts
   FROM plot_module_woody_dbh_cm
-  GROUP BY plot_no, group_id, species, dbh_class_index;
+  GROUP BY plot_id, group_id, species, dbh_class_index;
 
 CREATE MATERIALIZED VIEW reduced_fds2_class_freq AS
-  SELECT plot_no, species, count(*) as class_freq, count(*) / 12.0 as rel_class_freq
+  SELECT plot_id, species, count(*) as class_freq, count(*) / 12.0 as rel_class_freq
   FROM reduced_fds2_counts
-  GROUP BY plot_no, group_id, species;
+  GROUP BY plot_id, group_id, species;
   
 CREATE MATERIALIZED VIEW alt_reduced_fds2_freq AS 
-  SELECT a.plot_no, a.species, count(DISTINCT a.module_id::numeric) / b.total_modules::numeric AS alt_rel_freq
-  FROM plot_module_woody_raw a LEFT JOIN plot b ON a.plot_no = b.plot_no
-  GROUP BY a.group_id, species, a.plot_no, b.total_modules;
+  SELECT a.plot_id, a.species, count(DISTINCT a.module_id::numeric) / b.total_modules::numeric AS alt_rel_freq
+  FROM plot_module_woody_raw a LEFT JOIN plot b ON a.plot_id = b.plot_id
+  GROUP BY a.group_id, species, a.plot_id, b.total_modules;
 
 CREATE MATERIALIZED VIEW reduced_fds2_tot_stems AS
-  SELECT b.plot_no, a.species, sum(a.counts) as tot_stems, (sum(a.counts) / b.plot_size_for_cover_data_area_ha) as tot_stems_ha
+  SELECT b.plot_id, a.species, sum(a.counts) as tot_stems, (sum(a.counts) / b.plot_size_for_cover_data_area_ha) as tot_stems_ha
   FROM reduced_fds2_counts a
-    LEFT JOIN plot AS b ON a.plot_no = b.plot_no
-  GROUP BY b.plot_no, a.group_id, a.species;
+    LEFT JOIN plot AS b ON a.plot_id = b.plot_id
+  GROUP BY b.plot_id, a.group_id, a.species;
 
 CREATE MATERIALIZED VIEW reduced_fds2_tot_stems_all_spp AS
-  SELECT plot_no, sum(tot_stems_ha) as tot_stems_all_spp
+  SELECT plot_id, sum(tot_stems_ha) as tot_stems_all_spp
   FROM reduced_fds2_tot_stems
-  GROUP BY plot_no;
+  GROUP BY plot_id;
 
 CREATE MATERIALIZED VIEW reduced_fds2_basal_cm2 AS
-  SELECT a.plot_no, a.group_id, a.species, a.dbh_class_index, (a.counts * b.basal_area) as basal_cm2
+  SELECT a.plot_id, a.group_id, a.species, a.dbh_class_index, (a.counts * b.basal_area) as basal_cm2
   FROM reduced_fds2_counts a
     LEFT JOIN reduced_fds2_dbh_index_basal_area b
       ON a.dbh_class_index = b.dbh_class_index
@@ -152,55 +152,55 @@ CREATE MATERIALIZED VIEW reduced_fds2_basal_cm2 AS
   SELECT * FROM reduced_fds2_counts_cm2 as basal_cm2;
 
 CREATE MATERIALIZED VIEW reduced_fds2_basal_cm2_ha AS
-  SELECT a.plot_no, a.group_id, a.species, a.dbh_class_index, (a.counts * b.basal_area) / c.plot_size_for_cover_data_area_ha AS basal_cm2_ha
+  SELECT a.plot_id, a.group_id, a.species, a.dbh_class_index, (a.counts * b.basal_area) / c.plot_size_for_cover_data_area_ha AS basal_cm2_ha
   FROM reduced_fds2_counts a
     LEFT JOIN reduced_fds2_dbh_index_basal_area b
       ON a.dbh_class_index = b.dbh_class_index
     LEFT JOIN plot AS c
-      ON a.plot_no = c.plot_no
+      ON a.plot_id = c.plot_id
   WHERE a.dbh_class_index >= 0
   UNION
-  SELECT a.plot_no, a.group_id, a.species, a.dbh_class_index, a.counts / b.plot_size_for_cover_data_area_ha AS basal_cm2_ha
+  SELECT a.plot_id, a.group_id, a.species, a.dbh_class_index, a.counts / b.plot_size_for_cover_data_area_ha AS basal_cm2_ha
   FROM reduced_fds2_counts_cm2 a
     LEFT JOIN plot b
-      ON a.plot_no = b.plot_no;
+      ON a.plot_id = b.plot_id;
 
 CREATE MATERIALIZED VIEW reduced_fds2_basal_cm2_ha_tot AS
-  SELECT plot_no, species, sum(basal_cm2_ha) AS tot_cm2_ha
+  SELECT plot_id, species, sum(basal_cm2_ha) AS tot_cm2_ha
   FROM reduced_fds2_basal_cm2_ha
-  GROUP BY plot_no, group_id, species;
+  GROUP BY plot_id, group_id, species;
 
 CREATE MATERIALIZED VIEW reduced_fds2_basal_cm2_ha_all_spp AS
-  SELECT plot_no, sum(basal_cm2_ha) AS  tot_cm2_all_spp
+  SELECT plot_id, sum(basal_cm2_ha) AS  tot_cm2_all_spp
   FROM reduced_fds2_basal_cm2_ha
-  GROUP BY plot_no;
+  GROUP BY plot_id;
 
 CREATE MATERIALIZED VIEW reduced_fds2_iv AS
-  SELECT a.plot_no, a.species, (d.tot_cm2_ha / e.tot_cm2_all_spp + b.tot_stems_ha / c.tot_stems_all_spp + a.rel_class_freq) / 3 AS iv
+  SELECT a.plot_id, a.species, (d.tot_cm2_ha / e.tot_cm2_all_spp + b.tot_stems_ha / c.tot_stems_all_spp + a.rel_class_freq) / 3 AS iv
   FROM reduced_fds2_class_freq a
     LEFT JOIN reduced_fds2_tot_stems b
-      ON a.plot_no = b.plot_no AND a.species = b.species
+      ON a.plot_id = b.plot_id AND a.species = b.species
     LEFT JOIN reduced_fds2_tot_stems_all_spp c
-      ON a.plot_no = c.plot_no
+      ON a.plot_id = c.plot_id
     LEFT JOIN reduced_fds2_basal_cm2_ha_tot d
-      ON a.plot_no = d.plot_no AND a.species = d.species
+      ON a.plot_id = d.plot_id AND a.species = d.species
     LEFT JOIN reduced_fds2_basal_cm2_ha_all_spp e
-      ON a.plot_no = e.plot_no;
+      ON a.plot_id = e.plot_id;
 	  
 CREATE MATERIALIZED VIEW alt_reduced_fds2_iv AS
-  SELECT a.plot_no, a.species, (d.tot_cm2_ha / e.tot_cm2_all_spp + b.tot_stems_ha / c.tot_stems_all_spp + a.alt_rel_freq) / 3 AS iv
+  SELECT a.plot_id, a.species, (d.tot_cm2_ha / e.tot_cm2_all_spp + b.tot_stems_ha / c.tot_stems_all_spp + a.alt_rel_freq) / 3 AS iv
   FROM alt_reduced_fds2_freq a
     LEFT JOIN reduced_fds2_tot_stems b
-      ON a.plot_no = b.plot_no AND a.species = b.species
+      ON a.plot_id = b.plot_id AND a.species = b.species
     LEFT JOIN reduced_fds2_tot_stems_all_spp c
-      ON a.plot_no = c.plot_no
+      ON a.plot_id = c.plot_id
     LEFT JOIN reduced_fds2_basal_cm2_ha_tot d
-      ON a.plot_no = d.plot_no AND a.species = d.species
+      ON a.plot_id = d.plot_id AND a.species = d.species
     LEFT JOIN reduced_fds2_basal_cm2_ha_all_spp e
-      ON a.plot_no = e.plot_no;
+      ON a.plot_id = e.plot_id;
 
 CREATE MATERIALIZED VIEW  woody_importance_value AS
-  SELECT row_number() OVER () AS view_id, a.plot_no, a.species,
+  SELECT row_number() OVER () AS view_id, a.plot_id, a.species,
     CASE WHEN b.shade = 'partial' THEN a.iv ELSE null END AS subcanopy_iv_partial,
     CASE WHEN b.shade = 'shade' THEN a.iv ELSE null END AS subcanopy_iv_shade,
     CASE WHEN b.form = 'tree' THEN a.iv ELSE null END AS canopy_IV
@@ -208,7 +208,7 @@ CREATE MATERIALIZED VIEW  woody_importance_value AS
     LEFT JOIN species b ON a.species = b.scientific_name;
 	
 CREATE MATERIALIZED VIEW  alt_woody_importance_value AS
-  SELECT row_number() OVER () AS view_id, a.plot_no, a.species,
+  SELECT row_number() OVER () AS view_id, a.plot_id, a.species,
     CASE WHEN b.shade = 'partial' THEN a.iv ELSE null END AS subcanopy_iv_partial,
     CASE WHEN b.shade = 'shade' THEN a.iv ELSE null END AS subcanopy_iv_shade,
     CASE WHEN b.form = 'tree' THEN a.iv ELSE null END AS canopy_IV
@@ -216,7 +216,7 @@ CREATE MATERIALIZED VIEW  alt_woody_importance_value AS
     LEFT JOIN species b ON a.species = b.scientific_name;
 
 CREATE MATERIALIZED VIEW biomass AS
-  SELECT row_number() OVER () AS view_id, plot_no, date_time, module_id, corner, sample_id, area_sampled,
+  SELECT row_number() OVER () AS view_id, plot_id, date_time, module_id, corner, sample_id, area_sampled,
     weight_with_bag, bag_weight, biomass_collected, actual_or_derived,
     CASE WHEN COALESCE(weight_with_bag, 0.0) > 2
       THEN weight_with_bag - bag_weight ELSE COALESCE(weight_with_bag, 0.0)
@@ -228,52 +228,52 @@ CREATE MATERIALIZED VIEW biomass AS
   FROM biomass_raw;
 
 CREATE MATERIALIZED VIEW biomass_info AS
-  SELECT plot_no, date_time, biomass_collected
+  SELECT plot_id, date_time, biomass_collected
   FROM biomass
-  GROUP BY plot_no, date_time, biomass_collected;
+  GROUP BY plot_id, date_time, biomass_collected;
 
 CREATE MATERIALIZED VIEW biomass_count AS
-  SELECT plot_no,
+  SELECT plot_id,
     sum(CASE WHEN COALESCE(sample_id, 0) > 0 THEN 1 ELSE 0 END) AS count
   FROM biomass
-  GROUP BY plot_no;
+  GROUP BY plot_id;
 
 CREATE MATERIALIZED VIEW biomass_tot AS
-  SELECT plot_no,
+  SELECT plot_id,
     sum(COALESCE(grams_per_sq_meter, 0)) AS tot
   FROM biomass
-  GROUP BY plot_no;
+  GROUP BY plot_id;
 
 CREATE MATERIALIZED VIEW biomass_calculations AS
-  SELECT a.plot_no,
+  SELECT a.plot_id,
     CASE WHEN COALESCE(b.count, 0) > 0
       THEN c.tot / b.count ELSE 0 END AS biomass
   FROM plot a
     LEFT JOIN biomass_count b
-      ON a.plot_no = b.plot_no
+      ON a.plot_id = b.plot_id
     LEFT JOIN biomass_tot c
-      ON a.plot_no = c.plot_no;
+      ON a.plot_id = c.plot_id;
 
 CREATE MATERIALIZED VIEW reduced_fds2_den AS
-  SELECT a.plot_no, a.species, a.dbh_class_index, a.counts / b.plot_size_for_cover_data_area_ha AS counts_den
+  SELECT a.plot_id, a.species, a.dbh_class_index, a.counts / b.plot_size_for_cover_data_area_ha AS counts_den
   FROM reduced_fds2_counts a
     LEFT JOIN plot b
-      ON a.plot_no = b.plot_no;
+      ON a.plot_id = b.plot_id;
 
 CREATE MATERIALIZED VIEW reduced_fds2_rel_den AS
-  SELECT a.plot_no, a.species, a.dbh_class_index,
+  SELECT a.plot_id, a.species, a.dbh_class_index,
     CASE WHEN a.counts_den > 0 THEN a.counts_den / b.tot_stems_all_spp ELSE 0 END AS counts_rel_den
   FROM reduced_fds2_den a
     LEFT JOIN reduced_fds2_tot_stems_all_spp b
-      ON a.plot_no = b.plot_no;
+      ON a.plot_id = b.plot_id;
 
 CREATE MATERIALIZED VIEW reduced_fds2_rel_den_calculations AS
-  SELECT plot_no, sum(CASE WHEN dbh_class_index = 5 or dbh_class_index = 6 or dbh_class_index = 7 THEN counts_rel_den ELSE 0 END) AS small_tree
+  SELECT plot_id, sum(CASE WHEN dbh_class_index = 5 or dbh_class_index = 6 or dbh_class_index = 7 THEN counts_rel_den ELSE 0 END) AS small_tree
   FROM reduced_fds2_rel_den
-  GROUP BY plot_no;
+  GROUP BY plot_id;
 
 CREATE MATERIALIZED VIEW reduced_fds2_sums_counts_iv AS
-  SELECT plot_no,
+  SELECT plot_id,
     sum(subcanopy_iv_partial) AS sum_subcanopy_iv_partial,
     sum(subcanopy_iv_shade) AS sum_subcanopy_iv_shade,
     sum(canopy_IV) AS sum_canopy_IV,
@@ -281,10 +281,10 @@ CREATE MATERIALIZED VIEW reduced_fds2_sums_counts_iv AS
     count(subcanopy_iv_shade) AS count_subcanopy_iv_shade,
     count(canopy_IV) AS count_canopy_IV
   FROM woody_importance_value
-  GROUP BY plot_no;
+  GROUP BY plot_id;
   
 CREATE MATERIALIZED VIEW alt_reduced_fds2_sums_counts_iv AS
-  SELECT plot_no,
+  SELECT plot_id,
     sum(subcanopy_iv_partial) AS sum_subcanopy_iv_partial,
     sum(subcanopy_iv_shade) AS sum_subcanopy_iv_shade,
     sum(canopy_IV) AS sum_canopy_IV,
@@ -292,24 +292,24 @@ CREATE MATERIALIZED VIEW alt_reduced_fds2_sums_counts_iv AS
     count(subcanopy_iv_shade) AS count_subcanopy_iv_shade,
     count(canopy_IV) AS count_canopy_IV
   FROM alt_woody_importance_value
-  GROUP BY plot_no;
+  GROUP BY plot_id;
 
 CREATE MATERIALIZED VIEW reduced_fds2_avg_iv AS
-  SELECT plot_no,
+  SELECT plot_id,
     CASE WHEN count_subcanopy_iv_partial > 0 THEN sum_subcanopy_iv_partial / count_subcanopy_iv_partial ELSE 0 END AS avg_subcanopy_iv_partial,
     CASE WHEN count_subcanopy_iv_shade > 0 THEN sum_subcanopy_iv_shade / count_subcanopy_iv_shade ELSE 0 END AS avg_subcanopy_iv_shade,
     CASE WHEN count_canopy_IV > 0 THEN sum_canopy_IV / count_canopy_IV ELSE 0 END AS avg_canopy_IV
   FROM reduced_fds2_sums_counts_iv;
   
 CREATE MATERIALIZED VIEW alt_reduced_fds2_avg_iv AS
-  SELECT plot_no,
+  SELECT plot_id,
     CASE WHEN count_subcanopy_iv_partial > 0 THEN sum_subcanopy_iv_partial / count_subcanopy_iv_partial ELSE 0 END AS avg_subcanopy_iv_partial,
     CASE WHEN count_subcanopy_iv_shade > 0 THEN sum_subcanopy_iv_shade / count_subcanopy_iv_shade ELSE 0 END AS avg_subcanopy_iv_shade,
     CASE WHEN count_canopy_IV > 0 THEN sum_canopy_IV / count_canopy_IV ELSE 0 END AS avg_canopy_IV
   FROM alt_reduced_fds2_sums_counts_iv;
 
 CREATE MATERIALIZED VIEW reduced_fds2_calculations_iv AS
-  SELECT a.plot_no,
+  SELECT a.plot_id,
     sum_subcanopy_iv_partial,
     sum_subcanopy_iv_shade,
     sum_canopy_IV,
@@ -321,10 +321,10 @@ CREATE MATERIALIZED VIEW reduced_fds2_calculations_iv AS
     avg_canopy_IV
   FROM reduced_fds2_sums_counts_iv a
     LEFT JOIN reduced_fds2_avg_iv b
-      ON a.plot_no = b.plot_no;
+      ON a.plot_id = b.plot_id;
 	  
 CREATE MATERIALIZED VIEW alt_reduced_fds2_calculations_iv AS
-  SELECT a.plot_no,
+  SELECT a.plot_id,
     sum_subcanopy_iv_partial,
     sum_subcanopy_iv_shade,
     sum_canopy_IV,
@@ -336,10 +336,10 @@ CREATE MATERIALIZED VIEW alt_reduced_fds2_calculations_iv AS
     avg_canopy_IV
   FROM reduced_fds2_sums_counts_iv a
     LEFT JOIN alt_reduced_fds2_avg_iv b
-      ON a.plot_no = b.plot_no;
+      ON a.plot_id = b.plot_id;
 
 CREATE MATERIALIZED VIEW calculations_reduced_fds1 AS
-  SELECT a.plot_no,
+  SELECT a.plot_id,
     sum(CASE WHEN c.scientific_name SIMILAR TO '%Carex%' THEN 1.0 ELSE 0.0 END) AS carex,
     sum(CASE WHEN c.family = 'Cyperaceae' THEN 1.0 ELSE 0.0 END) AS cyperaceae,
     sum(CASE WHEN c.oh_status = 'native' AND c.type = 'DI' THEN 1.0 ELSE 0.0 END) AS dicot,
@@ -363,12 +363,12 @@ CREATE MATERIALIZED VIEW calculations_reduced_fds1 AS
     sum(CASE WHEN c.oh_status = 'native' AND c.ncne = 'FACW' OR c.ncne = 'OBL' AND c.habit = 'PE' THEN b.relative_cover ELSE 0.0 END) AS perennial_native_hydrophytes,
     sum(CASE WHEN c.oh_status = 'adventive' THEN b.relative_cover ELSE 0.0 END) AS adventives
   FROM plot a
-  LEFT JOIN herbaceous_relative_cover b ON a.plot_no = b.plot_no
+  LEFT JOIN herbaceous_relative_cover b ON a.plot_id = b.plot_id
   LEFT JOIN species c ON b.species = c.scientific_name
-  GROUP BY a.plot_no, a.plot_name;
+  GROUP BY a.plot_id, a.plot_name;
   
 CREATE MATERIALIZED VIEW alt_calculations_reduced_fds1 AS
-  SELECT a.plot_no,
+  SELECT a.plot_id,
     sum(CASE WHEN c.scientific_name SIMILAR TO '%Carex%' THEN 1.0 ELSE 0.0 END) AS carex,
     sum(CASE WHEN c.family = 'Cyperaceae' THEN 1.0 ELSE 0.0 END) AS cyperaceae,
     sum(CASE WHEN c.oh_status = 'native' AND c.type = 'DI' THEN 1.0 ELSE 0.0 END) AS dicot,
@@ -392,73 +392,73 @@ CREATE MATERIALIZED VIEW alt_calculations_reduced_fds1 AS
     sum(CASE WHEN c.oh_status = 'native' AND c.ncne = 'FACW' OR c.ncne = 'OBL' AND c.habit = 'PE' THEN b.relative_cover ELSE 0.0 END) AS perennial_native_hydrophytes,
     sum(CASE WHEN c.oh_status = 'adventive' THEN b.relative_cover ELSE 0.0 END) AS adventives
   FROM plot a
-  LEFT JOIN alt_herbaceous_relative_cover b ON a.plot_no = b.plot_no
+  LEFT JOIN alt_herbaceous_relative_cover b ON a.plot_id = b.plot_id
   LEFT JOIN species c ON b.species = c.scientific_name
-  GROUP BY a.plot_no, a.plot_name;
+  GROUP BY a.plot_id, a.plot_name;
 
 CREATE MATERIALIZED VIEW calculations_reduced_fds2_canopy AS
-  SELECT a.plot_no,
+  SELECT a.plot_id,
     b.small_tree,
     c.avg_subcanopy_iv_partial + c.avg_subcanopy_iv_shade AS subcanopy_iv,
     c.avg_canopy_IV AS canopy_iv
   FROM plot a
     LEFT JOIN reduced_fds2_rel_den_calculations b
-      ON a.plot_no = b.plot_no
+      ON a.plot_id = b.plot_id
     LEFT JOIN reduced_fds2_calculations_iv c
-      ON a.plot_no = c.plot_no;
+      ON a.plot_id = c.plot_id;
 	  
 CREATE MATERIALIZED VIEW alt_calculations_reduced_fds2_canopy AS
-  SELECT a.plot_no,
+  SELECT a.plot_id,
     b.small_tree,
     c.avg_subcanopy_iv_partial + c.avg_subcanopy_iv_shade AS subcanopy_iv,
     c.avg_canopy_IV AS canopy_iv
   FROM plot a
     LEFT JOIN reduced_fds2_rel_den_calculations b
-      ON a.plot_no = b.plot_no
+      ON a.plot_id = b.plot_id
     LEFT JOIN alt_reduced_fds2_calculations_iv c
-      ON a.plot_no = c.plot_no;
+      ON a.plot_id = c.plot_id;
 
 CREATE MATERIALIZED VIEW calculations_reduced_fds2_stems AS
-  SELECT a.plot_no,
+  SELECT a.plot_id,
     sum(CASE WHEN c.oh_status = 'native' AND c.ncne = 'FACW' OR c.ncne = 'OBL' AND c.form = 'tree' THEN b.tot_stems_ha ELSE 0 END) AS stems_wetland_trees,
     sum(CASE WHEN c.oh_status = 'native' AND c.ncne = 'FACW' OR c.ncne = 'OBL' AND c.form = 'shrub' THEN b.tot_stems_ha ELSE 0 END) AS stems_wetland_shrubs
   FROM plot a
     LEFT JOIN reduced_fds2_tot_stems b
-      ON a.plot_no = b.plot_no
+      ON a.plot_id = b.plot_id
     LEFT JOIN species c
       ON b.species = c.scientific_name
-  GROUP BY a.plot_no;
+  GROUP BY a.plot_id;
 
 CREATE MATERIALIZED VIEW herbaceous_info_tot_cov AS
-  SELECT a.plot_no, a.info, sum(b.midpoint) as tot_cov
+  SELECT a.plot_id, a.info, sum(b.midpoint) as tot_cov
   FROM plot_module_herbaceous_info a
     LEFT JOIN cover_midpoint_lookup b ON a.cover_class_code = b.cover_code
   WHERE a.cover_class_code NOTNULL
-  GROUP BY a.plot_no, a.info;
+  GROUP BY a.plot_id, a.info;
 
 CREATE MATERIALIZED VIEW herbaceous_info_tot_count AS
-  SELECT a.plot_no, a.info, sum(CASE WHEN b.midpoint > 0 THEN 1 ELSE 0 END) as tot_count
+  SELECT a.plot_id, a.info, sum(CASE WHEN b.midpoint > 0 THEN 1 ELSE 0 END) as tot_count
   FROM plot_module_herbaceous_info a
     LEFT JOIN cover_midpoint_lookup b ON a.cover_class_code = b.cover_code
   WHERE a.cover_class_code NOTNULL
-  GROUP BY a.plot_no, a.info;
+  GROUP BY a.plot_id, a.info;
 
 CREATE MATERIALIZED VIEW herbaceous_info_relative_cover AS
-  SELECT a.plot_no, a.info, CASE WHEN a.tot_cov > 0 THEN a.tot_cov / b.tot_count ELSE 0 END AS relative_cover
+  SELECT a.plot_id, a.info, CASE WHEN a.tot_cov > 0 THEN a.tot_cov / b.tot_count ELSE 0 END AS relative_cover
   FROM herbaceous_info_tot_cov a
-    LEFT JOIN herbaceous_info_tot_count b ON a.plot_no = b.plot_no AND a.info = b.info;
+    LEFT JOIN herbaceous_info_tot_count b ON a.plot_id = b.plot_id AND a.info = b.info;
 
 CREATE MATERIALIZED VIEW calculations_plot_module_herbaceous_info AS
-  SELECT plot_no,
+  SELECT plot_id,
     sum(CASE WHEN info = '%bare ground' OR info = '%litter cover' THEN relative_cover ELSE 0 END) AS unvegetated_partial,
     sum(CASE WHEN info = '%open water' THEN relative_cover ELSE 0 END) AS open_water,
     sum(CASE WHEN info = '%unvegetated open water' THEN relative_cover ELSE 0 END) AS unvegetated_open_water,
     sum(CASE WHEN info = '%bare ground' THEN relative_cover ELSE 0 END) AS bare_ground
   FROM herbaceous_info_relative_cover
-  GROUP BY plot_no;
+  GROUP BY plot_id;
 
 CREATE MATERIALIZED VIEW vibi_values AS
-  SELECT a.plot_no,
+  SELECT a.plot_id,
     'vibi_values'::text as vibi_type,
     carex AS carex_metric_value,
     cyperaceae AS cyperaceae_metric_value,
@@ -489,18 +489,18 @@ CREATE MATERIALIZED VIEW vibi_values AS
     bare_ground AS per_bare_ground
   FROM plot a
     LEFT JOIN calculations_reduced_fds2_canopy b
-      ON a.plot_no = b.plot_no
+      ON a.plot_id = b.plot_id
     LEFT JOIN calculations_reduced_fds2_stems c
-      ON a.plot_no = c.plot_no
+      ON a.plot_id = c.plot_id
     LEFT JOIN calculations_plot_module_herbaceous_info d
-      ON a.plot_no = d.plot_no
+      ON a.plot_id = d.plot_id
     LEFT JOIN calculations_reduced_fds1 e
-      ON a.plot_no = e.plot_no
+      ON a.plot_id = e.plot_id
     LEFT JOIN biomass_calculations f
-      ON a.plot_no = f.plot_no;
+      ON a.plot_id = f.plot_id;
 	  
 CREATE MATERIALIZED VIEW alt_vibi_values AS
-  SELECT a.plot_no,
+  SELECT a.plot_id,
     'vibi_values'::text as vibi_type,
     carex AS carex_metric_value,
     cyperaceae AS cyperaceae_metric_value,
@@ -531,18 +531,18 @@ CREATE MATERIALIZED VIEW alt_vibi_values AS
     bare_ground AS per_bare_ground
   FROM plot a
     LEFT JOIN alt_calculations_reduced_fds2_canopy b
-      ON a.plot_no = b.plot_no
+      ON a.plot_id = b.plot_id
     LEFT JOIN calculations_reduced_fds2_stems c
-      ON a.plot_no = c.plot_no
+      ON a.plot_id = c.plot_id
     LEFT JOIN calculations_plot_module_herbaceous_info d
-      ON a.plot_no = d.plot_no
+      ON a.plot_id = d.plot_id
     LEFT JOIN alt_calculations_reduced_fds1 e
-      ON a.plot_no = e.plot_no
+      ON a.plot_id = e.plot_id
     LEFT JOIN biomass_calculations f
-      ON a.plot_no = f.plot_no;
+      ON a.plot_id = f.plot_id;
 
 CREATE MATERIALIZED VIEW vibi_e_index AS
-  SELECT a.plot_no,
+  SELECT a.plot_id,
     'vibi_e_index'::text as vibi_type,
     metric_value(b.carex_metric_value::numeric, ARRAY[2.0, 4.0, 5.0], ARRAY[0.0, 3.0, 7.0, 10.0]) AS carex_metric_value,
     null::numeric AS cyperaceae_metric_value,
@@ -584,14 +584,14 @@ CREATE MATERIALIZED VIEW vibi_e_index AS
     null::numeric AS per_bare_ground
   FROM plot a
     LEFT JOIN vibi_values b
-      ON a.plot_no = b.plot_no
+      ON a.plot_id = b.plot_id
     LEFT JOIN herbaceous_site_cov c
-      ON a.plot_no = c.plot_no
+      ON a.plot_id = c.plot_id
     LEFT JOIN biomass_info d
-      ON a.plot_no = d.plot_no;
+      ON a.plot_id = d.plot_id;
 	  
 CREATE MATERIALIZED VIEW alt_vibi_e_index AS
-  SELECT a.plot_no,
+  SELECT a.plot_id,
     'vibi_e_index'::text as vibi_type,
     metric_value(b.carex_metric_value::numeric, ARRAY[2.0, 4.0, 5.0], ARRAY[0.0, 3.0, 7.0, 10.0]) AS carex_metric_value,
     null::numeric AS cyperaceae_metric_value,
@@ -633,14 +633,14 @@ CREATE MATERIALIZED VIEW alt_vibi_e_index AS
     null::numeric AS per_bare_ground
   FROM plot a
     LEFT JOIN alt_vibi_values b
-      ON a.plot_no = b.plot_no
+      ON a.plot_id = b.plot_id
     LEFT JOIN alt_herbaceous_site_cov c
-      ON a.plot_no = c.plot_no
+      ON a.plot_id = c.plot_id
     LEFT JOIN biomass_info d
-      ON a.plot_no = d.plot_no;
+      ON a.plot_id = d.plot_id;
 
 CREATE MATERIALIZED VIEW vibi_ecst_index AS
-  SELECT a.plot_no,
+  SELECT a.plot_id,
     'vibi_ecst_index'::text as vibi_type,
     null::numeric AS carex_metric_value,
     metric_value(b.cyperaceae_metric_value::numeric, ARRAY[2.0, 4.0, 7.0], ARRAY[0.0, 3.0, 7.0, 10.0]) AS cyperaceae_metric_value,
@@ -682,14 +682,14 @@ CREATE MATERIALIZED VIEW vibi_ecst_index AS
     null::numeric AS per_bare_ground
   FROM plot a
     LEFT JOIN vibi_values b
-      ON a.plot_no = b.plot_no
+      ON a.plot_id = b.plot_id
     LEFT JOIN herbaceous_site_cov c
-      ON a.plot_no = c.plot_no
+      ON a.plot_id = c.plot_id
     LEFT JOIN biomass_info d
-      ON a.plot_no = d.plot_no;
+      ON a.plot_id = d.plot_id;
 	  
 CREATE MATERIALIZED VIEW alt_vibi_ecst_index AS
-  SELECT a.plot_no,
+  SELECT a.plot_id,
     'vibi_ecst_index'::text as vibi_type,
     null::numeric AS carex_metric_value,
     metric_value(b.cyperaceae_metric_value::numeric, ARRAY[2.0, 4.0, 7.0], ARRAY[0.0, 3.0, 7.0, 10.0]) AS cyperaceae_metric_value,
@@ -731,14 +731,14 @@ CREATE MATERIALIZED VIEW alt_vibi_ecst_index AS
     null::numeric AS per_bare_ground
   FROM plot a
     LEFT JOIN alt_vibi_values b
-      ON a.plot_no = b.plot_no
+      ON a.plot_id = b.plot_id
     LEFT JOIN alt_herbaceous_site_cov c
-      ON a.plot_no = c.plot_no
+      ON a.plot_id = c.plot_id
     LEFT JOIN biomass_info d
-      ON a.plot_no = d.plot_no;
+      ON a.plot_id = d.plot_id;
 
 CREATE MATERIALIZED VIEW vibi_sh_index AS
-  SELECT a.plot_no,
+  SELECT a.plot_id,
     'vibi_sh_index'::text as vibi_type,
     metric_value(b.carex_metric_value::numeric, ARRAY[2.0, 4.0, 5.0], ARRAY[0.0, 3.0, 7.0, 10.0]) AS carex_metric_value,
     null::numeric AS cyperaceae_metric_value,
@@ -775,14 +775,14 @@ CREATE MATERIALIZED VIEW vibi_sh_index AS
     null::numeric AS per_bare_ground
   FROM plot a
     LEFT JOIN vibi_values b
-      ON a.plot_no = b.plot_no
+      ON a.plot_id = b.plot_id
     LEFT JOIN herbaceous_site_cov c
-      ON a.plot_no = c.plot_no
+      ON a.plot_id = c.plot_id
     LEFT JOIN biomass_info d
-      ON a.plot_no = d.plot_no;
+      ON a.plot_id = d.plot_id;
 	  
 CREATE MATERIALIZED VIEW alt_vibi_sh_index AS
-  SELECT a.plot_no,
+  SELECT a.plot_id,
     'vibi_sh_index'::text as vibi_type,
     metric_value(b.carex_metric_value::numeric, ARRAY[2.0, 4.0, 5.0], ARRAY[0.0, 3.0, 7.0, 10.0]) AS carex_metric_value,
     null::numeric AS cyperaceae_metric_value,
@@ -819,14 +819,14 @@ CREATE MATERIALIZED VIEW alt_vibi_sh_index AS
     null::numeric AS per_bare_ground
   FROM plot a
     LEFT JOIN alt_vibi_values b
-      ON a.plot_no = b.plot_no
+      ON a.plot_id = b.plot_id
     LEFT JOIN alt_herbaceous_site_cov c
-      ON a.plot_no = c.plot_no
+      ON a.plot_id = c.plot_id
     LEFT JOIN biomass_info d
-      ON a.plot_no = d.plot_no;
+      ON a.plot_id = d.plot_id;
 
 CREATE MATERIALIZED VIEW vibi_f_index AS
-  SELECT a.plot_no,
+  SELECT a.plot_id,
     'vibi_f_index'::text as vibi_type,
     null::numeric AS carex_metric_value,
     null::numeric AS cyperaceae_metric_value,
@@ -871,12 +871,12 @@ CREATE MATERIALIZED VIEW vibi_f_index AS
     null::numeric AS per_bare_ground
   FROM plot a
     LEFT JOIN vibi_values b
-      ON a.plot_no = b.plot_no
+      ON a.plot_id = b.plot_id
     LEFT JOIN herbaceous_site_cov c
-      ON a.plot_no = c.plot_no;
+      ON a.plot_id = c.plot_id;
 	  
 CREATE MATERIALIZED VIEW alt_vibi_f_index AS
-  SELECT a.plot_no,
+  SELECT a.plot_id,
     'vibi_f_index'::text as vibi_type,
     null::numeric AS carex_metric_value,
     null::numeric AS cyperaceae_metric_value,
@@ -921,9 +921,9 @@ CREATE MATERIALIZED VIEW alt_vibi_f_index AS
     null::numeric AS per_bare_ground
   FROM plot a
     LEFT JOIN alt_vibi_values b
-      ON a.plot_no = b.plot_no
+      ON a.plot_id = b.plot_id
     LEFT JOIN alt_herbaceous_site_cov c
-      ON a.plot_no = c.plot_no;
+      ON a.plot_id = c.plot_id;
 
 CREATE MATERIALIZED VIEW metric_calculations AS
   SELECT *, row_number() OVER () AS view_id FROM (
@@ -1016,11 +1016,11 @@ CREATE MATERIALIZED VIEW alt_metric_calculations AS
   ) a;
   
 CREATE MATERIALIZED VIEW herb_rel_cover_acronym_joined AS (
-SELECT a.plot_no AS plot_id, a.species, a.relative_cover, b.acronym FROM herbaceous_relative_cover a
+SELECT a.plot_id AS plot_id, a.species, a.relative_cover, b.acronym FROM herbaceous_relative_cover a
 LEFT JOIN species b ON a.species = b.scientific_name);
 
 CREATE MATERIALIZED VIEW woody_iv_acronym_joined AS (
-SELECT a.plot_no AS plot_id, a.species, a.iv, b.acronym FROM reduced_fds2_iv a
+SELECT a.plot_id AS plot_id, a.species, a.iv, b.acronym FROM reduced_fds2_iv a
 LEFT JOIN species b ON a.species = b.scientific_name);
 
 CREATE MATERIALIZED VIEW herb_plot_x_species_matrix AS (SELECT * FROM crosstab(                 
