@@ -9,14 +9,20 @@ import it.geosolutions.vibi.mapper.sheets.SheetProcessor;
 import it.geosolutions.vibi.mapper.utils.Sheets;
 import it.geosolutions.vibi.mapper.utils.Store;
 import it.geosolutions.vibi.mapper.utils.Type;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.geotools.data.DataStore;
 import org.geotools.data.Transaction;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 public class PlotService {
 
-    public static void processPlotInfoSheet(Sheet sheet, DataStore store, Transaction transaction) {
+    public static void processPlotInfoSheet(final Map<Object, Object> globalContext, Sheet sheet, DataStore store, Transaction transaction) {
 
         BoundsDetector boundsDetector = new BoundsDetector() {
             @Override
@@ -39,15 +45,31 @@ public class PlotService {
 
         SheetProcessor sheetProcessor = new SheetProcessorBuilder()
                 .withTable("plot").withBoundsDetector(boundsDetector)
-                .withAttribute(new Attribute("plot_no", Type.STRING, true) {
+                .withAttribute(new Attribute("plot_id", Type.STRING, true) {
                     @Override
                     public Object getValue(SheetContext context) {
-                        String plotNo = VibiService.extractPlotNo(
-                                context.getRow().getCell(Sheets.getIndex("A"), Row.RETURN_BLANK_AS_NULL));
-                        Store.delete(context.getStore(), context.getTransaction(), "plot", plotNo);
-                        return plotNo;
+                        // using the current row
+                        Row row = context.getRow();
+                        // select the cells we need to create the primary key
+                        Cell plotNoCell = row.getCell(Sheets.getIndex("A"), Row.RETURN_BLANK_AS_NULL);
+                        Cell monitoringEventCell = row.getCell(Sheets.getIndex("E"), Row.RETURN_BLANK_AS_NULL);
+                        Cell dateTimerEventCell = row.getCell(Sheets.getIndex("F"), Row.RETURN_BLANK_AS_NULL);
+                        // extract the values from the selected cells
+                        SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-mm-yyyy-hh:mm:ss");
+                        String plotNo = plotNoCell == null ? "null" : (String) Type.STRING.extract(plotNoCell);
+                        String monitoringEvent = monitoringEventCell == null ? "null" : (String) Type.STRING.extract(monitoringEventCell);
+                        String date = dateTimerEventCell == null ? "null" : dateFormatter.format((Date) Type.DATE.extract(dateTimerEventCell));
+                        // build the plot sampling the key
+                        String plotKey = plotNo + "_" + monitoringEvent + "_" + date;
+                        // removing any registered events for this plot sampling
+                        Store.delete(context.getStore(), context.getTransaction(), "plot", plotKey);
+                        // update plots indexes stored in the global context
+                        Map<String, String> plotsIndexes = VibiService.getPlotsIndex(globalContext);
+                        plotsIndexes.put(plotNo, plotKey);
+                        return plotKey;
                     }
                 })
+                .withAttribute("A", "plot_no", "Text")
                 .withAttribute("B", "project_name", "Text")
                 .withAttribute("C", "plot_name", "Text")
                 .withAttribute("D", "project_label", "Text")

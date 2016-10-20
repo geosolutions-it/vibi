@@ -16,6 +16,8 @@ import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 public final class VibiService {
 
@@ -26,17 +28,38 @@ public final class VibiService {
         submit(workBookFile.getPath(), store, transaction);
     }
 
+    public static final String PLOTS_INDEX = "plots_index";
+
+    public static Map<String, String> getPlotsIndex(Map<Object, Object> globalContext) {
+        Map<String, String> plotsIndex = (Map<String, String>) globalContext.get(PLOTS_INDEX);
+        if (plotsIndex == null) {
+            plotsIndex = new HashMap<>();
+            globalContext.put(PLOTS_INDEX, plotsIndex);
+        }
+        return plotsIndex;
+    }
+
+    public static String getPlotId(Map<Object, Object> globalContext, String plotNo) {
+        Map<String, String> plotsIndex = VibiService.getPlotsIndex(globalContext);
+        String plotId = plotsIndex.get(plotNo);
+        if (plotId == null) {
+            throw new RuntimeException(String.format("Could not find plot id for plot number '%s'.", plotNo));
+        }
+        return plotId;
+    }
+
     public static void submit(String workBookPath, final DataStore store, final Transaction transaction) {
         new Sheets.WorkBook(workBookPath) {
 
             @Override
             public void doWork(HSSFWorkbook workBook) {
+                Map<Object, Object> globalContext = new HashMap<>();
                 LookupService.processLookupNatureSOPEACommunitySheet(workBook.getSheet("LOOKUP NatureS+OEPA community"), store, transaction);
                 LookupService.processLookupMidPointSheet(workBook.getSheet("LOOKUP midpoint"), store, transaction);
-                PlotService.processPlotInfoSheet(workBook.getSheet("ENTER PLOT INFO"), store, transaction);
-                Fds1Service.processFds1Sheet(workBook.getSheet("ENTER FDS1"), store, transaction);
-                Fds2Service.processFds2Sheet(workBook.getSheet("ENTER FDS2"), store, transaction);
-                BiomassService.processBiomassSheet(workBook.getSheet("ENTER BIOMASS"), store, transaction);
+                PlotService.processPlotInfoSheet(globalContext, workBook.getSheet("ENTER PLOT INFO"), store, transaction);
+                Fds1Service.processFds1Sheet(globalContext, workBook.getSheet("ENTER FDS1"), store, transaction);
+                Fds2Service.processFds2Sheet(globalContext, workBook.getSheet("ENTER FDS2"), store, transaction);
+                BiomassService.processBiomassSheet(globalContext, workBook.getSheet("ENTER BIOMASS"), store, transaction);
             }
         };
     }
@@ -91,13 +114,6 @@ public final class VibiService {
         if (cell == null) {
             return null;
         }
-        String plotNoText = (String) Type.STRING.extract(cell);
-        try {
-            Integer plotNo = Double.valueOf(plotNoText).intValue();
-            return plotNo.toString();
-        } catch (Exception exception) {
-            // this is not an integer
-        }
-        return plotNoText;
+       return (String) Type.STRING.extract(cell);
     }
 }

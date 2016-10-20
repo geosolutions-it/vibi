@@ -17,7 +17,9 @@ import org.geotools.data.Transaction;
 import java.io.File;
 import java.io.IOException;
 import java.util.EventObject;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Queue;
 import java.util.UUID;
 
@@ -58,17 +60,18 @@ public final class MapperAction extends BaseAction<EventObject> {
                 public void doWork(HSSFWorkbook workBook) {
                     Transaction transaction = new DefaultTransaction(UUID.randomUUID().toString());
                     try {
+                        Map<Object, Object> globalContext = new HashMap<>();
                         LookupService.processLookupNatureSOPEACommunitySheet(workBook.getSheet("LOOKUP NatureS+OEPA community"), store, transaction);
                         MapperAction.super.listenerForwarder.progressing(5.0f, "LOOKUP NATURES+OEPA COMMUNITY");
                         LookupService.processLookupMidPointSheet(workBook.getSheet("LOOKUP midpoint"), store, transaction);
                         MapperAction.super.listenerForwarder.progressing(10.0f, "LOOKUP MIDPOINT");
-                        PlotService.processPlotInfoSheet(workBook.getSheet("ENTER PLOT INFO"), store, transaction);
+                        PlotService.processPlotInfoSheet(globalContext, workBook.getSheet("ENTER PLOT INFO"), store, transaction);
                         MapperAction.super.listenerForwarder.progressing(30.0f, "ENTER PLOT INFO");
-                        Fds1Service.processFds1Sheet(workBook.getSheet("ENTER FDS1"), store, transaction);
+                        Fds1Service.processFds1Sheet(globalContext, workBook.getSheet("ENTER FDS1"), store, transaction);
                         MapperAction.super.listenerForwarder.progressing(60.0f, "ENTER FDS1");
-                        Fds2Service.processFds2Sheet(workBook.getSheet("ENTER FDS2"), store, transaction);
+                        Fds2Service.processFds2Sheet(globalContext, workBook.getSheet("ENTER FDS2"), store, transaction);
                         MapperAction.super.listenerForwarder.progressing(90.0f, "ENTER FDS2");
-                        BiomassService.processBiomassSheet(workBook.getSheet("ENTER BIOMASS"), store, transaction);
+                        BiomassService.processBiomassSheet(globalContext, workBook.getSheet("ENTER BIOMASS"), store, transaction);
                         MapperAction.super.listenerForwarder.progressing(92.5f, "ENTER BIOMASS");
                         transaction.commit();
                         Calculations.refresh(actionConfiguration.getDbUrl(), actionConfiguration.getUser(), actionConfiguration.getPasswd());
