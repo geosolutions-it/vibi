@@ -344,8 +344,12 @@ CREATE MATERIALIZED VIEW calculations_reduced_fds1 AS
     sum(CASE WHEN c.family = 'Cyperaceae' THEN 1.0 ELSE 0.0 END) AS cyperaceae,
     sum(CASE WHEN c.oh_status = 'native' AND c.type = 'DI' THEN 1.0 ELSE 0.0 END) AS dicot,
     sum(CASE WHEN c.shade = 'shade' OR c.shade = 'partial' THEN 1.0 ELSE 0.0 END) AS shade,
-    sum(CASE WHEN c.oh_status = 'native' AND c.ncne = 'FACW' OR c.ncne = 'OBL' AND c.form = 'shrub' THEN 1.0 ELSE 0.0 END) AS shrub,
-    sum(CASE WHEN c.ncne = 'FACW' OR c.ncne = 'OBL' THEN 1.0 ELSE 0.0 END) AS hydrophyte,
+    sum(CASE 
+		WHEN c.oh_status = 'native' AND c.wet = 'FACW' AND c.form = 'shrub' THEN 1.0 
+		WHEN c.oh_status = 'native' AND c.wet = 'OBL' AND c.form = 'shrub' THEN 1.0
+		ELSE 0.0 
+		END) AS shrub,
+    sum(CASE WHEN c.wet = 'FACW' OR c.wet = 'OBL' THEN 1.0 ELSE 0.0 END) AS hydrophyte,
     sum(CASE WHEN c.type = 'SVP' THEN 1 ELSE 0.0 END) AS svp,
     CASE WHEN sum(CASE WHEN c.habit = 'PE' THEN b.relative_cover ELSE 0.0 END) > 0.0
          THEN sum(CASE WHEN c.habit = 'AN' THEN 1.0 ELSE 0.0 END) / sum(CASE WHEN c.habit = 'PE' THEN 1.0 ELSE 0.0 END)
@@ -354,13 +358,23 @@ CREATE MATERIALIZED VIEW calculations_reduced_fds1 AS
          THEN sum(CASE WHEN c.cofc >= 0.0 THEN c.cofc ELSE 0.0 END) / sqrt(sum(CASE WHEN c.cofc >= 0.0 THEN 1.0 ELSE 0.0 END))
          ELSE 0.0 END AS fqai,
     sum(CASE WHEN c.form = 'bryo' THEN b.relative_cover ELSE 0.0 END) AS bryophyte,
-    sum(CASE WHEN c.shade = 'shade' OR c.shade = 'partial' AND c.oh_status = 'native' AND c.ncne = 'FACW' OR c.ncne = 'OBL' THEN b.relative_cover ELSE 0.0 END) AS per_hydrophyte,
+    sum(CASE 
+		WHEN c.shade = 'shade' AND c.oh_status = 'native' AND c.wet = 'FACW' THEN b.relative_cover 
+		WHEN c.shade = 'shade' AND c.oh_status = 'native' AND c.wet = 'OBL' THEN b.relative_cover
+		WHEN c.shade = 'partial' AND c.oh_status = 'native' AND c.wet = 'FACW' THEN b.relative_cover
+		WHEN c.shade = 'partial' AND c.oh_status = 'native' AND c.wet = 'OBL' THEN b.relative_cover
+		ELSE 0.0 
+		END) AS per_hydrophyte,
     sum(CASE WHEN c.cofc >= 6.0 THEN b.relative_cover ELSE 0.0 END) AS sensitive,
     sum(CASE WHEN c.cofc <= 2.0 THEN b.relative_cover ELSE 0.0 END) AS tolerant,
     sum(CASE WHEN c.scientific_name = 'Typha angustifolia' OR c.scientific_name = 'Typha x glauca' OR c.scientific_name = 'Phalaris arundinacea' OR c.scientific_name = 'Phragmites australis ssp. australis'  THEN b.relative_cover ELSE 0.0 END) AS invasive_graminoids,
     sum(CASE WHEN c.habit = 'AN' THEN b.relative_cover ELSE 0.0 END) AS habit_an_sum,
     sum(CASE WHEN c.scientific_name = 'Cephalanthus occidentalis' THEN b.relative_cover ELSE 0.0 END) AS button_bush,
-    sum(CASE WHEN c.oh_status = 'native' AND c.ncne = 'FACW' OR c.ncne = 'OBL' AND c.habit = 'PE' THEN b.relative_cover ELSE 0.0 END) AS perennial_native_hydrophytes,
+    sum(CASE 
+		WHEN c.oh_status = 'native' AND c.wet = 'FACW' AND c.habit = 'PE' THEN b.relative_cover
+		WHEN c.oh_status = 'native' AND c.wet = 'OBL' AND c.habit = 'PE' THEN b.relative_cover 
+		ELSE 0.0 
+		END) AS perennial_native_hydrophytes,
     sum(CASE WHEN c.oh_status = 'adventive' THEN b.relative_cover ELSE 0.0 END) AS adventives
   FROM plot a
   LEFT JOIN herbaceous_relative_cover b ON a.plot_id = b.plot_id
@@ -373,7 +387,11 @@ CREATE MATERIALIZED VIEW alt_calculations_reduced_fds1 AS
     sum(CASE WHEN c.family = 'Cyperaceae' THEN 1.0 ELSE 0.0 END) AS cyperaceae,
     sum(CASE WHEN c.oh_status = 'native' AND c.type = 'DI' THEN 1.0 ELSE 0.0 END) AS dicot,
     sum(CASE WHEN c.shade = 'shade' OR c.shade = 'partial' THEN 1.0 ELSE 0.0 END) AS shade,
-    sum(CASE WHEN c.oh_status = 'native' AND c.ncne = 'FACW' OR c.ncne = 'OBL' AND c.form = 'shrub' THEN 1.0 ELSE 0.0 END) AS shrub,
+        sum(CASE 
+		WHEN c.oh_status = 'native' AND c.ncne = 'FACW' AND c.form = 'shrub' THEN 1.0 
+		WHEN c.oh_status = 'native' AND c.ncne = 'OBL' AND c.form = 'shrub' THEN 1.0
+		ELSE 0.0 
+		END) AS shrub,
     sum(CASE WHEN c.ncne = 'FACW' OR c.ncne = 'OBL' THEN 1.0 ELSE 0.0 END) AS hydrophyte,
     sum(CASE WHEN c.type = 'SVP' THEN 1 ELSE 0.0 END) AS svp,
     CASE WHEN sum(CASE WHEN c.habit = 'PE' THEN b.relative_cover ELSE 0.0 END) > 0.0
@@ -383,13 +401,23 @@ CREATE MATERIALIZED VIEW alt_calculations_reduced_fds1 AS
          THEN sum(CASE WHEN c.cofc >= 0.0 THEN c.cofc ELSE 0.0 END) / sqrt(sum(CASE WHEN c.cofc >= 0.0 THEN 1.0 ELSE 0.0 END))
          ELSE 0.0 END AS fqai,
     sum(CASE WHEN c.form = 'bryo' THEN b.relative_cover ELSE 0.0 END) AS bryophyte,
-    sum(CASE WHEN c.shade = 'shade' OR c.shade = 'partial' AND c.oh_status = 'native' AND c.ncne = 'FACW' OR c.ncne = 'OBL' THEN b.relative_cover ELSE 0.0 END) AS per_hydrophyte,
+        sum(CASE 
+		WHEN c.shade = 'shade' AND c.oh_status = 'native' AND c.ncne = 'FACW' THEN b.relative_cover 
+		WHEN c.shade = 'shade' AND c.oh_status = 'native' AND c.ncne = 'OBL' THEN b.relative_cover
+		WHEN c.shade = 'partial' AND c.oh_status = 'native' AND c.ncne = 'FACW' THEN b.relative_cover
+		WHEN c.shade = 'partial' AND c.oh_status = 'native' AND c.ncne = 'OBL' THEN b.relative_cover
+		ELSE 0.0 
+		END) AS per_hydrophyte,
     sum(CASE WHEN c.cofc >= 6.0 THEN b.relative_cover ELSE 0.0 END) AS sensitive,
     sum(CASE WHEN c.cofc <= 2.0 THEN b.relative_cover ELSE 0.0 END) AS tolerant,
     sum(CASE WHEN c.scientific_name = 'Typha angustifolia' OR c.scientific_name = 'Typha x glauca' OR c.scientific_name = 'Phalaris arundinacea' OR c.scientific_name = 'Phragmites australis ssp. australis'  THEN b.relative_cover ELSE 0.0 END) AS invasive_graminoids,
     sum(CASE WHEN c.habit = 'AN' THEN b.relative_cover ELSE 0.0 END) AS habit_an_sum,
     sum(CASE WHEN c.scientific_name = 'Cephalanthus occidentalis' THEN b.relative_cover ELSE 0.0 END) AS button_bush,
-    sum(CASE WHEN c.oh_status = 'native' AND c.ncne = 'FACW' OR c.ncne = 'OBL' AND c.habit = 'PE' THEN b.relative_cover ELSE 0.0 END) AS perennial_native_hydrophytes,
+        sum(CASE 
+		WHEN c.oh_status = 'native' AND c.ncne = 'FACW' AND c.habit = 'PE' THEN b.relative_cover
+		WHEN c.oh_status = 'native' AND c.ncne = 'OBL' AND c.habit = 'PE' THEN b.relative_cover 
+		ELSE 0.0 
+		END) AS perennial_native_hydrophytes,
     sum(CASE WHEN c.oh_status = 'adventive' THEN b.relative_cover ELSE 0.0 END) AS adventives
   FROM plot a
   LEFT JOIN alt_herbaceous_relative_cover b ON a.plot_id = b.plot_id
@@ -420,8 +448,16 @@ CREATE MATERIALIZED VIEW alt_calculations_reduced_fds2_canopy AS
 
 CREATE MATERIALIZED VIEW calculations_reduced_fds2_stems AS
   SELECT a.plot_id,
-    sum(CASE WHEN c.oh_status = 'native' AND c.ncne = 'FACW' OR c.ncne = 'OBL' AND c.form = 'tree' THEN b.tot_stems_ha ELSE 0 END) AS stems_wetland_trees,
-    sum(CASE WHEN c.oh_status = 'native' AND c.ncne = 'FACW' OR c.ncne = 'OBL' AND c.form = 'shrub' THEN b.tot_stems_ha ELSE 0 END) AS stems_wetland_shrubs
+    sum(CASE 
+		WHEN c.oh_status = 'native' AND c.ncne = 'FACW' AND c.form = 'tree' THEN b.tot_stems_ha 
+		WHEN c.oh_status = 'native' AND c.ncne = 'OBL' AND c.form = 'tree' THEN b.tot_stems_ha
+		ELSE 0 
+		END) AS stems_wetland_trees,
+    sum(CASE 
+		WHEN c.oh_status = 'native' AND c.ncne = 'FACW' AND c.form = 'shrub' THEN b.tot_stems_ha 
+		WHEN c.oh_status = 'native' AND c.ncne = 'OBL' AND c.form = 'shrub' THEN b.tot_stems_ha
+		ELSE 0 
+		END) AS stems_wetland_shrubs
   FROM plot a
     LEFT JOIN reduced_fds2_tot_stems b
       ON a.plot_id = b.plot_id
