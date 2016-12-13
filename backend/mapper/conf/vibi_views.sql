@@ -201,17 +201,33 @@ CREATE MATERIALIZED VIEW alt_reduced_fds2_iv AS
 
 CREATE MATERIALIZED VIEW  woody_importance_value AS
   SELECT row_number() OVER () AS view_id, a.plot_id, a.species,
-    CASE WHEN b.shade = 'partial' THEN a.iv ELSE null END AS subcanopy_iv_partial,
-    CASE WHEN b.shade = 'shade' THEN a.iv ELSE null END AS subcanopy_iv_shade,
-    CASE WHEN b.form = 'tree' THEN a.iv ELSE null END AS canopy_IV
+	CASE 
+	WHEN b.shade = 'partial' AND b.form = 'shrub' THEN a.iv   
+	WHEN b.shade = 'partial' AND b.form = 'sm tree' THEN a.iv	 
+	ELSE null 
+	END AS subcanopy_iv_partial,
+    	CASE 
+	WHEN b.shade = 'shade' AND b.form = 'shrub' THEN a.iv 
+	WHEN b.shade = 'shade' AND b.form = 'sm tree' THEN a.iv
+	ELSE null 
+	END AS subcanopy_iv_shade,
+    CASE WHEN b.form = 'tree' AND b.oh_status = 'native' THEN a.iv ELSE null END AS canopy_IV
   FROM reduced_fds2_iv a
     LEFT JOIN species b ON a.species = b.scientific_name;
 	
 CREATE MATERIALIZED VIEW  alt_woody_importance_value AS
   SELECT row_number() OVER () AS view_id, a.plot_id, a.species,
-    CASE WHEN b.shade = 'partial' THEN a.iv ELSE null END AS subcanopy_iv_partial,
-    CASE WHEN b.shade = 'shade' THEN a.iv ELSE null END AS subcanopy_iv_shade,
-    CASE WHEN b.form = 'tree' THEN a.iv ELSE null END AS canopy_IV
+	CASE 
+	WHEN b.shade = 'partial' AND b.form = 'shrub' THEN a.iv   
+	WHEN b.shade = 'partial' AND b.form = 'sm tree' THEN a.iv	 
+	ELSE null 
+	END AS subcanopy_iv_partial,
+    	CASE 
+	WHEN b.shade = 'shade' AND b.form = 'shrub' THEN a.iv 
+	WHEN b.shade = 'shade' AND b.form = 'sm tree' THEN a.iv
+	ELSE null 
+	END AS subcanopy_iv_shade,
+    CASE WHEN b.form = 'tree' AND b.oh_status = 'native' THEN a.iv ELSE null END AS canopy_IV
   FROM alt_reduced_fds2_iv a
     LEFT JOIN species b ON a.species = b.scientific_name;
 
