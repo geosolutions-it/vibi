@@ -15,9 +15,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.geotools.data.DataStore;
 import org.geotools.data.Transaction;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 public class PlotService {
@@ -53,14 +50,11 @@ public class PlotService {
                         // select the cells we need to create the primary key
                         Cell plotNoCell = row.getCell(Sheets.getIndex("A"), Row.RETURN_BLANK_AS_NULL);
                         Cell monitoringEventCell = row.getCell(Sheets.getIndex("E"), Row.RETURN_BLANK_AS_NULL);
-                        Cell dateTimerEventCell = row.getCell(Sheets.getIndex("F"), Row.RETURN_BLANK_AS_NULL);
                         // extract the values from the selected cells
-                        SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-mm-yyyy-hh:mm:ss");
                         String plotNo = plotNoCell == null ? "null" : (String) Type.STRING.extract(plotNoCell);
                         String monitoringEvent = monitoringEventCell == null ? "null" : (String) Type.STRING.extract(monitoringEventCell);
-                        String date = dateTimerEventCell == null ? "null" : dateFormatter.format((Date) Type.DATE.extract(dateTimerEventCell));
                         // build the plot sampling the key
-                        String plotKey = plotNo + "_" + monitoringEvent + "_" + date;
+                        String plotKey = plotNo + "_" + monitoringEvent;
                         // removing any registered events for this plot sampling
                         Store.delete(context.getStore(), context.getTransaction(), "plot", plotKey);
                         // update plots indexes stored in the global context
