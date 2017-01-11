@@ -294,7 +294,8 @@ CREATE TABLE plot (
   threeo_Disturbance_Severity text references disturbance_severity(disturbance_severity),
   threeo_Disturbance_Years_ago int4,
   threeo_Distubance_per_of_plot int4,
-  threeo_Disturbance_description text
+  threeo_Disturbance_description text,
+  location text
 );
 
 CREATE TABLE plot_module_herbaceous (

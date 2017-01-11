@@ -121,8 +121,10 @@ public final class Sheets {
     public static abstract class WorkBook {
 
         public WorkBook(String workBookPath) {
-            try (InputStream input = new FileInputStream(workBookPath);
-                 HSSFWorkbook workBook = new HSSFWorkbook(new POIFSFileSystem(input))) {
+            try (
+                InputStream input = new FileInputStream(workBookPath);
+                HSSFWorkbook workBook = new HSSFWorkbook(new POIFSFileSystem(input));
+            ){
                 doWork(workBook);
             } catch (VibiException exception) {
                 throw exception;

@@ -84,3 +84,32 @@ BEGIN
   REFRESH MATERIALIZED VIEW woody_plot_x_species_matrix;
 END;
 $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION isFACW(p plot, s species)
+  RETURNS boolean LANGUAGE plpgsql AS $$
+BEGIN
+  IF p.location = 'EMP' THEN
+    RETURN s.emp = 'FACW';
+  ELSEIF p.location = 'NCNE' THEN
+    RETURN s.ncne = 'FACW';
+  ELSEIF p.location = 'MW' THEN
+    RETURN s.mw = 'FACW';
+  END IF;
+  RETURN false;
+END
+$$;
+
+CREATE OR REPLACE FUNCTION isOBL(p plot, s species)
+  RETURNS boolean LANGUAGE plpgsql AS $$
+BEGIN
+  IF p.location = 'EMP' THEN
+    RETURN s.emp = 'OBL';
+  ELSEIF p.location = 'NCNE' THEN
+    RETURN s.ncne = 'OBL';
+  ELSEIF p.location = 'MW' THEN
+    RETURN s.mw = 'OBL';
+  END IF;
+  RETURN false;
+END
+$$;
+

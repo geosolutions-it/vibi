@@ -1,0 +1,20 @@
+ALTER TABLE plot DROP CONSTRAINT plot_drainage_fkey;
+ALTER TABLE plot DROP CONSTRAINT plot_hgmclass_fkey;
+ALTER TABLE plot DROP CONSTRAINT plot_hgmgroup_fkey;
+ALTER TABLE plot DROP CONSTRAINT plot_hgmsubclass_fkey;
+ALTER TABLE plot DROP CONSTRAINT plot_homogeneity_fkey;
+ALTER TABLE plot DROP CONSTRAINT plot_hydrologic_regime_fkey;
+ALTER TABLE plot DROP CONSTRAINT plot_landform_type_fkey;
+ALTER TABLE plot DROP CONSTRAINT plot_leap_landcover_classification_fkey;
+ALTER TABLE plot DROP CONSTRAINT plot_oneo_class_code_mod_natureserve_fkey;
+ALTER TABLE plot DROP CONSTRAINT plot_oneo_disturbance_severity_fkey;
+ALTER TABLE plot DROP CONSTRAINT plot_oneo_disturbance_type_fkey;
+ALTER TABLE plot DROP CONSTRAINT plot_salinity_fkey;
+ALTER TABLE plot DROP CONSTRAINT plot_stand_size_fkey;
+ALTER TABLE plot DROP CONSTRAINT plot_threeo_disturbance_severity_fkey;
+ALTER TABLE plot DROP CONSTRAINT plot_threeo_disturbance_type_fkey;
+ALTER TABLE plot DROP CONSTRAINT plot_twoo_disturbance_severity_fkey;
+ALTER TABLE plot DROP CONSTRAINT plot_twoo_disturbance_type_fkey;
+ALTER TABLE plot DROP CONSTRAINT plot_vegclass_fkey;
+
+ALTER TABLE plot_module_woody_raw DROP CONSTRAINT plot_module_woody_raw_dbh_class_fkey;

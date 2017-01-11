@@ -404,11 +404,11 @@ CREATE MATERIALIZED VIEW alt_calculations_reduced_fds1 AS
     sum(CASE WHEN c.oh_status = 'native' AND c.type = 'DI' THEN 1.0 ELSE 0.0 END) AS dicot,
     sum(CASE WHEN c.shade = 'shade' OR c.shade = 'partial' THEN 1.0 ELSE 0.0 END) AS shade,
         sum(CASE 
-		WHEN c.oh_status = 'native' AND c.ncne = 'FACW' AND c.form = 'shrub' THEN 1.0 
-		WHEN c.oh_status = 'native' AND c.ncne = 'OBL' AND c.form = 'shrub' THEN 1.0
+		WHEN c.oh_status = 'native' AND isFACW(a, c) AND c.form = 'shrub' THEN 1.0 
+		WHEN c.oh_status = 'native' AND isOBL(a, c) AND c.form = 'shrub' THEN 1.0
 		ELSE 0.0 
 		END) AS shrub,
-    sum(CASE WHEN c.ncne = 'FACW' OR c.ncne = 'OBL' THEN 1.0 ELSE 0.0 END) AS hydrophyte,
+    sum(CASE WHEN isFACW(a, c) OR isOBL(a, c) THEN 1.0 ELSE 0.0 END) AS hydrophyte,
     sum(CASE WHEN c.type = 'SVP' THEN 1 ELSE 0.0 END) AS svp,
     CASE WHEN sum(CASE WHEN c.habit = 'PE' THEN b.relative_cover ELSE 0.0 END) > 0.0
          THEN sum(CASE WHEN c.habit = 'AN' THEN 1.0 ELSE 0.0 END) / sum(CASE WHEN c.habit = 'PE' THEN 1.0 ELSE 0.0 END)
@@ -418,10 +418,10 @@ CREATE MATERIALIZED VIEW alt_calculations_reduced_fds1 AS
          ELSE 0.0 END AS fqai,
     sum(CASE WHEN c.form = 'bryo' THEN b.relative_cover ELSE 0.0 END) AS bryophyte,
         sum(CASE 
-		WHEN c.shade = 'shade' AND c.oh_status = 'native' AND c.ncne = 'FACW' THEN b.relative_cover 
-		WHEN c.shade = 'shade' AND c.oh_status = 'native' AND c.ncne = 'OBL' THEN b.relative_cover
-		WHEN c.shade = 'partial' AND c.oh_status = 'native' AND c.ncne = 'FACW' THEN b.relative_cover
-		WHEN c.shade = 'partial' AND c.oh_status = 'native' AND c.ncne = 'OBL' THEN b.relative_cover
+		WHEN c.shade = 'shade' AND c.oh_status = 'native' AND isFACW(a, c) THEN b.relative_cover 
+		WHEN c.shade = 'shade' AND c.oh_status = 'native' AND isOBL(a, c) THEN b.relative_cover
+		WHEN c.shade = 'partial' AND c.oh_status = 'native' AND isFACW(a, c) THEN b.relative_cover
+		WHEN c.shade = 'partial' AND c.oh_status = 'native' AND isOBL(a, c) THEN b.relative_cover
 		ELSE 0.0 
 		END) AS per_hydrophyte,
     sum(CASE WHEN c.cofc >= 6.0 THEN b.relative_cover ELSE 0.0 END) AS sensitive,
@@ -430,8 +430,8 @@ CREATE MATERIALIZED VIEW alt_calculations_reduced_fds1 AS
     sum(CASE WHEN c.habit = 'AN' THEN b.relative_cover ELSE 0.0 END) AS habit_an_sum,
     sum(CASE WHEN c.scientific_name = 'Cephalanthus occidentalis' THEN b.relative_cover ELSE 0.0 END) AS button_bush,
         sum(CASE 
-		WHEN c.oh_status = 'native' AND c.ncne = 'FACW' AND c.habit = 'PE' THEN b.relative_cover
-		WHEN c.oh_status = 'native' AND c.ncne = 'OBL' AND c.habit = 'PE' THEN b.relative_cover 
+		WHEN c.oh_status = 'native' AND isFACW(a, c) AND c.habit = 'PE' THEN b.relative_cover
+		WHEN c.oh_status = 'native' AND isOBL(a, c) AND c.habit = 'PE' THEN b.relative_cover 
 		ELSE 0.0 
 		END) AS perennial_native_hydrophytes,
     sum(CASE WHEN c.oh_status = 'adventive' THEN b.relative_cover ELSE 0.0 END) AS adventives

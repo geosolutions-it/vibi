@@ -5,6 +5,7 @@ import it.geosolutions.geobatch.annotations.Action;
 import it.geosolutions.geobatch.annotations.CheckConfiguration;
 import it.geosolutions.geobatch.flow.event.action.ActionException;
 import it.geosolutions.geobatch.flow.event.action.BaseAction;
+import it.geosolutions.vibi.mapper.attributes.Location;
 import it.geosolutions.vibi.mapper.exceptions.VibiException;
 import it.geosolutions.vibi.mapper.service.*;
 import it.geosolutions.vibi.mapper.utils.Sheets;
@@ -54,6 +55,7 @@ public final class MapperAction extends BaseAction<EventObject> {
     private void handleFileSystemEvent(FileSystemEvent event) {
         try {
             final DataStore store = actionConfiguration.getStore();
+            final Location plotLocation = getLocationFromFilename(event);
             new Sheets.WorkBook(event.getSource().getPath()) {
 
                 @Override
@@ -61,6 +63,9 @@ public final class MapperAction extends BaseAction<EventObject> {
                     Transaction transaction = new DefaultTransaction(UUID.randomUUID().toString());
                     try {
                         Map<Object, Object> globalContext = new HashMap<>();
+                        if(plotLocation != null){
+                            globalContext.put(VibiService.PLOT_LOCATION, plotLocation);
+                        }
                         LookupService.processLookupNatureSOPEACommunitySheet(workBook.getSheet("LOOKUP NatureS+OEPA community"), store, transaction);
                         MapperAction.super.listenerForwarder.progressing(5.0f, "LOOKUP NATURES+OEPA COMMUNITY");
                         LookupService.processLookupMidPointSheet(workBook.getSheet("LOOKUP midpoint"), store, transaction);
@@ -105,5 +110,30 @@ public final class MapperAction extends BaseAction<EventObject> {
             throw new RuntimeException(
                     String.format("Error moving file from '%s' to '%s'.", event.getSource(), actionConfiguration.getOutputPath()));
         }
+    }
+    
+    /**
+     * Reads the file name and extracts a Location from the form "_locationname_" or returns null
+     * Example:
+     *   deadbeef0102_ncne_filename1234.xls must return Location.NCNE
+     *   deadbeef0102_uuid_filename1234.xls must return NULL
+     * @param event
+     * @return
+     */
+    private Location getLocationFromFilename(FileSystemEvent event){
+        if(event == null
+        || event.getSource() == null
+        || event.getSource().getName() == null
+        || event.getSource().getName().isEmpty()){
+            return null;
+        }
+        
+        for (Location loc : Location.values()) {
+            if(event.getSource().getName().toUpperCase().contains("_"+loc.toString().toUpperCase()+"_")){
+                return loc;
+            }
+        }
+        
+        return null;
     }
 }

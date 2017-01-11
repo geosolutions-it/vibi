@@ -1,6 +1,7 @@
 package it.geosolutions.vibi.mapper.service;
 
 import it.geosolutions.vibi.mapper.attributes.Attribute;
+import it.geosolutions.vibi.mapper.attributes.Location;
 import it.geosolutions.vibi.mapper.builders.ReferenceAttributeBuilder;
 import it.geosolutions.vibi.mapper.builders.SheetProcessorBuilder;
 import it.geosolutions.vibi.mapper.detectors.BoundsDetector;
@@ -39,8 +40,7 @@ public class PlotService {
                 return Sheets.extract(context.getRow(), "A", Type.STRING) == null;
             }
         };
-
-        SheetProcessor sheetProcessor = new SheetProcessorBuilder()
+        SheetProcessorBuilder spBuilder = new SheetProcessorBuilder()
                 .withTable("plot").withBoundsDetector(boundsDetector)
                 .withAttribute(new Attribute("plot_id", Type.STRING, true) {
                     @Override
@@ -202,8 +202,18 @@ public class PlotService {
                         .build())
                 .withAttribute("BJ", "threeo_disturbance_years_ago", "Integer")
                 .withAttribute("BK", "threeo_distubance_per_of_plot", "Integer")
-                .withAttribute("BL", "threeo_disturbance_description", "Text")
-                .build();
+                .withAttribute("BL", "threeo_disturbance_description", "Text");
+
+        if(globalContext.get(VibiService.PLOT_LOCATION) != null){
+            spBuilder.withAttribute(new Attribute("location", Type.STRING) {
+                    @Override
+                    public Object getValue(SheetContext context) {
+                        return ((Location)globalContext.get(VibiService.PLOT_LOCATION)).toString();
+                    }
+                });
+        }
+        
+        SheetProcessor sheetProcessor = spBuilder.build();
         sheetProcessor.process(sheet, store, transaction);
     }
 }

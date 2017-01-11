@@ -3,3 +3,5 @@ target
 .idea
 geobatch/webapp/conf/GEOBATCH_CONFIG_DIR/settings
 geobatch/webapp/conf/GEOBATCH_CONFIG_DIR/temp
+.classpath
+.project

@@ -29,6 +29,7 @@ public final class VibiService {
     }
 
     public static final String PLOTS_INDEX = "plots_index";
+    public static final String PLOT_LOCATION = "plot_location";
 
     public static Map<String, String> getPlotsIndex(Map<Object, Object> globalContext) {
         Map<String, String> plotsIndex = (Map<String, String>) globalContext.get(PLOTS_INDEX);

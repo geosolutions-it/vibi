@@ -34,7 +34,7 @@ public class MapperTest {
     public void testMapper() throws Exception {
         Map<String, Object> dbParameters = getVibiTestDbParameters();
         if (dbParameters == null) {
-            LOGGER.warn("To activate VIBI mapper tests setup a database for VIBI and define is connection parameters" +
+            LOGGER.warn("To activate VIBI mapper tests setup a database for VIBI and define its connection parameters" +
                     " using OS environment or Java property VIBI_TEST_DB. " +
                     "As an example: 'host=localhost;port=5432;schema=public;database=postgres;user=postgres;passwd=postgres'");
         }
