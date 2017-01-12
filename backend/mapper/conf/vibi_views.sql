@@ -465,13 +465,13 @@ CREATE MATERIALIZED VIEW alt_calculations_reduced_fds2_canopy AS
 CREATE MATERIALIZED VIEW calculations_reduced_fds2_stems AS
   SELECT a.plot_id,
     sum(CASE 
-		WHEN c.oh_status = 'native' AND c.ncne = 'FACW' AND c.form = 'tree' THEN b.tot_stems_ha 
-		WHEN c.oh_status = 'native' AND c.ncne = 'OBL' AND c.form = 'tree' THEN b.tot_stems_ha
+		WHEN c.oh_status = 'native' AND c.wet = 'FACW' AND c.form = 'tree' THEN b.tot_stems_ha 
+		WHEN c.oh_status = 'native' AND c.wet = 'OBL' AND c.form = 'tree' THEN b.tot_stems_ha
 		ELSE 0 
 		END) AS stems_wetland_trees,
     sum(CASE 
-		WHEN c.oh_status = 'native' AND c.ncne = 'FACW' AND c.form = 'shrub' THEN b.tot_stems_ha 
-		WHEN c.oh_status = 'native' AND c.ncne = 'OBL' AND c.form = 'shrub' THEN b.tot_stems_ha
+		WHEN c.oh_status = 'native' AND c.wet = 'FACW' AND c.form = 'shrub' THEN b.tot_stems_ha 
+		WHEN c.oh_status = 'native' AND c.wet = 'OBL' AND c.form = 'shrub' THEN b.tot_stems_ha
 		ELSE 0 
 		END) AS stems_wetland_shrubs
   FROM plot a
