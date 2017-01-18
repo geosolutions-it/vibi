@@ -657,6 +657,10 @@
                             "sortable": true,
                             "filterable": true,
                             "name": "threeo_disturbance_description"
+                        },
+                        {
+                            "header": "",
+                            "name": "filler"
                         }
                     ],
                     "createTitle": "Create a new Plot",
@@ -1156,6 +1160,10 @@
                             "sortable": true,
                             "filterable": true,
                             "name": "notes"
+                        },
+                        {
+                            "header": "",
+                            "name": "filler"
                         }
                     ],
                     "createTitle": "Create a new Specie",
@@ -2266,6 +2274,10 @@
                             "sortable": true,
                             "filterable": true,
                             "name": "grams_per_sq_meter"
+                        },
+                        {
+                            "header": "",
+                            "name": "filler"
                         }
                     ],
                     "createTitle": "Create a new Biomass",
@@ -3256,6 +3268,10 @@
                             "sortable": true,
                             "filterable": true,
                             "name": "per_bare_ground"
+                        },
+                        {
+                            "header": "",
+                            "name": "filler"
                         }
                     ],
                     "createTitle": "Create new Metrics",
@@ -3877,6 +3893,10 @@
                             "sortable": true,
                             "filterable": true,
                             "name": "per_bare_ground"
+                        },
+                        {
+                            "header": "",
+                            "name": "filler"
                         }
                     ],
                     "createTitle": "Create new Alt Metrics",
@@ -5139,6 +5159,10 @@
                             "sortable": true,
                             "filterable": true,
                             "name": "notes"
+                        },
+                        {
+                            "header": "",
+                            "name": "filler"
                         }
                     ],
                     "createTitle": "Create a new Specie",
@@ -6241,6 +6265,10 @@
                             "sortable": true,
                             "filterable": true,
                             "name": "grams_per_sq_meter"
+                        },
+                        {
+                            "header": "",
+                            "name": "filler"
                         }
                     ],
                     "createTitle": "Create a new Biomass",
@@ -7224,6 +7252,10 @@
                             "sortable": true,
                             "filterable": true,
                             "name": "per_bare_ground"
+                        },
+                        {
+                            "header": "",
+                            "name": "filler"
                         }
                     ],
                     "createTitle": "Create new Metrics",
