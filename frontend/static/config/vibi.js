@@ -4071,7 +4071,21 @@
             "autoOpen": true,
             "closable": false,
             "showActionButton": false,
-            "filters": [{ "title" : "Excel files", "extensions" : "xls,xlsx" }]
+            "filters": [{ "title" : "Excel files", "extensions" : "xls,xlsx" }],
+            "askMoreParams": {
+                "title": "Choose Location",
+                "params": [{
+                    "name": "location",
+                    "title": "Location",
+                    "emptyText": "Select a Location...",
+                    "options": [
+                        ["none","None - No location"],
+                        ["EMP","EMP - Eastern Mountains and Piedmont"],
+                        ["NCNE","NCNE - Northcentral and Northeast"],
+                        ["MW","MW - Midwest"]
+                    ]
+                }]
+            }
         },
         {
             "ptype": "mxp_usermanager",
