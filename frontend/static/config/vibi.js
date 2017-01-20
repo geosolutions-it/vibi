@@ -4157,6 +4157,14 @@
                             "name": "plot_name"
                         },
                         {
+                            "header": "Location",
+                            "mapping": "location",
+                            "dataIndex": "location",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "location"
+                        },
+                        {
                             "header": "Project Label",
                             "mapping": "Project_Label",
                             "dataIndex": "Project_Label",
@@ -4693,6 +4701,10 @@
                         {
                             "mapping": "plotName",
                             "name": "plot_name"
+                        },
+                        {
+                            "mapping": "location",
+                            "name": "location"
                         },
                         {
                             "mapping": "projectLabel",
