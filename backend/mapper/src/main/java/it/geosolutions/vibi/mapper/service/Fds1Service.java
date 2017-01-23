@@ -118,7 +118,7 @@ public class Fds1Service {
     private static void processInfoRow(DataStore store, Transaction transaction, Row row, String expectedInfo,
                                        String plotId, List<ModuleAndCorner> modulesAndCorners) {
         try {
-            String info = extractString(row.getCell(Sheets.getIndex("L"), Row.RETURN_BLANK_AS_NULL)).trim();
+            String info = Type.extractString(row.getCell(Sheets.getIndex("L"), Row.RETURN_BLANK_AS_NULL)).trim();
             if (!info.equals(expectedInfo)) {
                 throw new VibiException("Expecting row '%d' of spreadsheet '%s' to contain info '%s' but contains info '%s'.",
                         row.getRowNum() + 1, row.getSheet().getSheetName(), expectedInfo, info);
@@ -147,7 +147,11 @@ public class Fds1Service {
                 moreData = false;
                 continue;
             }
-            String species = extractString(speciesCell);
+            String species = Type.extractString(speciesCell);
+            // Some spreadsheets unnecessary have trailing spaces
+            if(species != null){
+                species = species.trim();
+            }
             String groupId = UUID.randomUUID().toString();
             try {
                 processSpeciesRow(store, transaction, row, groupId, plotId, species, modulesAndCorners);
@@ -180,10 +184,14 @@ public class Fds1Service {
         Integer depth = null;
         if (!(moduleAndCorner.corner.equalsIgnoreCase("R") || moduleAndCorner.module.equalsIgnoreCase("R"))) {
             Cell depthCell = row.getCell(moduleAndCorner.depthColumnIndex, Row.RETURN_BLANK_AS_NULL);
-            depth = depthCell == null ? null : extractInteger(depthCell);
+            depth = depthCell == null ? null : Type.extractInteger(depthCell);
+            // Remove all the zeros
+            if (depth!= null && depth == 0){
+                depth = null;
+            }
         }
         Cell coverClassCodeCell = row.getCell(moduleAndCorner.coverClassCodeIndex, Row.RETURN_BLANK_AS_NULL);
-        Integer coverClassCode = coverClassCodeCell == null ? null : extractInteger(coverClassCodeCell);
+        Integer coverClassCode = coverClassCodeCell == null ? null : Type.extractInteger(coverClassCodeCell);
         return Tuple.tuple(depth, coverClassCode);
     }
 
@@ -268,12 +276,12 @@ public class Fds1Service {
                 index += 2;
                 continue;
             }
-            String moduleNumber = extractString(module);
+            String moduleNumber = Type.extractString(module);
             if (moduleNumber.equalsIgnoreCase("R")) {
                 moreModulesAndCorners = false;
             }
-            modulesAndCorners.add(new ModuleAndCorner(extractString(module),
-                    extractString(corner), index, index + 1));
+            modulesAndCorners.add(new ModuleAndCorner(Type.extractString(module),
+                    Type.extractString(corner), index, index + 1));
             index += 2;
         }
         if (index >= 10000) {
@@ -281,14 +289,6 @@ public class Fds1Service {
                     "Max number of searching corner/modules reached, if there is no residual corner/modules this is fine."));
         }
         return modulesAndCorners;
-    }
-
-    private static Integer extractInteger(Cell cell) {
-        return (Integer) Type.INTEGER.extract(cell);
-    }
-
-    private static String extractString(Cell cell) {
-        return (String) Type.STRING.extract(cell);
     }
 
     private static final class ModuleAndCorner {

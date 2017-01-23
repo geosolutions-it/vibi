@@ -106,9 +106,13 @@ public class Fds2Service {
         }
         Object sub = Type.DOUBLE.extract(row.getCell(Sheets.getIndex("F"), Row.RETURN_BLANK_AS_NULL));
         Object module = Type.STRING.extract(row.getCell(Sheets.getIndex("G"), Row.RETURN_BLANK_AS_NULL));
-        Object species = Type.STRING.extract(speciesCell);
+        String species = Type.extractString(speciesCell);
+        // Some spreadsheets unnecessary have trailing spaces
+        if(species != null){
+            species = species.trim();
+        }
         String groupId = UUID.randomUUID().toString();
-        createAndStoreMiscFeature(store, transaction, row, groupId, (String) species, plotId, (String) module,
+        createAndStoreMiscFeature(store, transaction, row, groupId, species, plotId, (String) module,
                 (String) Sheets.extract(row, "I", Type.STRING),
                 (String) Sheets.extract(row, "J", Type.STRING),
                 (String) Sheets.extract(row, "K", Type.STRING));

@@ -72,7 +72,7 @@ public abstract class Type {
             return rawValue;
         }
         if (clazz.equals(String.class) && rawValue instanceof Number) {
-            // hacker for plot number, module numbers and cornern numbers
+            // hacker for plot number, module numbers and corner numbers
             Number number = (Number) rawValue;
             double numberAsDouble =  number.doubleValue();
             if ((numberAsDouble == Math.floor(numberAsDouble)) && !Double.isInfinite(numberAsDouble)) {
@@ -86,6 +86,14 @@ public abstract class Type {
                     rawValue, cell.getSheet().getSheetName(), cell.getRow().getRowNum() + 1, Sheets.getColumn(cell.getColumnIndex()), name);
         }
         return value;
+    }
+
+    public static String extractString(Cell cell) {
+        return (String) STRING.extract(cell);
+    }
+
+    public static Integer extractInteger(Cell cell) {
+        return (Integer) INTEGER.extract(cell);
     }
 
     public static Type of(String name) {
