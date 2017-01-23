@@ -139,6 +139,14 @@
                             "name": "plot_name"
                         },
                         {
+                            "header": "Location",
+                            "mapping": "location",
+                            "dataIndex": "location",
+                            "sortable": true,
+                            "filterable": true,
+                            "name": "location"
+                        },
+                        {
                             "header": "Project Label",
                             "mapping": "Project_Label",
                             "dataIndex": "Project_Label",
@@ -679,6 +687,10 @@
                         {
                             "mapping": "plotName",
                             "name": "plot_name"
+                        },
+                        {
+                            "mapping": "location",
+                            "name": "location"
                         },
                         {
                             "mapping": "projectLabel",
@@ -4683,6 +4695,10 @@
                             "sortable": true,
                             "filterable": true,
                             "name": "threeo_disturbance_description"
+                        },
+                        {
+                            "header": "",
+                            "name": "filler"
                         }
                     ],
                     "createTitle": "Create a new Plot",
@@ -7458,7 +7474,21 @@
             "showActionButton": false,
             "autoRefreshState": true,
             "restrictToGroups": [ "uploaders" ],
-            "filters": [{ "title" : "Excel files", "extensions" : "xls,xlsx" }]
+            "filters": [{ "title" : "Excel files", "extensions" : "xls,xlsx" }],
+            "askMoreParams": {
+                "title": "Choose Location",
+                "params": [{
+                    "name": "location",
+                    "title": "Location",
+                    "emptyText": "Select a Location...",
+                    "options": [
+                        ["none","None - No location"],
+                        ["EMP","EMP - Eastern Mountains and Piedmont"],
+                        ["NCNE","NCNE - Northcentral and Northeast"],
+                        ["MW","MW - Midwest"]
+                    ]
+                }]
+            }
         },
         {
             "ptype": "mxp_login",
