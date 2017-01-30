@@ -2441,8 +2441,8 @@ G_ID,SCIENTIFIC_NAME,ACRONYM,AUTHORITY,COFC,SYN,COMMON_NAME,FAMILY,FN,WET,FORM,H
 2456,Rubus discolor,RUBDIS,Weihe & Nees,0,,HIMALAYAN BLACKBERRY,Rosaceae,,UPL,shrub,W,advent,RUAR9,,DI,adventive,UPL,UPL,UPL,syn. Rubus armeniacus
 2457,Rubus flagellaris,RUBFLA,Willd.,0,,NORTHERN DEWBERRY,Rosaceae,408,FACU,shrub,W,partial,RUFL,,DI,adventive,FACU,FACU,FACU,
 2458,Rubus hispidus,RUBHIS,L.,5,,SWAMP DEWBERRY,Rosaceae,409,FACW,forb,PE,partial,RUHI,,DI,native,FACW,FACW,FACW,
-2459,Rubus idaeus L. var. strigosus,RUBIDAS,(Michx.) Maxim.,6,syn,WILD RED RASPBERRY,Rosaceae,,FAC,shrub,W,full,RUIDS2,,DI,native,FAC,FACU,FACU,syn. Rubus idaeus
-2460,Rubus ideaus L. var. ideaus,RUBIDAI,L.,0,,RED RASPBERRY,Rosaceae,,FAC,shrub,W,full,RUIDI,,DI,adventive,FAC,FACU,FACU,syn. Rubus idaeus
+2459,Rubus idaeus var. strigosus,RUBIDAS,(Michx.) Maxim.,6,syn,WILD RED RASPBERRY,Rosaceae,,FAC,shrub,W,full,RUIDS2,,DI,native,FAC,FACU,FACU,syn. Rubus idaeus
+2460,Rubus ideaus var. ideaus,RUBIDAI,L.,0,,RED RASPBERRY,Rosaceae,,FAC,shrub,W,full,RUIDI,,DI,adventive,FAC,FACU,FACU,syn. Rubus idaeus
 2461,Rubus laciniatus,RUBLAC,Willd.,0,,CUT-LEAVED BLACKBERRY,Rosaceae,,UPL,shrub,W,advent,RULA,,DI,adventive,UPL,UPL,UPL,
 2462,Rubus occidentalis,RUBOCC,L.,1,,BLACK RASPBERRY,Rosaceae,,UPL,shrub,W,full,RUOC,,DI,native,,,,
 2463,Rubus odoratus,RUBODO,L.,5,,FLOWERING RASPBERRY,Rosaceae,,UPL,shrub,W,full,RUOD,,DI,native,,,,
