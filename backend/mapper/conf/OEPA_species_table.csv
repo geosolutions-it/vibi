@@ -3039,7 +3039,7 @@ G_ID,SCIENTIFIC_NAME,ACRONYM,AUTHORITY,COFC,SYN,COMMON_NAME,FAMILY,FN,WET,FORM,H
 3054,Viburnum rafinesquianum,VIBRAF,Schult.,5,,DOWNY ARROW-WOOD,Caprifoliaceae,511,UPL,shrub,W,shade,VIRA,,DI,native,,,,Viburnum rafinesqueanum? (check spelling)
 3055,Viburnum recognitum,VIBREC,Aiton,2,syn,NORTHERN ARROW-WOOD,Caprifoliaceae,,FACW,shrub,W,partial,VIRE7,,DI,native,FAC,FAC,FAC,
 3056,Viburnum rufidulum,VIBRUF,Raf.,6,,SOUTHERN BLACK-HAW,Caprifoliaceae,,UPL,shrub,W,partial,VIRU,P,DI,native,UPL,FACU,,
-3057,Viburnum seiboldii,VIBSIE,MIq.,0,,SEIBOLD'S ARROWWOOD,Caprifoliaceae,,FACU,shrub,W,partial,,,MO,adventive,,,,Viburnum sieboldii? (check spelling)
+3057,Viburnum sieboldii,VIBSIE,MIq.,0,,SEIBOLD'S ARROWWOOD,Caprifoliaceae,,FACU,shrub,W,partial,,,MO,adventive,,,,Viburnum sieboldii? (check spelling)
 3058,Viburnum sp.,VIBURN,ND,,,ND,Caprifoliaceae,,ND,shrub,W,ND,VIBUR,,DI,,,,,
 3059,Vicia americana,VICAME,Muhl. ex Willd.,5,,AMERICAN VETCH,Fabaceae,,UPL,forb,PE,full,VIAM,,DI,native,FACU,FACU,FACU,
 3060,Vicia angustifolia,VICANG,L.,0,,NARROW-LEAVED VETCH,Fabaceae,,FACU,vine,AN,advent,VISAN2,,DI,adventive,FACU,FACU,FACU,syn. Vicia sativa ssp. nigra
