@@ -118,7 +118,7 @@ public class PlotService {
                         .build())
                 .withAttribute(new ReferenceAttributeBuilder()
                         .withTableName("class_code_mod_natureserve")
-                        .withAttributeName("code")
+                        .withAttributeName("oneo_class_code_mod_natureserve")
                         .withAttributeType("Text")
                         .withAttributeId("code", "AO")
                         .build())
