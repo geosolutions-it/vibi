@@ -90,80 +90,118 @@ public class PlotService {
                 .withAttribute("AC", "estimate_of_per_unvegetated_ow_entire_site", "Double")
                 .withAttribute("AD", "estimate_per_invasives_entire_site", "Double")
                 .withAttribute("AE", "centerline", "Double")
+                .withAttribute("AH", "vegclass", "Text") // TODO: remove and use the ReferenceAttributeBuilder when constraints are needed 
+                /*
                 .withAttribute(new ReferenceAttributeBuilder()
                         .withTableName("veg_class")
                         .withAttributeName("vegclass")
                         .withAttributeType("Text")
                         .withAttributeId("veg_class", "AH")
                         .build())
+                */
                 .withAttribute("AI", "vegsubclass", "Text")
+                .withAttribute("AK", "hgmclass", "Text") // TODO: remove and use the ReferenceAttributeBuilder when constraints are needed
+                /*
                 .withAttribute(new ReferenceAttributeBuilder()
                         .withTableName("hgm_class")
                         .withAttributeName("hgmclass")
                         .withAttributeType("Text")
                         .withAttributeId("hgm_class", "AK")
                         .build())
+                */
+                .withAttribute("AL", "hgmsubclass", "Text") // TODO: remove and use the ReferenceAttributeBuilder when constraints are needed
+                /*
                 .withAttribute(new ReferenceAttributeBuilder()
                         .withTableName("hgm_subclass")
                         .withAttributeName("hgmsubclass")
                         .withAttributeType("Text")
                         .withAttributeId("hgm_subclass", "AL")
                         .build())
+                */
                 .withAttribute("AM", "twoo_hgm", "Text")
+                .withAttribute("AN", "hgmgroup", "Text") // TODO: remove and use the ReferenceAttributeBuilder when constraints are needed
+                /*
                 .withAttribute(new ReferenceAttributeBuilder()
                         .withTableName("hgm_group")
                         .withAttributeName("hgmgroup")
                         .withAttributeType("Text")
                         .withAttributeId("hgm_group", "AN")
                         .build())
+                */
+                .withAttribute("AO", "oneo_class_code_mod_natureserve", "Text") // TODO: remove and use the ReferenceAttributeBuilder when constraints are needed
+                /*
                 .withAttribute(new ReferenceAttributeBuilder()
                         .withTableName("class_code_mod_natureserve")
                         .withAttributeName("oneo_class_code_mod_natureserve")
                         .withAttributeType("Text")
                         .withAttributeId("code", "AO")
                         .build())
+                */
+                .withAttribute("AR", "landform_type", "Text") // TODO: remove and use the ReferenceAttributeBuilder when constraints are needed
+                /*
                 .withAttribute(new ReferenceAttributeBuilder()
                         .withTableName("landform_type")
                         .withAttributeName("landform_type")
                         .withAttributeType("Text")
                         .withAttributeId("Landform_type", "AR")
                         .build())
+                */
+                .withAttribute("AS", "homogeneity", "Text") // TODO: remove and use the ReferenceAttributeBuilder when constraints are needed
+                /*
                 .withAttribute(new ReferenceAttributeBuilder()
                         .withTableName("homogeneity")
                         .withAttributeName("homogeneity")
                         .withAttributeType("Text")
                         .withAttributeId("homogeneity", "AS")
                         .build())
+                */
+                .withAttribute("AT", "stand_size", "Text") // TODO: remove and use the ReferenceAttributeBuilder when constraints are needed
+                /*
                 .withAttribute(new ReferenceAttributeBuilder()
                         .withTableName("stand_size")
                         .withAttributeName("stand_size")
                         .withAttributeType("Text")
                         .withAttributeId("stand_size", "AT")
                         .build())
+                */
+                .withAttribute("AU", "drainage", "Text") // TODO: remove and use the ReferenceAttributeBuilder when constraints are needed
+                /*
                 .withAttribute(new ReferenceAttributeBuilder()
                         .withTableName("drainage")
                         .withAttributeName("drainage")
                         .withAttributeType("Text")
                         .withAttributeId("drainage", "AU")
                         .build())
+                */
+                .withAttribute("AV", "salinity", "Text") // TODO: remove and use the ReferenceAttributeBuilder when constraints are needed
+                /*
                 .withAttribute(new ReferenceAttributeBuilder()
                         .withTableName("salinity")
                         .withAttributeName("salinity")
                         .withAttributeType("Text")
                         .withAttributeId("salinity", "AV")
                         .build())
+                */
+                .withAttribute("AW", "hydrologic_regime", "Text") // TODO: remove and use the ReferenceAttributeBuilder when constraints are needed
+                /*
                 .withAttribute(new ReferenceAttributeBuilder()
                         .withTableName("hydrologic_regime")
                         .withAttributeName("hydrologic_regime")
                         .withAttributeType("Text")
                         .withAttributeId("hydrologic_regime", "AW")
                         .build())
+                */
+                .withAttribute("AX", "oneo_disturbance_type", "Text") // TODO: remove and use the ReferenceAttributeBuilder when constraints are needed
+                /*
                 .withAttribute(new ReferenceAttributeBuilder()
                         .withTableName("disturbance_type")
                         .withAttributeName("oneo_disturbance_type")
                         .withAttributeType("Text")
                         .withAttributeId("disturbance_type", "AX")
                         .build())
+                */
+                .withAttribute("AY", "oneo_disturbance_severity", "Text") // TODO: remove and use the ReferenceAttributeBuilder when constraints are needed
+                /*
                 .withAttribute(new ReferenceAttributeBuilder()
                         .withTableName("disturbance_severity")
                         .withAttributeName("oneo_disturbance_severity")
@@ -173,12 +211,18 @@ public class PlotService {
                 .withAttribute("AZ", "oneo_disturbance_years_ago", "Integer")
                 .withAttribute("BA", "oneo_distubance_per_of_plot", "Integer")
                 .withAttribute("BB", "oneo_disturbance_description", "Text")
+                */
+                .withAttribute("BC", "twoo_disturbance_type", "Text") // TODO: remove and use the ReferenceAttributeBuilder when constraints are needed
+                /*
                 .withAttribute(new ReferenceAttributeBuilder()
                         .withTableName("disturbance_type")
                         .withAttributeName("twoo_disturbance_type")
                         .withAttributeType("Text")
                         .withAttributeId("disturbance_type", "BC")
                         .build())
+                */
+                .withAttribute("BD", "twoo_disturbance_severity", "Text") // TODO: remove and use the ReferenceAttributeBuilder when constraints are needed
+                /*
                 .withAttribute(new ReferenceAttributeBuilder()
                         .withTableName("disturbance_severity")
                         .withAttributeName("twoo_disturbance_severity")
@@ -188,18 +232,25 @@ public class PlotService {
                 .withAttribute("BE", "twoo_disturbance_years_ago", "Integer")
                 .withAttribute("BF", "twoo_distubance_per_of_plot", "Integer")
                 .withAttribute("BG", "twoo_disturbance_description", "Text")
+                */
+                .withAttribute("BH", "threeo_disturbance_type", "Text") // TODO: remove and use the ReferenceAttributeBuilder when constraints are needed
+                /*
                 .withAttribute(new ReferenceAttributeBuilder()
                         .withTableName("disturbance_type")
                         .withAttributeName("threeo_disturbance_type")
                         .withAttributeType("Text")
                         .withAttributeId("disturbance_type", "BH")
                         .build())
+                */
+                .withAttribute("BI", "threeo_disturbance_severity", "Text") // TODO: remove and use the ReferenceAttributeBuilder when constraints are needed
+                /*
                 .withAttribute(new ReferenceAttributeBuilder()
                         .withTableName("disturbance_severity")
                         .withAttributeName("threeo_disturbance_severity")
                         .withAttributeType("Text")
                         .withAttributeId("disturbance_severity", "BI")
                         .build())
+                */
                 .withAttribute("BJ", "threeo_disturbance_years_ago", "Integer")
                 .withAttribute("BK", "threeo_distubance_per_of_plot", "Integer")
                 .withAttribute("BL", "threeo_disturbance_description", "Text");

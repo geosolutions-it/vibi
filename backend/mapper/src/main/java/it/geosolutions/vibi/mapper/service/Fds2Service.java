@@ -149,7 +149,7 @@ public class Fds2Service {
         VibiService.testForeignKeyExists(store, transaction, row, PLOT_TYPE, plotId);
         species = VibiService.testSpeciesForeignKey(store, transaction, row, SPECIES_TYPE, (String) species);
         VibiService.testForeignKeyExists(store, transaction, row, MODULE_TYPE, module);
-        VibiService.testForeignKeyExists(store, transaction, row, DBH_CLASS, dbhClass);
+        // VibiService.testForeignKeyExists(store, transaction, row, DBH_CLASS, dbhClass);
         SimpleFeatureBuilder featureBuilder = new SimpleFeatureBuilder(PLOT_MODULE_WOODY_RAW);
         featureBuilder.featureUserData(Hints.USE_PROVIDED_FID, Boolean.TRUE);
         String id = UUID.randomUUID().toString();

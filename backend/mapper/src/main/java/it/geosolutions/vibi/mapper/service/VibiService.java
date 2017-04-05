@@ -4,6 +4,8 @@ import it.geosolutions.vibi.mapper.exceptions.VibiException;
 import it.geosolutions.vibi.mapper.utils.Sheets;
 import it.geosolutions.vibi.mapper.utils.Store;
 import it.geosolutions.vibi.mapper.utils.Type;
+
+import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -20,6 +22,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class VibiService {
+
+    private final static Logger LOGGER = Logger.getLogger(VibiService.class);
 
     private VibiService() {
     }
@@ -91,9 +95,12 @@ public final class VibiService {
 
     static void testForeignKeyExists(DataStore store, Transaction transaction, Row row, SimpleFeatureType type, Object id) {
         if (!testForeignKeyExists(store, transaction, type, id)) {
-            throw new VibiException("Foreign key '%s' of type '%s' in the context of row " +
+            
+            VibiException warningEx = new VibiException("Foreign key '%s' of type '%s' in the context of row " +
                     "'%d' of spreadsheet '%s' could not be found.",
                     id, type.getTypeName(), row.getRowNum() + 1, row.getSheet().getSheetName());
+            LOGGER.warn(warningEx.getMessage());
+            throw warningEx;
         }
     }
 
