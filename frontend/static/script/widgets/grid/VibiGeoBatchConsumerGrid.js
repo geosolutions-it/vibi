@@ -21,7 +21,7 @@ Ext.ns("mxp.widgets");
 
 mxp.widgets.VibiGeoBatchConsumerGrid = Ext.extend(mxp.widgets.GeoBatchConsumerGrid, {
 
-    adminUrl: 'http://vibi.geo-solutions.it/opensdi2-manager',
+    adminUrl: 'http://vibi.cmparks.net/opensdi2-manager',
 
     tooltipDownload: 'Download File',
     
